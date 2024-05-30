@@ -1,0 +1,97 @@
+<?php
+
+return [
+    'companies' => [
+        'title' => 'Companies',
+        'title_singular' => 'Company',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'active' => 'Active',
+            'logo' => 'Logo',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'leaves' => [
+        'title' => 'Leaves',
+        'title_singular' => 'Leave',
+        'fields' => [
+            'id' => 'ID',
+            'employee' => 'Employee',
+            'type' => 'Type',
+            'date' => 'Date',
+            'status' => 'Status',
+            'reason' => 'Reason',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'status' => [
+        'title' => 'Statuses',
+        'title_singular' => 'Status',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'type' => 'Type',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'labels' => [
+        'title' => 'Labels',
+        'title_singular' => 'Label',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'leaveTypes' => [
+        'title' => 'Leave Types',
+        'title_singular' => 'Leave Type',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'max_days' => 'Max Days',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'tasks' => [
+        'title' => 'Tasks',
+        'title_singular' => 'Task',
+        'fields' => [
+            'id' => 'ID',
+            'title' => 'Titlte',
+            'assigned_to' => 'Assigned To',
+            'status' => 'Status',
+            'description' => 'Description',
+            'due_date' => 'Due Date',
+            'priority' => 'Priority',
+            'start_date' => 'Start Date',
+            'limit_hours' => 'Limit Hours',
+            'tags' => 'Tags',
+            'project' => 'Project',
+            'files' => 'Files',
+            'parent_task' => 'Parent Task',
+            'departments' => 'Departments',
+            'hours_logged' => 'Hours Logged',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'notes' => [
+        'title' => 'Notes',
+        'title_singular' => 'Note',
+        'fields' => [
+            'id' => 'ID',
+            'title' => 'Title',
+            'content' => 'Content',
+            'date' => 'Date',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+];

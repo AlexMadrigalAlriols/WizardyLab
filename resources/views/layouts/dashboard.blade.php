@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="locale" content="{{ app()->getLocale() }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicons/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicons/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicons/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('img/favicons/site.webmanifest')}}">
+    <link rel="mask-icon" href="{{asset('img/favicons/safari-pinned-tab.svg')}}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>{{ trans('global.site_title') }} | {{ trans('global.' . strtolower($section)) }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/board.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/navbar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
+    @yield('styles')
+
+    <script src="{{ mix('js/app.js') }}" defer></script>
+</head>
+
+<body class="body-pd" id="body-pd">
+    @include('sweetalert::alert')
+    <header class="header header-pd body-pd" id="header">
+        <div class="header_toggle show" id="header-toggle">
+            <i class='bx bx-menu bx-x' id="header-toggle-icon"></i>
+            <b class="ms-3 bc-header-text">Dashboard</b>
+        </div>
+        <div>
+            <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="Attendance" data-bs-placement="bottom">
+                <i class='bx bx-timer'></i> {{ auth()->user()->timer }}
+            </button>
+            <div class="d-inline-block align-middle">
+                <a href="#" class="text-dark me-4"><i class="bx bx-search" style="font-size: 23px;"></i></a>
+                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
+                <a href="#" class="text-dark me-4"><i class="bx bxs-time-five" style="font-size: 23px;"></i></a>
+                <a href="#" class="text-dark me-4"><i class="bx bxs-bell" style="font-size: 23px;"></i></a>
+                <a href="{{route('logout')}}" class="text-dark me-1"><i class="bx bx-power-off" style="font-size: 23px;"></i></a>
+            </div>
+        </div>
+    </header>
+    <div class="l-navbar show" id="nav-bar">
+        <nav class="nav">
+            <div class="scrollbar">
+                <a href="#" class="nav_logo"><img src="{{asset('img/LogoLetters.png')}}" width="175px"></a>
+                <div class="nav_list">
+                    <hr>
+                    <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
+                        <i class='bx bx-home-alt nav_icon'></i>
+                        <span class="nav_name">{{__('global.dashboard')}}</span>
+                    </a>
+                    <hr>
+                    <div class="nav_item has-treeview">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                            <div>
+                                <i class='bx bx-buildings nav_icon'></i>
+                                <span class="nav_name">Clients</span>
+                            </div>
+                            <i class='bx bx-chevron-right toggler'></i>
+                        </a>
+                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
+                                <i class='bx bx-buildings nav_icon'></i>
+                                <span class="nav_name">Clients</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.companies.index')}}" class="nav_link {{ $section == 'Companies' ? 'active' : ''}}">
+                                <i class='bx bx-building-house nav_icon'></i>
+                                <span class="nav_name">{{__('crud.companies.title')}}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="nav_item has-treeview">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Holiday' || $section == 'Hours_Reports' ? 'active' : ''}}">
+                            <div>
+                                <i class='bx bx-group nav_icon'></i>
+                                <span class="nav_name ms-4">HR</span>
+                            </div>
+                            <i class='bx bx-chevron-right toggler'></i>
+                        </a>
+                        <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
+                                <i class='bx bxs-plane-take-off nav_icon'></i>
+                                <span class="nav_name">Leaves</span>
+                            </a>
+                            <hr>
+                            <a href="#" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
+                                <i class='bx bx-user-plus nav_icon'></i>
+                                <span class="nav_name">Attendance</span>
+                            </a>
+                            <hr>
+                            <a href="#" class="nav_link {{ $section == 'Holiday' ? 'active' : ''}}">
+                                <i class='bx bx-user-plus nav_icon'></i>
+                                <span class="nav_name">Holiday</span>
+                            </a>
+                            <hr>
+                            <a href="#" class="nav_link {{ $section == 'Hours_Reports' ? 'active' : ''}}">
+                                <i class='bx bx-user-plus nav_icon'></i>
+                                <span class="nav_name">Hours Reports</span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="nav_item has-treeview">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
+                            <div>
+                                <i class='bx bx-briefcase nav_icon'></i>
+                                <span class="nav_name ms-4">Work</span>
+                            </div>
+                            <i class='bx bx-chevron-right toggler'></i>
+                        </a>
+                        <div class="treeview {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.projects.index')}}" class="nav_link {{ $section == 'Projects' ? 'active' : ''}}">
+                                <i class='bx bxs-dashboard nav_icon'></i>
+                                <span class="nav_name">Projects</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.tasks.index')}}" class="nav_link {{ $section == 'Tasks' ? 'active' : ''}}">
+                                <i class='bx bx-clipboard nav_icon'></i>
+                                <span class="nav_name">{{__('crud.tasks.title')}}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="nav_item has-treeview">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                            <div>
+                                <i class='bx bx-cog nav_icon'></i>
+                                <span class="nav_name ms-4">Configuration</span>
+                            </div>
+                            <i class='bx bx-chevron-right toggler'></i>
+                        </a>
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
+                                <i class='bx bx-cylinder nav_icon'></i>
+                                <span class="nav_name">{{__('crud.status.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.labels.index')}}" class="nav_link {{ $section == 'Labels' ? 'active' : ''}}">
+                                <i class='bx bx-label nav_icon'></i>
+                                <span class="nav_name">{{__('crud.labels.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.leaveTypes.index')}}" class="nav_link {{ $section == 'Leave_Types' ? 'active' : ''}}">
+                                <i class='bx bxs-plane-alt nav_icon'></i>
+                                <span class="nav_name">{{__('crud.leaveTypes.title')}}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="bc-text px-3 py-2">
+        <b class="h4">Dashboard</b> <span class="text-muted ms-3 mt-1">Home > Dashboard</span>
+    </div>
+    @yield('content_with_padding')
+    <div class="content height-100">
+        <div class="main" id="app">
+            @yield('content')
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src='{{asset('js/dragula.min.js')}}'></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+@include('partials.attendance_script')
+<script src="{{ asset('js/select2.full.min.js')}}"></script>
+<script src="{{ asset('js/main.js')}}"></script>
+@yield('scripts')
+</html>

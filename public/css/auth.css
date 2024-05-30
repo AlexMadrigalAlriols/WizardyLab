@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    --primary-color: #362ccb;
+    --middle-color: #374df1;
+    --secondary-color: #36cbd2;
+    --white-color: #f9f9f9;
+}
+
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body{
+    font-family: "Nunito", sans-serif;
+    overflow: hidden;
+    background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 60%, #e2e1e1 100%);
+}
+
+.login-page {
+    width: 100vw;
+    height: 100vh;
+}
+
+.wave{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	z-index: -1;
+}
+
+.img-container {
+	display: flex;
+}
+
+.img-container img {
+    width: 600px;
+}
+
+.login-container {
+	display: flex;
+	text-align: center;
+    border-left: rgba(175, 175, 175, 0.514);
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+form {
+	width: 360px;
+}
+
+.login-container {
+    padding: 1rem !important;
+}
+
+.login-container img{
+    height: 100px;
+}
+
+.login-container .title{
+	margin: 15px 0;
+	color: #333;
+	text-transform: uppercase;
+	font-size: 2.9rem;
+}
+
+.input-div {
+	position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+.input-div.error {
+    border-bottom: 2px solid red;
+    color: red;
+}
+.input-div.error > div > h5{
+    color: red;
+}
+.input-div.error > div > input{
+    color: red;
+}
+.input-div.error > .icon > i{
+	color: red !important;
+}
+
+.icon {
+	color: #d9d9d9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon i{
+	transition: .3s;
+}
+
+.input-div > div{
+    position: relative;
+	height: 45px;
+}
+
+.input-div > div > h5{
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 18px;
+	transition: .3s;
+}
+
+.input-div:before, .input-div:after{
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	width: 0%;
+	height: 2px;
+	background-color: var(--middle-color);
+	transition: .4s;
+}
+
+.input-div:before{
+	right: 50%;
+}
+
+.input-div:after{
+	left: 50%;
+}
+
+.input-div.focus:before, .input-div.focus:after{
+	width: 50%;
+}
+
+.input-div.focus > div > h5{
+	top: -5px;
+	font-size: 15px;
+}
+
+.input-div.focus > .icon > i{
+	color: var(--middle-color);
+}
+
+.input-div > div > input{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	background: none;
+	padding: 0.5rem 0.7rem;
+	font-size: 1.2rem;
+	color: #555;
+	font-family: 'poppins', sans-serif;
+}
+
+a{
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color: #999;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+
+a:hover{
+	color: var(--middle-color);
+}
+
+.btn{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, var(--primary-color), var(--middle-color), var(--secondary-color));
+	background-size: 200%;
+	font-size: 1.2rem;
+	color: #fff;
+	text-transform: uppercase;
+    font-weight: 700;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+}
+.btn:hover{
+	background-position: right;
+    color: white;
+}
+
+
+@media screen and (max-width: 1050px){
+	.container{
+		grid-gap: 5rem;
+	}
+}
+
+@media screen and (max-width: 1000px){
+	form{
+		width: 290px;
+	}
+
+	.login-container .title{
+        font-size: 2.4rem;
+        margin: 8px 0;
+	}
+
+	.img-container img{
+		width: 400px;
+	}
+}
+
+@media screen and (max-width: 770px){
+	.img-container {
+		display: none !important;
+	}
+
+	.wave{
+        height: 45%;
+	}
+
+	.login-container {
+		justify-content: center;
+	}
+}
+
+@media screen and (max-width: 900px){
+	.img-container img {
+		display: none !important;
+	}
+}

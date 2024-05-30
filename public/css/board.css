@@ -1,0 +1,190 @@
+:root {
+    --primary-color: #362ccb;
+    --middle-color: #374df1;
+    --secondary-color: #36cbd2;
+    --white-color: #f9f9f9;
+}
+
+.board-nav {
+    background-color: #f7f6f6 !important;
+}
+
+.kanban-board {
+    display: flex;
+    flex-wrap: nowrap !important;
+    padding: 0.25rem;
+    overflow-y: auto !important;
+    overflow-x: auto;
+    height: 80vh !important;
+    box-sizing: border-box; /* Asegura que el padding no afecte las dimensiones */
+    position: relative;
+}
+
+.list-container {
+    height: 100%;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.list-container.collapsed .card {
+    min-width: 5rem !important;
+    max-width: 5rem !important;
+    width: 5rem !important;
+}
+
+.list-container.collapsed .card-task {
+    display: none;
+}
+
+.list-container.collapsed .title-status {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    writing-mode: vertical-rl; /* Rotar el texto verticalmente, de derecha a izquierda */
+    text-orientation: mixed; /* Mantiene el texto en posición vertical */
+    white-space: nowrap; /* Evita que el texto se ajuste automáticamente */
+}
+
+.list-container.collapsed .card-title-collapsed {
+    display: block !important;
+}
+.list-container .card-title-collapsed {
+    display: none !important;
+}
+.list-container.collapsed .card-title {
+    display: none !important;
+}
+
+.list-container.collapsed .collapse-list.collapsed {
+    display: block !important;
+}
+.list-container .collapse-list.collapsed {
+    display: none !important;
+}
+
+.list-container.collapsed .collapse-list {
+    margin-top: 0.5rem;
+}
+.list-container .collapse-list {
+    margin-top: 0.5rem;
+}
+
+.collapse-list {
+    font-size: 20px;
+}
+.list-container .card {
+    margin-bottom: 10px;
+    padding: 0.25rem;
+    background-color: var(--white-color);
+    border-radius: 5px;
+    min-width: 23rem;
+    max-width: 23rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 0.75rem;
+    height: 100%;
+    position: relative;
+    z-index: 0 !important;
+    cursor: grab;
+}
+
+.list-container .card .card-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.list-container .card-divider {
+    width: 100%;
+    height: 0.35rem;
+    border-radius: 5px;
+    background-color: #362ccb;
+}
+
+
+.card-task-body {
+    border-radius: 5px;
+}
+.card-task-body:hover {
+    cursor: pointer;
+    background-color: rgb(255, 255, 255) !important;
+}
+.task-container {
+    min-height: 15rem;
+    overflow-x: hidden;
+    max-height: 32rem !important;
+}
+
+.modal-content {
+    border-radius: calc(1rem - 1px) !important;
+}
+
+.task-cover-header {
+    border-top-right-radius: calc(1rem - 1px) !important;
+    border-top-left-radius: calc(1rem - 1px) !important;
+}
+
+.btn-actions {
+    background-color: #f5f7fa;
+    color: #141824;
+    border-color: #f5f7fa;
+    border-radius: 5px;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.25rem;
+    font-weight: 600;
+}
+
+.btn-actions .arrow-icon {
+    display: none;
+    position: relative !important;
+    top: 1px;
+    right: 0;
+    float: right !important;
+}
+
+.btn-actions:hover {
+    background-color: #e4e7eb;
+    border-color: #f5f7fa !important;
+}
+
+.btn-actions:hover .arrow-icon {
+    display: inline-block;
+}
+
+.scrollbar {
+    overflow-y: auto !important;
+}
+
+.scrollbar::-webkit-scrollbar-thumb, .tox .tox-toolbar--scrolling::-webkit-scrollbar-thumb, .picmo__picker.picmo__picker .picmo__emojiArea::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar-thumb, .scrollbar-overlay::-webkit-scrollbar-thumb {
+    visibility: hidden;
+    border-radius: 3px;
+    background-color: rgba(109, 103, 103, 0.301);
+}
+
+.scrollbar::-webkit-scrollbar, .tox .tox-toolbar--scrolling::-webkit-scrollbar, .picmo__picker.picmo__picker .picmo__emojiArea::-webkit-scrollbar, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar, .scrollbar-overlay::-webkit-scrollbar {
+    visibility: hidden;
+    -webkit-appearance: none;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(0,0,0,0);
+}
+
+.scrollbar:hover.scrollbar::-webkit-scrollbar-thumb, .tox .tox-toolbar--scrolling::-webkit-scrollbar-thumb, .picmo__picker.picmo__picker .picmo__emojiArea::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar-thumb, .scrollbar-overlay::-webkit-scrollbar-thumb {
+    visibility: visible !important;
+}
+
+.card-task-close {
+    position: relative;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: #6c757d;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.card-task-body {
+    max-height: 33rem !important;
+}
+
+.card-task {
+    z-index: 10 !important;
+    cursor: grab;
+    position: relative;
+}
