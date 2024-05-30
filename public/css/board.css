@@ -179,6 +179,10 @@
     cursor: pointer;
 }
 
+.status {
+    background-color: #141824;
+}
+
 .card-task-body {
     max-height: 33rem !important;
 }
