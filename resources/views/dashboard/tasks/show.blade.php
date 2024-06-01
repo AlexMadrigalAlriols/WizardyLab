@@ -49,10 +49,10 @@
                             </p>
 
                             <div>
-                                <p><b>Project:</b> <a href="#" class="ms-2">{{$task->project->name}}</a></p>
+                                <p><b>Project:</b> <a href="#" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
                                 <p><b>Asssigned By:</b> <a href="#" class="ms-2">{{$task->assignee->name}}</a></p>
-                                <p><b>Start Date:</b> <span class="text-muted ms-2">{{$task->start_date->format('jS M, Y')}}</span></p>
-                                <p><b>Due Date:</b> <span class="text-muted ms-2">{{$task->duedate->format('jS M, Y')}}</span></p>
+                                <p><b>Start Date:</b> <span class="text-muted ms-2">{{$task->start_date?->format('jS M, Y') ?? '-'}}</span></p>
+                                <p><b>Due Date:</b> <span class="text-muted ms-2">{{$task->duedate?->format('jS M, Y') ?? '-'}}</span></p>
                                 <p><b>Total Hours:</b> <span class="text-muted ms-2">{{$task->total_hours}}h</span></p>
                             </div>
                         </div>
@@ -202,21 +202,21 @@ const xValues = ['Mon','Tue','Wed','Thu','Fri','Sat', 'Sun'];
 const yValues = [7,8,8,9,9,9,10,11,14,14,15];
 
 new Chart("activityChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    legend: false,
-    datasets: [{
-      backgroundColor:"rgba(0,0,255,1.0)",
-      borderColor: "rgba(0,0,255,0.1)",
-      data: [{{ implode(',', $activityChart['values']) }}],
-      fill: false
-    }]
-  },
-  options:{
-    legend: false
-  }
-});
+    type: "bar",
+    data: {
+        labels: xValues,
+        legend: false,
+        datasets: [{
+        backgroundColor:"rgba(0,0,255,1.0)",
+        borderColor: "rgba(0,0,255,0.1)",
+        data: [{{ isset($activityChart['values']) ? implode(',', $activityChart['values']) : '0' }}],
+        fill: false
+        }]
+    },
+    options:{
+        legend: false
+    }
+    });
 
 var barColors = [
   "#b91d47",
@@ -227,17 +227,18 @@ var barColors = [
 ];
 
 new Chart("hoursChart", {
-  type: "doughnut",
-  data: {
-    labels: [{!! $hoursChart['labels'] !!}],
-    datasets: [{
-      backgroundColor: barColors,
-      // transform array of objects to array of values
-      data: [{{ implode(',', $hoursChart['values']) }}]
-    }]
-  },
-  options: {
-  }
-});
+    type: "doughnut",
+    data: {
+        labels: [{!! $hoursChart['labels'] ?? '' !!}],
+        datasets: [{
+        backgroundColor: barColors,
+        // transform array of objects to array of values
+        data: [{{ isset($hoursChart['values']) ? implode(',', $hoursChart['values']) : '0' }}]
+        }]
+    },
+    options: {
+    }
+    });
+
 </script>
 @endsection

@@ -16,7 +16,7 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.projects.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary"><span class="px-5">Save Project</span></button>
+                    <button class="btn btn-primary ms-2"><span class="px-5">Save Project</span></button>
                 </div>
             </div>
         </form>

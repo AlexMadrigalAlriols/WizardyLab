@@ -34,7 +34,7 @@
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
     @yield('styles')
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body class="body-pd" id="body-pd">

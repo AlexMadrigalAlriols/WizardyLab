@@ -21,7 +21,7 @@ class UpdateUseCase extends UseCase
         protected ?Carbon $due_date = null,
         protected ?int $limit_hours = null,
         protected Status $status,
-        protected string $description = '',
+        protected ?string $description = '',
         protected array $users = [],
         protected array $departments = []
     ) {

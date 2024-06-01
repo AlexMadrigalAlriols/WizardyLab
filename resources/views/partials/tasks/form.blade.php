@@ -10,7 +10,7 @@
     <div class="col-md-5">
         <div class="form-floating mt-3">
             <select class="form-select select2" id="project" name="project">
-              <option selected>--</option>
+              <option value="" selected>--</option>
               @foreach ($projects as $project)
                 <option value="{{ $project->id }}" {{$project->id == request()->input('board') || ($task->project_id == $project->id || old('project') == $project->id) ? 'selected' : ''}}>{{ $project->name }}</option>
               @endforeach

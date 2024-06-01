@@ -113,7 +113,7 @@
                               </div>
                         </td>
                         <td><span class="badge bg-{{$task->priority}}">{{ucfirst($task->priority)}}</span></td>
-                        <td class="text-muted"><span class="{{$task->total_hours > $task->limit_hours ? 'text-danger' : ''}}">{{$task->total_hours}}h</span> / <b>{{$task->limit_hours ?? '-'}}h</b> </td>
+                        <td class="text-muted"><span class="{{$task->limit_hours && $task->total_hours > $task->limit_hours ? 'text-danger' : ''}}">{{$task->total_hours}}h</span> / <b>{{$task->limit_hours ?? '-'}}h</b> </td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"

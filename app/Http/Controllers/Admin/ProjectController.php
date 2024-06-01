@@ -77,7 +77,7 @@ class ProjectController extends Controller
             Carbon::parse($request->input('due_date')),
             $request->input('limit_hours'),
             Status::find($request->input('status')),
-            $request->input('description'),
+            $request->input('description', ''),
             $request->input('assigned_users', []),
             $request->input('departments', [])
         ))->action();
@@ -110,7 +110,7 @@ class ProjectController extends Controller
             Carbon::parse($request->input('due_date')),
             $request->input('limit_hours'),
             Status::find($request->input('status')),
-            $request->input('description'),
+            $request->input('description', ''),
             $request->input('assigned_users', []),
             $request->input('departments', [])
         ))->action();

@@ -16,7 +16,7 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.companies.index')}}"><span class="px-2">{{__('global.cancel')}}</span></a>
-                    <button class="btn btn-primary"><span class="px-5">{{__('global.save')}} {{__('crud.companies.title_singular')}}</span></button>
+                    <button class="btn btn-primary ms-2"><span class="px-5">{{__('global.save')}} {{__('crud.companies.title_singular')}}</span></button>
                 </div>
             </div>
         </form>

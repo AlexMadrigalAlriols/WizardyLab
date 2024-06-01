@@ -14,7 +14,7 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{request()->has('board') ? route('dashboard.projects.board', request()->input('board')) : route('dashboard.tasks.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary"><span class="px-5">Create Task</span></button>
+                    <button class="btn btn-primary ms-2"><span class="px-5">Create Task</span></button>
                 </div>
             </div>
         </form>

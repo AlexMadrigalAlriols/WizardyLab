@@ -68,11 +68,13 @@ class TaskAttendanceHelper {
             $chart['values'][$attendance->user->name] += TimerHelper::getAttendanceTimeDecimal($attendance, 2);
         }
 
-        $labels = array_keys($chart['values']);
-        $quotedLabels = array_map(function($label) {
-            return "'" . htmlspecialchars_decode($label) . "'";
-        }, $labels);
-        $chart['labels'] = implode(',', $quotedLabels);
+        if(isset($chart['values'])) {
+            $labels = array_keys($chart['values']);
+            $quotedLabels = array_map(function($label) {
+                return "'" . htmlspecialchars_decode($label) . "'";
+            }, $labels);
+            $chart['labels'] = implode(',', $quotedLabels);
+        }
 
         return $chart;
     }
