@@ -96,4 +96,21 @@ class TaskAttendanceHelper {
 
         return $chart;
     }
+
+    public static function getAllTaskAttendances(Task $task)
+    {
+        return $task->taskAttendances()->get();
+    }
+
+    public static function getTimer(Task $task): string
+    {
+        $total = '00:00:00';
+        $attendances = self::getAllTaskAttendances($task);
+
+        foreach ($attendances as $attendance) {
+            $total = TimerHelper::addTime($total, TimerHelper::getAttendanceTime($attendance));
+        }
+
+        return $total;
+    }
 }

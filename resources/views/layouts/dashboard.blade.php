@@ -51,14 +51,47 @@
             <div class="d-inline-block align-middle">
                 <a href="#" class="text-dark me-4"><i class="bx bx-search" style="font-size: 23px;"></i></a>
                 <div class="dropdown d-inline-block">
-                    <a class="text-dark text-decoration-none me-4" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-time-five" style="font-size: 23px;"></i>
+
+                        @if (auth()->user()->activeTaskTimers()->count() > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ auth()->user()->activeTaskTimers()->count() }}
+                            </span>
+                        @endif
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownTimers">
-                        <li><a class="dropdown-item" href="#">Notification 1</a></li>
-                        <li><a class="dropdown-item" href="#">Notification 2</a></li>
-                        <li><a class="dropdown-item" href="#">Notification 3</a></li>
+                        <div class="py-2 border-bottom">
+                            <span class="px-3 h6"><i class="bx bxs-time-five"></i> Active Timers </span>
+                        </div>
+
+                        @foreach (auth()->user()->activeTaskTimers as $timer)
+                                <div class="px-2 card-notification">
+                                    <div style="font-size: 13px;">
+                                        <div class="row pt-3">
+                                            <div class="col-9">
+                                                <a href="{{route('dashboard.tasks.show', $timer->task_id)}}" class="text-decoration-none text-dark">
+                                                <span class="h6"><b>{{$timer->task->title}}</b></span>
+
+                                                <p class="mt-1"><b>{{$timer->created_at->format('h:i A')}}</b> <span class="text-muted">{{$timer->created_at->format('F j, Y')}}</span></p>
+                                            </a>
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <a href="{{route('dashboard.task-clock-out', $timer->task_id)}}" class="btn btn-outline-secondary d-inline-block">
+                                                    <i class='bx bx-stop-circle align-middle'></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        @endforeach
+
+                        @if (auth()->user()->activeTaskTimers()->count() == 0)
+                            <div class="text-center py-3">
+                                <span class="text-muted">No active timers</span>
+                            </div>
+                        @endif
                     </ul>
                 </div>
                 <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4"><i class="bx bxs-note" style="font-size: 23px;"></i></a>

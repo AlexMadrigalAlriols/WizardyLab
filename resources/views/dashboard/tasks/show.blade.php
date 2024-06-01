@@ -13,6 +13,21 @@
                     <span class="badge bg-{{$task->priority}} ms-2">{{ucfirst($task->priority)}}</span>
                     <span class="badge {{$task->status->badge}} ms-2"><span class="px-2">{{$task->status->title}}</span></span>
                     <p class="text-muted mt-2 mb-1">{{$task->description}}</p>
+
+
+                    @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
+                        <a href="{{route('dashboard.task-clock-out', $task->id)}}" class="btn btn-outline-secondary mt-1">
+                            <i class='bx bx-stop-circle align-middle'></i> <span>Stop Timer</span>
+                        </a>
+                    @else
+                        <a href="{{route('dashboard.task-clock-in', $task->id)}}" class="btn btn-outline-secondary mt-1">
+                            <i class='bx bx-play-circle align-middle'></i> <span>Start Timer</span>
+                        </a>
+                    @endif
+
+                    <button class="btn btn-secondary mt-1 ms-2" id="timerTask">
+                        {{$task->timer}}
+                    </button>
                 </div>
 
                 <div class="col-md-2">
@@ -239,6 +254,52 @@ new Chart("hoursChart", {
     options: {
     }
     });
+
+$(function() {
+    let timer = $('#timerTask');
+
+    function updateTaskTimer() {
+        console.log('hola')
+        var myTime = timer.html();
+        var ss = myTime.split(":");
+
+        var hours = ss[0];
+        var mins = ss[1];
+        var secs = ss[2];
+        secs = parseInt(secs) + 1;
+
+        if(secs > 59) {
+            secs = '00';
+            mins = parseInt(mins) + 1;
+        }
+
+        if(mins > 59) {
+            mins = '00';
+            secs = '00';
+            hours = parseInt(hours) + 1;
+        }
+
+        if (hours.toString().length < 2) {
+            hours = '0' + hours;
+        }
+
+        if (mins.toString().length < 2) {
+            mins = '0' + mins;
+        }
+
+        if (secs.toString().length < 2) {
+            secs = '0' + secs;
+        }
+
+        var ts = hours + ":" + mins + ":" + secs;
+        timer.html(ts);
+    }
+
+    @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
+        setInterval(updateTaskTimer, 1000);
+    @endif
+})
+
 
 </script>
 @endsection
