@@ -150,6 +150,7 @@
 
 .scrollbar {
     overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
 .scrollbar::-webkit-scrollbar-thumb, .tox .tox-toolbar--scrolling::-webkit-scrollbar-thumb, .picmo__picker.picmo__picker .picmo__emojiArea::-webkit-scrollbar-thumb, html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content::-webkit-scrollbar-thumb, .scrollbar-overlay::-webkit-scrollbar-thumb {

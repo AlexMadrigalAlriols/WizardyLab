@@ -111,4 +111,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TaskAttendance::class)->whereNull('check_out');
     }
+
+    public function notifications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

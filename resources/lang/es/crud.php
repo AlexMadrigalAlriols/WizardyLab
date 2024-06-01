@@ -23,6 +23,8 @@ return [
             'date' => 'Fecha',
             'status' => 'Estado',
             'reason' => 'Razón',
+            'duration' => 'Dureación',
+            'user' => 'Usuario',
             'created_at' => 'Creado El',
             'updated_at' => 'Actualizado El',
         ],
