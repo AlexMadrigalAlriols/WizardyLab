@@ -50,9 +50,67 @@
             </button>
             <div class="d-inline-block align-middle">
                 <a href="#" class="text-dark me-4"><i class="bx bx-search" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block">
+                    <a class="text-dark text-decoration-none me-4" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bxs-time-five" style="font-size: 23px;"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownTimers">
+                        <li><a class="dropdown-item" href="#">Notification 1</a></li>
+                        <li><a class="dropdown-item" href="#">Notification 2</a></li>
+                        <li><a class="dropdown-item" href="#">Notification 3</a></li>
+                    </ul>
+                </div>
                 <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
-                <a href="#" class="text-dark me-4"><i class="bx bxs-time-five" style="font-size: 23px;"></i></a>
-                <a href="#" class="text-dark me-4"><i class="bx bxs-bell" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block">
+                    <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bxs-bell" style="font-size: 23px;"></i>
+                        @if (auth()->user()->notifications()->unread()->count() > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ auth()->user()->notifications()->unread()->count() }}
+                            </span>
+                        @endif
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownNotifications">
+                        <div class="py-2 border-bottom">
+                            <span class="px-3 h6"><i class="bx bxs-bell"></i> Notifications </span>
+                        </div>
+
+                        <div class="scrollbar" style="max-height: 300px;">
+                            @foreach (auth()->user()->notifications()->unread()->orderBy('created_at', 'desc')->get() as $notification)
+                                <a href="{{$notification->routeUrl}}" class="text-decoration-none text-dark">
+                                    <div class="px-2 card-notification">
+                                        <div style="font-size: 13px;">
+                                            <div class="row pt-3">
+                                                <div class="col-md-3 text-center">
+                                                    <img src="{{asset($notification->user->profile_img)}}" class="img-fluid rounded-circle border" width="50" alt="" style="height: 45px; width: 45px;">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span class="h6"><b>{{$notification->user->name}}</b></span>
+                                                    <p class="text-muted mb-0"><i class="bx {{$notification->icon}}"></i> {{$notification->title}}</p>
+                                                    <p class="mt-1"><b>{{$notification->created_at->format('h:i A')}}</b> <span class="text-muted">{{$notification->created_at->format('F j, Y')}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+
+                        @if (auth()->user()->notifications()->unread()->count() == 0)
+                            <div class="text-center py-3">
+                                <span class="text-muted">No notifications</span>
+                            </div>
+                        @else
+                            <div class="text-center border-top pt-2">
+                                <a href="{{route('dashboard.notifications.read')}}" class="text-decoration-none">
+                                    <span>Mark all as read</span>
+                                </a>
+                            </div>
+                        @endif
+                    </ul>
+                </div>
                 <a href="{{route('logout')}}" class="text-dark me-1"><i class="bx bx-power-off" style="font-size: 23px;"></i></a>
             </div>
         </div>

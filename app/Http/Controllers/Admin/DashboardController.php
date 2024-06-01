@@ -44,4 +44,14 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('user', 'now_hour', 'weekday', 'counters', 'tasks', 'weekdays', 'events'));
     }
+
+    public function readNotifications()
+    {
+        auth()->user()->notifications()->unread()->update([
+            'is_read' => true
+        ]);
+
+        toast('Notifications read', 'success');
+        return redirect()->back();
+    }
 }

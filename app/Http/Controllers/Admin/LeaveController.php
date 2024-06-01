@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\NotificationHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Leaves\StoreRequest;
 use App\Models\Company;
 use App\Models\Leave;
 use App\Models\LeaveType;
+use App\Models\Notification;
 use App\Models\User;
 use App\UseCases\Leaves\StoreUseCase;
 use Illuminate\Http\Request;
@@ -36,14 +38,24 @@ class LeaveController extends Controller
     }
 
     public function store(StoreRequest $request) {
-        $client = (new StoreUseCase(
+        $user =  User::find($request->input('user_id'));
+        $leave = (new StoreUseCase(
             $request->input('name'),
             LeaveType::find($request->input('type')),
             $request->input('duration'),
             $request->input('date'),
-            User::find($request->input('user_id')),
+            $user,
             $request->input('reason')
         ))->action();
+
+        if(auth()->user()->id !== $user->id) {
+            NotificationHelper::notificate(
+                $user,
+                Notification::TYPES['leave'],
+                'Leave created',
+                $leave->id
+            );
+        }
 
         toast('Leave created', 'success');
         return redirect()->route('dashboard.leaves.index');
@@ -58,6 +70,15 @@ class LeaveController extends Controller
     {
         $leave->approved = true;
         $leave->save();
+
+        if(auth()->user()->id !== $leave->user->id) {
+            NotificationHelper::notificate(
+                $leave->user,
+                Notification::TYPES['leave'],
+                'Leave approved',
+                $leave->id
+            );
+        }
 
         toast('Leave approved', 'success');
         return redirect()->route('dashboard.leaves.index');

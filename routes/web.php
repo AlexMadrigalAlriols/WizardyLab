@@ -68,6 +68,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     // Notes
     Route::resource('notes', NoteController::class);
 
+    // Notifications
+    Route::get('/notifications/read', [DashboardController::class, 'readNotifications'])->name('notifications.read');
+
     //Project
     Route::resource('projects', ProjectController::class);
     Route::get('/projects/{project}/update-status/{status}', [ProjectController::class, 'updateStatus'])->name('projects.update-status');
