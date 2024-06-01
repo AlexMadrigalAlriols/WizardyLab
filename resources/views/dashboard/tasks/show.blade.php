@@ -117,41 +117,47 @@
             </p>
 
             @foreach ($task->files as $file)
-            <div class="row border-top border-bottom p-3">
-                <div class="col-md-10 col-9">
-                    <p class="mt-1 mb-1">
-                        <i class="{{$file->icon}} text-muted"></i>
-                        {{$file->title}}
-                    </p>
-                    <p class="text-muted" style="font-size: 14px">{{$file->real_size}} | <a href="{{$file->user_id}}">{{$file->user->name}}</a> | {{$file->created_at->format('jS M, h:i A')}}</p>
+                <div class="row border-top border-bottom p-3">
+                    <div class="col-md-10 col-9">
+                        <p class="mt-1 mb-1">
+                            <i class="{{$file->icon}} text-muted"></i>
+                            {{$file->title}}
+                        </p>
+                        <p class="text-muted" style="font-size: 14px">{{$file->real_size}} | <a href="{{$file->user_id}}">{{$file->user->name}}</a> | {{$file->created_at->format('jS M, h:i A')}}</p>
 
-                    @if($file->is_image)
-                        <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
-                    @endif
-                </div>
-                <div class="col-md-2 col-3">
-                    <div class="col-md-2 text-end">
-                        <div class="dropdown">
-                            <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class='bx bx-dots-horizontal-rounded'></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{{$file->download_link}}"><i class='bx bxs-download' ></i> Download</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form action="{{route('dashboard.task.delete_file', $file->id)}}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
-                                    </form>
-                                </li>
-                            </ul>
+                        @if($file->is_image)
+                            <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
+                        @endif
+                    </div>
+                    <div class="col-md-2 col-3">
+                        <div class="col-md-2 text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class='bx bx-dots-horizontal-rounded'></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{{$file->download_link}}"><i class='bx bxs-download' ></i> Download</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form action="{{route('dashboard.task.delete_file', $file->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+
+            @if($task->files->isEmpty())
+                <div class="text-center p-3">
+                    <p class="text-muted">No files uploaded yet!</p>
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -204,6 +210,13 @@
                             </div>
                         </div>
                     @endforeach
+
+                    @if ($task_comments->isEmpty())
+                        <div class="text-center p-3">
+                            <p class="text-muted">No comments yet!</p>
+                        </div>
+
+                    @endif
                 </div>
             </div>
         </div>
