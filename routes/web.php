@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InventoriesController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Inventories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,10 +31,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::redirect('/', '/dashboard');
-
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-
+    Route::resource('inventories', InventoriesController::class);
     //Tasks
     Route::resource('tasks', TaskController::class);
     Route::get('/tasks/{task}/update-status/{status}', [TaskController::class, 'updateStatus'])->name('tasks.update-status');
@@ -86,6 +87,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::get('/user/clock-in', [UserController::class, 'userClockIn'])->name('user-clock-in');
     Route::get('/user/clock-out', [UserController::class, 'userClockOut'])->name('user-clock-out');
+
+    //inventaries
+
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
