@@ -92,6 +92,8 @@ class TaskController extends Controller
     }
 
     public function store(StoreRequest $request) {
+        $parent_task = $request->input('parent_task') ? Task::find($request->input('parent_task')) : null;
+
         $task = (new StoreUseCase(
             Auth::user(),
             $request->input('title'),
@@ -104,8 +106,8 @@ class TaskController extends Controller
             $request->input('tags', []),
             $request->input('assigned_users', []),
             $request->input('departments', []),
-            Project::find($request->input('project')),
-            Task::find($request->input('parent_task'))
+            $parent_task ? $parent_task->project : Project::find($request->input('project')),
+            $parent_task
         ))->action();
 
         $this->saveTaskFiles($task, $request);
@@ -117,7 +119,7 @@ class TaskController extends Controller
             return redirect()->route('dashboard.projects.board', $request->input('board'));
         }
 
-        return back();
+        return redirect()->route('dashboard.tasks.index');
     }
 
     public function edit(Request $request, Task $task)
@@ -155,7 +157,7 @@ class TaskController extends Controller
             $task,
             Auth::user(),
             $request->input('title'),
-            $request->input('description'),
+            $request->input('description') ?? '',
             $request->input('priority'),
             Status::find($request->input('status')),
             $request->input('limit_hours'),
@@ -177,7 +179,7 @@ class TaskController extends Controller
             return redirect()->route('dashboard.projects.board', $request->input('board'));
         }
 
-        return back();
+        return redirect()->route('dashboard.tasks.index');
     }
 
     public function updateStatus(Request $request, Task $task, Status $status)
@@ -305,7 +307,7 @@ class TaskController extends Controller
         $users = User::all();
         $tasks = Task::whereHas('status', function ($query) {
             $query->where('title', '!=', 'Completed');
-        })->get();
+        })->whereNull('task_id')->get();
 
         $departments = Department::all();
         $projects = Project::all();
