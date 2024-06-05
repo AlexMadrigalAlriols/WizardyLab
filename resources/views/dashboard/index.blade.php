@@ -149,7 +149,7 @@
                                 <p class="mb-0">Tasks</p>
                                 <div class="mt-3">
                                     <div class="d-inline-block me-4">
-                                        <h3 class="mb-0 text-primary"><b>{{ $counters['tasks']['total'] }}</b></h3>
+                                        <h3 class="mb-0 text-primary"><b>{{ $counters['tasks']['pending'] }}</b></h3>
                                         <span class="text-muted">Pending</span>
                                     </div>
                                     <div class="d-inline-block ms-5">
@@ -167,7 +167,7 @@
                                 <p class="mb-0">Projects</p>
                                 <div class="mt-3">
                                     <div class="d-inline-block me-4">
-                                        <h3 class="mb-0 text-primary"><b>{{ $counters['projects']['total'] }}</b></h3>
+                                        <h3 class="mb-0 text-primary"><b>{{ $counters['projects']['active'] }}</b></h3>
                                         <span class="text-muted">Pending</span>
                                     </div>
                                     <div class="d-inline-block ms-5">

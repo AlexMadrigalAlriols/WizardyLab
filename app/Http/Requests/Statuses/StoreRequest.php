@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
             'name' => 'required|string',
             'color' => 'required|string',
             'background' => 'required|string',
-            'type' => 'required|string|in:task,project',
+            'type' => 'required|string|in:task,project,invoice',
         ];
     }
 }

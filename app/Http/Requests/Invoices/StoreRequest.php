@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Statuses;
+namespace App\Http\Requests\Invoices;
 
-use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,13 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'color' => 'required|string',
-            'background' => 'required|string',
-            'type' => 'required|string|in:task,project, invoice',
+            'issue_date' => 'required|date',
+            'type' => 'required|string|in:tasks,projects,manual',
+            'project_id' => 'nullable|exists:projects,id',
+            'tasks' => 'nullable|array',
+            'tasks.*' => 'nullable|exists:tasks,id',
+            'amount' => 'nullable|numeric',
+            'status_id' => 'required|exists:statuses,id',
         ];
     }
 }

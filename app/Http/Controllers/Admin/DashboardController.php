@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
 
@@ -17,14 +18,14 @@ class DashboardController extends Controller
 
         $counters = [
             'tasks' => [
-                'total' => $user->tasks()->count(),
-                'pending' => $user->tasks()->count(),
-                'overdue' => $user->tasks()->where('duedate', '<', now())->count()
+                'total' => $user->tasks()->where('status_id', ConfigurationHelper::get('completed_task_status'))->count(),
+                'pending' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->count(),
+                'overdue' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->where('duedate', '<', now())->count()
             ],
             'projects' => [
                 'total' => $user->projects()->count(),
-                'active' => $user->projects()->count(),
-                'overdue' => $user->projects()->where('deadline', '<', now())->count()
+                'active' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->count(),
+                'overdue' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->where('deadline', '<', now())->count()
             ]
         ];
 

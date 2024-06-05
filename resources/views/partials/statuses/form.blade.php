@@ -11,6 +11,7 @@
             <select name="type" id="type" class="form-control form-select">
                 <option value="task">Task</option>
                 <option value="project">Project</option>
+                <option value="invoice">Invoice</option>
             </select>
         </div>
     </div>

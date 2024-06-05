@@ -167,7 +167,7 @@
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
                             <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
                                 <i class='bx bx-buildings nav_icon'></i>
                                 <span class="nav_name">Clients</span>
@@ -176,6 +176,11 @@
                             <a href="{{route('dashboard.companies.index')}}" class="nav_link {{ $section == 'Companies' ? 'active' : ''}}">
                                 <i class='bx bx-building-house nav_icon'></i>
                                 <span class="nav_name">{{__('crud.companies.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.invoices.index')}}" class="nav_link {{ $section == 'Invoices' ? 'active' : ''}}">
+                                <i class='bx bx-file nav_icon'></i>
+                                <span class="nav_name">{{__('crud.invoices.title')}}</span>
                             </a>
                         </div>
                     </div>
@@ -240,7 +245,12 @@
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                                <i class='bx bx-globe nav_icon'></i>
+                                <span class="nav_name">{{__('crud.globalConfigurations.title')}}</span>
+                            </a>
+                            <hr>
                             <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
                                 <i class='bx bx-cylinder nav_icon'></i>
                                 <span class="nav_name">{{__('crud.status.title')}}</span>

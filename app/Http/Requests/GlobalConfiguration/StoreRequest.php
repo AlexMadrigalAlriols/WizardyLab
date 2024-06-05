@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Statuses;
+namespace App\Http\Requests\GlobalConfiguration;
 
-use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'color' => 'required|string',
-            'background' => 'required|string',
-            'type' => 'required|string|in:task,project, invoice',
+            'keys' => 'required|array',
+            'keys.*' => 'required|string|exists:global_configurations,key',
+            'values' => 'required|array',
+            'values.*' => 'required'
         ];
     }
 }

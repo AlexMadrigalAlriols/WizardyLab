@@ -11,7 +11,7 @@
                     </span>
                     <br>
                     <span class="badge bg-{{$task->priority}} ms-2">{{ucfirst($task->priority)}}</span>
-                    <span class="badge {{$task->status->badge}} ms-2"><span class="px-2">{{$task->status->title}}</span></span>
+                    <span class="badge ms-2" style="{{$task->status->styles}}"><span class="px-2">{{$task->status->title}}</span></span>
                     <p class="text-muted mt-2 mb-1">{{$task->description}}</p>
 
 

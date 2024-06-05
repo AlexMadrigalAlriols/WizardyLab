@@ -1,12 +1,12 @@
-@extends('layouts.dashboard', ['section' => 'Projects'])
+@extends('layouts.dashboard', ['section' => 'Invoices'])
 
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Projects</b><span class="text-muted">({{count($projects)}})</span>
+            <b>{{__('crud.invoices.title')}}</b><span class="text-muted">({{count($invoices)}})</span>
         </span>
-        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.projects.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Project</span>
+        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.invoices.create')}}">
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.invoices.title_singular')}}</span>
         </a>
     </div>
 
@@ -18,27 +18,12 @@
             <div class="col-md-7 mt-1">
                 <div class="justify-content-end">
                     <div class="row">
-                        <div class="col-md-1 offset-md-3"></div>
-                        <div class="col-md-6 col-sm-12 mt-3">
+                        <div class="col-md-6 offset-md-6 col-sm-12 mt-3">
                             <div class="search-container w-100">
                                 <i class="bx bx-search search-icon"></i>
                                 <input type="text" class="search-input" id="search-input" name="search_input"
-                                    placeholder="Search Projects">
+                                    placeholder="Search Invoices">
                             </div>
-                        </div>
-                        <div class="col-md-2 col-12 mt-3 text-end">
-                            <button class="btn btn-change-view active" data-bs-toggle="tooltip" data-bs-title="List View"
-                                data-bs-placement="top">
-                                <i class='bx bx-list-ul'></i>
-                            </button>
-                            <button class="btn btn-change-view" data-bs-toggle="tooltip" data-bs-title="Board View"
-                                data-bs-placement="top">
-                                <i class='bx bx-chalkboard'></i>
-                            </button>
-                            <button class="btn btn-change-view" data-bs-toggle="tooltip" data-bs-title="Card View"
-                                data-bs-placement="top">
-                                <i class='bx bxs-dashboard'></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -50,40 +35,26 @@
         <table class="table table-borderless table-hover">
             <thead class="border-top border-bottom">
                 <tr>
-                    <th scope="col" class="min-width-0"></th>
-                    <th scope="col">CODE</th>
-                    <th scope="col">TITLE</th>
-                    <th scope="col">START DATE</th>
-                    <th scope="col">DUE DATE</th>
-                    <th scope="col">STATUS</th>
-                    <th scope="col">HOURS LOGGED</th>
+                    <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
+                    <th scope="col">{{strtoupper(__('crud.invoices.fields.number'))}}</th>
+                    <th scope="col">{{strtoupper(__('crud.invoices.fields.project'))}} / {{strtoupper(__('crud.invoices.fields.client'))}}</th>
+                    <th scope="col">{{strtoupper(__('crud.invoices.fields.status'))}}</th>
+                    <th scope="col">{{strtoupper(__('crud.invoices.fields.issue_date'))}}</th>
+                    <th scope="col">{{strtoupper(__('crud.invoices.fields.total'))}}</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($projects as $project)
+                @foreach ($invoices as $invoice)
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
+                            <input type="checkbox" name="checkbox[]">
                         </td>
-                        <td><b>{{ $project->code }}</b></td>
-                        <td><a href="{{route('dashboard.projects.board', $project->id)}}" class="text-decoration-none"><b>{{ $project->name }}</b></a></td>
-                        <td class="text-muted">
-                            {{ $project->start_date ? $project->start_date->format('d/m/Y') : '-' }}
-                        </td>
-                        <td class="{{ $project->is_overdue ? 'text-danger' : 'text-muted' }}">{{ $project->deadline ? $project->deadline->format('d/m/Y') : '-' }}</td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm dropdown-toggle" style="{{ $project->status->styles }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <b>{{$project->status->title}}</b>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-sm">
-                                    @foreach ($statuses as $status)
-                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.projects.update-status', [$project->id, $status->id])}}"><span class="badge" style="{{$status->styles}}">{{$status->title}}</span></a></li>
-                                    @endforeach
-                                </ul>
-                              </div>
-                        </td>
-                        <td class="text-muted"><span class="{{$project->total_hours > $project->limit_hours ? 'text-danger' : ''}}">{{$project->total_hours}}h</span> / <b>{{$project->limit_hours ?? '-'}}h</b> </td>
+                        <td>{{ $invoice->number }}</td>
+                        <td>{{ $invoice->project?->name ?? ($invoice->client?->name ?? '-') }}</td>
+                        <td><span class="badge">{{ $invoice->status->title }}</span></td>
+                        <td>{{ $invoice->issue_date }}</td>
+                        <td>{{ $invoice->total }} {{$invoice?->client->currency->symbol ?? '-'}}</td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -91,12 +62,10 @@
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.projects.show', $project->id)}}"><i class='bx bx-show' ></i> View</a></li>
-                                    <li><a class="dropdown-item" href="{{route('dashboard.projects.edit', $project->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
-                                    <li><a class="dropdown-item" href="{{route('dashboard.projects.generate-invoice', $project->id)}}"><i class='bx bx-file' ></i> Generate Invoice</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.invoices.download', $invoice->id)}}"><i class='bx bx-download' ></i> Download</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <form action="{{route('dashboard.projects.destroy', $project->id)}}" method="POST">
+                                        <form action="{{route('dashboard.invoices.destroy', $invoice->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
@@ -108,10 +77,10 @@
                     </tr>
                 @endforeach
 
-                @if(!count($projects))
+                @if(!count($invoices))
                     <tr>
                         <td colspan="9" class="text-center py-5">
-                            <span class="text-muted">No Projects found!</span>
+                            <span class="text-muted">No invoices found!</span>
                         </td>
                     </tr>
                 @endif
@@ -121,7 +90,7 @@
                     <td colspan="9" class="py-4 border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-muted">
-                                {{ count($projects) }} to {{$pagination['take'] ?? count($projects)}} items of <b>{{ $total }}</b>
+                                {{ count($invoices) }} to {{$pagination['take'] ?? count($invoices)}} items of <b>{{ $total }}</b>
                                 @if(request('page') != 'all')
                                     <span class="ms-4">
                                         <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>
