@@ -31,7 +31,7 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->tasks()->orderBy('created_at', 'desc');
+        $query = Auth::user()->tasks()->orderBy('duedate', 'desc');
 
         if($request->has('status') && is_numeric($request->input('status'))) {
             $query->where('status_id', $request->input('status'));
@@ -117,7 +117,7 @@ class TaskController extends Controller
             return redirect()->route('dashboard.projects.board', $request->input('board'));
         }
 
-        return redirect()->route('dashboard.tasks.index');
+        return back();
     }
 
     public function edit(Request $request, Task $task)
@@ -177,7 +177,7 @@ class TaskController extends Controller
             return redirect()->route('dashboard.projects.board', $request->input('board'));
         }
 
-        return redirect()->route('dashboard.tasks.index');
+        return back();
     }
 
     public function updateStatus(Request $request, Task $task, Status $status)
@@ -186,7 +186,7 @@ class TaskController extends Controller
         (new UpdateStatusUseCase($task, $status, $request->input('order')))->action();
 
         toast('Task status updated', 'success');
-        return redirect()->route('dashboard.tasks.index');
+        return back();
     }
 
     public function destroy(Task $task)
