@@ -12,7 +12,7 @@ class Project extends Model
 
     public const PAGE_SIZE = 10;
 
-    public const DEFAULT_STATUSES = [13, 14, 15, 16];
+    public const DEFAULT_STATUSES = [1, 2, 3, 4];
 
     /**
      * The attributes that are mass assignable.
