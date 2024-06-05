@@ -12,8 +12,9 @@ class InvoiceHelper {
     {
         $amount = 0;
         $tasksIds = [];
+        $stausId = ConfigurationHelper::get('completed_task_status');
         $tasks = $project->tasks()
-            ->where('status_id', ConfigurationHelper::get('completed_task_status'))
+            ->where('status_id', $stausId)
             ->whereNull('archive_at')
             ->get();
 
