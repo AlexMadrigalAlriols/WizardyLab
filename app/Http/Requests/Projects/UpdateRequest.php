@@ -30,10 +30,10 @@ class UpdateRequest extends FormRequest
             'limit_hours' => 'nullable|numeric',
             'status' => 'required|exists:statuses,id',
             'description' => 'nullable|string',
-            'users' => 'array',
-            'users.*' => 'exists:users,id',
-            'departments' => 'array',
-            'departments.*' => 'exists:departments,id',
+            'users' => 'nullable|array',
+            'users.*' => 'nullable|exists:users,id',
+            'departments' => 'nullable|array',
+            'departments.*' => 'nullable|exists:departments,id',
         ];
     }
 }

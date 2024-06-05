@@ -3,14 +3,18 @@
 <div class="row">
     <div class="col-md-7">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control" id="title" name="title" placeholder="Task Title" value="{{ old('title') ?? $task->title }}">
+            <input type="text" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" name="title" placeholder="Task Title" value="{{ old('title') ?? $task->title }}">
             <label for="title">Title <span class="text-danger">*</span></label>
         </div>
+
+        @if ($errors->has('title'))
+            <span class="text-danger">{{ $errors->first('title') }}</span>
+        @endif
     </div>
     <div class="col-md-5">
         <div class="form-floating mt-3">
             <select class="form-select select2" id="project" name="project">
-              <option selected>--</option>
+              <option value="" selected>--</option>
               @foreach ($projects as $project)
                 <option value="{{ $project->id }}" {{$project->id == request()->input('board') || ($task->project_id == $project->id || old('project') == $project->id) ? 'selected' : ''}}>{{ $project->name }}</option>
               @endforeach
@@ -72,17 +76,21 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <select class="form-select" id="priority" name="priority" aria-label="Priority">
+            <select class="form-select @if($errors->has('priority')) is-invalid @endif" id="priority" name="priority" aria-label="Priority">
                 @foreach ($priorities as $priority)
                     <option value="{{ $priority }}" {{$task->priority == $priority || old('priority') == $task->priority ? 'selected' : ''}}>{{ ucfirst($priority) }}</option>
                 @endforeach
             </select>
             <label for="floatingSelect">Priority <span class="text-danger">*</span></label>
         </div>
+
+        @if ($errors->has('priority'))
+            <span class="text-danger">{{ $errors->first('priority') }}</span>
+        @endif
     </div>
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <select class="form-select select2" id="parent_task" name="parent_task" aria-label="Task">
+            <select class="form-select select2 @if($errors->has('parent_task')) is-invalid @endif" id="parent_task" name="parent_task" aria-label="Task">
                 <option value=""></option>
                 @foreach ($tasks as $parent_task)
                     <option value="{{ $parent_task->id }}" {{$parent_task->id == $task->task_id || old('parent_task') == $parent_task->id ? 'selected' : ''}}>{{ $parent_task->title }}</option>
@@ -90,18 +98,26 @@
             </select>
             <label for="floatingSelect">Task</label>
         </div>
+
+        @if ($errors->has('parent_task'))
+            <span class="text-danger">{{ $errors->first('parent_task') }}</span>
+        @endif
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <select class="form-select select2" id="status" name="status" aria-label="Status">
+            <select class="form-select select2 @if($errors->has('status')) is-invalid @endif" id="status" name="status" aria-label="Status">
                 @foreach ($task_statuses as $status)
                     <option value="{{ $status->id }}" {{$status->id == request()->input('status') || ($task->status_id == $status->id || old('status') == $status->id) ? 'selected' : ''}}>{{ $status->title }}</option>
                 @endforeach
             </select>
             <label for="floatingSelect">Status <span class="text-danger">*</span></label>
         </div>
+
+        @if ($errors->has('status'))
+            <span class="text-danger">{{ $errors->first('status') }}</span>
+        @endif
     </div>
     <div class="col-md-6">
         <div class="form-floating mt-3">
@@ -121,23 +137,3 @@
         <div class="dropzone mt-2" id="logoDropzone"></div>
     </div>
 </div>
-
-@section('scripts')
-    <script>
-        Dropzone.autoDiscover = false;
-
-        $(document).ready(function() {
-            new Dropzone("#logoDropzone", {
-                url: "{{ route('dashboard.task.upload_file') }}", // Ruta donde manejarás la carga de archivos
-                paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
-                maxFilesize: 2, // Tamaño máximo en MB
-                acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
-                addRemoveLinks: true,
-                uploadMultiple: true,
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
-        });
-    </script>
-@endsection

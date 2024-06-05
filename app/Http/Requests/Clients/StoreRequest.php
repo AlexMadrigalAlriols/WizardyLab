@@ -35,7 +35,7 @@ class StoreRequest extends FormRequest
             'city' => 'nullable|string',
             'zip_code' => 'nullable|string',
             'country_id' => 'nullable|exists:countries,id',
-            'state' => 'nullable|string',
+            'state' => 'nullable|string'
         ];
     }
 }

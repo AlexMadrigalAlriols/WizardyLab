@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GlobalConfigurationController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
@@ -68,6 +70,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     // Notes
     Route::resource('notes', NoteController::class);
 
+    // Notifications
+    Route::get('/notifications/read', [DashboardController::class, 'readNotifications'])->name('notifications.read');
+
     //Project
     Route::resource('projects', ProjectController::class);
     Route::get('/projects/{project}/update-status/{status}', [ProjectController::class, 'updateStatus'])->name('projects.update-status');
@@ -83,6 +88,15 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::get('/user/clock-in', [UserController::class, 'userClockIn'])->name('user-clock-in');
     Route::get('/user/clock-out', [UserController::class, 'userClockOut'])->name('user-clock-out');
+
+    // Global Configs
+    Route::get('/global-configurations', [GlobalConfigurationController::class, 'index'])->name('global-configurations.index');
+    Route::post('/global-configurations', [GlobalConfigurationController::class, 'store'])->name('global-configurations.store');
+
+    // Invoices
+    Route::resource('invoices', InvoiceController::class);
+    Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
+    Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);

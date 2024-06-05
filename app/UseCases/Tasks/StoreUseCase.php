@@ -2,7 +2,9 @@
 
 namespace App\UseCases\Tasks;
 
+use App\Helpers\NotificationHelper;
 use App\Helpers\TaskHelper;
+use App\Models\Notification;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
@@ -63,6 +65,17 @@ class StoreUseCase extends UseCase
                 'status_id' => $this->status->id,
                 'order' => $lastOrder + 1,
             ]);
+        }
+
+        foreach ($this->users as $user) {
+            if($this->user->id != $user) {
+                NotificationHelper::notificate(
+                    User::find($user),
+                    Notification::TYPES['task'],
+                    'New Task Assigned To You',
+                    $task->id
+                );
+            }
         }
 
         return $task;

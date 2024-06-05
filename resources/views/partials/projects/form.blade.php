@@ -2,15 +2,23 @@
 <div class="row">
     <div class="col-md-7">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control" id="name" name="name" placeholder="Project Title" value="{{ old('name') ?? $project->name }}">
+            <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" id="name" name="name" placeholder="Project Title" value="{{ old('name') ?? $project->name }}">
             <label for="title">Title <span class="text-danger">*</span></label>
         </div>
+
+        @if ($errors->has('name'))
+            <span class="text-danger">{{ $errors->first('name') }}</span>
+        @endif
     </div>
     <div class="col-md-5">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control" id="code" name="code" placeholder="Project Code" {{$project->id ? 'disabled' : ''}} value="{{ old('code') ?? $project->code }}">
+            <input type="text" class="form-control @if($errors->has('code')) is-invalid @endif" id="code" name="code" placeholder="Project Code" {{$project->id ? 'disabled' : ''}} value="{{ old('code') ?? $project->code }}">
             <label for="code">Code <span class="text-danger">*</span></label>
         </div>
+
+        @if ($errors->has('code'))
+            <span class="text-danger">{{ $errors->first('code') }}</span>
+        @endif
     </div>
 </div>
 <div class="row">
@@ -30,20 +38,28 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="number" class="form-control" id="limit_hours" min="0" name="limit_hours" placeholder="Limit Hours"value="{{ old('limit_hours') ?? $project->limit_hours }}">
+            <input type="number" class="form-control @if($errors->has('limit_hours')) is-invalid @endif" id="limit_hours" min="0" name="limit_hours" placeholder="Limit Hours"value="{{ old('limit_hours') ?? $project->limit_hours }}">
             <label for="limit_hours">Limit Hours</label>
         </div>
+
+        @if ($errors->has('limit_hours'))
+            <span class="text-danger">{{ $errors->first('limit_hours') }}</span>
+        @endif
     </div>
 
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <select class="form-select select2" id="status" name="status" aria-label="Status">
+            <select class="form-select select2 @if($errors->has('status')) is-invalid @endif" id="status" name="status" aria-label="Status">
                 @foreach ($project_statuses as $status)
                     <option value="{{ $status->id }}" {{$project->status_id == $status->id || old('status') == $status->id ? 'selected' : ''}}>{{ $status->title }}</option>
                 @endforeach
             </select>
             <label for="floatingSelect">Status <span class="text-danger">*</span></label>
         </div>
+
+        @if ($errors->has('status'))
+            <span class="text-danger">{{ $errors->first('status') }}</span>
+        @endif
     </div>
 </div>
 <div class="row">

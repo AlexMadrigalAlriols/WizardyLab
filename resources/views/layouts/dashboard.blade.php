@@ -34,7 +34,7 @@
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
     @yield('styles')
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body class="body-pd" id="body-pd">
@@ -50,9 +50,100 @@
             </button>
             <div class="d-inline-block align-middle">
                 <a href="#" class="text-dark me-4"><i class="bx bx-search" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block">
+                    <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bxs-time-five" style="font-size: 23px;"></i>
+
+                        @if (auth()->user()->activeTaskTimers()->count() > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ auth()->user()->activeTaskTimers()->count() }}
+                            </span>
+                        @endif
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownTimers">
+                        <div class="py-2 border-bottom">
+                            <span class="px-3 h6"><i class="bx bxs-time-five"></i> Active Timers </span>
+                        </div>
+
+                        @foreach (auth()->user()->activeTaskTimers as $timer)
+                                <div class="px-2 card-notification">
+                                    <div style="font-size: 13px;">
+                                        <div class="row pt-3">
+                                            <div class="col-9">
+                                                <a href="{{route('dashboard.tasks.show', $timer->task_id)}}" class="text-decoration-none text-dark">
+                                                <span class="h6"><b>{{$timer->task->title}}</b></span>
+
+                                                <p class="mt-1"><b>{{$timer->created_at->format('h:i A')}}</b> <span class="text-muted">{{$timer->created_at->format('F j, Y')}}</span></p>
+                                            </a>
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <a href="{{route('dashboard.task-clock-out', $timer->task_id)}}" class="btn btn-outline-secondary d-inline-block">
+                                                    <i class='bx bx-stop-circle align-middle'></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        @endforeach
+
+                        @if (auth()->user()->activeTaskTimers()->count() == 0)
+                            <div class="text-center py-3">
+                                <span class="text-muted">No active timers</span>
+                            </div>
+                        @endif
+                    </ul>
+                </div>
                 <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
-                <a href="#" class="text-dark me-4"><i class="bx bxs-time-five" style="font-size: 23px;"></i></a>
-                <a href="#" class="text-dark me-4"><i class="bx bxs-bell" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block">
+                    <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bxs-bell" style="font-size: 23px;"></i>
+                        @if (auth()->user()->notifications()->unread()->count() > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ auth()->user()->notifications()->unread()->count() }}
+                            </span>
+                        @endif
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownNotifications">
+                        <div class="py-2 border-bottom">
+                            <span class="px-3 h6"><i class="bx bxs-bell"></i> Notifications </span>
+                        </div>
+
+                        <div class="scrollbar" style="max-height: 300px;">
+                            @foreach (auth()->user()->notifications()->unread()->orderBy('created_at', 'desc')->get() as $notification)
+                                <a href="{{$notification->routeUrl}}" class="text-decoration-none text-dark">
+                                    <div class="px-2 card-notification">
+                                        <div style="font-size: 13px;">
+                                            <div class="row pt-3">
+                                                <div class="col-md-3 text-center">
+                                                    <img src="{{asset($notification->user->profile_img)}}" class="img-fluid rounded-circle border" width="50" alt="" style="height: 45px; width: 45px;">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span class="h6"><b>{{$notification->user->name}}</b></span>
+                                                    <p class="text-muted mb-0"><i class="bx {{$notification->icon}}"></i> {{$notification->title}}</p>
+                                                    <p class="mt-1"><b>{{$notification->created_at->format('h:i A')}}</b> <span class="text-muted">{{$notification->created_at->format('F j, Y')}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+
+                        @if (auth()->user()->notifications()->unread()->count() == 0)
+                            <div class="text-center py-3">
+                                <span class="text-muted">No notifications</span>
+                            </div>
+                        @else
+                            <div class="text-center border-top pt-2">
+                                <a href="{{route('dashboard.notifications.read')}}" class="text-decoration-none">
+                                    <span>Mark all as read</span>
+                                </a>
+                            </div>
+                        @endif
+                    </ul>
+                </div>
                 <a href="{{route('logout')}}" class="text-dark me-1"><i class="bx bx-power-off" style="font-size: 23px;"></i></a>
             </div>
         </div>
@@ -76,7 +167,7 @@
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
                             <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
                                 <i class='bx bx-buildings nav_icon'></i>
                                 <span class="nav_name">Clients</span>
@@ -85,6 +176,11 @@
                             <a href="{{route('dashboard.companies.index')}}" class="nav_link {{ $section == 'Companies' ? 'active' : ''}}">
                                 <i class='bx bx-building-house nav_icon'></i>
                                 <span class="nav_name">{{__('crud.companies.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.invoices.index')}}" class="nav_link {{ $section == 'Invoices' ? 'active' : ''}}">
+                                <i class='bx bx-file nav_icon'></i>
+                                <span class="nav_name">{{__('crud.invoices.title')}}</span>
                             </a>
                         </div>
                     </div>
@@ -149,7 +245,12 @@
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                                <i class='bx bx-globe nav_icon'></i>
+                                <span class="nav_name">{{__('crud.globalConfigurations.title')}}</span>
+                            </a>
+                            <hr>
                             <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
                                 <i class='bx bx-cylinder nav_icon'></i>
                                 <span class="nav_name">{{__('crud.status.title')}}</span>

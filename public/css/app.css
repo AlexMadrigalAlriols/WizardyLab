@@ -222,6 +222,23 @@
     opacity: 0.8;
 }
 
+.dropdown-menu-lg {
+    width: 23rem;
+}
+
+.card-notification {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.card-notification:last-child {
+    border-bottom: none;
+}
+
+.card-notification:hover {
+    background-color: #ececec;
+
+}
+
 /* Phone */
 @media screen and (max-width: 768px) {
     .clock-in-container {

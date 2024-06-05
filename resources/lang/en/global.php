@@ -44,4 +44,6 @@ return [
     'tasks' => 'Tasks',
     'projects' => 'Projects',
     'project' => 'Project',
+    'globalconfigurations' => 'Global Configurations',
+    'invoices' => 'Invoices',
 ];

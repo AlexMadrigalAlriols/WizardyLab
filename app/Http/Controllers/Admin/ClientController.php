@@ -31,7 +31,6 @@ class ClientController extends Controller
         }
 
         [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Client::class);
-        $x = 0;
 
         $clients = $query->get();
         $total = $query->count();

@@ -43,7 +43,7 @@
                 @if (!count($boardRules))
                     <h5 class="card-title">Rules</h5>
                     <p class="card-text">No rules have been created yet.</p>
-                    <a href="{{ route('dashboard.board.automation.create', $project->id) }}"
+                    <a href="{{ route('dashboard.automation.create', $project->id) }}"
                         class="btn btn-primary">Create Rule</a>
                 @endif
 

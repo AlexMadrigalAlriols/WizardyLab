@@ -44,4 +44,18 @@ class Status extends Model
             default => 'bg-light text-dark'
         };
     }
+
+    public function getStylesAttribute() {
+        $styles = [
+            'background-color' => $this->data['background'] ?? '#fff',
+            'color' => $this->data['color'] ?? '#000',
+        ];
+
+        $string = '';
+        foreach ($styles as $key => $style) {
+            $string .= $key . ': ' . $style . ';';
+        }
+
+        return $string;
+    }
 }

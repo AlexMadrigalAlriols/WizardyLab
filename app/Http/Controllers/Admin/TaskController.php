@@ -31,7 +31,7 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->tasks()->orderBy('created_at', 'desc');
+        $query = Auth::user()->tasks()->whereNull('tasks.task_id')->orderBy('duedate', 'desc');
 
         if($request->has('status') && is_numeric($request->input('status'))) {
             $query->where('status_id', $request->input('status'));
@@ -92,6 +92,8 @@ class TaskController extends Controller
     }
 
     public function store(StoreRequest $request) {
+        $parent_task = $request->input('parent_task') ? Task::find($request->input('parent_task')) : null;
+
         $task = (new StoreUseCase(
             Auth::user(),
             $request->input('title'),
@@ -99,13 +101,13 @@ class TaskController extends Controller
             $request->input('priority'),
             Status::find($request->input('status')),
             $request->input('limit_hours'),
-            Carbon::parse($request->input('due_date')),
-            Carbon::parse($request->input('start_date')),
+            $request->input('due_date') ? Carbon::parse($request->input('due_date')) : null,
+            $request->input('start_date') ? Carbon::parse($request->input('start_date')) : null,
             $request->input('tags', []),
             $request->input('assigned_users', []),
             $request->input('departments', []),
-            Project::find($request->input('project')),
-            Task::find($request->input('parent_task'))
+            $parent_task ? $parent_task->project : Project::find($request->input('project')),
+            $parent_task
         ))->action();
 
         $this->saveTaskFiles($task, $request);
@@ -155,7 +157,7 @@ class TaskController extends Controller
             $task,
             Auth::user(),
             $request->input('title'),
-            $request->input('description'),
+            $request->input('description') ?? '',
             $request->input('priority'),
             Status::find($request->input('status')),
             $request->input('limit_hours'),
@@ -186,7 +188,7 @@ class TaskController extends Controller
         (new UpdateStatusUseCase($task, $status, $request->input('order')))->action();
 
         toast('Task status updated', 'success');
-        return redirect()->route('dashboard.tasks.index');
+        return back();
     }
 
     public function destroy(Task $task)
@@ -305,7 +307,7 @@ class TaskController extends Controller
         $users = User::all();
         $tasks = Task::whereHas('status', function ($query) {
             $query->where('title', '!=', 'Completed');
-        })->get();
+        })->whereNull('task_id')->get();
 
         $departments = Department::all();
         $projects = Project::all();

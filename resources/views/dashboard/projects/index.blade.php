@@ -73,12 +73,12 @@
                         <td class="{{ $project->is_overdue ? 'text-danger' : 'text-muted' }}">{{ $project->deadline ? $project->deadline->format('d/m/Y') : '-' }}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm {{ $project->status->badge }} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-sm dropdown-toggle" style="{{ $project->status->styles }}" data-bs-toggle="dropdown" aria-expanded="false">
                                   <b>{{$project->status->title}}</b>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-sm">
                                     @foreach ($statuses as $status)
-                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.projects.update-status', [$project->id, $status->id])}}"><span class="badge {{$status->badge}}">{{$status->title}}</span></a></li>
+                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.projects.update-status', [$project->id, $status->id])}}"><span class="badge" style="{{$status->styles}}">{{$status->title}}</span></a></li>
                                     @endforeach
                                 </ul>
                               </div>
@@ -93,6 +93,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" href="{{route('dashboard.projects.show', $project->id)}}"><i class='bx bx-show' ></i> View</a></li>
                                     <li><a class="dropdown-item" href="{{route('dashboard.projects.edit', $project->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.projects.generate-invoice', $project->id)}}"><i class='bx bx-file' ></i> Generate Invoice</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{route('dashboard.projects.destroy', $project->id)}}" method="POST">

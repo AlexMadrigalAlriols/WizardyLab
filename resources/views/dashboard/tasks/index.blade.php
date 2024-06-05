@@ -70,6 +70,12 @@
                 @foreach ($tasks as $task)
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
+                            @if($task->subtasks()->count())
+                                <a href="#" class="text-decoration-none text-dark me-2" onclick="toggleSubTasks({{$task->id}})">
+                                    <i class='bx bxs-right-arrow' id="toggler-{{$task->id}}"></i>
+                                </a>
+                            @endif
+
                             @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
                                 <a href="{{route('dashboard.task-clock-out', $task->id)}}" class="btn btn-attendance-task">
                                     <i class='bx bx-stop-circle align-middle'></i>
@@ -102,18 +108,18 @@
                         <td class="{{ $task->is_overdue ? 'text-danger' : 'text-muted' }}">{{ $task->duedate ? $task->duedate->format('d/m/Y') : '-' }}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm {{ $task->status->badge }} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-sm dropdown-toggle" style="{{$task->status->styles}}" data-bs-toggle="dropdown" aria-expanded="false">
                                   <b>{{$task->status->title}}</b>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-sm">
                                     @foreach ($statuses as $status)
-                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.tasks.update-status', [$task->id, $status->id])}}"><span class="badge {{$status->badge}}">{{$status->title}}</span></a></li>
+                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.tasks.update-status', [$task->id, $status->id])}}"><span class="badge" style="{{$status->styles}}">{{$status->title}}</span></a></li>
                                     @endforeach
                                 </ul>
                               </div>
                         </td>
                         <td><span class="badge bg-{{$task->priority}}">{{ucfirst($task->priority)}}</span></td>
-                        <td class="text-muted"><span class="{{$task->total_hours > $task->limit_hours ? 'text-danger' : ''}}">{{$task->total_hours}}h</span> / <b>{{$task->limit_hours ?? '-'}}h</b> </td>
+                        <td class="text-muted"><span class="{{$task->limit_hours && $task->total_hours > $task->limit_hours ? 'text-danger' : ''}}">{{$task->total_hours}}h</span> / <b>{{$task->limit_hours ?? '-'}}h</b> </td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -135,6 +141,76 @@
                             </div>
                         </td>
                     </tr>
+
+                    @foreach ($task->subtasks as $subtask)
+                        <tr class="table-entry align-middle border-bottom subtasks-{{$task->id}} d-none">
+                            <td class="text-nowrap ps-5">
+                                @if(in_array($subtask->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
+                                    <a href="{{route('dashboard.task-clock-out', $subtask->id)}}" class="btn btn-attendance-task">
+                                        <i class='bx bx-stop-circle align-middle'></i>
+                                    </a>
+                                @else
+                                    <a href="{{route('dashboard.task-clock-in', $subtask->id)}}" class="btn btn-attendance-task">
+                                        <i class='bx bx-play-circle align-middle'></i>
+                                    </a>
+                                @endif
+                            </td>
+                            <td><a href="{{route('dashboard.tasks.show', $subtask->id)}}" class="text-decoration-none"><b>{{ $subtask->title }}</b></a></td>
+                            <td>
+                                <div class="avatar-group">
+                                    @foreach ($subtask->users()->limit(3)->get() as $task_user)
+                                        <div class="avatar avatar-s">
+                                            <img src="{{ auth()->user()->profile_img}}" alt="avatar" class="rounded-circle">
+                                        </div>
+                                    @endforeach
+
+                                @if($subtask->users()->count() > 3)
+                                        <div class="avatar avatar-s">
+                                            <div class="avatar-name rounded-circle">
+                                                <span>+{{ $subtask->users()->count() - 3 }}</span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="text-muted">{{ $subtask->start_date ? $subtask->start_date->format('d/m/Y') : '-' }}</td>
+                            <td class="{{ $subtask->is_overdue ? 'text-danger' : 'text-muted' }}">{{ $subtask->duedate ? $subtask->duedate->format('d/m/Y') : '-' }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm dropdown-toggle" style="{{$subtask->status->styles}}" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <b>{{$subtask->status->title}}</b>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-sm">
+                                        @foreach ($statuses as $status)
+                                            <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.tasks.update-status', [$subtask->id, $status->id])}}"><span class="badge" style="{{$status->styles}}">{{$status->title}}</span></a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-{{$subtask->priority}}">{{ucfirst($subtask->priority)}}</span></td>
+                            <td class="text-muted"><span class="{{$subtask->limit_hours && $subtask->total_hours > $subtask->limit_hours ? 'text-danger' : ''}}">{{$subtask->total_hours}}h</span> / <b>{{$subtask->limit_hours ?? '-'}}h</b> </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $subtask->id)}}"><i class='bx bx-show' ></i> View</a></li>
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $subtask->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <form action="{{route('dashboard.tasks.destroy', $subtask->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 @endforeach
 
                 @if(!count($tasks))
@@ -193,5 +269,10 @@
                 $('.table-responsive').css("overflow", "auto");
             })
         });
+
+        function toggleSubTasks($taskId) {
+            $('.subtasks-' + $taskId).toggleClass('d-none');
+            $('#toggler-' + $taskId).toggleClass('bx-rotate-90');
+        }
     </script>
 @endsection

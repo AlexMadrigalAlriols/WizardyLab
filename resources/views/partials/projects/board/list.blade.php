@@ -7,7 +7,7 @@
                 <button class="d-inline-block btn btn-white collapse-list p-0"  onclick="switchListCollapse(this)" style="float:right;"><i class='bx bx-arrow-from-right' ></i></button>
             </p>
 
-            <div class="card-divider {{$status->status->badge}}"></div>
+            <div class="card-divider" style="{{$status->status->styles}}"></div>
 
             <p class="card-title-collapsed mb-3 mt-3">
                 <span class="badge bg-dark rounded-circle ms-1">{{ count($tasks) }}</span> <span class="title-status mt-2">{{$status->status->title}}</span>

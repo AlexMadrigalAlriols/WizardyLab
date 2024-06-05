@@ -134,4 +134,9 @@ class Task extends Model
     {
         return TaskAttendanceHelper::getTotalHoursDecimal($this);
     }
+
+    public function getTimerAttribute(): string
+    {
+        return TaskAttendanceHelper::getTimer($this);
+    }
 }

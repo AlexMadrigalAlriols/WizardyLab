@@ -68,11 +68,13 @@ class TaskAttendanceHelper {
             $chart['values'][$attendance->user->name] += TimerHelper::getAttendanceTimeDecimal($attendance, 2);
         }
 
-        $labels = array_keys($chart['values']);
-        $quotedLabels = array_map(function($label) {
-            return "'" . htmlspecialchars_decode($label) . "'";
-        }, $labels);
-        $chart['labels'] = implode(',', $quotedLabels);
+        if(isset($chart['values'])) {
+            $labels = array_keys($chart['values']);
+            $quotedLabels = array_map(function($label) {
+                return "'" . htmlspecialchars_decode($label) . "'";
+            }, $labels);
+            $chart['labels'] = implode(',', $quotedLabels);
+        }
 
         return $chart;
     }
@@ -93,5 +95,22 @@ class TaskAttendanceHelper {
         }
 
         return $chart;
+    }
+
+    public static function getAllTaskAttendances(Task $task)
+    {
+        return $task->taskAttendances()->get();
+    }
+
+    public static function getTimer(Task $task): string
+    {
+        $total = '00:00:00';
+        $attendances = self::getAllTaskAttendances($task);
+
+        foreach ($attendances as $attendance) {
+            $total = TimerHelper::addTime($total, TimerHelper::getAttendanceTime($attendance));
+        }
+
+        return $total;
     }
 }

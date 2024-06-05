@@ -45,7 +45,6 @@ class StoreUseCase extends UseCase
             'country_id' => $this->country?->id,
             'state' => $this->state,
         ]);
-
         return $client;
     }
 }

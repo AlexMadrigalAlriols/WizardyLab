@@ -21,7 +21,7 @@ class StoreUseCase extends UseCase
         protected ?Carbon $due_date = null,
         protected ?int $limit_hours = null,
         protected Status $status,
-        protected string $description = '',
+        protected ?string $description = '',
         protected array $users = [],
         protected array $departments = []
     ) {
@@ -47,7 +47,15 @@ class StoreUseCase extends UseCase
                 $this->users = array_unique(array_merge($this->users, $users->pluck('id')->toArray()));
             }
         }
-        $project->avaiableStatuses()->attach(Project::DEFAULT_STATUSES);
+
+        foreach(Project::DEFAULT_STATUSES as $idx => $status) {
+            $project->avaiableStatuses()->create([
+                'status_id' => $status,
+                'order' => $idx,
+                'collapsed' => false
+            ]);
+        }
+
         $project->users()->attach($this->users);
 
         return $project;
