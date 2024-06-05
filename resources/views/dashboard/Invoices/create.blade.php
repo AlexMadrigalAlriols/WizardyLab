@@ -14,7 +14,7 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.invoices.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary ms-2"><span class="px-5">{{__('global.create')}} {{__('crud.invoices.title_singular')}}</span></button>
+                    <button class="btn btn-primary ms-2" disabled id="submitBtn"><span class="px-5">{{__('global.create')}} {{__('crud.invoices.title_singular')}}</span></button>
                 </div>
             </div>
         </form>
@@ -23,21 +23,36 @@
 @endsection
 
 @section('scripts')
+@parent
 <script>
+    var obligatoryFields = ['type', 'status_id', 'client_id', 'issue_date'];
+
     $('#type').change(function() {
         if ($(this).val() == 'tasks') {
             $('#manual').addClass('d-none');
             $('#tasks').removeClass('d-none');
             $('#project').addClass('d-none');
+            obligatoryFields = ['type', 'status_id', 'client_id', 'issue_date', 'tasks'];
         } else if ($(this).val() == 'projects') {
             $('#manual').addClass('d-none');
             $('#tasks').addClass('d-none');
             $('#project').removeClass('d-none');
+            obligatoryFields = ['type', 'status_id', 'issue_date', 'project_id'];
         } else {
             $('#manual').removeClass('d-none');
             $('#tasks').addClass('d-none');
             $('#project').addClass('d-none');
+            obligatoryFields = ['type', 'status_id', 'issue_date', 'amount', 'client_id'];
         }
     })
+
+    $('input, select, textarea').each(function() {
+        $(this).on('keyup', function() {
+            checkObligatoryFields(obligatoryFields);
+        });
+        $(this).on('change', function() {
+            checkObligatoryFields(obligatoryFields);
+        });
+    });
 </script>
 @endsection

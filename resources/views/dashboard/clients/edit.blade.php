@@ -16,10 +16,26 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.clients.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary ms-2"><span class="px-5">Save Client</span></button>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">Save Client</span></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+        var obligatoryFields = ['name', 'email', 'currency_id', 'active'];
+
+        $('input, select, textarea').each(function() {
+            $(this).on('keyup', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+            $(this).on('change', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+        });
+    </script>
 @endsection

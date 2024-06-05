@@ -95,3 +95,15 @@ $(function() {
         setInterval(updateTimer, 1000);
     }
 })
+
+function checkObligatoryFields(obligatoryFields) {
+    var empty = obligatoryFields.some(function(field) {
+        return !$('#' + field).val();
+    });
+
+    if (empty) {
+        $('#submitBtn').attr('disabled', 'disabled');
+    } else {
+        $('#submitBtn').removeAttr('disabled');
+    }
+}

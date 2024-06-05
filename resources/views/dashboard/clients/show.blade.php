@@ -57,10 +57,10 @@
 
                             <div>
                                 <p><b>Email:</b> <a href="#" class="ms-2">{{$client->email}}</a></p>
-                                <p><b>Mobile Phone:</b> <a href="#" class="ms-2">{{$client->phone}}</a></p>
-                                <p><b>Vat Number:</b> <span class="text-muted ms-2">{{$client->vat_number}}</span></p>
-                                <p><b>Currency:</b> <span class="text-muted ms-2">{{$client->currency->name}}</span></p>
-                                <p><b>Language:</b> <span class="text-muted ms-2">{{$client->language->name}}</span></p>
+                                <p><b>Mobile Phone:</b> <a href="#" class="ms-2">{{$client->phone ?? '-'}}</a></p>
+                                <p><b>Vat Number:</b> <span class="text-muted ms-2">{{$client->vat_number ?? '-'}}</span></p>
+                                <p><b>Currency:</b> <span class="text-muted ms-2">{{$client->currency?->name ?? '-'}}</span></p>
+                                <p><b>Language:</b> <span class="text-muted ms-2">{{$client->language?->name ?? '-'}}</span></p>
                                 <p><b>Projects:</b> <a href="{{route('dashboard.projects.index')}}?client_id={{$client->id}}" class="ms-2">{{$client->projects->count()}}</a></p>
                             </div>
                         </div>
@@ -71,11 +71,11 @@
                             </p>
 
                             <div>
-                                <p><b>Street:</b> <span class="text-muted ms-2">{{$client->address}}</span></p>
-                                <p><b>City:</b> <span class="text-muted ms-2">{{$client->city}}</span></p>
-                                <p><b>State:</b> <span class="text-muted ms-2">{{$client->state}}</span></p>
-                                <p><b>Zip:</b> <span class="text-muted ms-2">{{$client->zip}}</span></p>
-                                <p><b>Country:</b> <span class="text-muted ms-2">{{$client->country->name}}</span></p>
+                                <p><b>Street:</b> <span class="text-muted ms-2">{{$client->address ?? '-'}}</span></p>
+                                <p><b>City:</b> <span class="text-muted ms-2">{{$client->city ?? '-'}}</span></p>
+                                <p><b>State:</b> <span class="text-muted ms-2">{{$client->state ?? '-'}}</span></p>
+                                <p><b>Zip:</b> <span class="text-muted ms-2">{{$client->zip ?? '-'}}</span></p>
+                                <p><b>Country:</b> <span class="text-muted ms-2">{{$client->country?->name ?? '-'}}</span></p>
                             </div>
                         </div>
                     </div>
