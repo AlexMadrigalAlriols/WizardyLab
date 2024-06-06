@@ -15,9 +15,9 @@
             <div class="col-md-5">
                 <div class="d-flex justify-content-start mt-4">
                     <a class="ms-3 text-decoration-none {{ request('status') == null ? 'text-black' : '' }}" href="{{ route('dashboard.tasks.index') }}"><b>All</b> ({{ $counters['total'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 1 ? 'text-black' : '' }}" href="?status=1"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 2 ? 'text-black' : '' }}" href="?status=2"><b>Completed</b> ({{ $counters['completed'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 3 ? 'text-black' : '' }}" href="?status=3"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 6 ? 'text-black' : '' }}" href="?status=6"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 7 ? 'text-black' : '' }}" href="?status=7"><b>Completed</b> ({{ $counters['completed'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 5 ? 'text-black' : '' }}" href="?status=5"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
                 </div>
             </div>
             <div class="col-md-7 mt-1">

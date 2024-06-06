@@ -339,9 +339,9 @@ class TaskController extends Controller
 
         $counters = [
             'total' => $tasks->count(),
-            'in_progress' => $tasks->where('status_id', 1)->count(),
-            'completed' => $tasks->where('status_id', 2)->count(),
-            'not_started' => $tasks->where('status_id', 3)->count(),
+            'in_progress' => $tasks->where('status_id', 6)->count(),
+            'completed' => $tasks->where('status_id', 7)->count(),
+            'not_started' => $tasks->where('status_id', 5)->count(),
         ];
 
         return $counters;
