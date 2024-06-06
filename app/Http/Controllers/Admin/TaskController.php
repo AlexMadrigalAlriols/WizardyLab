@@ -338,10 +338,10 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
 
         $counters = [
-            'total' => $tasks->count(),
-            'in_progress' => $tasks->where('status_id', 6)->count(),
-            'completed' => $tasks->where('status_id', 7)->count(),
-            'not_started' => $tasks->where('status_id', 5)->count(),
+            'total' => $tasks->whereNull('archive_at')->whereNull('task_id')->count(),
+            'in_progress' => $tasks->where('status_id', 6)->whereNull('archive_at')->whereNull('task_id')->count(),
+            'completed' => $tasks->where('status_id', 7)->whereNull('archive_at')->whereNull('task_id')->count(),
+            'not_started' => $tasks->where('status_id', 5)->whereNull('archive_at')->whereNull('task_id')->count(),
         ];
 
         return $counters;
