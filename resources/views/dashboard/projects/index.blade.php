@@ -83,7 +83,7 @@
                                 </ul>
                               </div>
                         </td>
-                        <td class="text-muted"><span class="{{$project->total_hours > $project->limit_hours ? 'text-danger' : ''}}">{{$project->total_hours}}h</span> / <b>{{$project->limit_hours ?? '-'}}h</b> </td>
+                        <td class="text-muted"><span class="{{$project->limit_hours && $project->total_hours > $project->limit_hours ? 'text-danger' : ''}}">{{$project->total_hours}}h</span> / <b>{{$project->limit_hours ?? '-'}}h</b> </td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
