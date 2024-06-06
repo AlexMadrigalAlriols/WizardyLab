@@ -20,12 +20,12 @@ class DashboardController extends Controller
             'tasks' => [
                 'total' => $user->tasks()->where('status_id', ConfigurationHelper::get('completed_task_status'))->count(),
                 'pending' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->count(),
-                'overdue' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->where('duedate', '<', now())->count()
+                'overdue' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->where('duedate', '<', now()->startOfDay())->count()
             ],
             'projects' => [
                 'total' => $user->projects()->count(),
                 'active' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->count(),
-                'overdue' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->where('deadline', '<', now())->count()
+                'overdue' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->where('deadline', '<', now()->startOfDay())->count()
             ]
         ];
 

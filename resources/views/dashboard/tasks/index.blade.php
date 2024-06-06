@@ -95,7 +95,7 @@
                             <div class="avatar-group">
                                 @foreach ($task->users()->limit(3)->get() as $task_user)
                                     <div class="avatar avatar-s">
-                                        <img src="{{ auth()->user()->profile_img}}" alt="avatar" class="rounded-circle">
+                                        <img src="{{ $task_user->profile_img }}" alt="avatar" class="rounded-circle">
                                     </div>
                                 @endforeach
 
@@ -177,7 +177,7 @@
                                 <div class="avatar-group">
                                     @foreach ($subtask->users()->limit(3)->get() as $task_user)
                                         <div class="avatar avatar-s">
-                                            <img src="{{ auth()->user()->profile_img}}" alt="avatar" class="rounded-circle">
+                                            <img src="{{ $task_user->profile_img}}" alt="avatar" class="rounded-circle">
                                         </div>
                                     @endforeach
 
