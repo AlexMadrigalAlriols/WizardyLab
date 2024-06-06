@@ -5,11 +5,11 @@
         <div class="col-md-8 col-lg-9 img-container d-flex align-items-center justify-content-center">
             <img src="{{ asset('img/bg_login.svg') }}">
         </div>
-        <div class="col-md-4 col-lg-3 col-sm-12 login-container d-flex align-items-center justify-content-center">
+        <div class="col-md-4 col-lg-3 col-sm-12 login-container d-flex justify-content-center">
             <form action="{{ route('login') }}" method="POST">
                 @csrf
-                <img src="{{ asset('img/avatar.svg') }}">
-                <h2 class="title">Welcome</h2>
+                <img src="{{ asset('img/LogoLetters.png') }}" class="mt-5 mb-5">
+                <h2 class="title mt-5">Welcome</h2>
                 <div class="input-div {{ $errors->has('email') ? 'error' : '' }}">
                     <div class="icon">
                         <i class="bx bx-envelope"></i>

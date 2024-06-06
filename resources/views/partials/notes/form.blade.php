@@ -12,7 +12,7 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <div class="form-floating mt-3">
-            <input type="datetime-local" class="form-control" id="date" name="date" value="{{ old('date') ?? $note->date }}" step="1">
+            <input type="datetime-local" class="form-control flatpicker hasTime" id="date" name="date" value="{{ old('date') ?? $note->date }}" step="1">
             <label for="title">{{__('crud.notes.fields.date')}}</label>
         </div>
     </div>

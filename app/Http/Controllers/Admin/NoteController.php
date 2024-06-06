@@ -33,7 +33,7 @@ class NoteController extends Controller
     public function store(StoreRequest $request) {
         $note = (new StoreUseCase(
             $request->input('content'),
-            Carbon::parse($request->input('date')),
+            $request->input('date', null) ? Carbon::parse($request->input('date')) : null,
             auth()->user()
         ))->action();
 
@@ -51,7 +51,7 @@ class NoteController extends Controller
         $note = (new UpdateUseCase(
             $note,
             $request->input('content'),
-            Carbon::parse($request->input('date'))
+            $request->input('date', null) ? Carbon::parse($request->input('date')) : null,
         ))->action();
 
         toast('Note updated', 'success');

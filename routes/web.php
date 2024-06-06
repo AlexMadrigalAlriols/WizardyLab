@@ -44,6 +44,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::delete('/tasks/delete_file/{taskFile}', [TaskController::class, 'deleteFile'])->name('task.delete_file');
     Route::get('/tasks/download_file/{taskFile}', [TaskController::class, 'downloadFile'])->name('task.download_file');
     Route::post('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
+    Route::get('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
 
     //Comments
     Route::resource('{task}/comments', TaskCommentController::class)->only(['store', 'destroy']);

@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'type' => 'required|string',
-            'date' => 'required|date',
+            'date' => 'required|string',
             'reason' => 'nullable|string',
             'user_id' => 'required|exists:users,id',
             'duration' => 'required|string'

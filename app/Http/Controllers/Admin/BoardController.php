@@ -29,7 +29,7 @@ class BoardController extends Controller
     {
         $user = Auth::user();
 
-        $tasks = $user->tasks()->where('project_id', $project->id)->whereNull('archive_at')->orderBy('order')->get();
+        $tasks = $project->tasks()->whereNull('archive_at')->orderBy('order')->get();
         $statuses = $project->avaiableStatuses()->orderBy('order')->get();
 
         return view('dashboard.projects.board.index', compact('project', 'tasks', 'statuses'));

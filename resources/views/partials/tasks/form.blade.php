@@ -26,13 +26,13 @@
 <div class="row">
     <div class="col-md-4">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control" id="start_date" name="start_date" placeholder="Start Date" value="{{ old('start_date') ?? $task->start_date?->format('Y-m-d') }}">
+            <input type="date" class="form-control flatpicker" id="start_date" name="start_date" placeholder="Start Date" value="{{ !$task->id ? now()->format('Y-m-d') : (old('start_date') ?? $task->start_date?->format('Y-m-d')) }}">
             <label for="start_date">Start Date</label>
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control" id="due_date" name="due_date" placeholder="Due Date" value="{{ old('due_date') ?? $task->duedate?->format('Y-m-d') }}">
+            <input type="date" class="form-control flatpicker" id="due_date" name="due_date" placeholder="Due Date" value="{{ old('due_date') ?? $task->duedate?->format('Y-m-d') }}">
             <label for="due_date">Due Date</label>
         </div>
     </div>
@@ -137,3 +137,4 @@
         <div class="dropzone mt-2" id="logoDropzone"></div>
     </div>
 </div>
+

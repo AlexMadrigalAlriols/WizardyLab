@@ -91,7 +91,6 @@
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.projects.show', $project->id)}}"><i class='bx bx-show' ></i> View</a></li>
                                     <li><a class="dropdown-item" href="{{route('dashboard.projects.edit', $project->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
                                     <li><a class="dropdown-item" href="{{route('dashboard.projects.generate-invoice', $project->id)}}"><i class='bx bx-file' ></i> Generate Invoice</a></li>
                                     <li><hr class="dropdown-divider"></li>

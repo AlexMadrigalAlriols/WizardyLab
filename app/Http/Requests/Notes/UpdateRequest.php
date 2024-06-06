@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'content' => 'required|string',
-            'date' => 'required|string',
+            'date' => 'nullable|date',
         ];
     }
 }

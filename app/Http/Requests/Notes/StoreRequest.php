@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'content' => 'required|string',
-            'date' => 'required|string',
+            'date' => 'nullable|date',
         ];
     }
 }

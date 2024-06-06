@@ -37,6 +37,16 @@ class TaskController extends Controller
             $query->where('status_id', $request->input('status'));
         }
 
+        if($request->has('archived') && is_numeric($request->input('archived'))) {
+            if($request->input('archived') == 1) {
+                $query->whereNotNull('archive_at');
+            } else {
+                $query->whereNull('archive_at');
+            }
+        } else {
+            $query->whereNull('archive_at');
+        }
+
         [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Task::class);
 
         $tasks = $query->get();
@@ -292,12 +302,17 @@ class TaskController extends Controller
             'duplicate' => BoardHelper::duplicateTask($task),
             'jump-top' => BoardHelper::jumpTopTask($task),
             'archive' => BoardHelper::archiveTask($task),
+            'unarchive' => BoardHelper::unarchiveTask($task),
             'delete' => $this->destroy($task),
             'download' => $this->download($task),
             'taskClockIn' => $this->taskClockIn($task),
             'taskClockOut' => $this->taskClockOut($task),
             default => ApiResponse::fail('Invalid action'),
         };
+
+        if ($request->isMethod('get')) {
+            return is_string($route) ? $route : $route;
+        }
 
         return ApiResponse::ok(['redirect' => is_string($route) ? $route : $route->getTargetUrl()]);
     }

@@ -64,7 +64,7 @@
                             </p>
 
                             <div>
-                                <p><b>Project:</b> <a href="#" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
+                                <p><b>Project:</b> <a href="{{route('dashboard.projects.board', $task->project->id)}}" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
                                 <p><b>Asssigned By:</b> <a href="#" class="ms-2">{{$task->assignee->name}}</a></p>
                                 <p><b>Start Date:</b> <span class="text-muted ms-2">{{$task->start_date?->format('jS M, Y') ?? '-'}}</span></p>
                                 <p><b>Due Date:</b> <span class="text-muted ms-2">{{$task->duedate?->format('jS M, Y') ?? '-'}}</span></p>
@@ -126,7 +126,9 @@
                         <p class="text-muted" style="font-size: 14px">{{$file->real_size}} | <a href="{{$file->user_id}}">{{$file->user->name}}</a> | {{$file->created_at->format('jS M, h:i A')}}</p>
 
                         @if($file->is_image)
-                            <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
+                            <a href="{{ asset('storage/' . $file->path) }}" target="__blank">
+                                <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
+                            </a>
                         @endif
                     </div>
                     <div class="col-md-2 col-3">

@@ -35,10 +35,12 @@ class DashboardController extends Controller
             $events[$wday] = Leave::where('user_id', $user->id)
                 ->where('date', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
                 ->where('date', '>=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
+                ->where('approved', 1)
                 ->get();
 
             $userTasks = $user->tasks()->where('duedate', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
             ->where('duedate', '>=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
+            ->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))
             ->get();
             $events[$wday] = $events[$wday]->merge($userTasks);
         }

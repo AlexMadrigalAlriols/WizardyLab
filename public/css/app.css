@@ -239,6 +239,16 @@
 
 }
 
+.flatpickr-calendar {
+    top: 15.6rem !important;
+}
+
+.flatpickr-day.selected {
+    background-color: var(--middle-color) !important;
+    color: var(--white-color) !important;
+    border-color: var(--middle-color) !important;
+}
+
 /* Phone */
 @media screen and (max-width: 768px) {
     .clock-in-container {

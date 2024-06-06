@@ -52,7 +52,7 @@
                         </td>
                         <td>{{ $invoice->number }}</td>
                         <td>{{ $invoice->project?->name ?? ($invoice->client?->name ?? '-') }}</td>
-                        <td><span class="badge">{{ $invoice->status->title }}</span></td>
+                        <td><span class="badge" style="{{$invoice->status->styles}}">{{ $invoice->status->title }}</span></td>
                         <td>{{ $invoice->issue_date }}</td>
                         <td>{{ $invoice->total }} {{$invoice?->client->currency->symbol ?? '-'}}</td>
                         <td class="text-center">

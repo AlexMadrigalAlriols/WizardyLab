@@ -15,6 +15,7 @@ use App\Models\Status;
 use App\Models\Task;
 use App\UseCases\Invoices\StoreUseCase;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -112,9 +113,19 @@ class InvoiceController extends Controller
 
     public function downloadInvoice(Invoice $invoice)
     {
-        toast('Downloaded invoice', 'success');
-        //return Storage::disk('public')->download($taskFile->path, $taskFile->title);
-        return back();
+        $dompdf = new Dompdf();
+        $logoPath = public_path('img/LogoLetters.png');
+        $logoBase64 = base64_encode(file_get_contents($logoPath));
+        $price_per_hour = ConfigurationHelper::get('price_per_hour', 15);
+
+        $tasks = Task::whereIn('id', $invoice->data['tasks_ids'])->get();
+
+        // Generar la vista como HTML
+        $html = view('templates.invoice', compact('invoice', 'logoBase64', 'tasks', 'price_per_hour'))->render();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return $dompdf->stream($invoice->number . '.pdf', ['Attachment' => true]);
     }
 
     public function destroy(Invoice $invoice)

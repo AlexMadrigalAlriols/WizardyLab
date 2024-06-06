@@ -43,7 +43,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control @if($errors->has('date')) is-invalid @endif" id="date" name="date" placeholder="{{__('crud.leaves.fields.date')}}" value="{{ old('date') }}">
+            <input type="date" class="form-control flatpicker @if($errors->has('date')) is-invalid @endif" id="date" name="date" placeholder="{{__('crud.leaves.fields.date')}}" value="{{ old('date') }}">
             <label for="date">{{__('crud.leaves.fields.date')}} <span class="text-danger">*</span></label>
         </div>
 

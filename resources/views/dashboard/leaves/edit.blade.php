@@ -37,5 +37,13 @@
                 checkObligatoryFields(obligatoryFields);
             });
         });
+
+        $('#duration').change(function() {
+            if ($(this).val() == 'single') {
+                $('#date').removeClass('multiple')
+            } else {
+                $('#date').addClass('multiple');
+            }
+        });
     </script>
 @endsection
