@@ -237,16 +237,23 @@ new Chart("activityChart", {
         labels: xValues,
         legend: false,
         datasets: [{
-        backgroundColor:"rgba(0,0,255,1.0)",
-        borderColor: "rgba(0,0,255,0.1)",
-        data: [{{ isset($activityChart['values']) ? implode(',', $activityChart['values']) : '0' }}],
-        fill: false
+            backgroundColor:"rgba(0,0,255,1.0)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: [{{ isset($activityChart['values']) ? implode(',', $activityChart['values']) : '0' }}],
+            fill: false
         }]
     },
     options:{
-        legend: false
+        legend: false,
+        scales:
+        {
+            y: {
+                beginAtZero: true,
+                min: 0
+            }
+        }
     }
-    });
+});
 
 var barColors = [
   "#b91d47",
@@ -268,7 +275,7 @@ new Chart("hoursChart", {
     },
     options: {
     }
-    });
+});
 
 $(function() {
     let timer = $('#timerTask');
