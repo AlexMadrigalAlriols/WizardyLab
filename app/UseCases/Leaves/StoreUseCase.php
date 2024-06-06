@@ -12,7 +12,6 @@ use Carbon\Carbon;
 class StoreUseCase extends UseCase
 {
     public function __construct(
-        protected string $name,
         protected LeaveType $leaveType,
         protected string $duration,
         protected string $date,
@@ -27,7 +26,6 @@ class StoreUseCase extends UseCase
 
         foreach ($dates as $date) {
             $leave = Leave::create([
-                'name' => $this->name,
                 'leave_type_id' => $this->leaveType->id,
                 'date' => Carbon::parse($date),
                 'user_id' => $this->user->id,

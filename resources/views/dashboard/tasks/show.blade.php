@@ -12,7 +12,7 @@
                     <br>
                     <span class="badge bg-{{$task->priority}} ms-2">{{ucfirst($task->priority)}}</span>
                     <span class="badge ms-2" style="{{$task->status->styles}}"><span class="px-2">{{$task->status->title}}</span></span>
-                    <p class="text-muted mt-2 mb-1">{{$task->description}}</p>
+                    <p class="text-muted mt-2 mb-1">{!! $task->description !!}</p>
 
 
                     @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))

@@ -2,9 +2,14 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" id="name" name="name" placeholder="{{__('crud.status.fields.name')}}" value="{{ old('name') ?? $status->title }}">
+            <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" maxlength="15" id="name" name="name" placeholder="{{__('crud.status.fields.name')}}" value="{{ old('name') ?? $status->title }}">
             <label for="title">{{__('crud.status.fields.name')}} <span class="text-danger">*</span></label>
         </div>
+
+        <div class="mt-0 text-end">
+            <span class="text-muted"><span id="nameCountChar">0</span>/15</span>
+        </div>
+
         @if ($errors->has('name'))
             <span class="text-danger">{{ $errors->first('name') }}</span>
         @endif

@@ -3,8 +3,12 @@
 <div class="row">
     <div class="col-md-7">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" name="title" placeholder="Task Title" value="{{ old('title') ?? $task->title }}">
+            <input type="text" class="form-control @if($errors->has('title')) is-invalid @endif" maxlength="50" id="title" name="title" placeholder="Task Title" value="{{ old('title') ?? $task->title }}">
             <label for="title">Title <span class="text-danger">*</span></label>
+        </div>
+
+        <div class="mt-0 text-end">
+            <span class="text-muted"><span id="titleCountChar">0</span>/50</span>
         </div>
 
         @if ($errors->has('title'))
@@ -65,12 +69,17 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mt-2">
     <div class="col-md-12">
-        <div class="form-floating mt-3">
-            <textarea class="form-control" placeholder="Task Description" id="description" name="description" style="height: 85px;">{{old('description') ?? $task->description}}</textarea>
-            <label for="description">Description</label>
+        <label for="description">Description</label>
+        <div class="form-floating mt-1">
+            <textarea class="form-control textricheditor" placeholder="Task Description" maxlength="1000" id="description" name="description" style="height: 85px;">{{old('description') ?? $task->description}}</textarea>
         </div>
+
+        <div class="mt-0 text-end">
+            <span class="text-muted"><span id="descriptionCountChar">0</span>/1000</span>
+        </div>
+
     </div>
 </div>
 <div class="row">
