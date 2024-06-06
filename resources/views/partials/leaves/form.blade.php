@@ -2,12 +2,16 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" id="name" name="name" placeholder="{{__('crud.companies.fields.name')}}" value="{{ old('name') ?? auth()->user()->name }}">
-            <label for="title">{{__('crud.companies.fields.name')}} <span class="text-danger">*</span></label>
+            <select class="form-select select2 @if($errors->has('user_id')) is-invalid @endif" id="user_id" name="user_id" aria-label="Type">
+                @foreach ($users as $user)
+                    <option value="{{$user->id}}" {{ auth()->user()->id == $user->id || old('user_id') == $user->id ? 'selected' : ''}}>{{$user->name}}</option>
+                @endforeach
+            </select>
+            <label for="user">{{__('crud.leaves.fields.user')}} <span class="text-danger">*</span></label>
         </div>
 
-        @if ($errors->has('name'))
-            <span class="text-danger">{{ $errors->first('name') }}</span>
+        @if ($errors->has('user_id'))
+            <span class="text-danger">{{ $errors->first('user_id') }}</span>
         @endif
     </div>
     <div class="col-md-6">
@@ -53,25 +57,11 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-floating mt-3">
-            <select class="form-select select2 @if($errors->has('user_id')) is-invalid @endif" id="user_id" name="user_id" aria-label="Type">
-                @foreach ($users as $user)
-                    <option value="{{$user->id}}" {{ auth()->user()->id == $user->id || old('user_id') == $user->id ? 'selected' : ''}}>{{$user->name}}</option>
-                @endforeach
-            </select>
-            <label for="user">{{__('crud.leaves.fields.user')}} <span class="text-danger">*</span></label>
-        </div>
-
-        @if ($errors->has('user_id'))
-            <span class="text-danger">{{ $errors->first('user_id') }}</span>
-        @endif
-    </div>
-</div>
-
 <div class="row mt-3">
     <div class="col-md-12">
-        <textarea name="reason" id="reason" rows="3" class="form-control" placeholder="e.g. Feeling not well"></textarea>
+        <textarea name="reason" id="reason" rows="3" class="form-control" placeholder="e.g. Feeling not well" maxlength="100"></textarea>
+        <div class="mt-0 text-end">
+            <span class="text-muted"><span id="reasonCountChar">0</span>/100</span>
+        </div>
     </div>
 </div>

@@ -7,7 +7,6 @@
         </div>
         <div class="card-task-header">
             <div class="card-task-header-title">
-
                 <span class="badge bg-{{$task->priority}} me-1">{{ucfirst($task->priority)}}</span>
 
                 @foreach ($task->labels as $label)
@@ -25,6 +24,22 @@
                 @if($task->files->count() > 0)
                     <p class="mb-0 text-muted"><i class='bx bx-paperclip' ></i> {{$task->files->count()}}</p>
                 @endif
+
+                <div class="avatar-group mt-2">
+                    @foreach ($task->users()->limit(3)->get() as $task_user)
+                        <div class="avatar avatar-s">
+                            <img src="{{ $task_user->profile_img}}" alt="avatar" class="rounded-circle">
+                        </div>
+                    @endforeach
+
+                   @if($task->users()->count() > 3)
+                        <div class="avatar avatar-s">
+                            <div class="avatar-name rounded-circle">
+                                <span>+{{ $task->users()->count() - 3 }}</span>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
 
             <div class="col-md-4 text-end">

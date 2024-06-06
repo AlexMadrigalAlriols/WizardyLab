@@ -9,6 +9,10 @@
     background-color: var(--middle-color);
 }
 
+.btn-primary:disabled {
+    background-color: var(--middle-color);
+}
+
 .week-time-container {
     text-align: right;
 }

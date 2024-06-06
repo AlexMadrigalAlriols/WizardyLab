@@ -77,6 +77,7 @@
     @parent
     <script>
         var obligatoryFields = ['title', 'priority', 'status'];
+        var limitedCharFields = ['title', 'description'];
         Dropzone.autoDiscover = false;
 
         $('input, select, textarea').each(function() {
@@ -102,5 +103,7 @@
                 }
             });
         });
+
+        countChars(['title', 'description', 'code']);
     </script>
 @endsection

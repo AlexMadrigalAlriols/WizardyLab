@@ -16,6 +16,11 @@ $(document).ready(function () {
         changeNavBar(nav, toggler, toggle, bodypd, headerpd);
     });
 
+    $('.textricheditor').summernote({
+        height: 100,   //set editable area's height
+        theme: 'flatly'
+    });
+
     initializeFlatPick();
 });
 
@@ -52,6 +57,16 @@ function initializeFlatPick() {
         mode: 'multiple',
         dateFormat: "Y-m-d",
         minDate: "today"
+    });
+}
+
+function countChars(limitedCharFields) {
+    limitedCharFields.forEach(function(field) {
+        $('#' + field + 'CountChar').html($('#' + field).val().length);
+
+        $('#' + field).on('keyup', function() {
+            $('#' + field + 'CountChar').html(this.value.length);
+        });
     });
 }
 
