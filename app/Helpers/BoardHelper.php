@@ -15,6 +15,16 @@ class BoardHelper {
         return back();
     }
 
+    public static function unarchiveTask(Task $task)
+    {
+        $task->update([
+            'archive_at' => null,
+        ]);
+
+        toast('Task unarchived successfully!', 'success');
+        return back();
+    }
+
     public static function jumpTopTask(Task $task)
     {
         $tasks = Task::where('project_id', $task->project_id)

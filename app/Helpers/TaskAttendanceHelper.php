@@ -51,6 +51,14 @@ class TaskAttendanceHelper {
             $total += TimerHelper::getAttendanceTimeDecimal($attendance);
         }
 
+        foreach ($task->subtasks as $subtask) {
+            $attendances = $subtask->taskAttendances()->whereNotNull('check_out')->get();
+
+            foreach ($attendances as $attendance) {
+                $total += TimerHelper::getAttendanceTimeDecimal($attendance);
+            }
+        }
+
         // return rounded total max 2 decimals
         return round($total, 2);
     }

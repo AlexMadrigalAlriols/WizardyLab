@@ -111,7 +111,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control @if($errors->has('issue_date')) is-invalid @endif" id="issue_date" name="issue_date" placeholder="Address" value="{{ old('issue_date') ?? now()->format('Y-m-d') }}">
+            <input type="date" class="form-control flatpicker @if($errors->has('issue_date')) is-invalid @endif" id="issue_date" name="issue_date" placeholder="Address" value="{{ old('issue_date') ?? now()->format('Y-m-d') }}">
             <label for="issue_date">{{__('crud.invoices.fields.issue_date')}} <span class="text-danger">*</span></label>
         </div>
 

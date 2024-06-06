@@ -79,17 +79,44 @@
                     <div class="d-flex flex-column gap-3 mb-2">
                         @foreach ($task->files as $file)
                             <div class="border-bottom d-flex flex-row pb-3">
-                                <img src="{{asset('storage/' . $file->path)}}" alt="" width="65" height="65" class="rounded-3">
-                                <div class="flex-1 ms-3 d-flex flex-column">
-                                    <h5 class="h6">{{$file->title}}</h5>
-                                    <p class="text-muted h6 mb-0">{{$file->updated_at->format('jS M, Y')}}</p>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="{{asset('storage/' . $file->path)}}" target="__blank">
+                                            <img src="{{asset('storage/' . $file->path)}}" alt="" width="65" height="65" class="rounded-3">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="flex-1 ms-3 d-flex flex-column">
+                                            <h5 class="h6 text-dark mb-0">{{$file->title}}</h5>
+                                            <p class="text-muted h6 mb-0 mt-1">{{$file->updated_at->format('jS M, Y')}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="dropdown">
+                                            <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <i class='bx bx-dots-horizontal-rounded'></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a class="dropdown-item" href="{{$file->download_link}}"><i class='bx bxs-download' ></i> Download</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form action="{{route('dashboard.task.delete_file', $file->id)}}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
 
                     <div class="text-center mt-3">
-                        <a href="#"><i class='bx bx-plus' ></i> Add Files</a>
+                        <a href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-plus' ></i> Add Files</a>
                     </div>
                 </div>
             </div>

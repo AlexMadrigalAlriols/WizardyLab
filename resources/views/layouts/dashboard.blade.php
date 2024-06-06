@@ -27,12 +27,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/board.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @yield('styles')
+
 
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
@@ -49,8 +52,8 @@
                 <i class='bx bx-timer'></i> {{ auth()->user()->timer }}
             </button>
             <div class="d-inline-block align-middle">
-                <a href="#" class="text-dark me-4"><i class="bx bx-search" style="font-size: 23px;"></i></a>
-                <div class="dropdown d-inline-block">
+                <a href="#" class="text-dark me-4 navIconBtn"><i class="bx bx-search" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-time-five" style="font-size: 23px;"></i>
 
@@ -94,8 +97,8 @@
                         @endif
                     </ul>
                 </div>
-                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
-                <div class="dropdown d-inline-block">
+                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4 navIconBtn"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-bell" style="font-size: 23px;"></i>
                         @if (auth()->user()->notifications()->unread()->count() > 0)
@@ -295,5 +298,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 @include('partials.attendance_script')
 <script src="{{ asset('js/select2.full.min.js')}}"></script>
 <script src="{{ asset('js/main.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @yield('scripts')
 </html>

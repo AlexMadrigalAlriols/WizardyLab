@@ -11,7 +11,7 @@ class StoreUseCase extends UseCase
 {
     public function __construct(
         protected string $content,
-        protected Carbon $date,
+        protected ?Carbon $date = null,
         protected User $user
     ) {
     }

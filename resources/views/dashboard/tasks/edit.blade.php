@@ -21,7 +21,7 @@
         </form>
     </div>
     <div class="col-md-4 border-start">
-        <div class="pt-2">
+        <div class="pt-2 border-bottom">
             <span class="h2 d-inline-block mt-1">
                 <b>Files</b>
             </span>
@@ -63,6 +63,12 @@
                 </div>
             </div>
         @endforeach
+
+        @if($task->files->isEmpty())
+            <div class="text-center p-3">
+                <p class="text-muted">No files uploaded yet!</p>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

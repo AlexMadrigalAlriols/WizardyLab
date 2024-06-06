@@ -16,6 +16,7 @@ $(document).ready(function () {
         changeNavBar(nav, toggler, toggle, bodypd, headerpd);
     });
 
+    initializeFlatPick();
 });
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {
@@ -32,6 +33,27 @@ document.querySelectorAll('.has_submenu ').forEach(toggle => {
         togglerIcon.classList.toggle('bx-chevron-down');
     });
 });
+
+function initializeFlatPick() {
+    $('.flatpicker').flatpickr({
+        dateFormat: "Y-m-d"
+    });
+
+    $('.flatpicker.hasTime').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        minuteIncrement: 1,
+        minDate: "today",
+        defaultDate: "{{old('due_date') ?? $task->due_date}}"
+    });
+
+    $('.flatpicker.multiple').flatpickr({
+        mode: 'multiple',
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+}
 
 function changeNavBar(nav, toggler, toggle, bodypd, headerpd) {
     // show navbar

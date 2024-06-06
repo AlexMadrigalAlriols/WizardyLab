@@ -16,6 +16,7 @@ class InvoiceHelper {
         $tasks = $project->tasks()
             ->where('status_id', $stausId)
             ->whereNull('archive_at')
+            ->whereNull('task_id')
             ->get();
 
         $amount = self::getTotalTasksAmount($tasks);

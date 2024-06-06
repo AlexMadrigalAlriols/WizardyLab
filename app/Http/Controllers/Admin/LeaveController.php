@@ -39,22 +39,26 @@ class LeaveController extends Controller
 
     public function store(StoreRequest $request) {
         $user =  User::find($request->input('user_id'));
-        $leave = (new StoreUseCase(
-            $request->input('name'),
-            LeaveType::find($request->input('type')),
-            $request->input('duration'),
-            $request->input('date'),
-            $user,
-            $request->input('reason')
-        ))->action();
+        $dates = explode(',', $request->input('date'));
 
-        if(auth()->user()->id !== $user->id) {
-            NotificationHelper::notificate(
+        foreach ($dates as $date) {
+            $leave = (new StoreUseCase(
+                $request->input('name'),
+                LeaveType::find($request->input('type')),
+                $request->input('duration'),
+                $date,
                 $user,
-                Notification::TYPES['leave'],
-                'Leave created',
-                $leave->id
-            );
+                $request->input('reason')
+            ))->action();
+
+            if(auth()->user()->id !== $user->id) {
+                NotificationHelper::notificate(
+                    $user,
+                    Notification::TYPES['leave'],
+                    'Leave created',
+                    $leave->id
+                );
+            }
         }
 
         toast('Leave created', 'success');

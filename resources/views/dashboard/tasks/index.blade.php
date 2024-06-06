@@ -32,18 +32,14 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-12 mt-3 text-end">
-                            <button class="btn btn-change-view active" data-bs-toggle="tooltip" data-bs-title="List View"
+                            <a class="btn btn-change-view {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
                                 data-bs-placement="top">
                                 <i class='bx bx-list-ul'></i>
-                            </button>
-                            <button class="btn btn-change-view" data-bs-toggle="tooltip" data-bs-title="Board View"
+                            </a>
+                            <a class="btn btn-change-view {{request('archived') !== null && request('archived') == 1 ? 'active' : ''}}" href="?archived=1" data-bs-toggle="tooltip" data-bs-title="Archive"
                                 data-bs-placement="top">
-                                <i class='bx bx-chalkboard'></i>
-                            </button>
-                            <button class="btn btn-change-view" data-bs-toggle="tooltip" data-bs-title="Card View"
-                                data-bs-placement="top">
-                                <i class='bx bxs-dashboard'></i>
-                            </button>
+                                <i class='bx bx-box'></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +82,15 @@
                                 </a>
                             @endif
                         </td>
-                        <td><a href="{{route('dashboard.tasks.show', $task->id)}}" class="text-decoration-none"><b>{{ $task->title }}</b></a></td>
+                        <td>
+                            <a href="{{route('dashboard.tasks.show', $task->id)}}" class="text-decoration-none"><b>{{ $task->title }}</b></a>
+
+                            <p class="mt-0 mb-0">
+                                @foreach ($task->labels as $label)
+                                    <span class="badge" style="{{$label->styles}}">{{$label->title}}</span>
+                                @endforeach
+                            </p>
+                        </td>
                         <td>
                             <div class="avatar-group">
                                 @foreach ($task->users()->limit(3)->get() as $task_user)
@@ -129,6 +133,11 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $task->id)}}"><i class='bx bx-show' ></i> View</a></li>
                                     <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                    @if(request('archived'))
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action', [$task->id, 'unarchive'])}}"><i class='bx bx-box' ></i> UnArchive</a></li>
+                                    @else
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action', [$task->id, 'archive'])}}"><i class='bx bx-box' ></i> Archive</a></li>
+                                    @endif
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{route('dashboard.tasks.destroy', $task->id)}}" method="POST">
@@ -155,7 +164,15 @@
                                     </a>
                                 @endif
                             </td>
-                            <td><a href="{{route('dashboard.tasks.show', $subtask->id)}}" class="text-decoration-none"><b>{{ $subtask->title }}</b></a></td>
+                            <td>
+                                <a href="{{route('dashboard.tasks.show', $subtask->id)}}" class="text-decoration-none"><b>{{ $subtask->title }}</b></a>
+
+                                <p class="mt-0 mb-0">
+                                    @foreach ($subtask->labels as $label)
+                                        <span class="badge" style="{{$label->styles}}">{{$label->title}}</span>
+                                    @endforeach
+                                </p>
+                            </td>
                             <td>
                                 <div class="avatar-group">
                                     @foreach ($subtask->users()->limit(3)->get() as $task_user)
@@ -237,15 +254,15 @@
                                 @if(request('page') != 'all')
                                     <ul class="pagination m-0">
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) > 1 ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-left' ></i></a>
+                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '') . (request('archived') ? '&archived=' . request('archived') : '')}}"><i class='bx bx-chevron-left' ></i></a>
                                         </li>
                                         @for ($page = 1; $page <= $pagination['pages']; $page++)
                                             <li class="page-item" aria-current="page">
-                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page . (request('status') ? '&status=' . request('status') : '')}}"><b>{{$page}}</b></a>
+                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page . (request('status') ? '&status=' . request('status') : '') . (request('archived') ? '&archived=' . request('archived') : '')}}"><b>{{$page}}</b></a>
                                             </li>
                                         @endfor
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) != $pagination['pages'] ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-right'></i></a>
+                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1) . (request('status') ? '&status=' . request('status') : '') . (request('archived') ? '&archived=' . request('archived') : '')}}"><i class='bx bx-chevron-right'></i></a>
                                         </li>
                                     </ul>
                                 @endif

@@ -233,8 +233,16 @@
                                                             </a>
                                                         @endif
                                                     </td>
-                                                    <td><a href="{{ route('dashboard.tasks.show', $task->id) }}"
-                                                            class="text-decoration-none"><b>{{ $task->title }}</b></a>
+                                                    <td>
+                                                        <a href="{{ route('dashboard.tasks.show', $task->id) }}"
+                                                            class="text-decoration-none"><b>{{ $task->title }}</b>
+                                                        </a>
+
+                                                        <p class="mt-0 mb-0">
+                                                            @foreach ($task->labels as $label)
+                                                                <span class="badge" style="{{$label->styles}}">{{$label->title}}</span>
+                                                            @endforeach
+                                                        </p>
                                                     </td>
                                                     <td class="text-muted">
                                                         {{ $task->start_date ? $task->start_date->format('d/m/Y') : '-' }}
@@ -243,7 +251,7 @@
                                                         {{ $task->duedate ? $task->duedate->format('d/m/Y') : '-' }}</td>
                                                     <td>
                                                         <span
-                                                            class="badge {{ $task->status->badge }}">{{ $task->status->title }}</span>
+                                                            class="badge" style="{{$task->status->styles}}">{{ $task->status->title }}</span>
                                                     </td>
                                                     <td><span
                                                             class="badge bg-{{ $task->priority }}">{{ ucfirst($task->priority) }}</span>
