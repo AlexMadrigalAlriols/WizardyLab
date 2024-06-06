@@ -27,7 +27,8 @@
 @section('scripts')
     @parent
     <script>
-        var obligatoryFields = ['name', 'type', 'duration', 'date', 'user_id'];
+        var obligatoryFields = ['type', 'duration', 'date', 'user_id'];
+        var limitedCharFields = ['reason'];
 
         $('input, select, textarea').each(function() {
             $(this).on('keyup', function() {
@@ -45,5 +46,7 @@
                 $('#date').addClass('multiple');
             }
         });
+
+        countChars(limitedCharFields);
     </script>
 @endsection

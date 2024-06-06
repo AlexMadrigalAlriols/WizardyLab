@@ -28,12 +28,15 @@
     @parent
     <script>
         var obligatoryFields = ['name', 'type', 'background', 'color'];
+        var limitedCharFields = ['name'];
 
         $('input, select, textarea').each(function() {
             $(this).on('keyup', function() {
                 checkObligatoryFields(obligatoryFields);
             });
         });
+
+        countChars(limitedCharFields);
     </script>
 @endsection
 

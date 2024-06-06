@@ -43,7 +43,6 @@ class LeaveController extends Controller
 
         foreach ($dates as $date) {
             $leave = (new StoreUseCase(
-                $request->input('name'),
                 LeaveType::find($request->input('type')),
                 $request->input('duration'),
                 $date,

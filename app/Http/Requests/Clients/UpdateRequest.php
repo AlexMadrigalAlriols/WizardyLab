@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:60',
             'active' => 'required|boolean',
             'company_id' => 'nullable|exists:companies,id',
             'email' => 'nullable|email|unique:clients,email,' . $this->route('client')->id . ',id',
@@ -31,11 +31,11 @@ class UpdateRequest extends FormRequest
             'vat_number' => 'nullable|string',
             'language_id' => 'nullable|exists:languages,id',
             'currency_id' => 'required|exists:currencies,id',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string',
-            'zip_code' => 'nullable|string',
+            'address' => 'nullable|string|max:250',
+            'city' => 'nullable|string|max:50',
+            'zip' => 'nullable|string|max:10',
             'country_id' => 'nullable|exists:countries,id',
-            'state' => 'nullable|string',
+            'state' => 'nullable|string|max:50'
         ];
     }
 }

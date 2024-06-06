@@ -19,7 +19,7 @@
                     <h6 class="text-muted fw-bolder mt-1">DESCRIPTION</h6>
                 </div>
                 <div class="col-sm-9 col-8">
-                    <span class="mt-1 text-muted">{{$task->description}}</span>
+                    <span class="mt-1 text-muted">{!! $task->description !!}</span>
                 </div>
 
                 <div class="col-sm-3 col-4">

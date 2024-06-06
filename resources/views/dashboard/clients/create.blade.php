@@ -26,6 +26,7 @@
     @parent
     <script>
         var obligatoryFields = ['name', 'email', 'currency_id', 'active'];
+        var limitedCharFields = ['name', 'address', 'city', 'state', 'zip'];
 
         $('input, select, textarea').each(function() {
             $(this).on('keyup', function() {
@@ -35,5 +36,7 @@
                 checkObligatoryFields(obligatoryFields);
             });
         });
+
+        countChars(limitedCharFields);
     </script>
 @endsection

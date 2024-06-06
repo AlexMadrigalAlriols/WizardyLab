@@ -23,13 +23,13 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:50',
             'client_id' => 'nullable|exists:clients,id',
             'start_date' => 'nullable|date',
             'due_date' => 'nullable|date',
             'limit_hours' => 'nullable|numeric',
             'status' => 'required|exists:statuses,id',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
             'users' => 'nullable|array',
             'users.*' => 'nullable|exists:users,id',
             'departments' => 'nullable|array',
