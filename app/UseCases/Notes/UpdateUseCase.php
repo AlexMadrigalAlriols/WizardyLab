@@ -11,7 +11,7 @@ class UpdateUseCase extends UseCase
     public function __construct(
         protected Note $note,
         protected string $content,
-        protected Carbon $date
+        protected ?Carbon $date = null
     ) {
     }
 

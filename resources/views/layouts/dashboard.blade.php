@@ -27,12 +27,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/board.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
+    <link href="{{asset('vendor/spectrum/spectrum.min.css')}}" rel="stylesheet">
     @yield('styles')
+
 
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
@@ -49,8 +54,8 @@
                 <i class='bx bx-timer'></i> {{ auth()->user()->timer }}
             </button>
             <div class="d-inline-block align-middle">
-                <a href="#" class="text-dark me-4"><i class="bx bx-search" style="font-size: 23px;"></i></a>
-                <div class="dropdown d-inline-block">
+                <a href="#" class="text-dark me-4 navIconBtn"><i class="bx bx-search" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-time-five" style="font-size: 23px;"></i>
 
@@ -94,8 +99,8 @@
                         @endif
                     </ul>
                 </div>
-                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
-                <div class="dropdown d-inline-block">
+                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4 navIconBtn"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
+                <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-bell" style="font-size: 23px;"></i>
                         @if (auth()->user()->notifications()->unread()->count() > 0)
@@ -167,7 +172,7 @@
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
                             <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
                                 <i class='bx bx-buildings nav_icon'></i>
                                 <span class="nav_name">Clients</span>
@@ -176,6 +181,11 @@
                             <a href="{{route('dashboard.companies.index')}}" class="nav_link {{ $section == 'Companies' ? 'active' : ''}}">
                                 <i class='bx bx-building-house nav_icon'></i>
                                 <span class="nav_name">{{__('crud.companies.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.invoices.index')}}" class="nav_link {{ $section == 'Invoices' ? 'active' : ''}}">
+                                <i class='bx bx-file nav_icon'></i>
+                                <span class="nav_name">{{__('crud.invoices.title')}}</span>
                             </a>
                         </div>
                     </div>
@@ -261,7 +271,12 @@
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                                <i class='bx bx-globe nav_icon'></i>
+                                <span class="nav_name">{{__('crud.globalConfigurations.title')}}</span>
+                            </a>
+                            <hr>
                             <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
                                 <i class='bx bx-cylinder nav_icon'></i>
                                 <span class="nav_name">{{__('crud.status.title')}}</span>
@@ -306,5 +321,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 @include('partials.attendance_script')
 <script src="{{ asset('js/select2.full.min.js')}}"></script>
 <script src="{{ asset('js/main.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="{{asset('vendor/spectrum/spectrum.min.js')}}"></script>
 @yield('scripts')
 </html>

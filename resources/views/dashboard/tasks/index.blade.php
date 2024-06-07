@@ -15,9 +15,9 @@
             <div class="col-md-5">
                 <div class="d-flex justify-content-start mt-4">
                     <a class="ms-3 text-decoration-none {{ request('status') == null ? 'text-black' : '' }}" href="{{ route('dashboard.tasks.index') }}"><b>All</b> ({{ $counters['total'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 1 ? 'text-black' : '' }}" href="?status=1"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 2 ? 'text-black' : '' }}" href="?status=2"><b>Completed</b> ({{ $counters['completed'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 3 ? 'text-black' : '' }}" href="?status=3"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 18 ? 'text-black' : '' }}" href="?status=18"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 19 ? 'text-black' : '' }}" href="?status=19"><b>Completed</b> ({{ $counters['completed'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 17 ? 'text-black' : '' }}" href="?status=17"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
                 </div>
             </div>
             <div class="col-md-7 mt-1">
@@ -32,18 +32,14 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-12 mt-3 text-end">
-                            <button class="btn btn-change-view active" data-bs-toggle="tooltip" data-bs-title="List View"
+                            <a class="btn btn-change-view {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
                                 data-bs-placement="top">
                                 <i class='bx bx-list-ul'></i>
-                            </button>
-                            <button class="btn btn-change-view" data-bs-toggle="tooltip" data-bs-title="Board View"
+                            </a>
+                            <a class="btn btn-change-view {{request('archived') !== null && request('archived') == 1 ? 'active' : ''}}" href="?archived=1" data-bs-toggle="tooltip" data-bs-title="Archive"
                                 data-bs-placement="top">
-                                <i class='bx bx-chalkboard'></i>
-                            </button>
-                            <button class="btn btn-change-view" data-bs-toggle="tooltip" data-bs-title="Card View"
-                                data-bs-placement="top">
-                                <i class='bx bxs-dashboard'></i>
-                            </button>
+                                <i class='bx bx-box'></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -70,6 +66,12 @@
                 @foreach ($tasks as $task)
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
+                            @if($task->subtasks()->count())
+                                <a href="#" class="text-decoration-none text-dark me-2" onclick="toggleSubTasks({{$task->id}})">
+                                    <i class='bx bxs-right-arrow' id="toggler-{{$task->id}}"></i>
+                                </a>
+                            @endif
+
                             @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
                                 <a href="{{route('dashboard.task-clock-out', $task->id)}}" class="btn btn-attendance-task">
                                     <i class='bx bx-stop-circle align-middle'></i>
@@ -80,12 +82,20 @@
                                 </a>
                             @endif
                         </td>
-                        <td><a href="{{route('dashboard.tasks.show', $task->id)}}" class="text-decoration-none"><b>{{ $task->title }}</b></a></td>
+                        <td>
+                            <a href="{{route('dashboard.tasks.show', $task->id)}}" class="text-decoration-none"><b>{{ $task->title }}</b></a>
+
+                            <p class="mt-0 mb-0">
+                                @foreach ($task->labels as $label)
+                                    <span class="badge" style="{{$label->styles}}">{{$label->title}}</span>
+                                @endforeach
+                            </p>
+                        </td>
                         <td>
                             <div class="avatar-group">
                                 @foreach ($task->users()->limit(3)->get() as $task_user)
                                     <div class="avatar avatar-s">
-                                        <img src="{{ auth()->user()->profile_img}}" alt="avatar" class="rounded-circle">
+                                        <img src="{{ $task_user->profile_img }}" alt="avatar" class="rounded-circle">
                                     </div>
                                 @endforeach
 
@@ -102,12 +112,12 @@
                         <td class="{{ $task->is_overdue ? 'text-danger' : 'text-muted' }}">{{ $task->duedate ? $task->duedate->format('d/m/Y') : '-' }}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm {{ $task->status->badge }} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-sm dropdown-toggle" style="{{$task->status->styles}}" data-bs-toggle="dropdown" aria-expanded="false">
                                   <b>{{$task->status->title}}</b>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-sm">
                                     @foreach ($statuses as $status)
-                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.tasks.update-status', [$task->id, $status->id])}}"><span class="badge {{$status->badge}}">{{$status->title}}</span></a></li>
+                                        <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.tasks.update-status', [$task->id, $status->id])}}"><span class="badge" style="{{$status->styles}}">{{$status->title}}</span></a></li>
                                     @endforeach
                                 </ul>
                               </div>
@@ -123,6 +133,11 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $task->id)}}"><i class='bx bx-show' ></i> View</a></li>
                                     <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                    @if(request('archived'))
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action', [$task->id, 'unarchive'])}}"><i class='bx bx-box' ></i> UnArchive</a></li>
+                                    @else
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action', [$task->id, 'archive'])}}"><i class='bx bx-box' ></i> Archive</a></li>
+                                    @endif
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{route('dashboard.tasks.destroy', $task->id)}}" method="POST">
@@ -135,6 +150,84 @@
                             </div>
                         </td>
                     </tr>
+
+                    @foreach ($task->subtasks as $subtask)
+                        <tr class="table-entry align-middle border-bottom subtasks-{{$task->id}} d-none">
+                            <td class="text-nowrap ps-5">
+                                @if(in_array($subtask->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
+                                    <a href="{{route('dashboard.task-clock-out', $subtask->id)}}" class="btn btn-attendance-task">
+                                        <i class='bx bx-stop-circle align-middle'></i>
+                                    </a>
+                                @else
+                                    <a href="{{route('dashboard.task-clock-in', $subtask->id)}}" class="btn btn-attendance-task">
+                                        <i class='bx bx-play-circle align-middle'></i>
+                                    </a>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{route('dashboard.tasks.show', $subtask->id)}}" class="text-decoration-none"><b>{{ $subtask->title }}</b></a>
+
+                                <p class="mt-0 mb-0">
+                                    @foreach ($subtask->labels as $label)
+                                        <span class="badge" style="{{$label->styles}}">{{$label->title}}</span>
+                                    @endforeach
+                                </p>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    @foreach ($subtask->users()->limit(3)->get() as $task_user)
+                                        <div class="avatar avatar-s">
+                                            <img src="{{ $task_user->profile_img}}" alt="avatar" class="rounded-circle">
+                                        </div>
+                                    @endforeach
+
+                                @if($subtask->users()->count() > 3)
+                                        <div class="avatar avatar-s">
+                                            <div class="avatar-name rounded-circle">
+                                                <span>+{{ $subtask->users()->count() - 3 }}</span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="text-muted">{{ $subtask->start_date ? $subtask->start_date->format('d/m/Y') : '-' }}</td>
+                            <td class="{{ $subtask->is_overdue ? 'text-danger' : 'text-muted' }}">{{ $subtask->duedate ? $subtask->duedate->format('d/m/Y') : '-' }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm dropdown-toggle" style="{{$subtask->status->styles}}" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <b>{{$subtask->status->title}}</b>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-sm">
+                                        @foreach ($statuses as $status)
+                                            <li class="border-top"><a class="dropdown-item" href="{{route('dashboard.tasks.update-status', [$subtask->id, $status->id])}}"><span class="badge" style="{{$status->styles}}">{{$status->title}}</span></a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-{{$subtask->priority}}">{{ucfirst($subtask->priority)}}</span></td>
+                            <td class="text-muted"><span class="{{$subtask->limit_hours && $subtask->total_hours > $subtask->limit_hours ? 'text-danger' : ''}}">{{$subtask->total_hours}}h</span> / <b>{{$subtask->limit_hours ?? '-'}}h</b> </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $subtask->id)}}"><i class='bx bx-show' ></i> View</a></li>
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $subtask->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <form action="{{route('dashboard.tasks.destroy', $subtask->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 @endforeach
 
                 @if(!count($tasks))
@@ -161,15 +254,15 @@
                                 @if(request('page') != 'all')
                                     <ul class="pagination m-0">
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) > 1 ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-left' ></i></a>
+                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '') . (request('archived') ? '&archived=' . request('archived') : '')}}"><i class='bx bx-chevron-left' ></i></a>
                                         </li>
                                         @for ($page = 1; $page <= $pagination['pages']; $page++)
                                             <li class="page-item" aria-current="page">
-                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page . (request('status') ? '&status=' . request('status') : '')}}"><b>{{$page}}</b></a>
+                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page . (request('status') ? '&status=' . request('status') : '') . (request('archived') ? '&archived=' . request('archived') : '')}}"><b>{{$page}}</b></a>
                                             </li>
                                         @endfor
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) != $pagination['pages'] ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-right'></i></a>
+                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1) . (request('status') ? '&status=' . request('status') : '') . (request('archived') ? '&archived=' . request('archived') : '')}}"><i class='bx bx-chevron-right'></i></a>
                                         </li>
                                     </ul>
                                 @endif
@@ -193,5 +286,10 @@
                 $('.table-responsive').css("overflow", "auto");
             })
         });
+
+        function toggleSubTasks($taskId) {
+            $('.subtasks-' + $taskId).toggleClass('d-none');
+            $('#toggler-' + $taskId).toggleClass('bx-rotate-90');
+        }
     </script>
 @endsection

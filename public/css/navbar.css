@@ -299,4 +299,8 @@ body {
     .sub_menu {
         background-color: #242424;
     }
+
+    .navIconBtn {
+        display: none !important;
+    }
 }

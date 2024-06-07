@@ -15,13 +15,13 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{request()->has('board') ? route('dashboard.projects.board', request()->input('board')) : route('dashboard.tasks.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary ms-2"><span class="px-5">Save Task</span></button>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">Save Task</span></button>
                 </div>
             </div>
         </form>
     </div>
     <div class="col-md-4 border-start">
-        <div class="pt-2">
+        <div class="pt-2 border-bottom">
             <span class="h2 d-inline-block mt-1">
                 <b>Files</b>
             </span>
@@ -63,6 +63,41 @@
                 </div>
             </div>
         @endforeach
+
+        @if($task->files->isEmpty())
+            <div class="text-center p-3">
+                <p class="text-muted">No files uploaded yet!</p>
+            </div>
+        @endif
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+        var obligatoryFields = ['title', 'priority', 'status'];
+        var limitedCharFields = ['title', 'description'];
+        Dropzone.autoDiscover = false;
+
+        $('input, select, textarea').each(function() {
+            $(this).on('keyup', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+            $(this).on('change', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+        });
+
+        $(document).ready(function() {
+            generateDropZone(
+                "#taskDropZone",
+                "{{ route('dashboard.task.upload_file') }}",
+                "{{ csrf_token() }}",
+                true
+            );
+        });
+
+        countChars(['title', 'description', 'code']);
+    </script>
 @endsection

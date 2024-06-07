@@ -15,7 +15,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        {{$note->content}}
+                        {!! $note->content !!}
 
                         <div class="row">
                             <div class="col-md-6">

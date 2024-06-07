@@ -23,7 +23,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'nullable|string',
+            'title' => 'required|string|max:50',
+            'description' => 'nullable|string|max:1000',
             'priority' => 'required|string|in:' . implode(',', array_keys(Task::PRIORITIES)),
             'status' => 'required|exists:statuses,id',
             'limit_hours' => 'nullable|numeric',

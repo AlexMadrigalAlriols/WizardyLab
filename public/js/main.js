@@ -16,6 +16,17 @@ $(document).ready(function () {
         changeNavBar(nav, toggler, toggle, bodypd, headerpd);
     });
 
+    $('.textricheditor').summernote({
+        height: 100,   //set editable area's height
+        theme: 'flatly'
+    });
+
+    $('.colorpicker').spectrum({
+        preferredFormat: "hex",
+        showAlpha: true
+    });
+
+    initializeFlatPick();
 });
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {
@@ -32,6 +43,43 @@ document.querySelectorAll('.has_submenu ').forEach(toggle => {
         togglerIcon.classList.toggle('bx-chevron-down');
     });
 });
+
+function initializeFlatPick() {
+    $('.flatpicker').flatpickr({
+        dateFormat: "Y-m-d",
+        allowInput: true,
+        onClose: function(selectedDates, dateStr, instance) {
+            if (!dateStr) {
+                instance.clear(); // Limpiar la fecha si el campo está vacío
+            }
+        }
+    });
+
+    $('.flatpicker.hasTime').flatpickr({
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        minuteIncrement: 1,
+        minDate: "today",
+        defaultDate: "{{old('due_date') ?? $task->due_date}}"
+    });
+
+    $('.flatpicker.multiple').flatpickr({
+        mode: 'multiple',
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+}
+
+function countChars(limitedCharFields) {
+    limitedCharFields.forEach(function(field) {
+        $('#' + field + 'CountChar').html($('#' + field).val().length);
+
+        $('#' + field).on('keyup', function() {
+            $('#' + field + 'CountChar').html(this.value.length);
+        });
+    });
+}
 
 function changeNavBar(nav, toggler, toggle, bodypd, headerpd) {
     // show navbar
@@ -95,3 +143,41 @@ $(function() {
         setInterval(updateTimer, 1000);
     }
 })
+
+function checkObligatoryFields(obligatoryFields) {
+    var empty = obligatoryFields.some(function(field) {
+        return !$('#' + field).val();
+    });
+
+    if (empty) {
+        $('#submitBtn').attr('disabled', 'disabled');
+    } else {
+        $('#submitBtn').removeAttr('disabled');
+    }
+}
+
+function generateDropZone(id, url, token, multiple = false) {
+    var myDropzone = new Dropzone(id, {
+        url: url, // Ruta donde manejarás la carga de archivos
+        paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
+        maxFilesize: 2, // Tamaño máximo en MB
+        acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
+        addRemoveLinks: true,
+        uploadMultiple: multiple,
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
+    });
+
+    $(document).on('paste', function(event) {
+        var items = (event.originalEvent.clipboardData || event.clipboardData).items;
+
+        for (var index in items) {
+            var item = items[index];
+            if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                var file = item.getAsFile();
+                myDropzone.addFile(file);
+            }
+        }
+    });
+}

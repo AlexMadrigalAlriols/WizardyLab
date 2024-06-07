@@ -48,7 +48,7 @@
                         <td class="text-nowrap">
                             <input type="checkbox" name="checkbox[]">
                         </td>
-                        <td><span class="badge {{ $status->badge }}"><b>{{ $status->title }}</b></span></td>
+                        <td><span class="badge" style="{{$status->styles}}"><b>{{ $status->title }}</b></span></td>
                         <td>{{ $status->morphable }}</td>
                         <td>{{ $status->created_at }}</td>
                         <td class="text-center">

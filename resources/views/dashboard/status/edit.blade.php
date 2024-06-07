@@ -16,10 +16,27 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.statuses.index')}}"><span class="px-2">{{__('global.cancel')}}</span></a>
-                    <button class="btn btn-primary ms-2"><span class="px-5">{{__('global.save')}} {{__('crud.status.title_singular')}}</span></button>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">{{__('global.save')}} {{__('crud.status.title_singular')}}</span></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 @endsection
+
+@section('scripts')
+    @parent
+    <script>
+        var obligatoryFields = ['name', 'type', 'background', 'color'];
+        var limitedCharFields = ['name'];
+
+        $('input, select, textarea').each(function() {
+            $(this).on('keyup', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+        });
+
+        countChars(limitedCharFields);
+    </script>
+@endsection
+

@@ -9,6 +9,10 @@
     background-color: var(--middle-color);
 }
 
+.btn-primary:disabled {
+    background-color: var(--middle-color);
+}
+
 .week-time-container {
     text-align: right;
 }
@@ -260,6 +264,16 @@
 .card-notification:hover {
     background-color: #ececec;
 
+}
+
+.flatpickr-calendar {
+    top: 15.6rem !important;
+}
+
+.flatpickr-day.selected {
+    background-color: var(--middle-color) !important;
+    color: var(--white-color) !important;
+    border-color: var(--middle-color) !important;
 }
 
 /* Phone */

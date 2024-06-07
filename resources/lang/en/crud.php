@@ -96,4 +96,33 @@ return [
             'updated_at' => 'Updated At',
         ],
     ],
+    'globalConfigurations' => [
+        'title' => 'Global Configs',
+        'title_singular' => 'Global Configuration',
+        'fields' => [
+            'id' => 'ID',
+            'key' => 'Key',
+            'value' => 'Value',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
+    'invoices' => [
+        'title' => 'Invoices',
+        'title_singular' => 'Invoice',
+        'fields' => [
+            'id' => 'ID',
+            'number' => 'Number',
+            'project' => 'Project',
+            'issue_date' => 'Issue Date',
+            'amount' => 'Amount',
+            'tax' => 'Tax',
+            'total' => 'Total',
+            'status' => 'Status',
+            'tasks' => 'Tasks',
+            'client' => 'Client',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ],
+    ],
 ];

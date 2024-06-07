@@ -31,10 +31,20 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->tasks()->orderBy('created_at', 'desc');
+        $query = Auth::user()->tasks()->whereNull('tasks.task_id')->orderBy('duedate', 'desc')->orderBy('updated_at', 'desc');
 
         if($request->has('status') && is_numeric($request->input('status'))) {
             $query->where('status_id', $request->input('status'));
+        }
+
+        if($request->has('archived') && is_numeric($request->input('archived'))) {
+            if($request->input('archived') == 1) {
+                $query->whereNotNull('archive_at');
+            } else {
+                $query->whereNull('archive_at');
+            }
+        } else {
+            $query->whereNull('archive_at');
         }
 
         [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Task::class);
@@ -92,6 +102,8 @@ class TaskController extends Controller
     }
 
     public function store(StoreRequest $request) {
+        $parent_task = $request->input('parent_task') ? Task::find($request->input('parent_task')) : null;
+
         $task = (new StoreUseCase(
             Auth::user(),
             $request->input('title'),
@@ -104,8 +116,8 @@ class TaskController extends Controller
             $request->input('tags', []),
             $request->input('assigned_users', []),
             $request->input('departments', []),
-            Project::find($request->input('project')),
-            Task::find($request->input('parent_task'))
+            $parent_task ? $parent_task->project : Project::find($request->input('project')),
+            $parent_task
         ))->action();
 
         $this->saveTaskFiles($task, $request);
@@ -155,7 +167,7 @@ class TaskController extends Controller
             $task,
             Auth::user(),
             $request->input('title'),
-            $request->input('description'),
+            $request->input('description') ?? '',
             $request->input('priority'),
             Status::find($request->input('status')),
             $request->input('limit_hours'),
@@ -186,7 +198,7 @@ class TaskController extends Controller
         (new UpdateStatusUseCase($task, $status, $request->input('order')))->action();
 
         toast('Task status updated', 'success');
-        return redirect()->route('dashboard.tasks.index');
+        return back();
     }
 
     public function destroy(Task $task)
@@ -290,12 +302,17 @@ class TaskController extends Controller
             'duplicate' => BoardHelper::duplicateTask($task),
             'jump-top' => BoardHelper::jumpTopTask($task),
             'archive' => BoardHelper::archiveTask($task),
+            'unarchive' => BoardHelper::unarchiveTask($task),
             'delete' => $this->destroy($task),
             'download' => $this->download($task),
             'taskClockIn' => $this->taskClockIn($task),
             'taskClockOut' => $this->taskClockOut($task),
             default => ApiResponse::fail('Invalid action'),
         };
+
+        if ($request->isMethod('get')) {
+            return is_string($route) ? $route : $route;
+        }
 
         return ApiResponse::ok(['redirect' => is_string($route) ? $route : $route->getTargetUrl()]);
     }
@@ -305,7 +322,7 @@ class TaskController extends Controller
         $users = User::all();
         $tasks = Task::whereHas('status', function ($query) {
             $query->where('title', '!=', 'Completed');
-        })->get();
+        })->whereNull('task_id')->get();
 
         $departments = Department::all();
         $projects = Project::all();
@@ -321,10 +338,10 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
 
         $counters = [
-            'total' => $tasks->count(),
-            'in_progress' => $tasks->where('status_id', 1)->count(),
-            'completed' => $tasks->where('status_id', 2)->count(),
-            'not_started' => $tasks->where('status_id', 3)->count(),
+            'total' => $tasks->whereNull('task_id')->whereNull('archive_at')->count(),
+            'in_progress' => $tasks->where('status_id', 18)->whereNull('archive_at')->whereNull('task_id')->count(),
+            'completed' => $tasks->where('status_id', 19)->whereNull('archive_at')->whereNull('task_id')->count(),
+            'not_started' => $tasks->where('status_id', 17)->whereNull('archive_at')->whereNull('task_id')->count(),
         ];
 
         return $counters;

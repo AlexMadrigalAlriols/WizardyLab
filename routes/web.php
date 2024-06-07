@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\GlobalConfigurationController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
@@ -47,6 +49,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::delete('/tasks/delete_file/{taskFile}', [TaskController::class, 'deleteFile'])->name('task.delete_file');
     Route::get('/tasks/download_file/{taskFile}', [TaskController::class, 'downloadFile'])->name('task.download_file');
     Route::post('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
+    Route::get('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
 
     //Comments
     Route::resource('{task}/comments', TaskCommentController::class)->only(['store', 'destroy']);
@@ -92,8 +95,14 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('/user/clock-in', [UserController::class, 'userClockIn'])->name('user-clock-in');
     Route::get('/user/clock-out', [UserController::class, 'userClockOut'])->name('user-clock-out');
 
-    //inventaries
+    // Global Configs
+    Route::get('/global-configurations', [GlobalConfigurationController::class, 'index'])->name('global-configurations.index');
+    Route::post('/global-configurations', [GlobalConfigurationController::class, 'store'])->name('global-configurations.store');
 
+    // Invoices
+    Route::resource('invoices', InvoiceController::class);
+    Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
+    Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
 
@@ -17,27 +18,29 @@ class DashboardController extends Controller
 
         $counters = [
             'tasks' => [
-                'total' => $user->tasks()->count(),
-                'pending' => $user->tasks()->count(),
-                'overdue' => $user->tasks()->where('duedate', '<', now())->count()
+                'total' => $user->tasks()->where('status_id', ConfigurationHelper::get('completed_task_status'))->count(),
+                'pending' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->count(),
+                'overdue' => $user->tasks()->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))->where('duedate', '<', now()->startOfDay())->count()
             ],
             'projects' => [
                 'total' => $user->projects()->count(),
-                'active' => $user->projects()->count(),
-                'overdue' => $user->projects()->where('deadline', '<', now())->count()
+                'active' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->count(),
+                'overdue' => $user->projects()->where('status_id', '!=', ConfigurationHelper::get('completed_project_status'))->where('deadline', '<', now()->startOfDay())->count()
             ]
         ];
 
-        $tasks = $user->tasks()->orderBy('duedate')->limit(5)->get();
+        $tasks = $user->tasks()->orderBy('duedate', 'desc')->orderBy('updated_at', 'desc')->limit(5)->get();
 
         foreach ($weekdays as $wday) {
             $events[$wday] = Leave::where('user_id', $user->id)
                 ->where('date', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
                 ->where('date', '>=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
+                ->where('approved', 1)
                 ->get();
 
             $userTasks = $user->tasks()->where('duedate', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
             ->where('duedate', '>=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
+            ->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))
             ->get();
             $events[$wday] = $events[$wday]->merge($userTasks);
         }

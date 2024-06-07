@@ -11,8 +11,8 @@
                     </span>
                     <br>
                     <span class="badge bg-{{$task->priority}} ms-2">{{ucfirst($task->priority)}}</span>
-                    <span class="badge {{$task->status->badge}} ms-2"><span class="px-2">{{$task->status->title}}</span></span>
-                    <p class="text-muted mt-2 mb-1">{{$task->description}}</p>
+                    <span class="badge ms-2" style="{{$task->status->styles}}"><span class="px-2">{{$task->status->title}}</span></span>
+                    <p class="text-muted mt-2 mb-1">{!! $task->description !!}</p>
 
 
                     @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
@@ -64,7 +64,7 @@
                             </p>
 
                             <div>
-                                <p><b>Project:</b> <a href="#" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
+                                <p><b>Project:</b> <a href="{{route('dashboard.projects.board', $task->project->id)}}" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
                                 <p><b>Asssigned By:</b> <a href="#" class="ms-2">{{$task->assignee->name}}</a></p>
                                 <p><b>Start Date:</b> <span class="text-muted ms-2">{{$task->start_date?->format('jS M, Y') ?? '-'}}</span></p>
                                 <p><b>Due Date:</b> <span class="text-muted ms-2">{{$task->duedate?->format('jS M, Y') ?? '-'}}</span></p>
@@ -126,7 +126,9 @@
                         <p class="text-muted" style="font-size: 14px">{{$file->real_size}} | <a href="{{$file->user_id}}">{{$file->user->name}}</a> | {{$file->created_at->format('jS M, h:i A')}}</p>
 
                         @if($file->is_image)
-                            <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
+                            <a href="{{ asset('storage/' . $file->path) }}" target="__blank">
+                                <img src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
+                            </a>
                         @endif
                     </div>
                     <div class="col-md-2 col-3">
@@ -235,16 +237,23 @@ new Chart("activityChart", {
         labels: xValues,
         legend: false,
         datasets: [{
-        backgroundColor:"rgba(0,0,255,1.0)",
-        borderColor: "rgba(0,0,255,0.1)",
-        data: [{{ isset($activityChart['values']) ? implode(',', $activityChart['values']) : '0' }}],
-        fill: false
+            backgroundColor:"rgba(0,0,255,1.0)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: [{{ isset($activityChart['values']) ? implode(',', $activityChart['values']) : '0' }}],
+            fill: false
         }]
     },
     options:{
-        legend: false
+        legend: false,
+        scales:
+        {
+            y: {
+                beginAtZero: true,
+                min: 0
+            }
+        }
     }
-    });
+});
 
 var barColors = [
   "#b91d47",
@@ -266,7 +275,7 @@ new Chart("hoursChart", {
     },
     options: {
     }
-    });
+});
 
 $(function() {
     let timer = $('#timerTask');
