@@ -143,7 +143,7 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <span class="h3">Upload Files</span>
-        <div class="dropzone mt-2" id="logoDropzone"></div>
+        <div class="dropzone mt-2" id="taskDropZone"></div>
     </div>
 </div>
 

@@ -144,3 +144,29 @@ function checkObligatoryFields(obligatoryFields) {
         $('#submitBtn').removeAttr('disabled');
     }
 }
+
+function generateDropZone(id, url, token, multiple = false) {
+    var myDropzone = new Dropzone(id, {
+        url: url, // Ruta donde manejarás la carga de archivos
+        paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
+        maxFilesize: 2, // Tamaño máximo en MB
+        acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
+        addRemoveLinks: true,
+        uploadMultiple: multiple,
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
+    });
+
+    $(document).on('paste', function(event) {
+        var items = (event.originalEvent.clipboardData || event.clipboardData).items;
+
+        for (var index in items) {
+            var item = items[index];
+            if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                var file = item.getAsFile();
+                myDropzone.addFile(file);
+            }
+        }
+    });
+}
