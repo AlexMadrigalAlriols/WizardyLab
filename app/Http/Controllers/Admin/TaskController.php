@@ -31,7 +31,7 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->tasks()->whereNull('tasks.task_id')->orderBy('duedate', 'desc');
+        $query = Auth::user()->tasks()->whereNull('tasks.task_id')->orderBy('duedate', 'desc')->orderBy('updated_at', 'desc');
 
         if($request->has('status') && is_numeric($request->input('status'))) {
             $query->where('status_id', $request->input('status'));

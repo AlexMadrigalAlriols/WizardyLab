@@ -29,7 +29,7 @@ class DashboardController extends Controller
             ]
         ];
 
-        $tasks = $user->tasks()->orderBy('duedate')->limit(5)->get();
+        $tasks = $user->tasks()->orderBy('duedate', 'desc')->orderBy('updated_at', 'desc')->limit(5)->get();
 
         foreach ($weekdays as $wday) {
             $events[$wday] = Leave::where('user_id', $user->id)

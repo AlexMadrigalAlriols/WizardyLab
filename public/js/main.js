@@ -46,7 +46,13 @@ document.querySelectorAll('.has_submenu ').forEach(toggle => {
 
 function initializeFlatPick() {
     $('.flatpicker').flatpickr({
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+        allowInput: true,
+        onClose: function(selectedDates, dateStr, instance) {
+            if (!dateStr) {
+                instance.clear(); // Limpiar la fecha si el campo está vacío
+            }
+        }
     });
 
     $('.flatpicker.hasTime').flatpickr({
