@@ -39,36 +39,13 @@
 <div class="row">
     <div class="col-md-10">
         <div class="form-floating mt-3">
-            <textarea class="form-control" placeholder="Item Description" id="description" name="description" style="height: 85px;">{{old('description') ?? $inventory->description}}</textarea>
-            <label for="description">Description</label>
+            <textarea class="form-control textricheditor" placeholder="Item Description" id="description" name="description" style="height: 85px;">{{old('description') ?? $inventory->description}}</textarea>
         </div>
     </div>
 </div>
 <div class="row mt-3">
     <div class="col-md-10">
         <span class="h3">Upload Files</span>
-        <div class="dropzone mt-2" id="logoDropzone"></div>
+        <div class="dropzone mt-2" id="inventoryFileDropZone"></div>
     </div>
 </div>
-
-@section('scripts')
-    <script>
-        Dropzone.autoDiscover = false;
-
-        $(document).ready(function() {
-            new Dropzone("#logoDropzone", {
-                url: "{{ route('dashboard.task.upload_file') }}", // Ruta donde manejarás la carga de archivos
-                paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
-                maxFilesize: 2, // Tamaño máximo en MB
-                acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
-                addRemoveLinks: true,
-                uploadMultiple: true,
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
-        });
-
-    </script>
-
-@endsection

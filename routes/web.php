@@ -38,6 +38,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     //Inventory
     Route::resource('inventories', InventoryController::class);
+    Route::post('/inventories-files/upload_file', [InventoryController::class, 'uploadFile'])->name('inventories.upload_file');
     Route::resource('assignments', UserInventoriesController::class);
 
     //Tasks

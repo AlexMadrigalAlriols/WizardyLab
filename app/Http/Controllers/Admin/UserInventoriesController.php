@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\FileSystemHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserInventories\StoreRequest;
 use App\Http\Requests\UserInventories\UpdateRequest;
@@ -102,8 +103,7 @@ class UserInventoriesController extends Controller
     {
         $assignment->delete();
         toast('Item deleted', 'success');
+
         return redirect()->route('dashboard.assignments.index');
-
-
     }
 }

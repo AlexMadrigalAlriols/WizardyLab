@@ -22,3 +22,21 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+    <script>
+        Dropzone.autoDiscover = false;
+
+        $(document).ready(function() {
+            generateDropZone(
+                "#inventoryFileDropZone",
+                "{{ route('dashboard.inventories.upload_file') }}",
+                "{{ csrf_token() }}",
+                true,
+                true
+            );
+        });
+
+    </script>
+
+@endsection

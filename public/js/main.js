@@ -156,12 +156,18 @@ function checkObligatoryFields(obligatoryFields) {
     }
 }
 
-function generateDropZone(id, url, token, multiple = false) {
+function generateDropZone(id, url, token, multiple = false, only_image = false) {
+    var acceptedFiles = ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt";
+
+    if(only_image) {
+        acceptedFiles = ".jpeg,.jpg,.png,.gif";
+    }
+
     var myDropzone = new Dropzone(id, {
         url: url, // Ruta donde manejarás la carga de archivos
         paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
         maxFilesize: 2, // Tamaño máximo en MB
-        acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
+        acceptedFiles: acceptedFiles,
         addRemoveLinks: true,
         uploadMultiple: multiple,
         headers: {

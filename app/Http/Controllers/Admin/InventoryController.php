@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Inventories\StoreRequest;
@@ -11,7 +12,10 @@ use App\Models\Inventory;
 use App\UseCases\AuditLogs\StoreUseCase;
 use App\UseCases\Inventories\StoreUseCase as InventoriesStoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
+use App\UseCases\ItemFiles\StoreUseCase as ItemFilesStoreUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class InventoryController extends Controller
 {
@@ -33,9 +37,10 @@ class InventoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $inventory = new Inventory();
+        $request->session()->forget('dropzone_inventories_temp_paths');
 
         return view(
             'dashboard.inventories.create',
@@ -60,6 +65,9 @@ class InventoryController extends Controller
                 $request->input('shop_place'),
             )
         )->action();
+
+        $this->saveFiles($inventory, $request);
+
         toast('Item created', 'success');
         return redirect()->route('dashboard.inventories.index');
     }
@@ -77,8 +85,10 @@ class InventoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Inventory $inventory)
+    public function edit(Request $request, Inventory $inventory)
     {
+        $request->session()->forget('dropzone_inventories_temp_paths');
+
         return view('dashboard.inventories.edit', compact('inventory'));
     }
 
@@ -98,8 +108,40 @@ class InventoryController extends Controller
                 $request->input('shop_place'),
             )
         )->action();
+
+        $this->saveFiles($inventory, $request);
+
         toast('Item edited', 'success');
         return redirect()->route('dashboard.inventories.index');
+    }
+
+    public function uploadFile(Request $request)
+    {
+        return FileSystemHelper::uploadFile($request, 'dropzone_inventories_temp_paths');
+    }
+
+    private function saveFiles(Inventory $inventory, Request $request)
+    {
+        if ($request->session()->has('dropzone_inventories_temp_paths')) {
+            foreach ($request->session()->get('dropzone_inventories_temp_paths', []) as $idx => $tempPath) {
+                [$permanentPath, $originalName, $storaged] = FileSystemHelper::saveFile(
+                    $request,
+                    $tempPath,
+                    'dropzone_inventories_temp_paths',
+                    'item_files/' . $inventory->id . '/'
+                );
+
+                if ($storaged) {
+                    (new ItemFilesStoreUseCase(
+                        $inventory,
+                        Auth::user(),
+                        $originalName,
+                        $permanentPath,
+                        Storage::disk('public')->size($permanentPath)
+                    ))->action();
+                }
+            }
+        }
     }
 
     /**
@@ -111,15 +153,16 @@ class InventoryController extends Controller
         toast('Item deleted', 'success');
         return redirect()->route('dashboard.inventories.index');
     }
+
     private function getInventoriesCounters(): array
     {
-    $inventories = Inventory::all();
+        $inventories = Inventory::all();
 
-    $counters = [
-        'total' => $inventories->count(),
-    ];
+        $counters = [
+            'total' => $inventories->count(),
+        ];
 
-    return $counters;
+        return $counters;
     }
 }
 

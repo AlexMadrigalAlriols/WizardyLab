@@ -66,11 +66,16 @@
                                     <p><b>Shop place:</b> <span
                                             class="ms-2">{{ $inventory->shop_place ? $inventory->shop_place : '-' }}</span>
                                     </p>
-                                    <p><b>Description:</b><span class="text-muted ms-2">
-                                            @if ($inventory->description)
-                                                {{ $inventory->description }}@else-
-                                            @endif
-                                        </span></p>
+                                    <p>
+                                        <b>Description:</b>
+                                        <span class="text-muted ms-2">
+                                        {!! $inventory->description ?? '-' !!}
+                                        </span>
+                                    </p>
+
+                                    @foreach ($inventory->inventory_files as $file)
+                                        <img src="{{ asset('storage/' . $file->path) }}" width="200" alt="{{$file->title}}">
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
