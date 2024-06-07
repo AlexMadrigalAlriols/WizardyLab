@@ -20,7 +20,7 @@ class Inventory extends Model
     ];
     public function UsersInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(UserInventories::class, 'inventories_id');
+        return $this->hasMany(UserInventories::class, 'inventory_id');
     }
 
     public function getRemainingStockAttribute(): int

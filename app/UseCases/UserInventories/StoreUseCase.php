@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Date;
 class StoreUseCase extends UseCase
 {
     public function __construct(
-        protected int $users_id,
-        protected int $inventories_id,
+        protected int $user_id,
+        protected int $inventory_id,
         protected int $quantity,
         protected ?Carbon $extract_date = null,
         protected ?Carbon $return_date = null,
@@ -21,8 +21,8 @@ class StoreUseCase extends UseCase
     public function action(): UserInventories
     {
         $UserInventories = UserInventories::create([
-            'users_id' => $this->users_id,
-            'inventories_id' => $this->inventories_id,
+            'user_id' => $this->user_id,
+            'inventory_id' => $this->inventory_id,
             'quantity' => $this->quantity,
             'extract_date' => $this->extract_date,
             'return_date' => $this->return_date,

@@ -10,8 +10,8 @@ class UserInventories extends Model
     use HasFactory;
 
     protected $fillable = [
-        'users_id',
-        'inventories_id',
+        'user_id',
+        'inventory_id',
         'quantity',
         'extract_date',
         'return_date'
@@ -19,11 +19,11 @@ class UserInventories extends Model
 
     public function inventory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Inventory::class, 'inventories_id');
+        return $this->belongsTo(Inventory::class, 'inventory_id');
     }
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
 

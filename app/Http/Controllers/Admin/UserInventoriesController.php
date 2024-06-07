@@ -46,8 +46,8 @@ class UserInventoriesController extends Controller
     {
         $inventory = (
             new StoreUseCase(
-                $request->input('users_id'),
-                $request->input('inventories_id'),
+                $request->input('user_id'),
+                $request->input('inventory_id'),
                 $request->input('quantity'),
                 Carbon::parse($request->input('extract_date')),
                 Carbon::parse($request->input('return_date')),
@@ -84,8 +84,8 @@ class UserInventoriesController extends Controller
         $inventory = (
             new UserInventoriesUpdateUseCase(
                 $assignment,
-                $request->input('users_id'),
-                $request->input('inventories_id'),
+                $request->input('user_id'),
+                $request->input('inventory_id'),
                 $request->input('quantity'),
                 Carbon::parse($request->input('extract_date')),
                 Carbon::parse($request->input('return_date')),

@@ -14,7 +14,7 @@
             @method("put")
             @include('partials.inventories.form')
             <div class="row mt-4">
-                <div class="col-md-10" style="display:flex; justify-content:center; align-items:center;">
+                <div class="col-md-10 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.inventories.index')}}"><span class="px-2">Cancel</span></a>
                     <button class="btn btn-primary ms-2"><span class="px-5">Edit item</span></button>
                 </div>

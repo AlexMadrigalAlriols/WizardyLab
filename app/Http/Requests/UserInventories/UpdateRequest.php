@@ -14,8 +14,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'users_id' => 'required|int|exists:users,id',
-            'inventories_id' => 'required|int|exists:inventories,id',
+            'user_id' => 'required|int|exists:users,id',
+            'inventory_id' => 'required|int|exists:inventories,id',
             'quantity' => 'required|numeric',
             'extract_date' => 'nullable|date',
             'return_date' => 'nullable|date',

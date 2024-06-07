@@ -23,3 +23,15 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+@parent
+<script>
+    $('#inventory_id').change(function() {
+        let stock = $(this).find(':selected').data('stock');
+        $('#quantity').attr('max', stock);
+    });
+
+    $('#inventory_id').trigger('change');
+</script>
+@endsection
