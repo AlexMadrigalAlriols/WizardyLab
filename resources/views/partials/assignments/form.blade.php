@@ -39,7 +39,6 @@
             <input type="date" class="form-control" id="extract_date" name="extract_date" placeholder="Extract date" value="{{ old('extract_date') ?? $assignment->extract_date }}">
             <label for="extract_date">Extract date</label>
         </div>
-
     </div>
     <div class="col-md-5">
         <div class="form-floating mt-3">
