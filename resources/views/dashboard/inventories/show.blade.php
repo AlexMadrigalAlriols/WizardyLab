@@ -80,23 +80,25 @@
 
                                     <div class="col-12 mt-3">
                                         <div class="card bg-transparent">
-                                            <div class="card-header p-4">
-                                                <div class="row">
-                                                    <div class="col-8">
+                                            <div class="card-header p-2 p-md-4">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-7">
                                                         <div>
-                                                            <h4 class="mb-0"><b><i class='bx bx-clipboard'></i>
+                                                            <h4 class="mb-0 hidden-md-down" ><b><i class='bx bx-clipboard'></i>
                                                                     Assignments</b></h4>
                                                             <p class="text-muted mb-0">Assigned {{ $inventory->name }}</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-5">
                                                         <div class="text-end">
-                                                            <div style=" display:flex; justify-content:right">
-                                                                <div class="d-left">
-                                                                    {{ $inventory->remaining_stock }}</div>
-                                                                <div
-                                                                    class="d-right">
-                                                                    {{ $inventory->stock }}</div>
+                                                            <div style=" display:flex; justify-content:right; align-items:center;">
+                                                            <div class="d-flex idea justify-content-around align-items-center flex-1">
+                                                                    <div class="d-left">
+                                                                        {{ $inventory->remaining_stock}}</div>
+                                                                    <div
+                                                                        class="d-right">
+                                                                        {{ $inventory->stock }}</div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -116,7 +118,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($inventory->UsersInventories as $assignment)
+                                                            @foreach ($inventory->UsersInventories->sortBy('return_date')->take(4) as $assignment)
                                                                 <tr class="table-entry align-middle border-bottom">
                                                                     <td colspan="2" class="width-2">
                                                                         <a
@@ -131,7 +133,7 @@
                                                                         <span>{{ $assignment->extract_date }}</span>
                                                                     </td>
                                                                     <td>
-                                                                        <span>{{ $assignment->return_date }}</span>
+                                                                        <span class="{{ $assignment->return_date < now()->addDays(3) ? 'text-danger' : 'text-muted' }}">{{ $assignment->return_date }}</span>
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <div class="dropdown">
@@ -144,10 +146,6 @@
                                                                             </button>
                                                                             <ul class="dropdown-menu"
                                                                                 aria-labelledby="dropdownMenuButton">
-                                                                                <li><a class="dropdown-item"
-                                                                                        href="{{ route('dashboard.tasks.show', $assignment->id) }}"><i
-                                                                                            class='bx bx-show'></i> View</a>
-                                                                                </li>
                                                                                 <li><a class="dropdown-item"
                                                                                         href="{{ route('dashboard.tasks.edit', $assignment->id) }}"><i
                                                                                             class='bx bx-edit'></i> Edit</a>
@@ -185,7 +183,7 @@
                                                         <tfoot>
                                                             <tr>
                                                                 <td colspan="9" class="py-3 text-end">
-                                                                    <a href="{{ route('dashboard.inventories.index') }}">View
+                                                                    <a href="{{ route('dashboard.assignments.index') }}">View
                                                                         All ></a>
                                                                 </td>
                                                             </tr>
