@@ -1,6 +1,7 @@
 @extends('layouts.dashboard', ['section' => 'Items'])
 
 @section('content')
+<link rel="stylesheet" href="inventories.css">
 <div class="row h-100">
     <div class="col-md-11 border-end">
         <div class="mt-2">
@@ -45,7 +46,7 @@
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <div class="row">
-                            <p class="h2">
+                            <p class="h3 mb-4">
                                 <b><i class='bx bx-info-circle' ></i> Details <span class="fs-6 text-muted">({{$inventory->created_at->format('Y/m/d')}})</span></b>
                             </p>
 
@@ -77,7 +78,7 @@
                                                     <div class="text-end">
                                                         <div style=" display:flex; justify-content:right">
                                                             <div style="width:50px;height: 50px; display:flex; justify-content:center; align-items:center; border-top-left-radius: 50px;
-                                                            border-bottom-left-radius: 50px; background-color:#374df1; color:white;">{{$inventory->stock-$inventory->users_inventories->sum('quantity')}}</div><div style="width:50px;height: 50px; display:flex; justify-content:center; align-items:center; border-top-right-radius: 50px;
+                                                            border-bottom-left-radius: 50px; background-color:#374df1; color:white;">{{$inventory->remaining_stock}}</div><div style="width:50px;height: 50px; display:flex; justify-content:center; align-items:center; border-top-right-radius: 50px;
                                                             border-bottom-right-radius: 50px; background-color:transparent; color:#374df1; border: 2px solid #374df1;">{{$inventory->stock}}</div>
                                                             </div>
                                                         </div>
@@ -98,10 +99,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($inventory->users_inventories as $assignment)
+                                                        @foreach ($inventory->UsersInventories as $assignment)
                                                             <tr class="table-entry align-middle border-bottom">
                                                                 <td colspan="2" class="width-2">
-                                                                    <a href="{{route('dashboard.clients.show',$assignment->user?->id)}}"><span>{{$assignment->user?->name}}</span></a>
+                                                                    <a href="{{route('dashboard.clients.show',$assignment->user?->id)}}"><span class="text-capitalize">{{$assignment->user?->name}}</span></a>
                                                                 </td>
                                                                 <td></td>
                                                                 <td>
@@ -147,7 +148,7 @@
                                                             </tr>
                                                         @endforeach
 
-                                                        @if (!count($inventory -> users_inventories))
+                                                        @if (!count($inventory -> UsersInventories))
                                                             <tr>
                                                                 <td colspan="7" class="text-center py-5">
                                                                     <span class="text-muted">No assignments found!</span>
@@ -177,31 +178,5 @@
 </div>
 @endsection
 
-@section('scripts')
-<script>
-const xValues = ['Paid', 'Unpaid', 'Inprogress'];
-const yValues = [5, 2, 10];
-var barColors = [
-  "#b91d47",
-  "#00aba9",
-  "#2b5797",
-  "#e8c3b9",
-  "#1e7145"
-];
 
-new Chart("activityChart", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    legend: false,
-    datasets: [{
-      backgroundColor: barColors,
-      borderColor: "rgba(0,0,255,0.1)",
-      data: yValues,
-      fill: false
-    }]
-  }
-});
-</script>
-@endsection
 

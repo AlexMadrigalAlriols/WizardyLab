@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\InventoriesController;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
@@ -15,8 +15,8 @@ use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Models\Inventories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +33,11 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/dashboard');
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-    Route::resource('inventories', InventoriesController::class);
+
+    //Inventory
+    Route::resource('inventories', InventoryController::class);
+    Route::resource('assignments', UserInventoriesController::class);
+
     //Tasks
     Route::resource('tasks', TaskController::class);
     Route::get('/tasks/{task}/update-status/{status}', [TaskController::class, 'updateStatus'])->name('tasks.update-status');

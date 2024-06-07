@@ -117,9 +117,9 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
-    public function users_inventories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function UsersInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Users_inventories::class);
+        return $this->hasMany(UsersInventories::class);
     }
 
 }

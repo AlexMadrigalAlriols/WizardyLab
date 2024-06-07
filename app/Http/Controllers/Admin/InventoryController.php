@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Inventories\StoreRequest;
-use App\Models\Inventories;
+use App\Http\Requests\Inventories\U;
+use App\Http\Requests\Inventories\UpdateRequest;
+use App\Models\Inventory;
+use App\UseCases\AuditLogs\StoreUseCase;
+use App\UseCases\Inventories\StoreUseCase as InventoriesStoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
 use Illuminate\Http\Request;
 
-class InventoriesController extends Controller
+class InventoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $inventories = Inventories::all();
+        $inventories = Inventory::all();
 
         return view('dashboard.inventories.index', compact('inventories'));
     }
@@ -25,7 +29,7 @@ class InventoriesController extends Controller
      */
     public function create()
     {
-        $inventory = new Inventories();
+        $inventory = new Inventory();
 
         return view(
             'dashboard.inventories.create',
@@ -38,17 +42,18 @@ class InventoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $item = new Inventories();
-        $item->name = $request->input('name');
-        $item->stock = $request->input('stock');
-        $item->reference = $request->input('reference');
-        $item->description = $request->input('description');
-        $item->price = $request->input('price');
-        $item->shop_place = $request->input('shop_place');
-        $item->save();
-
+        $inventory = (
+            new InventoriesStoreUseCase(
+                $request->input('name'),
+                $request->input('reference'),
+                $request->input('stock'),
+                $request->input('description'),
+                $request->input('price'),
+                $request->input('shop_place'),
+            )
+        )->action();
         toast('Item created', 'success');
         return redirect()->route('dashboard.inventories.index');
     }
@@ -57,7 +62,7 @@ class InventoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(inventories $inventory)
+    public function show(Inventory $inventory)
     {
 
         return view('dashboard.inventories.show', compact('inventory'));
@@ -66,7 +71,7 @@ class InventoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Inventories $inventory)
+    public function edit(Inventory $inventory)
     {
         return view('dashboard.inventories.edit', compact('inventory'));
     }
@@ -74,7 +79,7 @@ class InventoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Inventories $inventory)
+    public function update(UpdateRequest $request, Inventory $inventory)
     {
         $inventory = (
             new UpdateUseCase(
@@ -94,7 +99,7 @@ class InventoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inventories $inventory)
+    public function destroy(Inventory $inventory)
     {
         $inventory->delete();
         toast('Item deleted', 'success');

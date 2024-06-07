@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_inventories', function (Blueprint $table) {
+        Schema::create('user_inventories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('inventory_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
-            $table->date('extract_date');
-            $table->date('return_date');
+            $table->date('extract_date') -> nullable();
+            $table->date('return_date') -> nullable();
             $table->timestamps();
         });
     }

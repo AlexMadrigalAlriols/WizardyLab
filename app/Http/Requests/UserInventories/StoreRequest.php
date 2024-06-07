@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Inventories;
+namespace App\Http\Requests\UserInventories;
 
-use App\Models\Inventory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -18,12 +17,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'reference' => 'required|string',
-            'stock' => 'required|numeric',
-            'description' => 'nullable|string',
-            'price' => 'nullable|numeric',
-            'shop_place' => 'nullable|string',
+            'users_id' => 'required|int|exists:users,id',
+            'inventories_id' => 'required|int|exists:inventories,id',
+            'quantity' => 'required|numeric',
+            'extract_date' => 'nullable|date',
+            'return_date' => 'nullable|date',
         ];
     }
 }

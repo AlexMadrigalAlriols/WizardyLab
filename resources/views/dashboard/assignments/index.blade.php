@@ -1,13 +1,12 @@
-
-@extends('layouts.dashboard', ['section' => 'Items'])
+@extends('layouts.dashboard', ['section' => 'Assignments'])
 
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Inventory</b><span class="text-muted">({{count($inventories)}})</span>
+            <b>Assignments</b><span class="text-muted">({{ count($UserInventories) }})</span>
         </span>
-        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.inventories.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Item</span>
+        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{ route('dashboard.assignments.create') }}">
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Assignment</span>
         </a>
     </div>
 
@@ -37,38 +36,51 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Reference</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">CREATED</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Extracted</th>
+                    <th scope="col">Return Date</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inventories as $inventory)
+                @foreach ($UserInventories as $assignment)
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
                             <input type="checkbox" name="checkbox[]">
                         </td>
-                        <td><a href="{{route('dashboard.inventories.show', $inventory->id)}}" class="text-decoration-none text-capitalize"><b>{{ $inventory->name }}</b></a></td>
-                        <td>{{$inventory->reference}}</td>
-                        <td class="text-muted">{{ $inventory->stock }}</td>
-                        <td>{{$inventory->created_at->format('Y-m-d')}}</td>
+                        <td><a href="{{ route('dashboard.inventories.show', $assignment->user?->id)}}"
+                                class="text-decoration-none text-capitalize">
+                                <div class="avatar avatar-s"><img src="{{$assignment->user->profile_img}}" alt="user_image" class="rounded-circle"></div>
+                            </a></td>
+                        <td><a href="{{route('dashboard.assignments.show', $assignment->id)}}">{{$assignment->inventory->name}}</a></td>
+                        <td class="text-muted">{{ $assignment->quantity }}</td>
+                        <td>{{ $assignment->extract_date}}</td>
+                        <td class="{{ $assignment->return_date < now() ? 'text-danger' : 'text-muted' }}">{{ $assignment->return_date}}</td>
                         <td class="text-center">
                             <div class="dropdown">
-                                <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <button class="btn btn-options" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.inventories.show', $inventory->id)}}"><i class='bx bx-show' ></i> View</a></li>
-                                    <li><a class="dropdown-item" href="{{route('dashboard.inventories.edit', $inventory->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('dashboard.assignments.show', $assignment->id) }}"><i
+                                                class='bx bx-show'></i> View</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('dashboard.assignments.edit', $assignment->id) }}"><i
+                                                class='bx bx-edit'></i> Edit</a></li>
                                     <li>
-                                        <form action="{{route('dashboard.inventories.destroy', $inventory->id)}}" method="POST">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('dashboard.assignments.destroy', $assignment->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                            <button class="dropdown-item text-danger"><i class='bx bx-trash'></i>
+                                                Remove</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -77,7 +89,7 @@
                     </tr>
                 @endforeach
 
-                @if(!count($inventories))
+                @if (!count($UserInventories))
                     <tr>
                         <td colspan="9" class="text-center py-5">
                             <span class="text-muted">No items found!</span>
@@ -91,14 +103,14 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-muted">
                                 {{ count($inventories) }} to {{$pagination['take'] ?? count($inventories)}} items of <b>{{ $total }}</b>
-                                @if(request('page') != 'all')
+                                @if (request('page') != 'all')
                                     <span class="ms-4">
                                         <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>
                                     </span>
                                 @endif
                             </div>
                             <div>
-                                @if(request('page') != 'all')
+                                @if (request('page') != 'all')
                                     <ul class="pagination m-0">
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) > 1 ? '' : 'disabled'}}">
                                             <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-left' ></i></a>

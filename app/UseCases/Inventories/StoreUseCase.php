@@ -5,10 +5,9 @@ namespace App\UseCases\Inventories;
 use App\Models\Inventory;
 use App\UseCases\Core\UseCase;
 
-class UpdateUseCase extends UseCase
+class StoreUseCase extends UseCase
 {
     public function __construct(
-        protected Inventory $inventory,
         protected string $name,
         protected string $reference,
         protected int $stock,
@@ -20,7 +19,7 @@ class UpdateUseCase extends UseCase
 
     public function action(): Inventory
     {
-        $this->inventory->update([
+        $inventory = Inventory::create([
             'name' => $this->name,
             'reference' => $this->reference,
             'stock' => $this->stock,
@@ -29,6 +28,6 @@ class UpdateUseCase extends UseCase
             'store_place' => $this->store_place,
         ]);
 
-        return $this->inventory;
+        return $inventory;
     }
 }

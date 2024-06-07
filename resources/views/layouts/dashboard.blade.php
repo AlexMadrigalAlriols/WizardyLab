@@ -246,7 +246,7 @@
                                 <span class="nav_name">Items</span>
                             </a>
                             <hr>
-                            <a href="{{route('dashboard.tasks.index')}}" class="nav_link {{ $section == 'Assignments' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.assignments.index')}}" class="nav_link {{ $section == 'Assignments' ? 'active' : ''}}">
                                 <i class="fa-solid fa-inbox"></i>
                                 <span class="nav_name">Assignments</span>
                             </a>
