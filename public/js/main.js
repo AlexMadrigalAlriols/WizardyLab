@@ -21,6 +21,11 @@ $(document).ready(function () {
         theme: 'flatly'
     });
 
+    $('.colorpicker').spectrum({
+        preferredFormat: "hex",
+        showAlpha: true
+    });
+
     initializeFlatPick();
 });
 

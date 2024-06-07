@@ -31,12 +31,12 @@
 <div class="row mt-3">
     <div class="col-md-6">
         <label for="background" class="form-label">Background Color</label>
-        <input type="color" name="background" class="form-control form-control-color" id="background"
+        <input type="text" name="background" class="form-control colorpicker" id="background"
             value="{{ old('background') ?? ($leaveType->data['background'] ?? '#000000') }}" title="Choose your color">
     </div>
     <div class="col-md-6">
         <label for="color" class="form-label">Text Color</label>
-        <input type="color" name="color" class="form-control form-control-color" id="color"
+        <input type="text" name="color" class="form-control colorpicker" id="color"
             value="{{ old('color') ?? ($leaveType->data['color'] ?? '#FFFFFF') }}" title="Choose your color">
     </div>
 </div>
