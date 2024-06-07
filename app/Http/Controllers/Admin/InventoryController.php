@@ -103,6 +103,6 @@ class InventoryController extends Controller
     {
         $inventory->delete();
         toast('Item deleted', 'success');
-        return back();
+        return redirect()->route('dashboard.inventories.index');
     }
 }

@@ -9,7 +9,8 @@
                         <span class="h2 mt-1">
                             <a href="{{ route('dashboard.inventories.index') }}" class="btn btn-outline-primary">
                                 <span class="px-1">
-                                    << /span>
+                                    <i class='bx bx-left-arrow-alt'></i>
+                                    </span>
                             </a>
                             <b class="text-capitalize">{{ $inventory->name }}</b>
                         </span>
@@ -31,7 +32,7 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <form action="{{ route('dashboard.inventories.destroy', $inventory->id) }}"
+                                        <form action="{{ route('dashboard.inventories.destroy', $inventory->id)}}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -91,13 +92,10 @@
                                                     <div class="col-4">
                                                         <div class="text-end">
                                                             <div style=" display:flex; justify-content:right">
-                                                                <div
-                                                                    style="width:50px;height: 50px; display:flex; justify-content:center; align-items:center; border-top-left-radius: 50px;
-                                                            border-bottom-left-radius: 50px; background-color:#374df1; color:white;">
+                                                                <div class="d-left">
                                                                     {{ $inventory->remaining_stock }}</div>
                                                                 <div
-                                                                    style="width:50px;height: 50px; display:flex; justify-content:center; align-items:center; border-top-right-radius: 50px;
-                                                            border-bottom-right-radius: 50px; background-color:transparent; color:#374df1; border: 2px solid #374df1;">
+                                                                    class="d-right">
                                                                     {{ $inventory->stock }}</div>
                                                             </div>
                                                         </div>
