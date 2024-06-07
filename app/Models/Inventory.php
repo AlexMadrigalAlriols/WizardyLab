@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     use HasFactory;
-
+    public const PAGE_SIZE = 10;
     protected $fillable = [
         'name',
         'stock',

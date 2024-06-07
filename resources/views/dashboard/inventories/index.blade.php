@@ -85,12 +85,12 @@
                     </tr>
                 @endif
             </tbody>
-            {{-- <tfoot>
+            <tfoot>
                 <tr>
                     <td colspan="9" class="py-4 border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-muted">
-                                {{ count($inventories) }} to {{$pagination['take'] ?? count($inventories)}} items of <b>{{ $total }}</b>
+                                {{ count($inventories) }} to {{$pagination['take'] ?? $counters['total']}} items of <b>{{ $counters['total'] }}</b>
                                 @if(request('page') != 'all')
                                     <span class="ms-4">
                                         <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>
@@ -101,15 +101,15 @@
                                 @if(request('page') != 'all')
                                     <ul class="pagination m-0">
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) > 1 ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-left' ></i></a>
+                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1)}}"><i class='bx bx-chevron-left' ></i></a>
                                         </li>
                                         @for ($page = 1; $page <= $pagination['pages']; $page++)
                                             <li class="page-item" aria-current="page">
-                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page . (request('status') ? '&status=' . request('status') : '')}}"><b>{{$page}}</b></a>
+                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page}}"><b>{{$page}}</b></a>
                                             </li>
                                         @endfor
                                         <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) != $pagination['pages'] ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-right'></i></a>
+                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1)}}"><i class='bx bx-chevron-right'></i></a>
                                         </li>
                                     </ul>
                                 @endif
@@ -117,7 +117,7 @@
                         </div>
                     </td>
                 </tr>
-            </tfoot> --}}
+            </tfoot>
         </table>
     </div>
 @endsection

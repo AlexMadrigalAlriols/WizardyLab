@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Inventories\StoreRequest;
 use App\Http\Requests\Inventories\U;
@@ -17,11 +18,16 @@ class InventoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $inventories = Inventory::all();
+        $query = Inventory::query();
 
-        return view('dashboard.inventories.index', compact('inventories'));
+        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Inventory::class);
+
+        $inventories = $query->get();
+        $counters = $this->getInventoriesCounters();
+
+        return view('dashboard.inventories.index', compact('inventories', 'pagination', 'counters'));
     }
 
     /**
@@ -105,4 +111,15 @@ class InventoryController extends Controller
         toast('Item deleted', 'success');
         return redirect()->route('dashboard.inventories.index');
     }
+    private function getInventoriesCounters(): array
+    {
+    $inventories = Inventory::all();
+
+    $counters = [
+        'total' => $inventories->count(),
+    ];
+
+    return $counters;
+    }
 }
+
