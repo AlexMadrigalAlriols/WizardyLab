@@ -336,13 +336,16 @@ class TaskController extends Controller
 
     private function saveTaskFiles(Task $task, Request $request)
     {
+        $extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'zip', 'rar', '7z'];
+
         if ($request->session()->has('dropzone_tasks_temp_paths')) {
             foreach ($request->session()->get('dropzone_tasks_temp_paths', []) as $idx => $tempPath) {
                 [$permanentPath, $originalName, $storaged] = FileSystemHelper::saveFile(
                     $request,
                     $tempPath,
                     'dropzone_tasks_temp_paths',
-                    'task_files/' . $task->id . '/'
+                    'task_files/' . $task->id . '/',
+                    $extensions
                 );
 
                 if ($storaged) {

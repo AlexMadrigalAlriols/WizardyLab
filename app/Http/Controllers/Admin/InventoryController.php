@@ -124,13 +124,16 @@ class InventoryController extends Controller
 
     private function saveFiles(Inventory $inventory, Request $request)
     {
+        $extensions = ['jpg', 'jpeg', 'png', 'gif'];
+
         if ($request->session()->has('dropzone_inventories_temp_paths')) {
             foreach ($request->session()->get('dropzone_inventories_temp_paths', []) as $idx => $tempPath) {
                 [$permanentPath, $originalName, $storaged] = FileSystemHelper::saveFile(
                     $request,
                     $tempPath,
                     'dropzone_inventories_temp_paths',
-                    'item_files/' . $inventory->id . '/'
+                    'item_files/' . $inventory->id . '/',
+                    $extensions
                 );
 
                 if ($storaged) {

@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Department;
+use App\Models\InventoryFile;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskFile;
+use App\Observers\DepartmentObserver;
+use App\Observers\InventoryFilesObserver;
 use App\Observers\ProjectObserver;
 use App\Observers\TaskFilesObserver;
 use App\Observers\TaskObserver;
@@ -17,9 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        TaskFile::observe(TaskFilesObserver::class);
-        Task::observe(TaskObserver::class);
-        Project::observe(ProjectObserver::class);
+        //
     }
 
     /**
@@ -27,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        TaskFile::observe(TaskFilesObserver::class);
+        Task::observe(TaskObserver::class);
+        Project::observe(ProjectObserver::class);
+        Department::observe(DepartmentObserver::class);
+        InventoryFile::observe(InventoryFilesObserver::class);
     }
 }

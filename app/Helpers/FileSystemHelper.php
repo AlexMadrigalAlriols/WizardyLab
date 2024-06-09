@@ -33,12 +33,17 @@ class FileSystemHelper {
         Request $request,
         string $tempPath,
         string $session_name = 'DROPZONE_FILES_TEMP_PATHS',
-        $permanentPath = 'files/'
+        $permanentPath = 'files/',
+        ?array $extension = null
     ) {
         $originalName = pathinfo($tempPath, PATHINFO_BASENAME);
         $extension = pathinfo($tempPath, PATHINFO_EXTENSION);
         $fileName = uniqid() . '.' . $extension;
         $permanentPath = $permanentPath . $fileName;
+
+        if(!is_null($$extension) && !in_array($extension, $extension)) {
+            return [null, null, false];
+        }
 
         $storaged = Storage::disk('public')->put($permanentPath, Storage::disk('local')->get($tempPath));
         Storage::disk('local')->delete($tempPath);

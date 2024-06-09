@@ -2,16 +2,16 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" maxlength="40" id="name" name="name" placeholder="Name" value="{{ old('name') ?? $department->name }}">
+            <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" maxlength="30" id="name" name="name" placeholder="Name" value="{{ old('name') ?? $department->name }}">
             <label for="title">Name <span class="text-danger">*</span></label>
         </div>
 
         <div class="mt-0 text-end">
-            <span class="text-muted"><span id="nameCountChar">0</span>/40</span>
+            <span class="text-muted"><span id="nameCountChar">0</span>/30</span>
         </div>
 
-        {{-- @if ($errors->has('name'))
+        @if ($errors->has('name'))
             <span class="text-danger">{{ $errors->first('name') }}</span>
-        @endif --}}
+        @endif
     </div>
 </div>
