@@ -42,12 +42,33 @@
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
 
-<body class="body-pd" id="body-pd">
+@php
+    use Jenssegers\Agent\Facades\Agent;
+
+    $isPhone = Agent::isMobile();
+@endphp
+
+<body class="{{$isPhone ? '' : 'body-pd'}}" id="body-pd">
     @include('sweetalert::alert')
-    <header class="header header-pd body-pd" id="header">
-        <div class="header_toggle show" id="header-toggle">
-            <i class='bx bx-menu bx-x' id="header-toggle-icon"></i>
-            <b class="ms-3 bc-header-text">Dashboard</b>
+    <header class="header {{$isPhone ? '' : 'header-pd body-pd'}}" id="header">
+        <div class="header_toggle {{$isPhone ? '' : 'show'}}" id="header-toggle">
+            <i class='bx {{$isPhone ? 'bx-menu' : 'bx-menu bx-x '}}' id="header-toggle-icon"></i>
+
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="d-inline-block ms-3 mt-1 bc-header-text">
+                <ol class="breadcrumb mb-0 fs-5">
+                    @foreach ($breadcrumbs ?? [['label' => $section, 'url' => '']] as $idx => $bc)
+                        @if ($idx == 0)
+                            <li class="breadcrumb-item fs-4">
+                                <a href="{{ $bc['url'] }}" class="text-decoration-none text-dark"><b>{{ $bc['label'] }}</b></a>
+                            </li>
+                        @else
+                            <li class="breadcrumb-item mt-1">
+                                <a href="{{ $bc['url'] }}" class="text-decoration-none text-muted"><b>{{ $bc['label'] }}</b></a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ol>
+            </nav>
         </div>
         <div>
             <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="Attendance" data-bs-placement="bottom">
@@ -153,7 +174,7 @@
             </div>
         </div>
     </header>
-    <div class="l-navbar show" id="nav-bar">
+    <div class="l-navbar {{$isPhone ? '' : 'show'}}" id="nav-bar">
         <nav class="nav">
             <div class="scrollbar">
                 <a href="#" class="nav_logo"><img src="{{asset('img/LogoLetters.png')}}" width="175px"></a>
@@ -297,9 +318,7 @@
             </div>
         </nav>
     </div>
-    <div class="bc-text px-3 py-2">
-        <b class="h4">Dashboard</b> <span class="text-muted ms-3 mt-1">Home > Dashboard</span>
-    </div>
+
     @yield('content_with_padding')
     <div class="content height-100">
         <div class="main" id="app">
