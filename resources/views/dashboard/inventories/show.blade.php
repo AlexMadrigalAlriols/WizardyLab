@@ -73,9 +73,6 @@
                                         </span>
                                     </p>
 
-                                    @foreach ($inventory->inventory_files as $file)
-                                        <img src="{{ asset('storage/' . $file->path) }}" width="200" alt="{{$file->title}}">
-                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -202,6 +199,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row mt-5 border-top p-4" style="min-height: 250px;">
+                <b class="fs-5"><i class='bx bx-image-alt' ></i></i> Images</b>
+                <div class="col-md-12 gap-2 d-flex overflow-x-scroll scrollbar-hidden p-2">
+                    @foreach ($inventory->inventory_files as $file)
+                    <img class=" border" style="height: 200px" src="{{ asset('storage/' . $file->path) }}" alt="{{$file->title}}">
+                    @endforeach
+
+                    @if (!count($inventory->inventory_files))
+                        <div class="d-flex justify-content-center align-items-center w-100 h-100">No image yet!</div>
+                    @endif
                 </div>
             </div>
         </div>

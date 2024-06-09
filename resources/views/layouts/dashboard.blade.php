@@ -282,6 +282,11 @@
                                 <span class="nav_name">{{__('crud.status.title')}}</span>
                             </a>
                             <hr>
+                            <a href="{{route('dashboard.departments.index')}}" class="nav_link {{ $section == 'Departments' ? 'active' : ''}}">
+                                <i class='bx bx-folder-open nav_icon'></i>
+                                <span class="nav_name">Departments</span>
+                            </a>
+                            <hr>
                             <a href="{{route('dashboard.labels.index')}}" class="nav_link {{ $section == 'Labels' ? 'active' : ''}}">
                                 <i class='bx bx-label nav_icon'></i>
                                 <span class="nav_name">{{__('crud.labels.title')}}</span>

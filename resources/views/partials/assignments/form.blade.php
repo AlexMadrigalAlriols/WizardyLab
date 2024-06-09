@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row assignment clonar">
     <div class="col-md-7">
         <div class="form-floating mt-3">
             <select class="form-select select2" id="inventory_id" name="inventory_id">

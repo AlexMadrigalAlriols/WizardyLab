@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserInventories extends Model
 {
     use HasFactory;
+    public const PAGE_SIZE = 10;
 
     protected $fillable = [
         'user_id',

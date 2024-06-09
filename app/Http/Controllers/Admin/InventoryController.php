@@ -9,6 +9,8 @@ use App\Http\Requests\Inventories\StoreRequest;
 use App\Http\Requests\Inventories\U;
 use App\Http\Requests\Inventories\UpdateRequest;
 use App\Models\Inventory;
+use App\Models\InventoryFile;
+use App\Models\TaskFile;
 use App\UseCases\AuditLogs\StoreUseCase;
 use App\UseCases\Inventories\StoreUseCase as InventoriesStoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
@@ -163,6 +165,18 @@ class InventoryController extends Controller
         ];
 
         return $counters;
+    }
+
+    public function downloadFile(InventoryFile $taskFile)
+    {
+        return Storage::disk('public')->download($taskFile->path, $taskFile->title);
+    }
+    public function deleteFile(Request $request, InventoryFile $taskFile)
+    {
+        $taskFile->delete();
+
+        toast('File removed', 'success');
+        return back();
     }
 }
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -39,7 +40,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     //Inventory
     Route::resource('inventories', InventoryController::class);
     Route::post('/inventories-files/upload_file', [InventoryController::class, 'uploadFile'])->name('inventories.upload_file');
+    Route::get('/inventories-files/download_file/{taskFile}', [InventoryController::class, 'downloadFile'])->name('inventories.download_file');
+    Route::get('/inventories-files/delete_file/{taskFile}', [InventoryController::class, 'deleteFile'])->name('inventories.delete_file');
     Route::resource('assignments', UserInventoriesController::class);
+
+    //Departments
+    Route::resource('departments', DepartmentController::class);
 
     //Tasks
     Route::resource('tasks', TaskController::class);

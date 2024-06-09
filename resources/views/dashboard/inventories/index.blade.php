@@ -37,6 +37,7 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
+                    <th scope="col"></th>
                     <th scope="col">Description</th>
                     <th scope="col">Reference</th>
                     <th scope="col">Stock</th>
@@ -49,6 +50,11 @@
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
                             <input type="checkbox" name="checkbox[]">
+                        </td>
+                        <td>
+                            @if ($inventory->getCoverAttribute())
+                            <img class="img-thumbnail" style="max-width: 100px; aspect-ratio: 1/1; object-fit:cover;" src="{{$inventory->getCoverAttribute()}}" alt="">
+                            @endif
                         </td>
                         <td><a href="{{route('dashboard.inventories.show', $inventory->id)}}" class="text-decoration-none text-capitalize"><b>{{ $inventory->name }}</b></a></td>
                         <td>{{$inventory->reference}}</td>

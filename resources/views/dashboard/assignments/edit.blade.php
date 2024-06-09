@@ -33,5 +33,7 @@
     });
 
     $('#inventory_id').trigger('change');
+
+
 </script>
 @endsection

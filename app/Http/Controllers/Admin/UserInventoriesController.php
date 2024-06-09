@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\FileSystemHelper;
+use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserInventories\StoreRequest;
 use App\Http\Requests\UserInventories\UpdateRequest;
 use App\Models\Inventory;
+use App\Models\InventoryFile;
 use App\Models\User;
 use App\Models\UserInventories;
 use App\UseCases\Inventories\UpdateUseCase;
@@ -20,10 +22,15 @@ class UserInventoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(request $request)
     {
-        $UserInventories = UserInventories::all();
-        return view("dashboard.assignments.index", compact('UserInventories'));
+        $query = UserInventories::query();
+
+        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Inventory::class);
+        $UserInventories = $query->get();
+        $counters = $this->getInventoriesCounters();
+
+        return view('dashboard.assignments.index', compact('UserInventories', 'pagination', 'counters'));
     }
 
     /**
@@ -106,4 +113,16 @@ class UserInventoriesController extends Controller
 
         return redirect()->route('dashboard.assignments.index');
     }
+
+        private function getInventoriesCounters(): array
+    {
+        $inventories = UserInventories::all();
+
+        $counters = [
+            'total' => $inventories->count(),
+        ];
+
+        return $counters;
+    }
+
 }

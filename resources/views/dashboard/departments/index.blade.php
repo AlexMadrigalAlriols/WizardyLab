@@ -1,12 +1,12 @@
-@extends('layouts.dashboard', ['section' => 'Assignments'])
+@extends('layouts.dashboard', ['section' => 'departments'])
 
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Assignments</b><span class="text-muted">({{ count($UserInventories) }})</span>
+            <b>Departments</b><span class="text-muted">({{count($departments)}})</span>
         </span>
-        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{ route('dashboard.assignments.create') }}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Assignment</span>
+        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.departments.create')}}">
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.companies.title_singular')}}</span>
         </a>
     </div>
 
@@ -22,7 +22,7 @@
                             <div class="search-container w-100">
                                 <i class="bx bx-search search-icon"></i>
                                 <input type="text" class="search-input" id="search-input" name="search_input"
-                                    placeholder="Search items">
+                                    placeholder="Search Companies">
                             </div>
                         </div>
                     </div>
@@ -36,51 +36,33 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
-                    <th scope="col">User</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Extracted</th>
-                    <th scope="col">Return Date</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">CREATED AT</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($UserInventories as $assignment)
+                @foreach ($departments as $department)
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
                             <input type="checkbox" name="checkbox[]">
                         </td>
-                        <td><a href="{{ route('dashboard.inventories.show', $assignment->user?->id)}}"
-                                class="text-decoration-none text-capitalize">
-                                <div class="avatar avatar-s"><img src="{{$assignment->user->profile_img}}" alt="user_image" class="rounded-circle"></div>
-                            </a></td>
-                        <td><a href="{{route('dashboard.assignments.show', $assignment->id)}}">{{$assignment->inventory->name}}</a></td>
-                        <td class="text-muted">{{ $assignment->quantity }}</td>
-                        <td>{{ $assignment->extract_date}}</td>
-                        <td class="{{ $assignment->return_date < now() ? 'text-danger' : 'text-muted' }}">{{ $assignment->return_date}}</td>
+                        <td><b>{{ $department->name }}</b></td>
+                        <td>{{ $department->created_at->format('Y-m-d') }}</td>
                         <td class="text-center">
                             <div class="dropdown">
-                                <button class="btn btn-options" type="button" id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item"
-                                            href="{{ route('dashboard.assignments.show', $assignment->id) }}"><i
-                                                class='bx bx-show'></i> View</a></li>
-                                    <li><a class="dropdown-item"
-                                            href="{{ route('dashboard.assignments.edit', $assignment->id) }}"><i
-                                                class='bx bx-edit'></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.departments.edit', $department->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <form action="{{ route('dashboard.assignments.destroy', $assignment->id) }}"
-                                            method="POST">
+                                        <form action="{{route('dashboard.departments.destroy', $department->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="dropdown-item text-danger"><i class='bx bx-trash'></i>
-                                                Remove</button>
+                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -89,10 +71,10 @@
                     </tr>
                 @endforeach
 
-                @if (!count($UserInventories))
+                @if(!count($departments))
                     <tr>
                         <td colspan="9" class="text-center py-5">
-                            <span class="text-muted">No items found!</span>
+                            <span class="text-muted">No companies found!</span>
                         </td>
                     </tr>
                 @endif
@@ -102,7 +84,7 @@
                     <td colspan="9" class="py-4 border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-muted">
-                                {{ count($UserInventories) }} to {{$pagination['take'] ?? $counters['total']}} items of <b>{{ $counters['total'] }}</b>
+                                {{ count($departments) }} to {{$pagination['take'] ?? count($departments)}} items of <b>{{ $total }}</b>
                                 @if(request('page') != 'all')
                                     <span class="ms-4">
                                         <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>
