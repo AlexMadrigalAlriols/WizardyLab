@@ -16,7 +16,7 @@
             <div class="row mt-4">
                 <div class="col-md-10 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.inventories.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary ms-2"><span class="px-5">Edit item</span></button>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">Edit item</span></button>
                 </div>
             </div>
         </form>
@@ -46,7 +46,6 @@
                         @foreach ($inventory->inventory_files->skip(ceil($inventory->inventory_files->count()/2)) as $file)
                             <a style="z-index:200; width: 100%" class="text-decoration-none" href="{{route("dashboard.inventories.delete_file", $file->id)}}">
                                     <div style="height:{{mt_rand(200, 400)}}px; width: 100%; border-radius:10px" class="galery-item borde m-1">
-
                                                 <img style="height:100%; width:100%; object-fit:cover; border-radius:10px" src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
                                         <div class="trash-icon" style="color:black;"><i class='bx bx-trash'></i></div>
                                     </div>
@@ -78,6 +77,17 @@
                 true
             );
         });
+
+        var obligatoryFields = ['name', 'reference', 'stock'];
+        var limitedCharFields = ['name', 'reference'];
+
+        $('input, select, textarea').each(function() {
+            $(this).on('keyup', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+        });
+
+        countChars(limitedCharFields);
 
     </script>
 

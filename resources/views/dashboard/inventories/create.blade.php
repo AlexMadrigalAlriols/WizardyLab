@@ -15,7 +15,7 @@
             <div class="row mt-4">
                 <div class="col-md-10 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.inventories.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary ms-2"><span class="px-5">Create item</span></button>
+                    <button class="btn btn-primary ms-2" id="submitBtn"  disabled><span class="px-5">Create item</span></button>
                 </div>
             </div>
         </form>
@@ -36,6 +36,17 @@
                 true
             );
         });
+
+        var obligatoryFields = ['name', 'reference', 'stock'];
+        var limitedCharFields = ['name', 'reference'];
+
+        $('input, select, textarea').each(function() {
+            $(this).on('keyup', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+        });
+
+        countChars(limitedCharFields);
 
     </script>
 

@@ -2,16 +2,22 @@
 <div class="row">
     <div class="col-md-10">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ old('name') ?? $inventory->name }}">
+            <input type="text" class="form-control" id="name" name="name" maxlength="20" placeholder="Name" value="{{ old('name') ?? $inventory->name }}">
             <label for="name">Name <span class="text-danger">*</span></label>
+        </div>
+        <div class="mt-0 text-end">
+            <span class="text-muted"><span id="nameCountChar">0</span>/20</span>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-7">
         <div class="form-floating mt-3">
-            <input type="text" class="form-control" id="reference" name="reference" placeholder="Reference" value="{{ old('reference') ?? $inventory->reference }}">
+            <input type="text" class="form-control" id="reference" name="reference" maxlength="30" placeholder="Reference" value="{{ old('reference') ?? $inventory->reference }}">
             <label for="reference">Reference <span class="text-danger">*</span></label>
+        </div>
+        <div class="mt-0 text-end">
+            <span class="text-muted"><span id="referenceCountChar">0</span>/30</span>
         </div>
     </div>
     <div class="col-md-3">

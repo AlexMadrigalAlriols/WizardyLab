@@ -24,3 +24,18 @@
 </div>
 @endsection
 
+@section('scripts')
+    @parent
+    <script>
+        var obligatoryFields = ['name'];
+        var limitedCharFields = ['name'];
+
+        $('input, select, textarea').each(function() {
+            $(this).on('keyup', function() {
+                checkObligatoryFields(obligatoryFields);
+            });
+        });
+
+        countChars(limitedCharFields);
+    </script>
+@endsection
