@@ -303,4 +303,8 @@ body {
     .navIconBtn {
         display: none !important;
     }
+
+    .body-pd {
+        padding-left: 0;
+    }
 }

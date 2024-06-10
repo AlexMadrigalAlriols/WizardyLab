@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LabelController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,9 +34,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::redirect('/', '/dashboard');
-
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+    //Item
+    Route::resource('items', ItemController::class);
+    Route::post('/items-files/upload_file', [ItemController::class, 'uploadFile'])->name('items.upload_file');
+    Route::get('/items-files/download_file/{itemFile}', [ItemController::class, 'downloadFile'])->name('items.download_file');
+    Route::get('/items-files/delete_file/{itemFile}', [ItemController::class, 'deleteFile'])->name('items.delete_file');
+    Route::resource('assignments', UserInventoriesController::class);
+    Route::delete('/assignments-line/{assignment}/delete', [UserInventoriesController::class, 'destroyLine'])->name('assignments.line.delete');
+
+    //Departments
+    Route::resource('departments', DepartmentController::class);
 
     //Tasks
     Route::resource('tasks', TaskController::class);

@@ -82,7 +82,6 @@
 
         $('input, select, textarea').each(function() {
             $(this).on('keyup', function() {
-                console.log('keyup');
                 checkObligatoryFields(obligatoryFields);
             });
             $(this).on('change', function() {
@@ -91,17 +90,12 @@
         });
 
         $(document).ready(function() {
-            new Dropzone("#logoDropzone", {
-                url: "{{ route('dashboard.task.upload_file') }}", // Ruta donde manejarás la carga de archivos
-                paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
-                maxFilesize: 2, // Tamaño máximo en MB
-                acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
-                addRemoveLinks: true,
-                uploadMultiple: true,
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
+            generateDropZone(
+                "#taskDropZone",
+                "{{ route('dashboard.task.upload_file') }}",
+                "{{ csrf_token() }}",
+                true
+            );
         });
 
         countChars(['title', 'description', 'code']);

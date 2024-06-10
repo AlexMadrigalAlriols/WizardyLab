@@ -32,7 +32,6 @@
 
         $('input, select, textarea').each(function() {
             $(this).on('keyup', function() {
-                console.log('keyup');
                 checkObligatoryFields(obligatoryFields);
             });
             $(this).on('change', function() {

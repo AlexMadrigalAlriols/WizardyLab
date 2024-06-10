@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\BreadcrumbHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
@@ -29,7 +30,11 @@ class DashboardController extends Controller
             ]
         ];
 
-        $tasks = $user->tasks()->orderBy('duedate')->limit(5)->get();
+        $tasks = $user->tasks()
+            ->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))
+            ->orderBy('duedate', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->limit(5)->get();
 
         foreach ($weekdays as $wday) {
             $events[$wday] = Leave::where('user_id', $user->id)
@@ -45,7 +50,15 @@ class DashboardController extends Controller
             $events[$wday] = $events[$wday]->merge($userTasks);
         }
 
-        return view('dashboard.index', compact('user', 'now_hour', 'weekday', 'counters', 'tasks', 'weekdays', 'events'));
+        return view('dashboard.index', compact(
+            'user',
+            'now_hour',
+            'weekday',
+            'counters',
+            'tasks',
+            'weekdays',
+            'events'
+        ));
     }
 
     public function readNotifications()

@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -182,10 +183,10 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Alert' => RealRashid\SweetAlert\Facades\Alert::class
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class
     ])->toArray(),
 
 ];
