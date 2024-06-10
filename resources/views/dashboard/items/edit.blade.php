@@ -6,16 +6,16 @@
     <div class="col-md-8 col-sm-12">
         <div class="mt-1">
             <span class="h2 d-inline-block mt-1">
-                <b>Edit {{$inventory -> name}} <span class="text-muted">({{$inventory -> reference}})</span></b>
+                <b>Edit {{$item->name}} <span class="text-muted">({{$item->reference}})</span></b>
             </span>
         </div>
-        <form action="{{route('dashboard.inventories.update', $inventory->id)}}" method="POST" class="mt-2 pb-3">
+        <form action="{{route('dashboard.items.update', $item->id)}}" method="POST" class="mt-2 pb-3">
             @csrf
             @method("put")
-            @include('partials.inventories.form')
+            @include('partials.items.form')
             <div class="row mt-4">
                 <div class="col-md-10 text-end">
-                    <a class="btn btn-outline-primary" href="{{route('dashboard.inventories.index')}}"><span class="px-2">Cancel</span></a>
+                    <a class="btn btn-outline-primary" href="{{route('dashboard.items.index')}}"><span class="px-2">Cancel</span></a>
                     <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">Edit item</span></button>
                 </div>
             </div>
@@ -30,8 +30,8 @@
                 <div class="row">
                 <div class="col-md-6 p-1">
                     <div style="display: flex; flex-wrap:wrap;">
-                        @foreach ($inventory->inventory_files->take(ceil($inventory->inventory_files->count()/2)) as $file)
-                                <a style="z-index:200; width: 100%" class="text-decoration-none" href="{{route("dashboard.inventories.delete_file", $file->id)}}">
+                        @foreach ($item->files->take(ceil($item->files->count()/2)) as $file)
+                                <a style="z-index:200; width: 100%" class="text-decoration-none" href="{{route("dashboard.items.delete_file", $file->id)}}">
                                     <div style="height:{{mt_rand(200, 400)}}px; width: 100%; border-radius:10px" class="galery-item border m-1">
                                                 <img style="height:100%; width:100%; object-fit:cover; border-radius:10px" src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
                                             <div class="trash-icon text-decoration-none" style="color: black"><i class='bx bx-trash'></i></div>
@@ -43,8 +43,8 @@
                 </div>
                 <div class="col-md-6 p-1">
                     <div style="display: flex; flex-wrap:wrap;">
-                        @foreach ($inventory->inventory_files->skip(ceil($inventory->inventory_files->count()/2)) as $file)
-                            <a style="z-index:200; width: 100%" class="text-decoration-none" href="{{route("dashboard.inventories.delete_file", $file->id)}}">
+                        @foreach ($item->files->skip(ceil($item->files->count()/2)) as $file)
+                            <a style="z-index:200; width: 100%" class="text-decoration-none" href="{{route("dashboard.items.delete_file", $file->id)}}">
                                     <div style="height:{{mt_rand(200, 400)}}px; width: 100%; border-radius:10px" class="galery-item borde m-1">
                                                 <img style="height:100%; width:100%; object-fit:cover; border-radius:10px" src="{{ asset('storage/' . $file->path) }}" class="img-fluid" alt="{{$file->title}}" style="max-width: 250px">
                                         <div class="trash-icon" style="color:black;"><i class='bx bx-trash'></i></div>
@@ -53,7 +53,7 @@
                         @endforeach
                     </div>
                 </div>
-                @if($inventory->inventory_files->isEmpty())
+                @if($item->files->isEmpty())
                     <div class="text-center p-3">
                         <p class="text-muted">No files uploaded yet!</p>
                     </div>
@@ -71,7 +71,7 @@
         $(document).ready(function() {
             generateDropZone(
                 "#inventoryFileDropZone",
-                "{{ route('dashboard.inventories.upload_file') }}",
+                "{{ route('dashboard.items.upload_file') }}",
                 "{{ csrf_token() }}",
                 true,
                 true

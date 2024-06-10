@@ -7,12 +7,12 @@
                 <div class="row">
                     <div class="col-md-10">
                         <span class="h2 mt-1">
-                            <a href="{{ route('dashboard.inventories.index') }}" class="btn btn-outline-primary">
+                            <a href="{{ route('dashboard.items.index') }}" class="btn btn-outline-primary">
                                 <span class="px-1">
                                     <i class='bx bx-left-arrow-alt'></i>
                                     </span>
                             </a>
-                            <b class="text-capitalize">{{ $inventory->name }}</b>
+                            <b class="text-capitalize ms-2">{{ $item->name }}</b>
                         </span>
                         <br>
                     </div>
@@ -26,13 +26,13 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item"
-                                            href="{{ route('dashboard.inventories.edit', $inventory->id) }}"><i
+                                            href="{{ route('dashboard.items.edit', $item->id) }}"><i
                                                 class='bx bx-edit'></i> Edit</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <form action="{{ route('dashboard.inventories.destroy', $inventory->id)}}"
+                                        <form action="{{ route('dashboard.items.destroy', $item->id)}}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -54,22 +54,22 @@
                             <div class="row">
                                 <p class="h3 mb-4">
                                     <b><i class='bx bx-info-circle'></i> Details <span
-                                            class="fs-6 text-muted">({{ $inventory->created_at->format('Y/m/d') }})</span></b>
+                                            class="fs-6 text-muted">({{ $item->created_at->format('Y/m/d') }})</span></b>
                                 </p>
 
                                 <div class="fs-5">
-                                    <p><b>Name:</b><span class="ms-2 text-capitalize">{{ $inventory->name }}</span></p>
-                                    <p><b>Reference</b> <span class="ms-2">{{ $inventory->reference }}</span></p>
-                                    <p><b>Stock:</b> <span class="ms-2">{{ $inventory->stock }}</span></p>
+                                    <p><b>Name:</b><span class="ms-2 text-capitalize">{{ $item->name }}</span></p>
+                                    <p><b>Reference</b> <span class="ms-2">{{ $item->reference }}</span></p>
+                                    <p><b>Stock:</b> <span class="ms-2">{{ $item->stock }}</span></p>
                                     <p><b>Price:</b> <span
-                                            class="ms-2">{{ $inventory->price ? $inventory->price : '-' }}</span> $</p>
+                                            class="ms-2">{{ $item->price ? $item->price : '-' }}</span> $</p>
                                     <p><b>Shop place:</b> <span
-                                            class="ms-2">{{ $inventory->shop_place ? $inventory->shop_place : '-' }}</span>
+                                            class="ms-2">{{ $item->shop_place ? $item->shop_place : '-' }}</span>
                                     </p>
                                     <p>
                                         <b>Description:</b>
                                         <span class="text-muted ms-2">
-                                        {!! $inventory->description ?? '-' !!}
+                                        {!! $item->description ?? '-' !!}
                                         </span>
                                     </p>
 
@@ -88,7 +88,7 @@
                                                         <div>
                                                             <h4 class="mb-0 hidden-md-down" ><b><i class='bx bx-clipboard'></i>
                                                                     Assignments</b></h4>
-                                                            <p class="text-muted mb-0">Assigned {{ $inventory->name }}</p>
+                                                            <p class="text-muted mb-0">Assigned {{ $item->name }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-5">
@@ -96,10 +96,10 @@
                                                             <div style=" display:flex; justify-content:right; align-items:center;">
                                                             <div class="d-flex idea justify-content-around align-items-center flex-1">
                                                                     <div class="d-left">
-                                                                        {{ $inventory->remaining_stock}}</div>
+                                                                        {{ $item->remaining_stock}}</div>
                                                                     <div
                                                                         class="d-right">
-                                                                        {{ $inventory->stock }}</div>
+                                                                        {{ $item->stock }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -120,22 +120,22 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($inventory->UsersInventories->sortBy('return_date')->take(4) as $assignment)
+                                                            @foreach ($item->assignments->sortBy('return_date')->take(4) as $assignment)
                                                                 <tr class="table-entry align-middle border-bottom">
                                                                     <td colspan="2" class="width-2">
                                                                         <a
-                                                                            href="{{ route('dashboard.clients.show', $assignment->user?->id) }}"><span
-                                                                                class="text-capitalize">{{ $assignment->user?->name }}</span></a>
+                                                                            href="#"><span
+                                                                                class="text-capitalize">{{ $assignment?->assignment?->user?->name }}</span></a>
                                                                     </td>
                                                                     <td></td>
                                                                     <td>
                                                                         <span>{{ $assignment->quantity }}</span>
                                                                     </td>
                                                                     <td>
-                                                                        <span>{{ $assignment->extract_date }}</span>
+                                                                        <span>{{ $assignment->assignment->extract_date ?? '-' }}</span>
                                                                     </td>
                                                                     <td>
-                                                                        <span class="{{ $assignment->return_date < now()->addDays(3) ? 'text-danger' : 'text-muted' }}">{{ $assignment->return_date }}</span>
+                                                                        <span class="{{ $assignment->assignment->return_date < now()->addDays(3) ? 'text-danger' : 'text-muted' }}">{{ $assignment->assignment->return_date }}</span>
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <div class="dropdown">
@@ -149,7 +149,7 @@
                                                                             <ul class="dropdown-menu"
                                                                                 aria-labelledby="dropdownMenuButton">
                                                                                 <li><a class="dropdown-item"
-                                                                                        href="{{ route('dashboard.tasks.edit', $assignment->id) }}"><i
+                                                                                        href="{{ route('dashboard.assignments.edit', $assignment->assignment->id) }}"><i
                                                                                             class='bx bx-edit'></i> Edit</a>
                                                                                 </li>
                                                                                 <li>
@@ -157,7 +157,7 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <form
-                                                                                        action="{{ route('dashboard.tasks.destroy', $assignment->id) }}"
+                                                                                        action="{{ route('dashboard.assignments.line.delete', $assignment->id) }}"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         @method('DELETE')
@@ -173,7 +173,7 @@
                                                                 </tr>
                                                             @endforeach
 
-                                                            @if (!count($inventory->UsersInventories))
+                                                            @if (!count($item->assignments))
                                                                 <tr>
                                                                     <td colspan="7" class="text-center py-5">
                                                                         <span class="text-muted">No assignments
@@ -204,15 +204,29 @@
             <div class="row mt-5 border-top p-4" style="min-height: 250px;">
                 <b class="fs-5"><i class='bx bx-image-alt' ></i></i> Images</b>
                 <div class="col-md-12 gap-2 d-flex overflow-x-scroll scrollbar-hidden p-2">
-                    @foreach ($inventory->inventory_files as $file)
+                    @foreach ($item->files as $file)
                     <img class=" border" style="height: 200px" src="{{ asset('storage/' . $file->path) }}" alt="{{$file->title}}">
                     @endforeach
 
-                    @if (!count($inventory->inventory_files))
+                    @if (!count($item->files))
                         <div class="d-flex justify-content-center align-items-center w-100 h-100">No image yet!</div>
                     @endif
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.table-responsive').on('show.bs.dropdown', function() {
+                $('.table-responsive').css("overflow", "inherit");
+            });
+
+            $('.table-responsive').on('hide.bs.dropdown', function() {
+                $('.table-responsive').css("overflow", "auto");
+            })
+        });
+    </script>
 @endsection

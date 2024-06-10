@@ -37,8 +37,7 @@
                 <tr>
                     <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
                     <th scope="col">User</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Quantity</th>
+                    <th scope="col">Items</th>
                     <th scope="col">Extracted</th>
                     <th scope="col">Return Date</th>
                     <th scope="col"></th>
@@ -50,12 +49,19 @@
                         <td class="text-nowrap">
                             <input type="checkbox" name="checkbox[]">
                         </td>
-                        <td><a href="{{ route('dashboard.inventories.show', $assignment->user?->id)}}"
+                        <td>
+                            <a href="{{ route('dashboard.items.show', $assignment->user?->id)}}"
                                 class="text-decoration-none text-capitalize">
                                 <div class="avatar avatar-s"><img src="{{$assignment->user->profile_img}}" alt="user_image" class="rounded-circle"></div>
-                            </a></td>
-                        <td><a href="{{route('dashboard.assignments.show', $assignment->id)}}">{{$assignment->inventory->name}}</a></td>
-                        <td class="text-muted">{{ $assignment->quantity }}</td>
+                            </a>
+                        </td>
+                        <td>
+                            @foreach ($assignment->items as $item)
+                                <a class="badge bg-white text-primary text-decoration-none ms-1" href="{{route('dashboard.items.show', $item->id)}}">
+                                    {{$item->item->reference ?? '-'}}
+                                </a>
+                            @endforeach
+                        </td>
                         <td>{{ $assignment->extract_date}}</td>
                         <td class="{{ $assignment->return_date < now() ? 'text-danger' : 'text-muted' }}">{{ $assignment->return_date}}</td>
                         <td class="text-center">

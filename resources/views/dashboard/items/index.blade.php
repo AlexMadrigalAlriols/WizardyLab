@@ -4,9 +4,9 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Inventory</b><span class="text-muted">({{count($inventories)}})</span>
+            <b>Items </b><span class="text-muted">({{count($items)}})</span>
         </span>
-        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.inventories.create')}}">
+        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.items.create')}}">
             <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Item</span>
         </a>
     </div>
@@ -46,20 +46,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inventories as $inventory)
+                @foreach ($items as $item)
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
                             <input type="checkbox" name="checkbox[]">
                         </td>
                         <td>
-                            @if ($inventory->getCoverAttribute())
-                            <img class="img-thumbnail" style="max-width: 100px; aspect-ratio: 1/1; object-fit:cover;" src="{{$inventory->getCoverAttribute()}}" alt="">
+                            @if ($item->getCoverAttribute())
+                            <img class="img-thumbnail" style="max-width: 100px; aspect-ratio: 1/1; object-fit:cover;" src="{{$item->getCoverAttribute()}}" alt="">
                             @endif
                         </td>
-                        <td><a href="{{route('dashboard.inventories.show', $inventory->id)}}" class="text-decoration-none text-capitalize"><b>{{ $inventory->name }}</b></a></td>
-                        <td>{{$inventory->reference}}</td>
-                        <td class="text-muted">{{ $inventory->stock }}</td>
-                        <td>{{$inventory->created_at->format('Y-m-d')}}</td>
+                        <td><a href="{{route('dashboard.items.show', $item->id)}}" class="text-decoration-none text-capitalize"><b>{{ $item->name }}</b></a></td>
+                        <td>{{$item->reference}}</td>
+                        <td class="text-muted">{{ $item->stock }}</td>
+                        <td>{{$item->created_at->format('Y-m-d')}}</td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -67,11 +67,11 @@
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.inventories.show', $inventory->id)}}"><i class='bx bx-show' ></i> View</a></li>
-                                    <li><a class="dropdown-item" href="{{route('dashboard.inventories.edit', $inventory->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.items.show', $item->id)}}"><i class='bx bx-show' ></i> View</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.items.edit', $item->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <form action="{{route('dashboard.inventories.destroy', $inventory->id)}}" method="POST">
+                                        <form action="{{route('dashboard.items.destroy', $item->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
@@ -83,7 +83,7 @@
                     </tr>
                 @endforeach
 
-                @if(!count($inventories))
+                @if(!count($items))
                     <tr>
                         <td colspan="9" class="text-center py-5">
                             <span class="text-muted">No items found!</span>
@@ -96,7 +96,7 @@
                     <td colspan="9" class="py-4 border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-muted">
-                                {{ count($inventories) }} to {{$pagination['take'] ?? $counters['total']}} items of <b>{{ $counters['total'] }}</b>
+                                {{ count($items) }} to {{$pagination['take'] ?? $counters['total']}} items of <b>{{ $counters['total'] }}</b>
                                 @if(request('page') != 'all')
                                     <span class="ms-4">
                                         <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>

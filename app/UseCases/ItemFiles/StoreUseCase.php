@@ -2,15 +2,15 @@
 
 namespace App\UseCases\ItemFiles;
 
-use App\Models\Inventory;
-use App\Models\InventoryFile;
+use App\Models\Item;
+use App\Models\ItemFile;
 use App\Models\User;
 use App\UseCases\Core\UseCase;
 
 class StoreUseCase extends UseCase
 {
     public function __construct(
-        protected Inventory $inventory,
+        protected Item $item,
         protected User $user,
         protected string $title,
         protected string $path,
@@ -18,10 +18,10 @@ class StoreUseCase extends UseCase
     ) {
     }
 
-    public function action(): InventoryFile
+    public function action(): ItemFile
     {
-        $file = InventoryFile::create([
-            'inventory_id' => $this->inventory->id,
+        $file = ItemFile::create([
+            'item_id' => $this->item->id,
             'user_id' => $this->user->id,
             'title' => $this->title,
             'path' => $this->path,

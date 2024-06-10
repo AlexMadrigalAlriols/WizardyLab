@@ -34,14 +34,14 @@ class FileSystemHelper {
         string $tempPath,
         string $session_name = 'DROPZONE_FILES_TEMP_PATHS',
         $permanentPath = 'files/',
-        ?array $extension = null
+        ?array $extensions = null
     ) {
         $originalName = pathinfo($tempPath, PATHINFO_BASENAME);
         $extension = pathinfo($tempPath, PATHINFO_EXTENSION);
         $fileName = uniqid() . '.' . $extension;
         $permanentPath = $permanentPath . $fileName;
 
-        if(!is_null($$extension) && !in_array($extension, $extension)) {
+        if(!is_null($extensions) && !in_array($extension, $extensions)) {
             return [null, null, false];
         }
 

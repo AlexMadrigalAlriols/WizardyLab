@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class InventoryFile extends Model
+class ItemFile extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'inventory_id',
+        'item_id',
         'user_id',
         'title',
         'path',
@@ -23,9 +23,9 @@ class InventoryFile extends Model
         'updated_at' => 'datetime'
     ];
 
-    public function inventory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Inventory::class, 'inventory_id');
+        return $this->belongsTo(Item::class);
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

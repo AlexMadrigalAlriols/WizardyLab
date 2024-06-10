@@ -37,9 +37,6 @@
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
     <link href="{{asset('vendor/spectrum/spectrum.min.css')}}" rel="stylesheet">
     @yield('styles')
-
-
-    <script src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body class="body-pd" id="body-pd">
@@ -251,7 +248,7 @@
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
                         <div class="treeview {{ $section == 'Assignments' || $section == 'Items' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.inventories.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.items.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
                                 <i class='bx bx-desktop nav_icon'></i>
                                 <span class="nav_name">Items</span>
                             </a>
@@ -329,5 +326,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="{{asset('vendor/spectrum/spectrum.min.js')}}"></script>
+
+<script src="{{ mix('js/app.js') }}"></script>
 @yield('scripts')
 </html>

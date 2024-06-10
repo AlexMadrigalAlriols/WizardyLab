@@ -276,6 +276,17 @@
     border-color: var(--middle-color) !important;
 }
 
+.btn-outline-primary {
+    color: var(--middle-color);
+    border-color: var(--middle-color);
+}
+
+.btn-outline-primary:hover {
+    color: var(--white-color);
+    background-color: var(--middle-color);
+    border-color: var(--middle-color);
+}
+
 /* Phone */
 @media screen and (max-width: 768px) {
     .clock-in-container {

@@ -2,7 +2,7 @@
 
 namespace App\UseCases\Inventories;
 
-use App\Models\Inventory;
+use App\Models\Item;
 use App\UseCases\Core\UseCase;
 
 class StoreUseCase extends UseCase
@@ -17,9 +17,9 @@ class StoreUseCase extends UseCase
     ) {
     }
 
-    public function action(): Inventory
+    public function action(): Item
     {
-        $inventory = Inventory::create([
+        $item = Item::create([
             'name' => $this->name,
             'reference' => $this->reference,
             'stock' => $this->stock,
@@ -28,6 +28,6 @@ class StoreUseCase extends UseCase
             'store_place' => $this->store_place,
         ]);
 
-        return $inventory;
+        return $item;
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Inventory extends Model
+class Item extends Model
 {
     use HasFactory;
     public const PAGE_SIZE = 10;
@@ -25,27 +25,27 @@ class Inventory extends Model
         'updated_at' => 'datetime'
     ];
 
-    public function UsersInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function assignments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(UserInventories::class, 'inventory_id');
+        return $this->hasMany(ItemUserInventory::class);
     }
 
-    public function inventory_files(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function files(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(InventoryFile::class);
+        return $this->hasMany(ItemFile::class);
     }
 
     public function getRemainingStockAttribute(): int
     {
-        return $this->stock - $this->UsersInventories->sum('quantity');
+        return $this->stock - $this->assignments->sum('quantity');
     }
 
     public function getCoverAttribute(): ?string
     {
-        if($path = $this->inventory_files()->first()?->path) {
+        if($path = $this->files()->first()?->path) {
             return asset('storage/' . $path);
         }
 
-        return null;
+        return asset('img/default-image.jpeg');
     }
 }

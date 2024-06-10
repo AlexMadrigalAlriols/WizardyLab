@@ -9,12 +9,12 @@
                 <b>Create a item</b>
             </span>
         </div>
-        <form action="{{route('dashboard.inventories.store')}}" method="POST" class="mt-2 pb-3">
+        <form action="{{route('dashboard.items.store')}}" method="POST" class="mt-2 pb-3">
             @csrf
-            @include('partials.inventories.form')
+            @include('partials.items.form')
             <div class="row mt-4">
                 <div class="col-md-10 text-end">
-                    <a class="btn btn-outline-primary" href="{{route('dashboard.inventories.index')}}"><span class="px-2">Cancel</span></a>
+                    <a class="btn btn-outline-primary" href="{{route('dashboard.items.index')}}"><span class="px-2">Cancel</span></a>
                     <button class="btn btn-primary ms-2" id="submitBtn"  disabled><span class="px-5">Create item</span></button>
                 </div>
             </div>
@@ -30,7 +30,7 @@
         $(document).ready(function() {
             generateDropZone(
                 "#inventoryFileDropZone",
-                "{{ route('dashboard.inventories.upload_file') }}",
+                "{{ route('dashboard.items.upload_file') }}",
                 "{{ csrf_token() }}",
                 true,
                 true
