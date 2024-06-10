@@ -11,35 +11,13 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-7">
-        <div class="form-floating mt-3">
-            <select class="form-select select2" id="inventory_id" name="inventory_id">
-              @foreach ($inventories as $item)
-                <option value="{{$item->id}}" data-stock="{{ $item->remaining_stock }}" {{($assignment->inventory_id == $item->id || old('project') == $item->id) ? 'selected' : ''}}>{{ $item->name }} - {{ $item->reference }}</option>
-              @endforeach
-            </select>
-            <label for="floatingSelect">Item <span class="text-danger">*</span></label>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-floating mt-3">
-            <input type="number" class="form-control" id="quantity" name="quantity" min="1" placeholder="Quantity" value="{{ (old('quantity') ?? $assignment->quantity) ?? 1 }}">
-            <label for="stock">Quantity <span class="text-danger">*</span></label>
-        </div>
 
-        <div class="text-end text-muted">
-            Max. <span class="d-none" id="qtyCounter">1</span>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-5">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control" id="extract_date" name="extract_date" placeholder="Extract date" value="{{ old('extract_date') ?? $assignment->extract_date }}">
+            <input type="date" class="form-control" id="extract_date" name="extract_date" placeholder="Extract date" value="{{ old('extract_date') ?? $assignment->extract_date ?? now()->toDateString()}}">
             <label for="extract_date">Extract date</label>
         </div>
-
     </div>
     <div class="col-md-5">
         <div class="form-floating mt-3">
@@ -49,4 +27,13 @@
     </div>
 </div>
 
+<div class="row mt-2">
+    <div class="col-md-10">
+        <multi-assignment :inventory-items="{{json_encode($inventoryArray)}}" :assignments="{{json_encode($assignment->items->toArray())}}"></multi-assignment>
+
+        @if ($errors->has('items'))
+            <span class="text-danger">{{ $errors->first('items') }}</span>
+        @endif
+    </div>
+</div>
 
