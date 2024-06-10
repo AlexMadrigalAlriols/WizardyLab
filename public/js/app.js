@@ -28295,6 +28295,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _components_BoardRule_Index_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/BoardRule/Index.vue */ "./resources/js/components/BoardRule/Index.vue");
 /* harmony import */ var _components_MultiAssignment_Index_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/MultiAssignment/Index.vue */ "./resources/js/components/MultiAssignment/Index.vue");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.es.js");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 
  // Asegúrate de que este archivo exista y se cargue correctamente
 
@@ -28302,12 +28304,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // Importa los estilos de vue-select
+
 // Crea la instancia de la aplicación Vue
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({});
 
 // Registra el componente
 app.component('marketplace-rule', _components_BoardRule_Index_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
 app.component('multi-assignment', _components_MultiAssignment_Index_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
+app.component('v-select', vue_select__WEBPACK_IMPORTED_MODULE_4__["default"]);
 
 // Monta la aplicación
 app.mount('#app');

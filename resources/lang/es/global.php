@@ -46,4 +46,15 @@ return [
     'project' => 'Proyecto',
     'globalconfigurations' => 'Configuraciones globales',
     'invoices' => 'Facturas',
+    'select_all' => 'Seleccionar todo',
+    'deselect_all' => 'Deseleccionar todo',
+    'datatables' => [
+        'copy' => 'Copiar',
+        'csv' => 'CSV',
+        'excel' => 'Excel',
+        'print' => 'Imprimir',
+        'reset' => 'Restablecer',
+        'delete' => 'Borrar Seleccionados',
+        'zero_selected' => 'No hay filas seleccionadas',
+    ]
 ];

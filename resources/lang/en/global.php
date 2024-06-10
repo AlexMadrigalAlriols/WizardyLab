@@ -46,4 +46,15 @@ return [
     'project' => 'Project',
     'globalconfigurations' => 'Global Configurations',
     'invoices' => 'Invoices',
+    'select_all' => 'Select All',
+    'deselect_all' => 'Deselect All',
+    'datatables' => [
+        'copy' => 'Copy',
+        'csv' => 'CSV',
+        'excel' => 'Excel',
+        'print' => 'Print',
+        'reset' => 'Reset',
+        'delete' => 'Delete Selected',
+        'zero_selected' => 'No rows selected',
+    ]
 ];

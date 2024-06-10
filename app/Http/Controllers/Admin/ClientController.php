@@ -7,6 +7,7 @@ use App\Helpers\AttendanceHelper;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\ClientsDataTable;
 use App\Http\Requests\Clients\StoreRequest;
 use App\Http\Requests\Clients\UpdateRequest;
 use App\Models\Client;
@@ -18,6 +19,7 @@ use App\Models\Status;
 use App\UseCases\Clients\StoreUseCase;
 use App\UseCases\Clients\UpdateUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
@@ -25,6 +27,11 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $query = Client::query();
+
+        if($request->ajax()) {
+            $dataTable = new ClientsDataTable('clients');
+            return $dataTable->make();
+        }
 
         if($request->has('status') && is_numeric($request->input('status'))) {
             $query->where('status_id', $request->input('status'));
@@ -121,6 +128,15 @@ class ClientController extends Controller
 
         toast('Client deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(Request $request)
+    {
+        $ids = $request->input('ids');
+        Client::whereIn('id', $ids)->delete();
+
+        toast('Clients deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     private function getData()

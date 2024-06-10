@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
@@ -64,6 +65,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     // Clients
     Route::resource('clients', ClientController::class);
+    Route::delete('massDestroy/clients', [ClientController::class, 'massDestroy'])->name('clients.massDestroy');
 
     // Companies
     Route::resource('companies', CompanyController::class);
@@ -111,6 +113,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+
+    // Select 2 Search list
+    Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
