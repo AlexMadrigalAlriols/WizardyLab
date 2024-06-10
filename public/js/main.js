@@ -1,3 +1,9 @@
+const toggle = $(`#header-toggle-icon`),
+nav = $(`#nav-bar`),
+bodypd = $(`#body-pd`),
+headerpd = $(`#header`),
+toggler = $(`#header-toggle`);
+
 $(document).ready(function () {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -6,11 +12,6 @@ $(document).ready(function () {
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
     $(".select2").select2();
-    const toggle = $(`#header-toggle-icon`),
-    nav = $(`#nav-bar`),
-    bodypd = $(`#body-pd`),
-    headerpd = $(`#header`),
-    toggler = $(`#header-toggle`);
 
     toggler.on("click", () => {
         changeNavBar(nav, toggler, toggle, bodypd, headerpd);
@@ -186,4 +187,8 @@ function generateDropZone(id, url, token, multiple = false, only_image = false) 
             }
         }
     });
+}
+
+function isPhoneDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/.test(navigator.userAgent);
 }

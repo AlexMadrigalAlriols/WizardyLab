@@ -6,6 +6,7 @@ use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\BoardHelper;
 use App\Helpers\FileSystemHelper;
+use App\Helpers\ConfigurationHelper;
 use App\Helpers\LogHelper;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
@@ -32,10 +33,15 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->tasks()->whereNull('tasks.task_id')->orderBy('duedate', 'desc')->orderBy('updated_at', 'desc');
+        $query = Auth::user()->tasks()
+            ->whereNull('tasks.task_id')
+            ->orderBy('duedate', 'desc')
+            ->orderBy('updated_at', 'desc');
 
         if($request->has('status') && is_numeric($request->input('status'))) {
             $query->where('status_id', $request->input('status'));
+        } else {
+            $query->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'));
         }
 
         if($request->has('archived') && is_numeric($request->input('archived'))) {
@@ -325,7 +331,9 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
 
         $counters = [
-            'total' => $tasks->whereNull('task_id')->whereNull('archive_at')->count(),
+            'total' => $tasks->whereNull('task_id')
+                ->where('status_id', '!=', ConfigurationHelper::get('completed_task_status'))
+                ->whereNull('archive_at')->count(),
             'in_progress' => $tasks->where('status_id', 18)->whereNull('archive_at')->whereNull('task_id')->count(),
             'completed' => $tasks->where('status_id', 19)->whereNull('archive_at')->whereNull('task_id')->count(),
             'not_started' => $tasks->where('status_id', 17)->whereNull('archive_at')->whereNull('task_id')->count(),
