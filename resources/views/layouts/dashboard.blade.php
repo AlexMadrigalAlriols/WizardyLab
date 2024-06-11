@@ -81,7 +81,7 @@
         </div>
         <div>
             <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="Attendance" data-bs-placement="bottom">
-                <i class='bx bx-timer'></i> {{ auth()->user()->timer }}
+                <i class='bx bx-timer'></i> <span id="timerValue">{{ auth()->user()->timer }}</span>
             </button>
             <div class="d-inline-block align-middle">
                 <a href="#" class="text-dark me-4 navIconBtn"><i class="bx bx-search" style="font-size: 23px;"></i></a>
