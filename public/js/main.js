@@ -192,3 +192,11 @@ function generateDropZone(id, url, token, multiple = false, only_image = false) 
 function isPhoneDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/.test(navigator.userAgent);
 }
+
+const debounce = (fn, ms = 1000) => {
+    let timeout;
+    return function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(), ms);
+    };
+}

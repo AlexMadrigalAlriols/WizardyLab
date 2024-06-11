@@ -6,9 +6,10 @@ use App\Helpers\ConfigurationHelper;
 use App\Helpers\InvoiceHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\InvoicesDataTable;
 use App\Http\Requests\Invoices\StoreRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Client;
-use App\Models\GlobalConfiguration;
 use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\Status;
@@ -17,19 +18,28 @@ use App\UseCases\Invoices\StoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class InvoiceController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new InvoicesDataTable('invoices');
+            return $dataTable->make();
+        }
+
         $query = Invoice::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Invoice::class);
-
-        $invoices = $query->get();
         $total = $query->count();
+        $statuses = Status::where('morphable', Invoice::class)->get();
+        $json_statuses = [['value' => '', 'label' => '-']];
 
-        return view('dashboard.invoices.index', compact('invoices', 'total', 'pagination'));
+        foreach ($statuses as $status) {
+            $json_statuses[] = ['value' => $status->id, 'label' => $status->title];
+        }
+
+        $statuses = json_encode($json_statuses, JSON_UNESCAPED_UNICODE);
+        return view('dashboard.invoices.index', compact('total', 'statuses'));
     }
 
     public function create()
@@ -139,6 +149,15 @@ class InvoiceController extends Controller
 
         toast('Invoice deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Invoice::whereIn('id', $ids)->delete();
+
+        toast('Invoices deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     private function getData()

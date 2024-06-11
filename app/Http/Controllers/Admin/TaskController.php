@@ -11,6 +11,7 @@ use App\Helpers\LogHelper;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Tasks\StoreRequest;
 use App\Http\Requests\Tasks\UpdateRequest;
 use App\Models\Department;
@@ -26,6 +27,7 @@ use App\UseCases\Tasks\UpdateStatusUseCase;
 use App\UseCases\Tasks\UpdateUseCase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -216,6 +218,15 @@ class TaskController extends Controller
 
         toast('Task deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Task::whereIn('id', $ids)->delete();
+
+        toast('Tasks deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function taskClockIn(Task $task)

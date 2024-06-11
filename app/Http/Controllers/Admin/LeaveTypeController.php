@@ -4,25 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\LeaveTypesDataTable;
 use App\Http\Requests\LeaveTypes\StoreRequest;
 use App\Http\Requests\LeaveTypes\UpdateRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\LeaveType;
 use App\UseCases\LeaveTypes\StoreUseCase;
 use App\UseCases\LeaveTypes\UpdateUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LeaveTypeController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new LeaveTypesDataTable('leaveTypes');
+            return $dataTable->make();
+        }
+
         $query = LeaveType::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, LeaveType::class);
-
-        $leaveTypes = $query->get();
         $total = $query->count();
 
-        return view('dashboard.leaveTypes.index', compact('leaveTypes', 'total', 'pagination'));
+        return view('dashboard.leaveTypes.index', compact('total'));
     }
 
     public function create()
@@ -67,5 +71,14 @@ class LeaveTypeController extends Controller
 
         toast('Leave Type deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        LeaveType::whereIn('id', $ids)->delete();
+
+        toast('Leave Types deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -14,12 +14,14 @@ use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,11 +44,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::post('/items-files/upload_file', [ItemController::class, 'uploadFile'])->name('items.upload_file');
     Route::get('/items-files/download_file/{itemFile}', [ItemController::class, 'downloadFile'])->name('items.download_file');
     Route::get('/items-files/delete_file/{itemFile}', [ItemController::class, 'deleteFile'])->name('items.delete_file');
+    Route::delete('massDestroy/items', [ItemController::class, 'massDestroy'])->name('items.massDestroy');
+
+    //Assignments
     Route::resource('assignments', UserInventoriesController::class);
     Route::delete('/assignments-line/{assignment}/delete', [UserInventoriesController::class, 'destroyLine'])->name('assignments.line.delete');
-
-    //Departments
-    Route::resource('departments', DepartmentController::class);
+    Route::delete('massDestroy/assignments', [UserInventoriesController::class, 'massDestroy'])->name('assignments.massDestroy');
 
     //Tasks
     Route::resource('tasks', TaskController::class);
@@ -58,28 +61,39 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('/tasks/download_file/{taskFile}', [TaskController::class, 'downloadFile'])->name('task.download_file');
     Route::post('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
     Route::get('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
+    Route::delete('massDestroy/tasks', [TaskController::class, 'massDestroy'])->name('tasks.massDestroy');
 
     //Comments
     Route::resource('{task}/comments', TaskCommentController::class)->only(['store', 'destroy']);
 
     // Clients
     Route::resource('clients', ClientController::class);
+    Route::delete('massDestroy/clients', [ClientController::class, 'massDestroy'])->name('clients.massDestroy');
 
     // Companies
     Route::resource('companies', CompanyController::class);
+    Route::delete('massDestroy/companies', [CompanyController::class, 'massDestroy'])->name('companies.massDestroy');
 
     // Leaves
     Route::resource('leaves', LeaveController::class)->except(['update']);
     Route::get('/leaves/{leave}/approve', [LeaveController::class, 'update'])->name('leaves.approve');
+    Route::delete('massDestroy/leaves', [LeaveController::class, 'massDestroy'])->name('leaves.massDestroy');
 
     // Status
     Route::resource('statuses', StatusController::class)->except(['show']);
+    Route::delete('massDestroy/statuses', [StatusController::class, 'massDestroy'])->name('statuses.massDestroy');
 
     // Labels
     Route::resource('labels', LabelController::class)->except(['show']);
+    Route::delete('massDestroy/labels', [LabelController::class, 'massDestroy'])->name('labels.massDestroy');
 
     // Leave Types
     Route::resource('leaveTypes', LeaveTypeController::class)->except(['show']);
+    Route::delete('massDestroy/leaveTypes', [LeaveTypeController::class, 'massDestroy'])->name('leaveTypes.massDestroy');
+
+    //Departments
+    Route::resource('departments', DepartmentController::class);
+    Route::delete('massDestroy/departments', [DepartmentController::class, 'massDestroy'])->name('departments.massDestroy');
 
     // Notes
     Route::resource('notes', NoteController::class);
@@ -91,6 +105,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('projects', ProjectController::class);
     Route::get('/projects/{project}/update-status/{status}', [ProjectController::class, 'updateStatus'])->name('projects.update-status');
     Route::get('/projects/update-order/{projectStatus}', [ProjectController::class, 'updateStatusOrder'])->name('projects.update-order');
+    Route::delete('massDestroy/projects', [ProjectController::class, 'massDestroy'])->name('projects.massDestroy');
 
     // Board
     Route::get('/projects/{project}/board', [BoardController::class, 'index'])->name('projects.board');
@@ -111,7 +126,13 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+    Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
+
+    // Select 2 Search list
+    Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 });
 
+//Translations
+Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

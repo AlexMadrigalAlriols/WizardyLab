@@ -4,26 +4,31 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\StatusesDataTable;
+use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Statuses\StoreRequest;
 use App\Http\Requests\Statuses\UpdateRequest;
 use App\Models\Company;
+use App\Models\Leave;
 use App\Models\Status;
 use App\UseCases\Statuses\StoreUseCase;
 use App\UseCases\Statuses\UpdateUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class StatusController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new StatusesDataTable('statuses');
+            return $dataTable->make();
+        }
+
         $query = Status::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Status::class);
-
-        $statuses = $query->get();
         $total = $query->count();
 
-        return view('dashboard.status.index', compact('statuses', 'total', 'pagination'));
+        return view('dashboard.status.index', compact('total'));
     }
 
     public function create()
@@ -67,5 +72,14 @@ class StatusController extends Controller
 
         toast('Status deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Status::whereIn('id', $ids)->delete();
+
+        toast('Status deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
