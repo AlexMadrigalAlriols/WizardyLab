@@ -3,13 +3,14 @@
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    --secondary-color: #374df1;
+    --primary-color: #374df1;
+    --secondary-color: #242424;
     --first-color: black;
     --first-color-light: black;
     --white-color: #f7f6fb;
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
-    --z-fixed: 100;
+    --z-fixed: 1000;
     --black-color: #242424;
 }
 *,
@@ -70,7 +71,7 @@ body {
     left: -500px;
     width: var(--nav-width);
     height: 100vh;
-    background-color: #242424;
+    background-color: var(--secondary-color);
     padding: 0.5rem 0rem 0 0;
     transition: 0.5s;
     z-index: var(--z-fixed);
@@ -114,7 +115,7 @@ body {
     padding-bottom: 0.5rem;
 }
 .nav_link:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
 }
 .nav_icon {
     font-size: 1.25rem;
@@ -124,7 +125,7 @@ body {
     width: calc(var(--nav-width) + 176px);
 }
 .nav_link.active {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: 600;
 }
 .nav_link.active::before {
@@ -133,7 +134,7 @@ body {
     left: 0;
     width: 2px;
     height: 32px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 .height-100 {
     height: calc(100vh - var(--header-height) - 3rem) !important;

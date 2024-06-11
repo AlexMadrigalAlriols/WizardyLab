@@ -28,6 +28,7 @@ $(document).ready(function () {
     });
 
     initializeFlatPick();
+    $('#loader-overlay').addClass('d-none');
 });
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {

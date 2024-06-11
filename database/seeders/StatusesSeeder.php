@@ -32,6 +32,10 @@ class StatusesSeeder extends Seeder
             ['title' => 'No Paid', 'data' => json_encode(['background' => '#b63737', 'color' => '#ffffff']), 'morphable' => Invoice::class]
         ];
 
+        foreach ($statuses as $key => $status) {
+            $statuses[$key]['portal_id'] = 1;
+        }
+
         Status::insert($statuses);
     }
 }

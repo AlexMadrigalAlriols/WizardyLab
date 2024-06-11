@@ -4,17 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-;
-
-class Company extends Model
+class Portal extends Model
 {
     use HasFactory, SoftDeletes;
-    public const PAGE_SIZE = 10;
 
     /**
      * The attributes that are mass assignable.
@@ -22,27 +18,30 @@ class Company extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'subdomain',
         'name',
-        'active'
+        'active',
+        'data'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'data' => 'array'
     ];
 
-    protected static function booted()
+    public function getLogoAttribute()
     {
-        static::addGlobalScope(new PortalScope(session('portal_id')));
+        if($this->data['logo'] && filter_var($this->data['logo'], FILTER_VALIDATE_URL)) {
+            return $this->data['logo'];
+        }
 
-        static::creating(function ($model) {
-            $model->portal_id = session('portal_id');
-        });
-    }
-
-    public function clients(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Client::class);
+        return asset('storage/' . $this->data['logo']) ?? null;
     }
 }

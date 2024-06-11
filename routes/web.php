@@ -36,7 +36,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::redirect('/', '/dashboard');
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], static function () {
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     //Item
@@ -121,6 +122,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     // Global Configs
     Route::get('/global-configurations', [GlobalConfigurationController::class, 'index'])->name('global-configurations.index');
     Route::post('/global-configurations', [GlobalConfigurationController::class, 'store'])->name('global-configurations.store');
+    Route::post('/global-configurations/upload_file', [GlobalConfigurationController::class, 'uploadFile'])->name('global-configurations.upload_file');
 
     // Invoices
     Route::resource('invoices', InvoiceController::class);
@@ -134,5 +136,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+
+Route::group(['middleware' => ['checkPortalExists']], static function () {
+    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+});
+
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

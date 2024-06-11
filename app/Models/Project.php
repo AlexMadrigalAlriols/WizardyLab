@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;;
 
@@ -36,6 +38,15 @@ class Project extends Model
         'deadline' => 'date',
         'start_date' => 'date',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id')));
+
+        static::creating(function ($model) {
+            $model->portal_id = session('portal_id');
+        });
+    }
 
     public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

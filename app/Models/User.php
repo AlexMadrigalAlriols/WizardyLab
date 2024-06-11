@@ -119,7 +119,7 @@ class User extends Authenticatable
 
     public function UsersInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(UsersInventories::class);
+        return $this->hasMany(UserInventory::class);
     }
 
 }
