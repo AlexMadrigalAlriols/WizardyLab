@@ -56,5 +56,9 @@ return [
         'reset' => 'Restablecer',
         'delete' => 'Borrar Seleccionados',
         'zero_selected' => 'No hay filas seleccionadas',
-    ]
+    ],
+    'filter' => 'Filter',
+    'reset' => 'Reset',
+    'min' => 'Min',
+    'max' => 'Max',
 ];

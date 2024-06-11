@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\DataTables\ClientsDataTable;
 use App\Http\Requests\Clients\StoreRequest;
 use App\Http\Requests\Clients\UpdateRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Country;
@@ -26,24 +27,15 @@ class ClientController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Client::query();
-
         if($request->ajax()) {
             $dataTable = new ClientsDataTable('clients');
             return $dataTable->make();
         }
 
-        if($request->has('status') && is_numeric($request->input('status'))) {
-            $query->where('status_id', $request->input('status'));
-        }
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Client::class);
-
-        $clients = $query->get();
+        $query = Client::query();
         $total = $query->count();
-        $statuses = Status::all();
 
-        return view('dashboard.clients.index', compact('clients', 'statuses', 'total', 'pagination'));
+        return view('dashboard.clients.index', compact('total'));
     }
 
     public function show(Client $client)
@@ -130,7 +122,7 @@ class ClientController extends Controller
         return back();
     }
 
-    public function massDestroy(Request $request)
+    public function massDestroy(MassDestroyRequest $request)
     {
         $ids = $request->input('ids');
         Client::whereIn('id', $ids)->delete();

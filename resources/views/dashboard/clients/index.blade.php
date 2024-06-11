@@ -3,7 +3,7 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Clients</b><span class="text-muted">({{count($clients)}})</span>
+            <b>Clients</b><span class="text-muted">({{$total}})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.clients.create')}}">
             <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Client</span>
@@ -119,10 +119,10 @@
                         name: 'active',
                         type: 'options',
                         options: [
-                            {value: '', label: '-'},
-                            {value: 1, label: 'Active'},
-                            {value: 0, label: 'Inactive'},
-                    ],
+                                {value: '', label: '-'},
+                                {value: 1, label: 'Active'},
+                                {value: 0, label: 'Inactive'},
+                        ],
                         filter: true,
                         width: 30
                     },

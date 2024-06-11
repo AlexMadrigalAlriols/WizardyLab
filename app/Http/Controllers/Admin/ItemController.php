@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\ItemsDataTable;
 use App\Http\Requests\Inventories\StoreRequest;
 use App\Http\Requests\Inventories\UpdateRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Item;
 use App\Models\ItemFile;
 use App\UseCases\Inventories\StoreUseCase as InventoriesStoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
 use App\UseCases\ItemFiles\StoreUseCase as ItemFilesStoreUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,14 +26,15 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new ItemsDataTable('labels');
+            return $dataTable->make();
+        }
+
         $query = Item::query();
+        $total = $query->count();
 
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Item::class);
-
-        $items = $query->get();
-        $counters = $this->getInventoriesCounters();
-
-        return view('dashboard.items.index', compact('items', 'pagination', 'counters'));
+        return view('dashboard.items.index', compact('total'));
     }
 
     /**
@@ -177,6 +181,15 @@ class ItemController extends Controller
 
         toast('File removed', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Item::whereIn('id', $ids)->delete();
+
+        toast('Items deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
 

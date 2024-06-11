@@ -33,7 +33,7 @@ function drawDataTable(selector, options, withFilters = false) {
                             $(this).html(`
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-sm-12 col-md">
-                                        <input class="form-control form-control-sm flatpicker" type="text" id="${columnOptions.name}_range" name="min" data-index="${i}" data-status="closed">
+                                        <input class="form-control form-control-sm flatpicker" placeholder="Select Date" type="text" id="${columnOptions.name}_range" name="min" data-index="${i}" data-status="closed">
                                     </div>
                                 </div>
                             `);
@@ -87,13 +87,13 @@ function drawDataTable(selector, options, withFilters = false) {
                                     <div class="row d-flex justify-content-center">
                                         ${currencyInput}
                                         <div class="col-sm-12 col-md">
-                                            <label for="exampleInputEmail1">${trans('global.min')}</label>
-                                            <input class="form-control form-control-sm" type="text" name="min" id="${columnOptions.name}_min" placeholder="Min" value="${columnOptions.valueMin}">
+                                            <label for="exampleInputEmail1">Min</label>
+                                            <input class="form-control form-control-sm" type="text" name="min" id="${columnOptions.name}_min" placeholder="Min">
                                         </div>
 
                                         <div class="col-sm-12 col-md">
-                                            <label for="exampleInputEmail1">${trans('global.min')}</label>
-                                            <input class="form-control form-control-sm" type="text" name="max" id="${columnOptions.name}_max" placeholder="Max" value="${columnOptions.valueMax}">
+                                            <label for="exampleInputEmail1">Max</label>
+                                            <input class="form-control form-control-sm" type="text" name="max" id="${columnOptions.name}_max" placeholder="Max">
                                         </div>
                                     </div>
                                 </form>
@@ -243,7 +243,7 @@ function drawDataTable(selector, options, withFilters = false) {
     function buttonModal(name) {
         return `
             <div class="row d-flex justify-content-center">
-                <button id="${name}FilterModalBtn" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#${name}FilterModal">
+                <button id="${name}FilterModalBtn" class="btn btn-secondary btn-sm w-50" data-toggle="modal" data-target="#${name}FilterModal">
                     <i class="fa fa-filter"></i>
                 </button>
             </div>
@@ -257,19 +257,17 @@ function drawDataTable(selector, options, withFilters = false) {
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">${modalTitle}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                         <div class="modal-body">${content}</div>
                         <div class="modal-footer">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <button type="button" class="btn btn-secondary btn-sm resetFilterModal" data-modal="#${columnOptions.name}FilterModal">${trans('global.reset')}</button>
+                                        <button type="button" class="btn btn-secondary btn-sm resetFilterModal" data-modal="#${columnOptions.name}FilterModal">Reset</button>
                                     </div>
-                                    <div class="col-sm-6 text-right">
-                                        <button type="button" class="btn btn-primary btn-sm submitFilterModal" data-modal="#${columnOptions.name}FilterModal">${trans('global.filter')}</button>
+                                    <div class="col-sm-6 text-end">
+                                        <button type="button" class="btn btn-primary btn-sm submitFilterModal" data-modal="#${columnOptions.name}FilterModal">Filter</button>
                                     </div>
                                 </div>
                             </div>
@@ -339,4 +337,12 @@ function drawDataTable(selector, options, withFilters = false) {
                 }
             );
     }
+
+    $('.dataTables_scrollBody').on('show.bs.dropdown', function() {
+        $('.dataTables_scrollBody').css("overflow", "inherit");
+    });
+
+    $('.dataTables_scrollBody').on('hide.bs.dropdown', function() {
+        $('.dataTables_scrollBody').css("overflow", "auto");
+    })
 }

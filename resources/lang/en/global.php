@@ -56,5 +56,9 @@ return [
         'reset' => 'Reset',
         'delete' => 'Delete Selected',
         'zero_selected' => 'No rows selected',
-    ]
+    ],
+    'filter' => 'Filter',
+    'reset' => 'Reset',
+    'min' => 'Min',
+    'max' => 'Max',
 ];

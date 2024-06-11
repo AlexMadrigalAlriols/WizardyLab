@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\DepartmentsDataTable;
 use App\Http\Requests\Departments\StoreRequest;
 use App\Http\Requests\Departments\UpdateRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Department;
 use App\UseCases\Departments\StoreUseCase;
 use App\UseCases\Departments\UpdateUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DepartmentController extends Controller
 {
@@ -18,14 +21,15 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new DepartmentsDataTable('statuses');
+            return $dataTable->make();
+        }
+
         $query = Department::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Department::class);
-
-        $departments = $query->get();
         $total = $query->count();
 
-        return view('dashboard.departments.index', compact('departments', 'total', 'pagination'));
+        return view('dashboard.departments.index', compact('total'));
     }
 
     /**
@@ -88,5 +92,14 @@ class DepartmentController extends Controller
 
         toast('Department updated', 'success');
         return redirect()->route('dashboard.departments.index');
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Department::whereIn('id', $ids)->delete();
+
+        toast('Departments deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

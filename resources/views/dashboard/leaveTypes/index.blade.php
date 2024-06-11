@@ -3,131 +3,142 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>{{__('crud.leaveTypes.title')}}</b><span class="text-muted">({{count($leaveTypes)}})</span>
+            <b>{{__('crud.leaveTypes.title')}}</b><span class="text-muted">({{ $total }})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.leaveTypes.create')}}">
             <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.leaveTypes.title_singular')}}</span>
         </a>
     </div>
 
-    <div class="table-actions">
-        <div class="row">
-            <div class="col-md-5">
-
-            </div>
-            <div class="col-md-7 mt-1">
-                <div class="justify-content-end">
-                    <div class="row">
-                        <div class="col-md-6 offset-md-6 col-sm-12 mt-3">
-                            <div class="search-container w-100">
-                                <i class="bx bx-search search-icon"></i>
-                                <input type="text" class="search-input" id="search-input" name="search_input"
-                                    placeholder="Search Leave Types">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-responsive mt-5">
-        <table class="table table-borderless table-hover">
+    <div class="mt-4">
+        <table class="table table-borderless table-responsive table-hover ajaxTable datatable datatable-LeaveTypes mt-5 w-100">
             <thead class="border-top border-bottom">
                 <tr>
-                    <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
-                    <th scope="col">{{strtoupper(__('crud.leaveTypes.fields.name'))}}</th>
-                    <th scope="col">{{strtoupper(__('crud.leaveTypes.fields.max_days'))}}</th>
-                    <th scope="col">{{strtoupper(__('crud.leaveTypes.fields.created_at'))}}</th>
-                    <th scope="col"></th>
+                    <th scope="col" class="border-bottom"></th>
+                    <th scope="col" class="border-bottom">NAME</th>
+                    <th scope="col" class="border-bottom">MAX DAYS</th>
+                    <th scope="col" class="border-bottom">CREATED_AT</th>
+                    <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($leaveTypes as $leaveType)
-                    <tr class="table-entry align-middle border-bottom">
-                        <td class="text-nowrap">
-                            <input type="checkbox" name="checkbox[]">
-                        </td>
-                        <td><span class="badge" style="{{ $leaveType->styles }}"><b>{{ $leaveType->name }}</b></span></td>
-                        <td>{{ $leaveType->max_days }}</td>
-                        <td>{{ $leaveType->created_at }}</td>
-                        <td class="text-center">
-                            <div class="dropdown">
-                                <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class='bx bx-dots-horizontal-rounded'></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.leaveTypes.edit', $leaveType->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{route('dashboard.leaveTypes.destroy', $leaveType->id)}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-
-                @if(!count($leaveTypes))
-                    <tr>
-                        <td colspan="9" class="text-center py-5">
-                            <span class="text-muted">No Leave Types found!</span>
-                        </td>
-                    </tr>
-                @endif
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="9" class="py-4 border-bottom">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="text-muted">
-                                {{ count($leaveTypes) }} to {{$pagination['take'] ?? count($leaveTypes)}} items of <b>{{ $total }}</b>
-                                @if(request('page') != 'all')
-                                    <span class="ms-4">
-                                        <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>
-                                    </span>
-                                @endif
-                            </div>
-                            <div>
-                                @if(request('page') != 'all')
-                                    <ul class="pagination m-0">
-                                        <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) > 1 ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1)}}"><i class='bx bx-chevron-left' ></i></a>
-                                        </li>
-                                        @for ($page = 1; $page <= $pagination['pages']; $page++)
-                                            <li class="page-item" aria-current="page">
-                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page}}"><b>{{$page}}</b></a>
-                                            </li>
-                                        @endfor
-                                        <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) != $pagination['pages'] ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1)}}"><i class='bx bx-chevron-right'></i></a>
-                                        </li>
-                                    </ul>
-                                @endif
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 @endsection
 
 @section('scripts')
+    @parent
+    <script src="{{ asset('js/datatables/drawDataTable.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('.table-responsive').on('show.bs.dropdown', function() {
-                $('.table-responsive').css("overflow", "inherit");
+        $(function () {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+            let deleteButton = {
+                text: '{{ trans('global.datatables.delete') }}',
+                url: "{{ route('dashboard.leaveTypes.massDestroy') }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
+
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
+
+                        return
+                    }
+
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                            headers: {
+                                'x-csrf-token': '{{ csrf_token() }}'
+                            },
+                            method: 'POST',
+                            url: config.url,
+                            data: {
+                                ids: ids,
+                                _method: 'DELETE'
+                            }
+                        })
+                        .done(function() {
+                            location.reload()
+                        })
+                    }
+                }
+            }
+            dtButtons.push(deleteButton);
+
+            let dtOverrideGlobals = {
+                searchDelay: 1000,
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                aaSorting: [],
+                language: {
+                    paginate: {
+                        next: '<i class="bx bx-chevron-right"></i>',
+                        previous: '<i class="bx bx-chevron-left"></i>',
+                    }
+                },
+                ajax: {
+                    url: "{{ route('dashboard.leaveTypes.index') }}",
+                    data: function(data) {
+                        data.created_at_range = $('#created_at_range').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'placeholder',
+                        name: 'placeholder',
+                        width: 5
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                        filter: true,
+                        width: 30
+                    },
+                    {
+                        data: 'max_days',
+                        name: 'max_days',
+                        filter: true,
+                        width: 30
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        filter: true,
+                        datepicker: true,
+                        type: 'range',
+                        width: 30,
+                        searchable: false
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}',
+                        width: 20
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [3, "desc"]
+                ],
+                pageLength: 10,
+                filterAjax: '{{ route('dashboard.searchListOptions.index') }}',
+            };
+
+            drawDataTable('.datatable-LeaveTypes', dtOverrideGlobals, true);
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
             });
 
-            $('.table-responsive').on('hide.bs.dropdown', function() {
-                $('.table-responsive').css("overflow", "auto");
-            })
+            $('#DataTables_Table_0_filter').addClass('d-none');
+            $('#DataTables_Table_0_length').appendTo('.dt-buttons');
+            $('#DataTables_Table_0_length').addClass('d-inline-block');
         });
     </script>
 @endsection

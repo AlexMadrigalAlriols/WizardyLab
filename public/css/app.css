@@ -100,7 +100,6 @@
     padding-bottom: 1.5rem;
 }
 
-
 table.dataTable tbody td.select-checkbox::before,
 table.dataTable tbody td.select-checkbox::after,
 table.dataTable tbody th.select-checkbox::before,
@@ -113,6 +112,9 @@ table.dataTable tbody th.select-checkbox::after {
     background-color: var(--primary-color) !important;
 }
 
+.table-entry td {
+    padding: 1.5rem !important;
+}
 .btn-attendance-task {
     border-color: var(--middle-color);
     background-color: transparent;
@@ -224,6 +226,12 @@ table.dataTable tbody th.select-checkbox::after {
     color: var(--middle-color);
 }
 
+.page-link.active {
+    background-color: var(--middle-color);
+    color: var(--white-color);
+    border-color: var(--middle-color);
+}
+
 .active .page-link {
     background-color: var(--primary-color) !important;
     color: var(--white-color);
@@ -251,6 +259,11 @@ table.dataTable tbody th.select-checkbox::after {
 tr.selected {
     --dt-row-selected: 228, 228, 228 !important;
     --dt-row-selected-text: 0, 0, 0 !important;
+}
+
+.datatable tr {
+    align-items: center;
+    vertical-align: middle !important;
 }
 
 .btn-default {

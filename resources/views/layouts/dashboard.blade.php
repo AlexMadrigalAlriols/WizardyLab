@@ -283,14 +283,14 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-cog nav_icon'></i>
                                 <span class="nav_name ms-4">Configuration</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
                                 <i class='bx bx-globe nav_icon'></i>
                                 <span class="nav_name">{{__('crud.globalConfigurations.title')}}</span>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\NotificationHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\LeavesDataTable;
 use App\Http\Requests\Leaves\StoreRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Company;
 use App\Models\Leave;
 use App\Models\LeaveType;
@@ -13,19 +15,21 @@ use App\Models\Notification;
 use App\Models\User;
 use App\UseCases\Leaves\StoreUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LeaveController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new LeavesDataTable('leaves');
+            return $dataTable->make();
+        }
+
         $query = Leave::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Leave::class);
-
-        $leaves = $query->get();
         $total = $query->count();
 
-        return view('dashboard.leaves.index', compact('leaves', 'total', 'pagination'));
+        return view('dashboard.leaves.index', compact('total'));
     }
 
     public function create()
@@ -93,5 +97,14 @@ class LeaveController extends Controller
 
         toast('Leave deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Leave::whereIn('id', $ids)->delete();
+
+        toast('Leaves deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
