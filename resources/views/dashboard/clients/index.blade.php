@@ -34,9 +34,8 @@
         $(function () {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
-                text: deleteButtonTrans,
+                text: '{{ trans('global.datatables.delete') }}',
                 url: "{{ route('dashboard.clients.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {

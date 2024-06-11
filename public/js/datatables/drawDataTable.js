@@ -134,7 +134,7 @@ function drawDataTable(selector, options, withFilters = false) {
                     case 'select':
                     case 'origin':
                         let select2 = `
-                            <select class="form-control form-control-sm select2" id="${columnOptions.name}" data-index="${i}" ${columnOptions.multiple ? 'multiple="multiple"' : ''}>`;
+                            <select class="form-control form-control-sm select2" style="width: 100%;" id="${columnOptions.name}" data-index="${i}" ${columnOptions.multiple ? 'multiple="multiple"' : ''}>`;
                         if(columnOptions.value) {
                             select2 += `<option value="${columnOptions.value}" selected>${columnOptions.value}</option>`;
                         }

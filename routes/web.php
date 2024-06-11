@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -118,5 +119,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 });
 
+//Translations
+Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

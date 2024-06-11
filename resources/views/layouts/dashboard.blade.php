@@ -342,6 +342,7 @@
 <script src="{{ asset('js/select2.full.min.js')}}"></script>
 <script src="{{ asset('js/main.js')}}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
+@include('partials.datatables.trans_script')
 
 {{-- DataTables --}}
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>

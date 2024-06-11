@@ -15,7 +15,7 @@
     };
 
     $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
-        className: 'btn me-2 mb-3 mt-2'
+        className: 'btn btn-sm me-2 mb-3 mt-2'
     })
     $.extend(true, $.fn.dataTable.defaults, {
         language: {
