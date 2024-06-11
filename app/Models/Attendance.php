@@ -20,6 +20,7 @@ class Attendance extends Model
         'date',
         'check_in',
         'check_out',
+        'data'
     ];
 
     protected $casts = [
@@ -28,6 +29,7 @@ class Attendance extends Model
         'date' => 'datetime',
         'check_in' => 'datetime',
         'check_out' => 'datetime',
+        'data' => 'array'
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -224,7 +224,7 @@
                             </a>
                             <hr>
                             <a href="#" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
-                                <i class='bx bx-user-plus nav_icon'></i>
+                                <i class='bx bx-timer nav_icon'></i>
                                 <span class="nav_name">Attendance</span>
                             </a>
                             <hr>
