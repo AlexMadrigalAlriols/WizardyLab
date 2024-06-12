@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -38,9 +40,23 @@ class Invoice extends Model
         'data' => 'array'
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id')));
+
+        static::creating(function ($model) {
+            $model->portal_id = session('portal_id');
+        });
+    }
+
     public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function portal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Portal::class);
     }
 
     public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo

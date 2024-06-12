@@ -31,6 +31,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'local_portal' => env('LOCAL_PORTAL', '1'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

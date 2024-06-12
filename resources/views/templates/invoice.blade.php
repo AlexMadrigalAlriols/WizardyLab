@@ -86,7 +86,7 @@
         <div class="invoice-info">
             <h1>Factura #{{ $invoice->number }}</h1>
             <p>Fecha: {{ $invoice->issue_date }}</p>
-            <p>Cliente: {{ $invoice->client->name }} ({{$invoice->client->company->name}})</p>
+            <p>Cliente: {{ $invoice->client?->name }} ({{$invoice->client?->company?->name}})</p>
         </div>
         <div class="addresses">
             <div>

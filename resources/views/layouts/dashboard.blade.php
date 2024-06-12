@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 
+@php
+    use Jenssegers\Agent\Facades\Agent;
+    use App\Helpers\SubdomainHelper;
+
+    $isPhone = Agent::isMobile();
+
+    $portal = SubdomainHelper::getPortal(request());
+@endphp
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -37,14 +46,18 @@
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
     <link href="{{asset('vendor/spectrum/spectrum.min.css')}}" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: {{ $portal->data['primary_color'] }};
+            --secondary-color: {{ $portal->data['secondary_color'] }};
+            --secondary-color-light: {{ $portal->secondary_light }};
+            --btn-text: {{ $portal->data['btn_text_color'] }};
+            --menu-text-color: {{ $portal->data['menu_text_color'] }};
+        }
+    </style>
     @yield('styles')
 </head>
-
-@php
-    use Jenssegers\Agent\Facades\Agent;
-
-    $isPhone = Agent::isMobile();
-@endphp
 
 <body class="{{$isPhone ? '' : 'body-pd'}}" id="body-pd">
     @include('sweetalert::alert')
@@ -70,7 +83,7 @@
         </div>
         <div>
             <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="Attendance" data-bs-placement="bottom">
-                <i class='bx bx-timer'></i> {{ auth()->user()->timer }}
+                <i class='bx bx-timer'></i> <span id="timerValue">{{ auth()->user()->timer }}</span>
             </button>
             <div class="d-inline-block align-middle">
                 <a href="#" class="text-dark me-4 navIconBtn"><i class="bx bx-search" style="font-size: 23px;"></i></a>
@@ -175,7 +188,7 @@
     <div class="l-navbar {{$isPhone ? '' : 'show'}}" id="nav-bar">
         <nav class="nav">
             <div class="scrollbar">
-                <a href="#" class="nav_logo"><img src="{{asset('img/LogoLetters.png')}}" width="175px"></a>
+                <a href="#" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
                 <div class="nav_list">
                     <hr>
                     <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
@@ -292,8 +305,8 @@
                         </a>
                         <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
-                                <i class='bx bx-globe nav_icon'></i>
-                                <span class="nav_name">{{__('crud.globalConfigurations.title')}}</span>
+                                <i class='bx bx-cog nav_icon'></i>
+                                <span class="nav_name">Configuration</span>
                             </a>
                             <hr>
                             <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
@@ -323,6 +336,9 @@
     </div>
 
     @yield('content_with_padding')
+    <div class="loader-overlay" id="loader-overlay">
+        <div class="loader"></div>
+    </div>
     <div class="content height-100">
         <div class="main" id="app">
             @yield('content')

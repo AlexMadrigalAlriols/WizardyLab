@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class FileSystemHelper {
     public static function uploadFile(Request $request, string $session_name = 'DROPZONE_FILES_TEMP_PATHS') {
         if ($request->hasFile('dropzone_image')) {
-            $files = $request->file('dropzone_image');
+            $files = is_array($request->file('dropzone_image')) ? $request->file('dropzone_image') : [$request->file('dropzone_image')];
 
             foreach ($files as $idx => $file) {
                 $tempPath = $file->storeAs('temp', $file->getClientOriginalName());
@@ -23,7 +23,7 @@ class FileSystemHelper {
                 $request->session()->put($session_name, $dropzoneTasksTempPaths);
             }
 
-            return response()->json(['path' => $tempPath], 200);
+            return response()->json(['path' => $tempPath ?? ''], 200);
         }
 
         return response()->json(['error' => 'No file uploaded.'], 400);

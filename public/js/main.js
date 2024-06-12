@@ -28,6 +28,7 @@ $(document).ready(function () {
     });
 
     initializeFlatPick();
+    $('#loader-overlay').addClass('d-none');
 });
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {
@@ -101,7 +102,7 @@ function parseSelect2Results(results) {
 }
 
 $(function() {
-    let timer = $('#timer');
+    let timer = $('#timerValue');
 
     function updateTimer() {
         var myTime = timer.html();
