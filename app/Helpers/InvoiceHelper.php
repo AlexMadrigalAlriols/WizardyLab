@@ -25,6 +25,19 @@ class InvoiceHelper {
             $tasksIds[] = $task->id;
         }
 
+        $items = [];
+        foreach ($project->expenses()->where('facturable', true)->get() as $expense) {
+            $items[] = [
+                'id' => $expense->item_id,
+                'name' => $expense->name,
+                'qty' => $expense->quantity,
+                'amount' => $expense->amount
+            ];
+            $amount += $expense->total;
+            $expense->facturable = false;
+            $expense->save();
+        }
+
         $tax = ($amount * ConfigurationHelper::get('tax_value', 21)) / 100;
         $total = $amount + $tax;
 
@@ -32,7 +45,8 @@ class InvoiceHelper {
             'amount' => $amount,
             'tax' => $tax,
             'total' => $total,
-            'tasks_ids' => $tasksIds
+            'tasks_ids' => $tasksIds,
+            'items' => $items
         ];
     }
 

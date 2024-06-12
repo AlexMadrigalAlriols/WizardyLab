@@ -73,6 +73,11 @@ class Project extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function expenses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
+
     public function avaiableStatuses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ProjectStatuses::class);

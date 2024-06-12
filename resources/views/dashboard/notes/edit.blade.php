@@ -23,19 +23,3 @@
     </div>
 </div>
 @endsection
-
-@section('scripts')
-    @parent
-    <script>
-        var obligatoryFields = ['content'];
-        var limitedCharFields = ['content'];
-
-        $('input, select, textarea').each(function() {
-            $(this).on('keyup', function() {
-                checkObligatoryFields(obligatoryFields);
-            });
-        });
-
-        countChars(limitedCharFields);
-    </script>
-@endsection

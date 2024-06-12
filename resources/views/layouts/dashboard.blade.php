@@ -275,14 +275,14 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-package nav_icon'></i>
                                 <span class="nav_name ms-4">Inventory</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Assignments' || $section == 'Items' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
                             <a href="{{route('dashboard.items.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
                                 <i class='bx bx-desktop nav_icon'></i>
                                 <span class="nav_name">Items</span>
@@ -291,6 +291,11 @@
                             <a href="{{route('dashboard.assignments.index')}}" class="nav_link {{ $section == 'Assignments' ? 'active' : ''}}">
                                 <i class='bx bx-book-add nav_icon'></i>
                                 <span class="nav_name">Assignments</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.expenses.index')}}" class="nav_link {{ $section == 'Expenses' ? 'active' : ''}}">
+                                <i class='bx bx-dollar nav_icon'></i>
+                                <span class="nav_name">Expenses</span>
                             </a>
                         </div>
                     </div>

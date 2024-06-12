@@ -1,25 +1,27 @@
-@extends('layouts.dashboard', ['section' => 'Invoices'])
+
+@extends('layouts.dashboard', ['section' => 'Expenses'])
 
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>{{__('crud.invoices.title')}}</b><span class="text-muted">({{$total}})</span>
+            <b>Expenses </b><span class="text-muted">({{ $total }})</span>
         </span>
-        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.invoices.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.invoices.title_singular')}}</span>
+        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.expenses.create')}}">
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Expense</span>
         </a>
     </div>
 
     <div class="mt-4">
-        <table class="table table-borderless table-responsive table-hover ajaxTable datatable datatable-Invoices mt-5 w-100">
+        <table class="table table-borderless table-responsive table-hover ajaxTable datatable datatable-Expenses mt-5 w-100">
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">NUMBER</th>
-                    <th scope="col" class="border-bottom">CLIENT</th>
-                    <th scope="col" class="border-bottom">STATUS</th>
-                    <th scope="col" class="border-bottom">ISSUE_DATE</th>
-                    <th scope="col" class="border-bottom">TOTAL</th>
+                    <th scope="col" class="border-bottom">PROJECT</th>
+                    <th scope="col" class="border-bottom">ITEM</th>
+                    <th scope="col" class="border-bottom">QUANTITY</th>
+                    <th scope="col" class="border-bottom">AMOUNT</th>
+                    <th scope="col" class="border-bottom">FACTURABLE</th>
+                    <th scope="col" class="border-bottom">CREATED AT</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
@@ -36,7 +38,7 @@
 
             let deleteButton = {
                 text: '{{ trans('global.datatables.delete') }}',
-                url: "{{ route('dashboard.invoices.massDestroy') }}",
+                url: "{{ route('dashboard.expenses.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {
                     var ids = $.map(dt.rows({
@@ -77,7 +79,6 @@
                 processing: true,
                 serverSide: true,
                 retrieve: true,
-                dropdownParent: $('body'),
                 aaSorting: [],
                 language: {
                     paginate: {
@@ -86,13 +87,15 @@
                     }
                 },
                 ajax: {
-                    url: "{{ route('dashboard.invoices.index') }}",
+                    url: "{{ route('dashboard.expenses.index') }}",
                     data: function(data) {
-                        data.issue_date_range = $('#issue_date_range').val();
-                        data.client_name = $('#clients\\.name').val();
+                        data.created_at_range = $('#created_at_range').val();
 
-                        data.total_min = $('#total_min').val();
-                        data.total_max = $('#total_max').val();
+                        data.amount_min = $('#amount_min').val();
+                        data.amount_max = $('#amount_max').val();
+                        data.quantity_min = $('#quantity_min').val();
+                        data.quantity_max = $('#quantity_max').val();
+                        data.name = $('#name').val();
                     }
                 },
                 columns: [
@@ -102,46 +105,56 @@
                         width: 5
                     },
                     {
-                        data: 'number',
-                        name: 'number',
-                        filter: true,
-                        width: 30
-                    },
-                    {
-                        data: 'client',
-                        name: 'clients.name',
+                        data: 'project',
+                        name: 'projects.name',
                         filter: true,
                         type: 'select',
-                        model: 'Client',
+                        model: 'Project',
                         field: 'name',
                         searchable: false,
                         filterAjax: '{{ route('dashboard.searchListOptions.index') }}',
                         width: 30
                     },
                     {
-                        data: 'status',
-                        name: 'status_id',
-                        type: 'options',
-                        options: {!! $statuses !!},
+                        data: 'name',
+                        name: 'name',
                         filter: true,
+                        width: 20
+                    },
+                    {
+                        data: 'quantity',
+                        name: 'quantity',
+                        filter: false,
                         width: 30
                     },
                     {
-                        data: 'issue_date',
-                        name: 'issue_date',
-                        filter: true,
-                        datepicker: true,
-                        type: 'range',
-                        width: 30,
-                        searchable: false
-                    },
-                    {
-                        data: 'total',
-                        name: 'total',
+                        data: 'amount',
+                        name: 'amount',
                         filter: true,
                         width: 30,
                         type: 'range',
                         currency: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'facturable',
+                        name: 'facturable',
+                        type: 'options',
+                        options: [
+                                {value: '', label: '-'},
+                                {value: 1, label: 'Facturable'},
+                                {value: 0, label: 'Non-Facturable'},
+                        ],
+                        filter: true,
+                        width: 30
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        filter: true,
+                        datepicker: true,
+                        type: 'range',
+                        width: 30,
                         searchable: false
                     },
                     {
@@ -152,13 +165,13 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, "desc"]
+                    [5, "desc"]
                 ],
                 pageLength: 10,
                 filterAjax: '{{ route('dashboard.searchListOptions.index') }}',
             };
 
-            drawDataTable('.datatable-Invoices', dtOverrideGlobals, true);
+            drawDataTable('.datatable-Expenses', dtOverrideGlobals, true);
 
             $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
                 $($.fn.dataTable.tables(true)).DataTable()
@@ -169,8 +182,12 @@
             $('#DataTables_Table_0_length').appendTo('.dt-buttons');
             $('#DataTables_Table_0_length').addClass('d-inline-block');
 
-            $('#totalFilterModalBtn').on('click', function() {
-                $('#totalFilterModal').modal('show');
+            $('#quantityFilterModalBtn').on('click', function() {
+                $('#quantityFilterModalBtn').modal('show');
+            });
+
+            $('#amountFilterModalBtn').on('click', function() {
+                $('#amountFilterModalBtn').modal('show');
             });
         });
     </script>

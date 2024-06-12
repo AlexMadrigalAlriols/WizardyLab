@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-;
-
 class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
@@ -71,5 +69,9 @@ class Invoice extends Model
         }
 
         return $this->belongsTo(Client::class);
+    }
+
+    public function getFilePathAttribute() {
+        return 'invoices/' . $this->portal_id . '/' . $this->number . '.pdf';
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
+use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Admin\BoardController;
 use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -22,6 +24,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
+use App\Models\Invoice;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -129,6 +133,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
     Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
+
+    Route::resource('expenses', ExpenseController::class)->except(['update', 'edit']);
+    Route::post('/expenses/upload_file', [ExpenseController::class, 'uploadFile'])->name('expenses.upload_file');
+    Route::delete('/expensesBill/delete_file/{expenseBill}', [ExpenseController::class, 'deleteFile'])->name('expenses.delete_file');
+    Route::delete('massDestroy/expenses', [ExpenseController::class, 'massDestroy'])->name('expenses.massDestroy');
 
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
