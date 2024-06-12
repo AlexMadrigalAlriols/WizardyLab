@@ -1,11 +1,13 @@
 <?php
 
+use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Admin\BoardController;
 use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -14,12 +16,16 @@ use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TranslationController;
+use App\Models\Invoice;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +40,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::redirect('/', '/dashboard');
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], static function () {
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     //Item
@@ -42,11 +49,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::post('/items-files/upload_file', [ItemController::class, 'uploadFile'])->name('items.upload_file');
     Route::get('/items-files/download_file/{itemFile}', [ItemController::class, 'downloadFile'])->name('items.download_file');
     Route::get('/items-files/delete_file/{itemFile}', [ItemController::class, 'deleteFile'])->name('items.delete_file');
+    Route::delete('massDestroy/items', [ItemController::class, 'massDestroy'])->name('items.massDestroy');
+
+    //Assignments
     Route::resource('assignments', UserInventoriesController::class);
     Route::delete('/assignments-line/{assignment}/delete', [UserInventoriesController::class, 'destroyLine'])->name('assignments.line.delete');
-
-    //Departments
-    Route::resource('departments', DepartmentController::class);
+    Route::delete('massDestroy/assignments', [UserInventoriesController::class, 'massDestroy'])->name('assignments.massDestroy');
 
     //Tasks
     Route::resource('tasks', TaskController::class);
@@ -58,28 +66,39 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('/tasks/download_file/{taskFile}', [TaskController::class, 'downloadFile'])->name('task.download_file');
     Route::post('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
     Route::get('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
+    Route::delete('massDestroy/tasks', [TaskController::class, 'massDestroy'])->name('tasks.massDestroy');
 
     //Comments
     Route::resource('{task}/comments', TaskCommentController::class)->only(['store', 'destroy']);
 
     // Clients
     Route::resource('clients', ClientController::class);
+    Route::delete('massDestroy/clients', [ClientController::class, 'massDestroy'])->name('clients.massDestroy');
 
     // Companies
     Route::resource('companies', CompanyController::class);
+    Route::delete('massDestroy/companies', [CompanyController::class, 'massDestroy'])->name('companies.massDestroy');
 
     // Leaves
     Route::resource('leaves', LeaveController::class)->except(['update']);
     Route::get('/leaves/{leave}/approve', [LeaveController::class, 'update'])->name('leaves.approve');
+    Route::delete('massDestroy/leaves', [LeaveController::class, 'massDestroy'])->name('leaves.massDestroy');
 
     // Status
     Route::resource('statuses', StatusController::class)->except(['show']);
+    Route::delete('massDestroy/statuses', [StatusController::class, 'massDestroy'])->name('statuses.massDestroy');
 
     // Labels
     Route::resource('labels', LabelController::class)->except(['show']);
+    Route::delete('massDestroy/labels', [LabelController::class, 'massDestroy'])->name('labels.massDestroy');
 
     // Leave Types
     Route::resource('leaveTypes', LeaveTypeController::class)->except(['show']);
+    Route::delete('massDestroy/leaveTypes', [LeaveTypeController::class, 'massDestroy'])->name('leaveTypes.massDestroy');
+
+    //Departments
+    Route::resource('departments', DepartmentController::class);
+    Route::delete('massDestroy/departments', [DepartmentController::class, 'massDestroy'])->name('departments.massDestroy');
 
     // Notes
     Route::resource('notes', NoteController::class);
@@ -91,6 +110,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('projects', ProjectController::class);
     Route::get('/projects/{project}/update-status/{status}', [ProjectController::class, 'updateStatus'])->name('projects.update-status');
     Route::get('/projects/update-order/{projectStatus}', [ProjectController::class, 'updateStatusOrder'])->name('projects.update-order');
+    Route::delete('massDestroy/projects', [ProjectController::class, 'massDestroy'])->name('projects.massDestroy');
 
     // Board
     Route::get('/projects/{project}/board', [BoardController::class, 'index'])->name('projects.board');
@@ -106,12 +126,28 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     // Global Configs
     Route::get('/global-configurations', [GlobalConfigurationController::class, 'index'])->name('global-configurations.index');
     Route::post('/global-configurations', [GlobalConfigurationController::class, 'store'])->name('global-configurations.store');
+    Route::post('/global-configurations/upload_file', [GlobalConfigurationController::class, 'uploadFile'])->name('global-configurations.upload_file');
 
     // Invoices
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+    Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
+
+    Route::resource('expenses', ExpenseController::class)->except(['update', 'edit']);
+    Route::post('/expenses/upload_file', [ExpenseController::class, 'uploadFile'])->name('expenses.upload_file');
+    Route::delete('/expensesBill/delete_file/{expenseBill}', [ExpenseController::class, 'deleteFile'])->name('expenses.delete_file');
+    Route::delete('massDestroy/expenses', [ExpenseController::class, 'massDestroy'])->name('expenses.massDestroy');
+
+    // Select 2 Search list
+    Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 });
 
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+//Translations
+Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
+
+Route::group(['middleware' => ['checkPortalExists']], static function () {
+    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+});
+
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

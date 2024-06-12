@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,15 @@ class Item extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id')));
+
+        static::creating(function ($model) {
+            $model->portal_id = session('portal_id');
+        });
+    }
 
     public function assignments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

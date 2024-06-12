@@ -4,25 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\LabelsDataTable;
 use App\Http\Requests\Labels\StoreRequest;
 use App\Http\Requests\Labels\UpdateRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Label;
 use App\UseCases\Labels\StoreUseCase;
 use App\UseCases\Labels\UpdateUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LabelController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new LabelsDataTable('labels');
+            return $dataTable->make();
+        }
+
         $query = Label::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Label::class);
-
-        $labels = $query->get();
         $total = $query->count();
 
-        return view('dashboard.labels.index', compact('labels', 'total', 'pagination'));
+        return view('dashboard.labels.index', compact('total'));
     }
 
     public function create()
@@ -65,5 +69,14 @@ class LabelController extends Controller
 
         toast('Label deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Label::whereIn('id', $ids)->delete();
+
+        toast('Labels deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

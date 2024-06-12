@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 
+@php
+    use Jenssegers\Agent\Facades\Agent;
+    use App\Helpers\SubdomainHelper;
+
+    $isPhone = Agent::isMobile();
+
+    $portal = SubdomainHelper::getPortal(request());
+@endphp
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -29,6 +38,7 @@
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.3/css/select.dataTables.css">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/board.css') }}" rel="stylesheet" />
@@ -36,14 +46,18 @@
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dragula.min.css') }}" rel="stylesheet" />
     <link href="{{asset('vendor/spectrum/spectrum.min.css')}}" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: {{ $portal->data['primary_color'] }};
+            --secondary-color: {{ $portal->data['secondary_color'] }};
+            --secondary-color-light: {{ $portal->secondary_light }};
+            --btn-text: {{ $portal->data['btn_text_color'] }};
+            --menu-text-color: {{ $portal->data['menu_text_color'] }};
+        }
+    </style>
     @yield('styles')
 </head>
-
-@php
-    use Jenssegers\Agent\Facades\Agent;
-
-    $isPhone = Agent::isMobile();
-@endphp
 
 <body class="{{$isPhone ? '' : 'body-pd'}}" id="body-pd">
     @include('sweetalert::alert')
@@ -69,7 +83,7 @@
         </div>
         <div>
             <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="Attendance" data-bs-placement="bottom">
-                <i class='bx bx-timer'></i> {{ auth()->user()->timer }}
+                <i class='bx bx-timer'></i> <span id="timerValue">{{ auth()->user()->timer }}</span>
             </button>
             <div class="d-inline-block align-middle">
                 <a href="#" class="text-dark me-4 navIconBtn"><i class="bx bx-search" style="font-size: 23px;"></i></a>
@@ -174,7 +188,7 @@
     <div class="l-navbar {{$isPhone ? '' : 'show'}}" id="nav-bar">
         <nav class="nav">
             <div class="scrollbar">
-                <a href="#" class="nav_logo"><img src="{{asset('img/LogoLetters.png')}}" width="175px"></a>
+                <a href="#" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
                 <div class="nav_list">
                     <hr>
                     <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
@@ -223,7 +237,7 @@
                             </a>
                             <hr>
                             <a href="#" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
-                                <i class='bx bx-user-plus nav_icon'></i>
+                                <i class='bx bx-timer nav_icon'></i>
                                 <span class="nav_name">Attendance</span>
                             </a>
                             <hr>
@@ -261,14 +275,14 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-package nav_icon'></i>
                                 <span class="nav_name ms-4">Inventory</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Assignments' || $section == 'Items' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
                             <a href="{{route('dashboard.items.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
                                 <i class='bx bx-desktop nav_icon'></i>
                                 <span class="nav_name">Items</span>
@@ -278,21 +292,26 @@
                                 <i class='bx bx-book-add nav_icon'></i>
                                 <span class="nav_name">Assignments</span>
                             </a>
+                            <hr>
+                            <a href="{{route('dashboard.expenses.index')}}" class="nav_link {{ $section == 'Expenses' ? 'active' : ''}}">
+                                <i class='bx bx-dollar nav_icon'></i>
+                                <span class="nav_name">Expenses</span>
+                            </a>
                         </div>
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-cog nav_icon'></i>
                                 <span class="nav_name ms-4">Configuration</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
-                                <i class='bx bx-globe nav_icon'></i>
-                                <span class="nav_name">{{__('crud.globalConfigurations.title')}}</span>
+                                <i class='bx bx-cog nav_icon'></i>
+                                <span class="nav_name">Configuration</span>
                             </a>
                             <hr>
                             <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
@@ -322,6 +341,9 @@
     </div>
 
     @yield('content_with_padding')
+    <div class="loader-overlay" id="loader-overlay">
+        <div class="loader"></div>
+    </div>
     <div class="content height-100">
         <div class="main" id="app">
             @yield('content')
@@ -331,21 +353,29 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-<script src='{{asset('js/dragula.min.js')}}'></script>
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
-</script>
-@include('partials.attendance_script')
-<script src="{{ asset('js/select2.full.min.js')}}"></script>
-<script src="{{ asset('js/main.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="{{asset('vendor/spectrum/spectrum.min.js')}}"></script>
-
+<script src='{{asset('js/dragula.min.js')}}'></script>
+<script src="{{ asset('js/select2.full.min.js')}}"></script>
+<script src="{{ asset('js/main.js')}}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
+@include('partials.datatables.trans_script')
+
+{{-- DataTables --}}
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
+<script src="{{asset('js/datatables/buttons.html5.min.js')}}"></script>
+<script src="{{asset('js/datatables/dataTables.buttons.min.js')}}"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="{{asset('js/datatables/dataTables.select.min.js')}}"></script>
+
+@include('partials.attendance_script')
+@include('partials.datatables.scripts')
 @yield('scripts')
 </html>

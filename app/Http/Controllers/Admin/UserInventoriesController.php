@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\AssignmentsDataTable;
+use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\UserInventories\StoreRequest;
 use App\Http\Requests\UserInventories\UpdateRequest;
 use App\Models\Item;
@@ -18,6 +20,7 @@ use App\UseCases\UserInventories\StoreUseCase;
 use App\UseCases\UserInventories\UpdateUseCase as UserInventoriesUpdateUseCase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserInventoriesController extends Controller
 {
@@ -26,13 +29,15 @@ class UserInventoriesController extends Controller
      */
     public function index(request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new AssignmentsDataTable('assignments');
+            return $dataTable->make();
+        }
+
         $query = UserInventory::query();
+        $total = $query->count();
 
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Item::class);
-        $UserInventories = $query->get();
-        $counters = $this->getInventoriesCounters();
-
-        return view('dashboard.assignments.index', compact('UserInventories', 'pagination', 'counters'));
+        return view('dashboard.assignments.index', compact('total'));
     }
 
     /**
@@ -156,4 +161,12 @@ class UserInventoriesController extends Controller
         return redirect()->route('dashboard.items.show', $assignment->item_id);
     }
 
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        UserInventory::whereIn('id', $ids)->delete();
+
+        toast('Assignments deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
 }

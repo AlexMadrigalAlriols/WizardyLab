@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-8 col-sm-12">
+    <div class="col-md-10 col-sm-12">
         <div class="mt-1">
             <span class="h2 d-inline-block mt-1">
                 <b>{{__('global.create')}} {{__('crud.invoices.title_singular')}}</b>
@@ -32,17 +32,20 @@
             $('#manual').addClass('d-none');
             $('#tasks').removeClass('d-none');
             $('#project').addClass('d-none');
+            $('#manualValues').addClass('d-none');
             obligatoryFields = ['type', 'status_id', 'client_id', 'issue_date', 'tasks'];
         } else if ($(this).val() == 'projects') {
             $('#manual').addClass('d-none');
             $('#tasks').addClass('d-none');
             $('#project').removeClass('d-none');
+            $('#manualValues').addClass('d-none');
             obligatoryFields = ['type', 'status_id', 'issue_date', 'project_id'];
         } else {
             $('#manual').removeClass('d-none');
             $('#tasks').addClass('d-none');
             $('#project').addClass('d-none');
-            obligatoryFields = ['type', 'status_id', 'issue_date', 'amount', 'client_id'];
+            $('#manualValues').removeClass('d-none');
+            obligatoryFields = ['type', 'status_id', 'issue_date', 'client_id'];
         }
     })
 

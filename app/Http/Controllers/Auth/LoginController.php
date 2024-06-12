@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\SubdomainHelper;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -33,6 +34,33 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        $portal = SubdomainHelper::getPortal(request());
+
+        return view('auth.login', compact('portal'));
+    }
+
+    protected function authenticate(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $portal = SubdomainHelper::getPortal($request);
+
+            if ($user->portal_id != $portal->id) {
+                Auth::logout();
+                return redirect()->route('login')->withErrors(['portal_id' => 'No tienes acceso a este portal.']);
+            }
+
+            return redirect()->intended($this->redirectPath());
+        }
+
+        // Si las credenciales son incorrectas
+        return $this->sendFailedLoginResponse($request);
     }
 
     public function logout(Request $request) {

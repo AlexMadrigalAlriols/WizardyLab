@@ -33,18 +33,6 @@ class ItemFile extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function getIconAttribute(): string
-    {
-        return match($this->mime_type) {
-            'image/jpeg', 'image/png', 'image/gif' => 'bx bx-image',
-            'application/pdf' => 'bx bx-file-pdf',
-            'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'bx bx-file-word',
-            'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'bx bx-file-excel',
-            'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'bx bx-file-ppt',
-            default => 'bx bx-file'
-        };
-    }
-
     public function getRealSizeAttribute(): string
     {
         return round($this->size / 1024, 2) . 'kb';
@@ -57,6 +45,6 @@ class ItemFile extends Model
 
     public function getDownloadLinkAttribute(): string
     {
-        return route('dashboard.inventories.download_file', $this->id);
+        return route('dashboard.items.download_file', $this->id);
     }
 }

@@ -28,6 +28,7 @@ $(document).ready(function () {
     });
 
     initializeFlatPick();
+    $('#loader-overlay').addClass('d-none');
 });
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {
@@ -101,7 +102,7 @@ function parseSelect2Results(results) {
 }
 
 $(function() {
-    let timer = $('#timer');
+    let timer = $('#timerValue');
 
     function updateTimer() {
         var myTime = timer.html();
@@ -191,4 +192,12 @@ function generateDropZone(id, url, token, multiple = false, only_image = false) 
 
 function isPhoneDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/.test(navigator.userAgent);
+}
+
+const debounce = (fn, ms = 1000) => {
+    let timeout;
+    return function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(), ms);
+    };
 }

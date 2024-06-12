@@ -29,6 +29,7 @@ class StoreRequest extends FormRequest
             'tasks.*' => 'nullable|exists:tasks,id',
             'amount' => 'nullable|numeric',
             'status_id' => 'required|exists:statuses,id',
+            'items' => 'nullable|array'
         ];
     }
 }

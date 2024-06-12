@@ -21,6 +21,10 @@ class GlobalConfigSeeder extends Seeder
             ['type' => 'select-status-invoice', 'key' => 'default_invoice_status', 'value' => '12'],
         ];
 
+        foreach ($configs as $key => $status) {
+            $configs[$key]['portal_id'] = 1;
+        }
+
         GlobalConfiguration::insert($configs);
     }
 }

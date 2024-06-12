@@ -3,135 +3,176 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>{{__('crud.invoices.title')}}</b><span class="text-muted">({{count($invoices)}})</span>
+            <b>{{__('crud.invoices.title')}}</b><span class="text-muted">({{$total}})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.invoices.create')}}">
             <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.invoices.title_singular')}}</span>
         </a>
     </div>
 
-    <div class="table-actions">
-        <div class="row">
-            <div class="col-md-5">
-
-            </div>
-            <div class="col-md-7 mt-1">
-                <div class="justify-content-end">
-                    <div class="row">
-                        <div class="col-md-6 offset-md-6 col-sm-12 mt-3">
-                            <div class="search-container w-100">
-                                <i class="bx bx-search search-icon"></i>
-                                <input type="text" class="search-input" id="search-input" name="search_input"
-                                    placeholder="Search Invoices">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-responsive mt-5">
-        <table class="table table-borderless table-hover">
+    <div class="mt-4">
+        <table class="table table-borderless table-responsive table-hover ajaxTable datatable datatable-Invoices mt-5 w-100">
             <thead class="border-top border-bottom">
                 <tr>
-                    <th scope="col" class="min-width-0"><input type="checkbox" id="select_all"></th>
-                    <th scope="col">{{strtoupper(__('crud.invoices.fields.number'))}}</th>
-                    <th scope="col">{{strtoupper(__('crud.invoices.fields.project'))}} / {{strtoupper(__('crud.invoices.fields.client'))}}</th>
-                    <th scope="col">{{strtoupper(__('crud.invoices.fields.status'))}}</th>
-                    <th scope="col">{{strtoupper(__('crud.invoices.fields.issue_date'))}}</th>
-                    <th scope="col">{{strtoupper(__('crud.invoices.fields.total'))}}</th>
-                    <th scope="col"></th>
+                    <th scope="col" class="border-bottom"></th>
+                    <th scope="col" class="border-bottom">NUMBER</th>
+                    <th scope="col" class="border-bottom">CLIENT</th>
+                    <th scope="col" class="border-bottom">STATUS</th>
+                    <th scope="col" class="border-bottom">ISSUE_DATE</th>
+                    <th scope="col" class="border-bottom">TOTAL</th>
+                    <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($invoices as $invoice)
-                    <tr class="table-entry align-middle border-bottom">
-                        <td class="text-nowrap">
-                            <input type="checkbox" name="checkbox[]">
-                        </td>
-                        <td>{{ $invoice->number }}</td>
-                        <td>{{ $invoice->project?->name ?? ($invoice->client?->name ?? '-') }}</td>
-                        <td><span class="badge" style="{{$invoice->status->styles}}">{{ $invoice->status->title }}</span></td>
-                        <td>{{ $invoice->issue_date }}</td>
-                        <td>{{ $invoice->total }} {{$invoice?->client->currency->symbol ?? '-'}}</td>
-                        <td class="text-center">
-                            <div class="dropdown">
-                                <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class='bx bx-dots-horizontal-rounded'></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.invoices.download', $invoice->id)}}"><i class='bx bx-download' ></i> Download</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{{route('dashboard.invoices.destroy', $invoice->id)}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-
-                @if(!count($invoices))
-                    <tr>
-                        <td colspan="9" class="text-center py-5">
-                            <span class="text-muted">No invoices found!</span>
-                        </td>
-                    </tr>
-                @endif
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="9" class="py-4 border-bottom">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="text-muted">
-                                {{ count($invoices) }} to {{$pagination['take'] ?? count($invoices)}} items of <b>{{ $total }}</b>
-                                @if(request('page') != 'all')
-                                    <span class="ms-4">
-                                        <a href="?page=all" class="text-decoration-none">View All <i class='bx bx-chevron-right'></i></a>
-                                    </span>
-                                @endif
-                            </div>
-                            <div>
-                                @if(request('page') != 'all')
-                                    <ul class="pagination m-0">
-                                        <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) > 1 ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) - 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-left' ></i></a>
-                                        </li>
-                                        @for ($page = 1; $page <= $pagination['pages']; $page++)
-                                            <li class="page-item" aria-current="page">
-                                                <a class="page-link {{request('page', 1) == $page ? 'active' : ''}}" href="?page={{$page . (request('status') ? '&status=' . request('status') : '')}}"><b>{{$page}}</b></a>
-                                            </li>
-                                        @endfor
-                                        <li class="page-item {{ $pagination['pages'] > 1 && request('page', 1) != $pagination['pages'] ? '' : 'disabled'}}">
-                                            <a class="page-link arrow" href="?page={{(request('page', 1) + 1) . (request('status') ? '&status=' . request('status') : '')}}"><i class='bx bx-chevron-right'></i></a>
-                                        </li>
-                                    </ul>
-                                @endif
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 @endsection
 
 @section('scripts')
+    @parent
+    <script src="{{ asset('js/datatables/drawDataTable.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('.table-responsive').on('show.bs.dropdown', function() {
-                $('.table-responsive').css("overflow", "inherit");
+        $(function () {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+            let deleteButton = {
+                text: '{{ trans('global.datatables.delete') }}',
+                url: "{{ route('dashboard.invoices.massDestroy') }}",
+                className: 'btn-danger',
+                action: function(e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).data(), function(entry) {
+                        return entry.id
+                    });
+
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
+
+                        return
+                    }
+
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': '{{ csrf_token() }}'
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'DELETE'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
+                    }
+                }
+            }
+            dtButtons.push(deleteButton);
+
+            let dtOverrideGlobals = {
+                searchDelay: 1000,
+                buttons: dtButtons,
+                processing: true,
+                serverSide: true,
+                retrieve: true,
+                dropdownParent: $('body'),
+                aaSorting: [],
+                language: {
+                    paginate: {
+                        next: '<i class="bx bx-chevron-right"></i>',
+                        previous: '<i class="bx bx-chevron-left"></i>',
+                    }
+                },
+                ajax: {
+                    url: "{{ route('dashboard.invoices.index') }}",
+                    data: function(data) {
+                        data.issue_date_range = $('#issue_date_range').val();
+                        data.client_name = $('#clients\\.name').val();
+
+                        data.total_min = $('#total_min').val();
+                        data.total_max = $('#total_max').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'placeholder',
+                        name: 'placeholder',
+                        width: 5
+                    },
+                    {
+                        data: 'number',
+                        name: 'number',
+                        filter: true,
+                        width: 30
+                    },
+                    {
+                        data: 'client',
+                        name: 'clients.name',
+                        filter: true,
+                        type: 'select',
+                        model: 'Client',
+                        field: 'name',
+                        searchable: false,
+                        filterAjax: '{{ route('dashboard.searchListOptions.index') }}',
+                        width: 30
+                    },
+                    {
+                        data: 'status',
+                        name: 'status_id',
+                        type: 'options',
+                        options: {!! $statuses !!},
+                        filter: true,
+                        width: 30
+                    },
+                    {
+                        data: 'issue_date',
+                        name: 'issue_date',
+                        filter: true,
+                        datepicker: true,
+                        type: 'range',
+                        width: 30,
+                        searchable: false
+                    },
+                    {
+                        data: 'total',
+                        name: 'total',
+                        filter: true,
+                        width: 30,
+                        type: 'range',
+                        currency: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}',
+                        width: 20
+                    }
+                ],
+                orderCellsTop: true,
+                order: [
+                    [1, "desc"]
+                ],
+                pageLength: 10,
+                filterAjax: '{{ route('dashboard.searchListOptions.index') }}',
+            };
+
+            drawDataTable('.datatable-Invoices', dtOverrideGlobals, true);
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
             });
 
-            $('.table-responsive').on('hide.bs.dropdown', function() {
-                $('.table-responsive').css("overflow", "auto");
-            })
+            $('#DataTables_Table_0_filter').addClass('d-none');
+            $('#DataTables_Table_0_length').appendTo('.dt-buttons');
+            $('#DataTables_Table_0_length').addClass('d-inline-block');
+
+            $('#totalFilterModalBtn').on('click', function() {
+                $('#totalFilterModal').modal('show');
+            });
         });
     </script>
 @endsection
+

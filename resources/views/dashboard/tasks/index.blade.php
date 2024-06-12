@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-12 mt-3 text-end">
-                            <a class="btn btn-change-view {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
+                            <a class="btn btn-change-view me-2 {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
                                 data-bs-placement="top">
                                 <i class='bx bx-list-ul'></i>
                             </a>
@@ -64,11 +64,17 @@
             </thead>
             <tbody>
                 @foreach ($tasks as $task)
+                    @php
+                        foreach ($task->subtasks()->pluck('id') as $stask_id) {
+                            $active = in_array($stask_id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray());
+                            break;
+                        }
+                    @endphp
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
                             @if($task->subtasks()->count())
                                 <a href="#" class="text-decoration-none text-dark me-2" onclick="toggleSubTasks({{$task->id}})">
-                                    <i class='bx bxs-right-arrow' id="toggler-{{$task->id}}"></i>
+                                    <i class='bx bxs-right-arrow {{$active ? 'bx-rotate-90' : ''}}' id="toggler-{{$task->id}}"></i>
                                 </a>
                             @endif
 
@@ -152,14 +158,14 @@
                     </tr>
 
                     @foreach ($task->subtasks as $subtask)
-                        <tr class="table-entry align-middle border-bottom subtasks-{{$task->id}} d-none">
-                            <td class="text-nowrap ps-5">
+                        <tr class="table-entry align-middle border-bottom subtasks-{{$task->id}} {{$active ? '' : 'd-none'}}">
+                            <td class="text-nowrap">
                                 @if(in_array($subtask->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
-                                    <a href="{{route('dashboard.task-clock-out', $subtask->id)}}" class="btn btn-attendance-task">
+                                    <a href="{{route('dashboard.task-clock-out', $subtask->id)}}" class="btn ms-5 btn-attendance-task">
                                         <i class='bx bx-stop-circle align-middle'></i>
                                     </a>
                                 @else
-                                    <a href="{{route('dashboard.task-clock-in', $subtask->id)}}" class="btn btn-attendance-task">
+                                    <a href="{{route('dashboard.task-clock-in', $subtask->id)}}" class="btn ms-5 btn-attendance-task">
                                         <i class='bx bx-play-circle align-middle'></i>
                                     </a>
                                 @endif

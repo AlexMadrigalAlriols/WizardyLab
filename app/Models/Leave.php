@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,7 +26,8 @@ class Leave extends Model
         'date',
         'leave_type_id',
         'approved',
-        'reason'
+        'reason',
+        'portal_id'
     ];
 
     protected $casts = [
@@ -32,6 +35,11 @@ class Leave extends Model
         'updated_at' => 'datetime',
         'date' => 'datetime'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id'), true));
+    }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
