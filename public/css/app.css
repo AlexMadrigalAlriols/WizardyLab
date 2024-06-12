@@ -3,6 +3,8 @@
     --secondary-color: #36cbd2;
     --white-color: #f9f9f9;
     --btn-text: #fff;
+    --menu-text-color: #f7f6fb;
+    --secondary-color-light: #5c5c5c;
 }
 
 .btn-primary, .btn-primary:active, .btn-primary:focus {
@@ -43,6 +45,18 @@
 
 .btn-primary:disabled {
     background-color: var(--primary-color);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--menu-text-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color-light);
+    border-color: var(--secondary-color-light);
+    color: var(--menu-text-color);
 }
 
 .week-time-container {
