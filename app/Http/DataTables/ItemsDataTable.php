@@ -37,7 +37,7 @@ class ItemsDataTable extends DataTable
         });
 
         $table->editColumn('name', function($row) {
-            return $row->name ?: '';
+            return $row->name ? '<a href="'.route('dashboard.items.show', $row->id).'">' . $row->name . '</a>' : '';
         });
 
         $table->editColumn('reference', function($row) {
@@ -45,14 +45,14 @@ class ItemsDataTable extends DataTable
         });
 
         $table->editColumn('stock', function($row) {
-            return $row->stock ?: '0';
+            return $row->remaining_stock ?: '0';
         });
 
         $table->editColumn('created_at', function($row) {
             return $row->created_at ?: '';
         });
 
-        $table->rawColumns(['placeholder', 'image', 'actions']);
+        $table->rawColumns(['placeholder', 'name', 'image', 'actions']);
 
         return $table;
     }

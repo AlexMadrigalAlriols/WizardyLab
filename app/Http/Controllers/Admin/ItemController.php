@@ -159,17 +159,6 @@ class ItemController extends Controller
         return redirect()->route('dashboard.items.index');
     }
 
-    private function getInventoriesCounters(): array
-    {
-        $items = Item::all();
-
-        $counters = [
-            'total' => $items->count(),
-        ];
-
-        return $counters;
-    }
-
     public function downloadFile(ItemFile $itemFile)
     {
         return Storage::disk('public')->download($itemFile->path, $itemFile->title);

@@ -6,6 +6,7 @@ import './bootstrap'; // Asegúrate de que este archivo exista y se cargue corre
 // Importa los componentes
 import BoardRule from './components/BoardRule/Index.vue';
 import MultiAssignment from './components/MultiAssignment/Index.vue';
+import ExpensesForm from './components/ExpensesForm/Index.vue';
 import VueSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css'; // Importa los estilos de vue-select
 
@@ -18,6 +19,7 @@ app.use(i18n);
 // Registra los componentes
 app.component('marketplace-rule', BoardRule);
 app.component('multi-assignment', MultiAssignment);
+app.component('expenses-form', ExpensesForm);
 app.component('v-select', VueSelect);
 
 // Monta la aplicación
