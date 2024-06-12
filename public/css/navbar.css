@@ -5,8 +5,10 @@
     --nav-width: 68px;
     --primary-color: #374df1;
     --secondary-color: #242424;
+    --secondary-color-light: #5c5c5c;
     --first-color: black;
     --first-color-light: black;
+    --menu-text-color: #f7f6fb;
     --white-color: #f7f6fb;
     --body-font: "Nunito", sans-serif;
     --normal-font-size: 1rem;
@@ -109,7 +111,7 @@ body {
 }
 .nav_link {
     position: relative;
-    color: rgba(192, 192, 192, 0.733);
+    color: var(--menu-text-color);
     transition: 0.3s;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -222,7 +224,7 @@ body {
 .treeview.active {
     display: block;
     max-height: fit-content !important;
-    background-color: #353535 !important;
+    background-color: var(--secondary-color-light) !important;
     padding-left: 1rem;
     padding-top: 0.5rem;
     margin: 0 !important;

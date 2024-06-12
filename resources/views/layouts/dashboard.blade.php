@@ -51,7 +51,9 @@
         :root {
             --primary-color: {{ $portal->data['primary_color'] }};
             --secondary-color: {{ $portal->data['secondary_color'] }};
+            --secondary-color-light: {{ $portal->secondary_light }};
             --btn-text: {{ $portal->data['btn_text_color'] }};
+            --menu-text-color: {{ $portal->data['menu_text_color'] }};
         }
     </style>
     @yield('styles')

@@ -41,16 +41,23 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-md-4">
+                        <div class="row mt-3">
+                            <div class="col-md-6">
                                 <label for="color" class="form-label">Primary Color</label>
                                 <input type="text" name="primary_color" class="form-control colorpicker" id="primary_color" value="{{ $portal->data['primary_color'] ?? '#FFFFFF' }}" title="Choose your color">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="color" class="form-label">Secondary Color</label>
                                 <input type="text" name="secondary_color" class="form-control colorpicker" id="secondary_color" value="{{ $portal->data['secondary_color'] ?? '#FFFFFF' }}" title="Choose your color">
                             </div>
-                            <div class="col-md-4">
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <label for="color" class="form-label">Menu Text Color</label>
+                                <input type="text" name="menu_text_color" class="form-control colorpicker" id="menu_text_color" value="{{ $portal->data['menu_text_color'] ?? '#fff' }}" title="Choose your color">
+                            </div>
+                            <div class="col-md-6">
                                 <label for="color" class="form-label">Text Color</label>
                                 <input type="text" name="btn_text_color" class="form-control colorpicker" id="btn_text_color" value="{{ $portal->data['btn_text_color'] ?? '#FFFFFF' }}" title="Choose your color">
                             </div>

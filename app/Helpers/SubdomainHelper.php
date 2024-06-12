@@ -13,7 +13,13 @@ class SubdomainHelper
         $subdomain = explode('.', $request->getHost())[0];
 
         if(str_contains($request->getHost(), 'wizardylab')) {
-            return Portal::find(1);
+            $portal = Portal::find(1);
+
+            if($portal) {
+                session(['portal_id' => $portal->id]);
+            }
+
+            return $portal;
         }
 
         $portal = Cache::get('portal_subdomain_' . $subdomain, function () use($subdomain) {

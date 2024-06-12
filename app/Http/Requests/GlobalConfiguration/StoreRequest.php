@@ -30,6 +30,7 @@ class StoreRequest extends FormRequest
             'primary_color' => 'required|string',
             'secondary_color' => 'required|string',
             'btn_text_color' => 'required|string',
+            'menu_text_color' => 'required|string',
             'keys' => 'required|array',
             'keys.*' => 'required|string|exists:global_configurations,key',
             'values' => 'required|array',

@@ -26,7 +26,8 @@ class Leave extends Model
         'date',
         'leave_type_id',
         'approved',
-        'reason'
+        'reason',
+        'portal_id'
     ];
 
     protected $casts = [
@@ -38,10 +39,6 @@ class Leave extends Model
     protected static function booted()
     {
         static::addGlobalScope(new PortalScope(session('portal_id'), true));
-
-        static::creating(function ($model) {
-            $model->portal_id = session('portal_id');
-        });
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

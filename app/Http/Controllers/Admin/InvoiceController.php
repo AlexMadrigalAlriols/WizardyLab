@@ -124,11 +124,11 @@ class InvoiceController extends Controller
     public function downloadInvoice(Invoice $invoice)
     {
         $dompdf = new Dompdf();
-        $logoPath = public_path('img/LogoLetters.png');
+        $logoPath = $invoice->portal->logo;
         $logoBase64 = base64_encode(file_get_contents($logoPath));
         $price_per_hour = ConfigurationHelper::get('price_per_hour', 15);
 
-        $tasks = Task::whereIn('id', $invoice->data['tasks_ids'])->get();
+        $tasks = Task::whereIn('id', $invoice->data['tasks_ids'] ?? [])->get();
 
         // Generar la vista como HTML
         $html = view('templates.invoice', compact('invoice', 'logoBase64', 'tasks', 'price_per_hour'))->render();

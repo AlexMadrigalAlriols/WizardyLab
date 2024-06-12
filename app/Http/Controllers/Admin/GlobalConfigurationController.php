@@ -47,7 +47,8 @@ class GlobalConfigurationController extends Controller
             [
                 'primary_color' => $request->input('primary_color'),
                 'secondary_color' => $request->input('secondary_color'),
-                'btn_text_color' => $request->input('btn_text_color')
+                'btn_text_color' => $request->input('btn_text_color'),
+                'menu_text_color' => $request->input('menu_text_color'),
             ],
         ))->action();
 

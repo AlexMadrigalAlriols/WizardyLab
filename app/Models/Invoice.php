@@ -54,6 +54,11 @@ class Invoice extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function portal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Portal::class);
+    }
+
     public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Status::class);
