@@ -44,7 +44,8 @@ class MakePortal extends Command
                 'data' => [
                     'primary_color' => '#374df1',
                     'secondary_color' => '#242424',
-                    'color' => '#fff',
+                    'btn_text_color' => '#fff',
+                    'menu_text_color' => '#fff',
                     'logo' => asset('img/LogoLetters.png'),
                 ]
             ]);

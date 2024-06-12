@@ -12,8 +12,8 @@ class SubdomainHelper
     {
         $subdomain = explode('.', $request->getHost())[0];
 
-        if(str_contains($request->getHost(), 'wizardylab')) {
-            $portal = Portal::find(1);
+        if(config('app.env')  === 'local' && config('app.local_portal')) {
+            $portal = Portal::find(env('LOCAL_PORTAL'));
 
             if($portal) {
                 session(['portal_id' => $portal->id]);
