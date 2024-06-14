@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DocumentController;
+use App\Http\Controllers\Admin\DocumentFolderController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
@@ -41,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::redirect('/', '/dashboard');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal']], static function () {
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal', 'throttle']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     //Item
@@ -139,6 +141,19 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::delete('/expensesBill/delete_file/{expenseBill}', [ExpenseController::class, 'deleteFile'])->name('expenses.delete_file');
     Route::delete('massDestroy/expenses', [ExpenseController::class, 'massDestroy'])->name('expenses.massDestroy');
 
+    //Documents
+    Route::resource('documents', DocumentFolderController::class);
+    Route::get('/documents-update-order/{folder}', [DocumentFolderController::class, 'updateOrder'])->name('documents.update-order');
+    Route::get('/my-documents/{folder}', [DocumentController::class, 'index'])->name('documents.list');
+    Route::post('/my-documents/{folder}/upload-file', [DocumentController::class, 'uploadFile'])->name('documents.upload-file');
+    Route::post('/my-documents/{folder}/assign-file', [DocumentController::class, 'store'])->name('documents.assign-file');
+    Route::delete('/my-documents/{folder}/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy-document');
+    Route::get('/my-documents/{folder}/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::get('/my-documents/{folder}/{document}', [DocumentController::class, 'show'])->name('documents.view');
+    Route::put('/my-documents/{folder}/{document}', [DocumentController::class, 'update'])->name('documents.update-file');
+    Route::get('/my-documents/{folder}/{document}/view-sign', [DocumentController::class, 'viewSignFile'])->name('documents.view-sign');
+    Route::post('/my-documents/{document}/sign', [DocumentController::class, 'signDocument'])->name('documents.sign');
+
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 });
@@ -146,7 +161,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 
-Route::group(['middleware' => ['checkPortalExists']], static function () {
+Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
     Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
 });
 

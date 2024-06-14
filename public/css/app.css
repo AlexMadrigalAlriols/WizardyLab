@@ -511,6 +511,27 @@ opacity: 1;
     animation: spin 2s linear infinite;
 }
 
+.folder-card {
+    cursor: pointer;
+}
+.folder-card:hover {
+    background-color: #f2f2f2;
+}
+
+.confirm-btn {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--btn-text) !important;
+}
+
+.confirm-btn:focus,
+.confirm-btn:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--btn-text) !important;
+    box-shadow: 0 0 10px var(--primary-color) !important;
+}
+
 /* Animación del loader */
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
