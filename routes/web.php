@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserInventoriesController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -103,7 +104,17 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+
+    //users
+    Route::resource('users', UserController::class);
+    Route::post('/users/upload_file', [UserController::class, 'uploadFile'])->name('user.upload_file');
+
+
 });
 
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+// Password reset link request routes...
+ Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
+
+
+Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

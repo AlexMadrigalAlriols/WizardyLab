@@ -28,11 +28,11 @@ class StoreRequest extends FormRequest
             'email' => 'required|string|max:30|unique:users,email',
             'gender' => 'required|string|in:' . implode(',', array_keys(User::GENDERS)),
             'birthday_date' => 'required|date',
-            'code' => 'required|unique:users,code',
+            'reporting_user_id' => 'nullable|int|exists:users,id',
             'department_id' => 'required|int|exists:departments,id',
             'country_id' => 'required|int|exists:countries,id',
             'role_id' => 'required|int|exists:roles,id',
-            // 'password' => 'required|string'
+            'password' => 'required|string'
         ];
     }
 }

@@ -15,6 +15,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasAttendance;
 
+    public const PAGE_SIZE = 10;
+
     public const GENDERS = [
         'female' => 'female',
         'male' => 'male',
@@ -62,7 +64,7 @@ class User extends Authenticatable
         'password' => 'hashed',
         'last_login_at' => 'datetime',
         'joining_date' => 'datetime',
-        'birthday_date' => 'date',
+        'birthday_date' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -117,9 +119,9 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
-    public function UsersInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function UserInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(UsersInventories::class);
+        return $this->hasMany(UserInventories::class);
     }
 
 }

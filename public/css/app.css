@@ -311,3 +311,9 @@
     background-color: #374df1;
     color: white;
 }
+
+.disabled-user > *{
+    color: grey!important;
+    text-decoration: none;
+
+}

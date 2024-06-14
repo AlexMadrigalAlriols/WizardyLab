@@ -25,8 +25,9 @@
 @section('scripts')
 @parent
 <script>
-    var obligatoryFields = ['name', 'code', 'email', 'password'];
-    var limitedCharFields = ['name'];
+    var obligatoryFields = ['name', 'email', 'password'];
+    var limitedCharFields = ['name', 'email'];
+    Dropzone.autoDiscover = false;
 
     $('input, select, textarea').each(function() {
         $(this).on('keyup', function() {
@@ -36,8 +37,15 @@
 
     countChars(limitedCharFields);
 
-    //  if($('#password').attr('noEdit') !== undefined){
-    //      $('#password').delete()
-    //  }
+    $('[siEdit]').remove();
+
+    $(document).ready(function() {
+            generateDropZone(
+                "#taskDropZone",
+                "{{ route('dashboard.user.upload_file') }}",
+                "{{ csrf_token() }}",
+                true
+            );
+        });
 </script>
 @endsection

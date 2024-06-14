@@ -239,6 +239,11 @@
                                 <i class='bx bx-user-plus nav_icon'></i>
                                 <span class="nav_name">Hours Reports</span>
                             </a>
+                            <hr>
+                            <a href="{{route('dashboard.users.index')}}" class="nav_link {{ $section == 'Users' ? 'active' : ''}}">
+                                <i class='bx bx-user-plus nav_icon'></i>
+                                <span class="nav_name">{{__('crud.users.title')}}</span>
+                            </a>
                         </div>
                     </div>
                     <hr>

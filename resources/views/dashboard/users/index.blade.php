@@ -47,14 +47,21 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    <tr class="table-entry align-middle border-bottom">
+                    <tr class="table-entry align-middle border-bottom {{auth()->user()->id == $user->id?"disabled-user":""}}" @if (auth()->user()->id == $user->id)
+                        tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="You can't edit your user!"
+                    @endif>
                         <td class="text-nowrap">
-                            <input type="checkbox" name="checkbox[]">
+                            <input type="checkbox" name="checkbox[] ">
                         </td>
                         <td>
-                            <img class="img-thumbnail rounded" src="url({{$user->profile_url}})" alt="">
+                            <img class="border rounded-circle" width="60px" height="60px" style="object-fit:cover" src="{{asset('storage/'.$user->profile_img)}}" alt="">
                         </td>
-                        <td><a href="{{route('dashboard.clients.show', $user->id)}}" class="text-decoration-none"><b>{{ $user->name }}</b></a></td>
+                        @if (auth()->user()->id == $user->id)
+                            <td><b>{{ $user->name }}</b></td>
+                        @else
+                            <td><a href="{{route('dashboard.users.show', $user->id)}}" class="text-decoration-none"><b>{{ $user->name }}</b></a></td>
+                        @endif
+
                         <td>{{$user->email}}</td>
                         <td>{{$user->department->name}}</td>
                         <td class="text-muted">{{ $user->country->name}}</td>
@@ -62,7 +69,7 @@
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                    aria-expanded="false" {{auth()->user()->id == $user->id?'disabled':""}}>
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

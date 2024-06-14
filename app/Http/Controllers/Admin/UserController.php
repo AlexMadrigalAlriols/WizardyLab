@@ -4,15 +4,34 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
+use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\StoreRequest;
+use App\Http\Requests\Users\UpdateRequest;
+use App\Models\Country;
+use App\Models\Department;
+use App\Models\Role;
+use App\Models\User;
+use App\Notifications\CustomResetPassword;
+use App\UseCases\Users\StoreUseCase;
+use App\UseCases\Users\UpdateUseCase;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard.index');
+        $query = User::query();
+
+        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, User::class);
+
+        $users = $query->get();
+        $total = $query->count();
+
+        return view('dashboard.users.index', compact('users', 'total', 'pagination'));
     }
 
     public function userAttendance(Request $request) {
@@ -69,4 +88,136 @@ class UserController extends Controller
         toast('You have successfully clocked out', 'success');
         return redirect()->route('dashboard.index');
     }
+
+    public function create()
+    {
+        $user = new User();
+        $departments = Department::all();
+        $roles = Role::all();
+        $countries = Country::all();
+        $qusers = User::all();
+
+        return view('dashboard.users.create', compact(
+            'user',
+            'departments',
+            'roles',
+            'countries',
+            'qusers'
+        ));
+    }
+
+
+
+    public function store(StoreRequest $request)
+    {
+        $user = (new StoreUseCase(
+            $request->input('name'),
+            Carbon::parse($request->input('birthday_date')),
+            $request->input('email'),
+            $request->input('reporting_user_id'),
+            rand(100, 999),
+            $request->input('gender'),
+            $request->input('department_id'),
+            $request->input('country_id'),
+            $request->input('role_id'),
+            $request->input('password'),
+        ))->action();
+
+        $this->saveTaskFiles($user, $request);
+
+        toast('User created', 'success');
+        return redirect()->route('dashboard.users.index');
+    }
+
+    public function update(UpdateRequest $request, User $user)
+    {
+        $update = (new UpdateUseCase(
+            $user,
+            $request->input('name'),
+            Carbon::parse($request->input('birthday_date')),
+            $request->input('email'),
+            $request->input('reporting_user_id'),
+            $request->input('gender'),
+            $request->input('department_id'),
+            $request->input('country_id'),
+            $request->input('role_id'),
+        ))->action();
+
+        $this->saveTaskFiles($user, $request);
+
+        toast('User updated', 'success');
+        return redirect()->route('dashboard.users.index');
+    }
+
+
+    public function edit(User $user)
+    {
+        $departments = Department::all();
+        $roles = Role::all();
+        $countries = Country::all();
+        $qusers = User::all();
+
+        return view('dashboard.users.edit', compact(
+            'user',
+            'departments',
+            'roles',
+            'countries',
+            'qusers'
+        ));
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        toast('User deleted', 'success');
+        return redirect()->route('dashboard.users.index');
+    }
+
+    public function show(User $user)
+    {
+        return view('dashboard.users.show', compact('user'));
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $request->session()->forget('dropzone_users_temp_paths');
+
+        if ($request->hasFile('dropzone_image')) {
+            $files = $request->file('dropzone_image');
+
+            foreach ($files as $idx => $file) {
+                $tempPath = $file->storeAs('temp', $file->getClientOriginalName());
+
+                $dropzoneUsersTempPaths = $request->session()->get('dropzone_users_temp_paths', []);
+                $dropzoneUsersTempPaths[] = $tempPath;
+                $request->session()->put('dropzone_users_temp_paths', $dropzoneUsersTempPaths);
+            }
+
+            return response()->json(['path' => $tempPath], 200);
+        }
+
+        return response()->json(['error' => 'No file uploaded.'], 400);
+    }
+
+    private function saveTaskFiles(User $user, Request $request) {
+        if ($request->session()->has('dropzone_users_temp_paths')) {
+            foreach ($request->session()->get('dropzone_users_temp_paths', []) as $idx => $tempPath) {
+                $originalName = pathinfo($tempPath, PATHINFO_BASENAME);
+                $extension = pathinfo($tempPath, PATHINFO_EXTENSION);
+                $fileName = uniqid() . '.' . $extension;
+                $permanentPath = 'user_profiles/' . $user->id . '/' . $fileName;
+
+                $storaged = Storage::disk('public')->put($permanentPath, Storage::disk('local')->get($tempPath));
+                Storage::disk('local')->delete($tempPath);
+                $request->session()->forget('dropzone_users_temp_paths');
+
+                if ($storaged) {
+                    $user->profile_img = $permanentPath;
+                    $user->save();
+                }
+            }
+        }
+    }
+
 }
