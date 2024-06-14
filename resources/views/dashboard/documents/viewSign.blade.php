@@ -97,7 +97,11 @@
         });
 
         $('#submitDocument').click(() => {
-            saveSign();
+            getPdfSigned().then((pdfBlob) => {
+                saveSign(pdfBlob);
+            }).catch((error) => {
+                console.error('Error generating signed PDF:', error);
+            });
         });
     });
 
@@ -109,18 +113,22 @@
         return null;
     }
 
-    function saveSign() {
-        $('#loader-overlay').removeClass('d-none');
+    function saveSign(pdfBlob) {
+        const formData = new FormData();
+        formData.append('pdf', pdfBlob, 'signed_document.pdf');
+        formData.append('_token', '{{ csrf_token() }}');
+
         $.ajax({
             url: '{{ route('dashboard.documents.sign', $document->id) }}',
             type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
                 window.location.href = '{{ route('dashboard.documents.list', $folder->id) }}';
             },
             error: function(error) {
+                console.error('Error saving signed PDF:', error);
                 window.location.href = '{{ route('dashboard.documents.list', $folder->id) }}';
             }
         });
@@ -202,6 +210,47 @@
         if (fabricCanvas) {
             fabricCanvas.freeDrawingBrush.color = color;
         }
+    }
+
+    async function getPdfSigned() {
+        const doc = new jsPDF();
+        const promises = [];
+
+        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+            promises.push(pdfDoc.getPage(pageNum).then(page => {
+                const viewport = page.getViewport({ scale: 1 });
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const context = canvas.getContext('2d');
+
+                return page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise.then(() => {
+                    if (pageCanvases[pageNum]) {
+                        const fabricCanvas = new fabric.Canvas();
+                        fabricCanvas.loadFromJSON(pageCanvases[pageNum], () => {
+                            fabricCanvas.renderAll();
+                            const fabricImg = fabricCanvas.toDataURL({ format: 'jpeg', quality: 1.0 });
+                            const img = new Image();
+                            img.src = fabricImg;
+                            context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        });
+                    }
+                    return canvas;
+                });
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                if (pageNum > 1) {
+                    doc.addPage();
+                }
+                doc.addImage(imgData, 'JPEG', 0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height);
+            }));
+        }
+
+        await Promise.all(promises);
+        return doc.output('blob');
     }
 </script>
 @endsection

@@ -196,6 +196,11 @@
                         <span class="nav_name">{{__('global.dashboard')}}</span>
                     </a>
                     <hr>
+                    <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
+                        <i class='bx bx-buildings nav_icon'></i>
+                        <span class="nav_name">CRM</span>
+                    </a>
+                    <hr>
                     <div class="nav_item has-treeview">
                         <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
                             <div>

@@ -127,8 +127,13 @@ class DocumentController extends Controller
         return view('dashboard.documents.viewSign', compact('folder', 'document'));
     }
 
-    public function signDocument(Document $document)
+    public function signDocument(Request $request, Document $document)
     {
+        if($request->pdf) {
+            Storage::disk('public')->delete($document->path);
+            Storage::disk('public')->put($document->path, $request->pdf);
+        }
+
         $document->update([
             'data' => array_merge($document->data, ['signed' => true, 'signed_user_id' => auth()->user()->id])
         ]);
