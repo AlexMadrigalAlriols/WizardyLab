@@ -3,6 +3,7 @@
 namespace App\Http\DataTables;
 
 use App\Models\Client;
+use App\Models\User;
 
 class UserDataTable extends DataTable
 {
@@ -14,11 +15,11 @@ class UserDataTable extends DataTable
         $table->addColumn('actions', '&nbsp;');
 
         $table->editColumn('actions', function($row) {
-            $crudRoutePart = 'clients';
-            $model = 'client';
-            $viewGate = false;
-            $editGate = 'client_edit';
-            $deleteGate = 'client_delete';
+            $crudRoutePart = 'users';
+            $model = 'user';
+            $viewGate = 'user_show';
+            $editGate = 'user_edit';
+            $deleteGate = 'user_delete';
 
             return view('partials.datatables.actions', compact(
                 'row',
@@ -30,34 +31,34 @@ class UserDataTable extends DataTable
             ));
         });
 
+        $table->editColumn('profile_img', function($row) {
+            return $row->profile_img ? '<img src="'. $row->profile_url .'" class="rounded-circle" width="60px" height="60px">' : '';
+        });
+
         $table->editColumn('name', function($row) {
             return $row->name ?: '';
         });
 
         $table->editColumn('email', function($row) {
-            return $row->email ?: '';
+            return $row->email ?: '-';
         });
 
-        $table->editColumn('phone', function($row) {
-            return $row->phone ?: '-';
+        $table->editColumn('department', function($row) {
+            return $row->department?->name;
         });
 
-        $table->editColumn('active', function($row) {
-            return $row->active ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
+        $table->editColumn('role', function($row) {
+            return $row->role?->name;
         });
 
-        $table->editColumn('created_at', function($row) {
-            return $row->created_at ?: '';
-        });
-
-        $table->rawColumns(['placeholder', 'active', 'actions']);
+        $table->rawColumns(['placeholder', 'profile_img', 'actions']);
 
         return $table;
     }
 
     public function query()
     {
-        $query = Client::query();
+        $query = User::query();
 
         $email = request()?->get('email');
         $created_at_range = request()?->get('created_at_range');

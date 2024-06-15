@@ -133,12 +133,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+    Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
 
     //users
     Route::resource('users', UserController::class);
     Route::post('/users/upload_file', [UserController::class, 'uploadFile'])->name('user.upload_file');
-
-    Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
+    Route::delete('massDestroy/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
 
     Route::resource('expenses', ExpenseController::class)->except(['update', 'edit']);
     Route::post('/expenses/upload_file', [ExpenseController::class, 'uploadFile'])->name('expenses.upload_file');

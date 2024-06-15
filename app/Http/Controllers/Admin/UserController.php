@@ -7,6 +7,8 @@ use App\Helpers\AttendanceHelper;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\UserDataTable;
+use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Users\StoreRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Models\Country;
@@ -18,20 +20,22 @@ use App\UseCases\Users\StoreUseCase;
 use App\UseCases\Users\UpdateUseCase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new UserDataTable('users');
+            return $dataTable->make();
+        }
+
         $query = User::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, User::class);
-
-        $users = $query->get();
         $total = $query->count();
 
-        return view('dashboard.users.index', compact('users', 'total', 'pagination'));
+        return view('dashboard.users.index', compact('total'));
     }
 
     public function userAttendance(Request $request) {
@@ -177,6 +181,15 @@ class UserController extends Controller
 
         toast('User deleted', 'success');
         return redirect()->route('dashboard.users.index');
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        User::whereIn('id', $ids)->delete();
+
+        toast('Users deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function show(User $user)
