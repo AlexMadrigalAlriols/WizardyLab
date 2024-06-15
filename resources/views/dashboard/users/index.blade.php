@@ -63,9 +63,9 @@
                         @endif
 
                         <td>{{$user->email}}</td>
-                        <td>{{$user->department->name}}</td>
+                        <td>{{$user->department?->name}}</td>
                         <td class="text-muted">{{ $user->country->name}}</td>
-                        <td>{{$user->role->name}}</td>
+                        <td>{{$user->role?->name}}</td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-options" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"

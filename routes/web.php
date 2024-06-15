@@ -138,14 +138,6 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::resource('users', UserController::class);
     Route::post('/users/upload_file', [UserController::class, 'uploadFile'])->name('user.upload_file');
 
-
-});
-
-// Password reset link request routes...
- Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
-
-
-Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
     Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
 
     Route::resource('expenses', ExpenseController::class)->except(['update', 'edit']);
@@ -156,6 +148,12 @@ Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 });
+
+// Password reset link request routes...
+ Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
+
+
+Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');

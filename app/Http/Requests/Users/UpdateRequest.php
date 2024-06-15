@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
             'gender' => 'required|string|in:' . implode(',', array_keys(User::GENDERS)),
             'reporting_user_id' => 'nullable|int|exists:users,id|not_in:'.$this->route('user')->id.",".$this->route('user')->reportinguser,
             'birthday_date' => 'required|date',
-            'department_id' => 'required|int|exists:departments,id',
+            'department_id' => 'nullable|int|exists:departments,id',
             'country_id' => 'required|int|exists:countries,id',
             'role_id' => 'required|int|exists:roles,id',
         ];

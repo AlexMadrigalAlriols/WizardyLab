@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             'gender' => 'required|string|in:' . implode(',', array_keys(User::GENDERS)),
             'birthday_date' => 'required|date',
             'reporting_user_id' => 'nullable|int|exists:users,id',
-            'department_id' => 'required|int|exists:departments,id',
+            'department_id' => 'nullable|int|exists:departments,id',
             'country_id' => 'required|int|exists:countries,id',
             'role_id' => 'required|int|exists:roles,id',
             'password' => 'required|string'
