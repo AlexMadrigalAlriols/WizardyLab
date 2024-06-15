@@ -64,6 +64,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
     window.jsPDF = window.jspdf.jsPDF;
@@ -96,43 +97,11 @@
             $('.next-page').prop('disabled', currentPage === pdfDoc.numPages);
         });
 
+        // Llamar a esta función en el botón submit
         $('#submitDocument').click(() => {
-            getPdfSigned().then((pdfBlob) => {
-                saveSign(pdfBlob);
-            }).catch((error) => {
-                console.error('Error generating signed PDF:', error);
-            });
+            getPdfSigned();
         });
     });
-
-    function exportCanvasToImage(pageNum) {
-        if (pageCanvases[pageNum]) {
-            const imageData = pageCanvases[pageNum].toDataURL({ format: 'jpeg', quality: 0.8 });
-            return imageData;
-        }
-        return null;
-    }
-
-    function saveSign(pdfBlob) {
-        const formData = new FormData();
-        formData.append('pdf', pdfBlob, 'signed_document.pdf');
-        formData.append('_token', '{{ csrf_token() }}');
-
-        $.ajax({
-            url: '{{ route('dashboard.documents.sign', $document->id) }}',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                window.location.href = '{{ route('dashboard.documents.list', $folder->id) }}';
-            },
-            error: function(error) {
-                console.error('Error saving signed PDF:', error);
-                window.location.href = '{{ route('dashboard.documents.list', $folder->id) }}';
-            }
-        });
-    }
 
     function loadPdfFromUrl(url) {
         pdfjsLib.getDocument(url).promise.then(pdf => {
@@ -191,12 +160,14 @@
             fabricCanvas.loadFromJSON(pageCanvases[pageNum], () => {
                 fabricCanvas.renderAll();
             });
+        } else {
+            pageCanvases[1] = fabricCanvas.toJSON();
         }
     }
 
     function saveCanvasState(pageNum) {
         if (fabricCanvas) {
-            pageCanvases[currentPage] = fabricCanvas.toJSON();
+            pageCanvases[pageNum] = fabricCanvas.toJSON();
         }
     }
 
@@ -213,44 +184,65 @@
     }
 
     async function getPdfSigned() {
+        if (!pdfDoc) {
+            console.error('No se ha cargado ningún PDF.');
+            return;
+        }
+
         const doc = new jsPDF();
-        const promises = [];
+        const pagePromises = [];
 
         for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-            promises.push(pdfDoc.getPage(pageNum).then(page => {
+            pagePromises.push(pdfDoc.getPage(pageNum).then(async (page) => {
                 const viewport = page.getViewport({ scale: 1 });
-                const canvas = document.createElement('canvas');
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-                const context = canvas.getContext('2d');
 
-                return page.render({
-                    canvasContext: context,
-                    viewport: viewport
-                }).promise.then(() => {
-                    if (pageCanvases[pageNum]) {
-                        const fabricCanvas = new fabric.Canvas();
-                        fabricCanvas.loadFromJSON(pageCanvases[pageNum], () => {
-                            fabricCanvas.renderAll();
-                            const fabricImg = fabricCanvas.toDataURL({ format: 'jpeg', quality: 1.0 });
-                            const img = new Image();
-                            img.src = fabricImg;
-                            context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        });
-                    }
-                    return canvas;
-                });
-            }).then(canvas => {
+                // Renderiza la página del PDF
+                await renderPage(pageNum);
+
+                // Usa html2canvas para capturar la imagen del contenedor completo
+                const container = document.querySelector('.pdf-page');
+                const canvas = await html2canvas(container, { scale: 1 });
+                console.log(canvas)
                 const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+                // Crear una nueva página en el documento jsPDF
                 if (pageNum > 1) {
                     doc.addPage();
                 }
                 doc.addImage(imgData, 'JPEG', 0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height);
+
+                // Guardar el documento PDF al finalizar todas las páginas
+                if (pageNum === pdfDoc.numPages) {
+                    const pdfBlob = doc.output('blob');
+                    const formData = new FormData();
+                    formData.append('pdf', pdfBlob, 'signed_document.pdf');
+                    savePdfToBackend(formData);
+                }
             }));
         }
 
-        await Promise.all(promises);
-        return doc.output('blob');
+        await Promise.all(pagePromises);
     }
+
+    // Función para enviar el archivo al backend
+    function savePdfToBackend(formData) {
+        formData.append('_token', '{{ csrf_token() }}');
+
+        $.ajax({
+            url: '{{ route('dashboard.documents.sign', $document->id) }}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                window.location.href = '{{ route('dashboard.documents.list', $folder->id) }}';
+            },
+            error: function(error) {
+                //window.location.href = '{{ route('dashboard.documents.list', $folder->id) }}';
+                console.log(error)
+            }
+        });
+    }
+
 </script>
 @endsection
