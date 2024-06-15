@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserInventoriesController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
 use App\Models\Invoice;
@@ -132,6 +133,19 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+
+    //users
+    Route::resource('users', UserController::class);
+    Route::post('/users/upload_file', [UserController::class, 'uploadFile'])->name('user.upload_file');
+
+
+});
+
+// Password reset link request routes...
+ Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
+
+
+Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
     Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
 
     Route::resource('expenses', ExpenseController::class)->except(['update', 'edit']);

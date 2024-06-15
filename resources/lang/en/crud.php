@@ -125,4 +125,22 @@ return [
             'updated_at' => 'Updated At',
         ],
     ],
+    'users' => [
+        'title' => 'Users',
+        'title_singular' => 'User',
+        'fields' => [
+            'id' => 'ID',
+            'profile_img' => 'Profile image',
+            'name' => 'Name',
+            'email' => 'Email',
+            'department' => 'Department',
+            'country' => 'Country',
+            'role' => 'Role',
+            'code' => 'Code',
+            'gender' => 'Gender',
+            'report_to' => 'Reporting to',
+            'birthday_date' => 'Birthday',
+            'updated_at' => 'Updated At',
+        ],
+    ],
 ];

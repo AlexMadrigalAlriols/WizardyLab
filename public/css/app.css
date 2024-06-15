@@ -414,6 +414,10 @@ tr.selected {
     background-color: transparent;
     color: white;
 }
+.disabled-user > *{
+    color: grey!important;
+    text-decoration: none;
+
 .idea{
     border: 2px solid #374df1;
     position:relative;

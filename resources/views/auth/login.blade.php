@@ -17,7 +17,6 @@
                     <div class="input-container">
                         <h5>Email</h5>
                         <input type="text" name="email" class="login-input">
-
                     </div>
                 </div>
                 @if ($errors->has('email'))
