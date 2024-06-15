@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\ProjectsDataTable;
+use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Projects\StoreRequest;
 use App\Http\Requests\Projects\UpdateRequest;
 use App\Models\Client;
@@ -19,29 +21,28 @@ use App\UseCases\Projects\UpdateStatusUseCase;
 use App\UseCases\Projects\UpdateUseCase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->projects()->orderBy('created_at', 'desc');
-
-        if($request->has('status') && is_numeric($request->input('status'))) {
-            $query->where('status_id', $request->input('status'));
+        if($request->ajax()) {
+            $dataTable = new ProjectsDataTable('projects');
+            return $dataTable->make();
         }
 
-        if($request->has('client_id') && is_numeric($request->input('client_id'))) {
-            $query->where('client_id', $request->input('client_id'));
-        }
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Project::class);
-
-        $projects = $query->get();
-        $statuses = Status::where('morphable', Project::class)->get();
         $total = Auth::user()->projects()->count();
+        $statuses = Status::where('morphable', Project::class)->get();
+        $json_statuses = [['value' => '', 'label' => '-']];
 
-        return view('dashboard.projects.index', compact('projects', 'statuses', 'pagination', 'total'));
+        foreach ($statuses as $status) {
+            $json_statuses[] = ['value' => $status->id, 'label' => $status->title];
+        }
+
+        $statuses = json_encode($json_statuses, JSON_UNESCAPED_UNICODE);
+        return view('dashboard.projects.index', compact('total', 'statuses'));
     }
 
     public function show(Task $task)
@@ -125,6 +126,15 @@ class ProjectController extends Controller
 
         toast('Project deleted', 'success');
         return redirect()->route('dashboard.projects.index');
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Project::whereIn('id', $ids)->delete();
+
+        toast('Projects deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function updateStatus(Project $project, Status $status)

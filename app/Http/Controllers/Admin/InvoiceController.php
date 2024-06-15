@@ -6,10 +6,12 @@ use App\Helpers\ConfigurationHelper;
 use App\Helpers\InvoiceHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\InvoicesDataTable;
 use App\Http\Requests\Invoices\StoreRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Client;
-use App\Models\GlobalConfiguration;
 use App\Models\Invoice;
+use App\Models\Item;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
@@ -17,19 +19,29 @@ use App\UseCases\Invoices\StoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new InvoicesDataTable('invoices');
+            return $dataTable->make();
+        }
+
         $query = Invoice::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Invoice::class);
-
-        $invoices = $query->get();
         $total = $query->count();
+        $statuses = Status::where('morphable', Invoice::class)->get();
+        $json_statuses = [['value' => '', 'label' => '-']];
 
-        return view('dashboard.invoices.index', compact('invoices', 'total', 'pagination'));
+        foreach ($statuses as $status) {
+            $json_statuses[] = ['value' => $status->id, 'label' => $status->title];
+        }
+
+        $statuses = json_encode($json_statuses, JSON_UNESCAPED_UNICODE);
+        return view('dashboard.invoices.index', compact('total', 'statuses'));
     }
 
     public function create()
@@ -37,7 +49,26 @@ class InvoiceController extends Controller
         $invoice = new Invoice();
         [$types, $statuses, $projects, $tasks, $clients] = $this->getData();
 
-        return view('dashboard.invoices.create', compact('invoice', 'types', 'statuses', 'projects', 'tasks', 'clients'));
+        $inventories = Item::all();
+        $inventories = $inventories->filter(function ($item) {
+            return $item->remaining_stock > 0;
+        });
+        foreach ($inventories ?? [] as $item) {
+            $item->remaining_stock = $item->remaining_stock;
+            $item->cover = $item->cover;
+        }
+        $inventoryArray = array_values(array_filter($inventories->toArray()));
+
+        return view('dashboard.invoices.create', compact(
+            'invoice',
+            'types',
+            'statuses',
+            'projects',
+            'tasks',
+            'clients',
+            'inventories',
+            'inventoryArray'
+        ));
     }
 
     public function store(StoreRequest $request) {
@@ -59,13 +90,23 @@ class InvoiceController extends Controller
             $amount = $amounts['amount'];
             $tax = $amounts['tax'];
             $total = $amounts['total'];
-            $data = ['tasks_ids' => $amounts['tasks_ids']];
+            $data = [
+                'tasks_ids' => $amounts['tasks_ids'],
+                'items' => $amounts['items']
+            ];
             $client = $project->client;
         } else {
             $amount = $request->input('amount');
             $tax = ($amount * ConfigurationHelper::get('tax_value', 21)) / 100;
             $total = $amount + $tax;
             $client = Client::find($request->input('client_id'));
+            $data = ['items' => $request->input('items')];
+
+            foreach ($request->input('items') as $dataItem) {
+                if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
+                    $item->update(['stock' => $item->stock - $dataItem['qty']]);
+                }
+            }
         }
 
         if($amount === 0) {
@@ -113,19 +154,43 @@ class InvoiceController extends Controller
 
     public function downloadInvoice(Invoice $invoice)
     {
-        $dompdf = new Dompdf();
-        $logoPath = public_path('img/LogoLetters.png');
-        $logoBase64 = base64_encode(file_get_contents($logoPath));
-        $price_per_hour = ConfigurationHelper::get('price_per_hour', 15);
+        $path = $invoice->file_path;
 
-        $tasks = Task::whereIn('id', $invoice->data['tasks_ids'])->get();
+        if(!Storage::disk('public')->exists($path)) {
+            $dompdf = new Dompdf();
+            $logoPath = $invoice->portal->logo;
+            $logoBase64 = base64_encode(file_get_contents($logoPath));
+            $price_per_hour = ConfigurationHelper::get('price_per_hour', 15);
+            $billingClient = Client::find(ConfigurationHelper::get('invoice_client_id'));
 
-        // Generar la vista como HTML
-        $html = view('templates.invoice', compact('invoice', 'logoBase64', 'tasks', 'price_per_hour'))->render();
-        $dompdf->loadHtml($html);
-        $dompdf->render();
+            $tasks = Task::whereIn('id', $invoice->data['tasks_ids'] ?? [])->get();
+            $items = [];
 
-        return $dompdf->stream($invoice->number . '.pdf', ['Attachment' => true]);
+            foreach ($invoice->data['items'] as $item) {
+                $items[] = [
+                    'name' => $item['name'],
+                    'quantity' => $item['qty'],
+                    'amount' => $item['amount'],
+                    'total' => $item['qty'] * $item['amount']
+                ];
+            }
+
+            // Generar la vista como HTML
+            $html = view('templates.invoice', compact(
+                'billingClient',
+                'invoice',
+                'logoBase64',
+                'items',
+                'tasks',
+                'price_per_hour'
+            ))->render();
+            $dompdf->loadHtml($html);
+            $dompdf->render();
+
+            Storage::disk('public')->put($path, $dompdf->output());
+        }
+
+        return Storage::disk('public')->download($path);
     }
 
     public function destroy(Invoice $invoice)
@@ -139,6 +204,15 @@ class InvoiceController extends Controller
 
         toast('Invoice deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Invoice::whereIn('id', $ids)->delete();
+
+        toast('Invoices deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     private function getData()

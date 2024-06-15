@@ -49,14 +49,19 @@ class UserController extends Controller
     }
 
     public function userClockIn(Request $request) {
-        $attendance = AttendanceHelper::getTodayAttendanceOrCreate();
+        $ubication = [
+            'latitude' => $request->get('latitude'),
+            'longitude' => $request->get('longitude')
+        ];
+
+        $attendance = AttendanceHelper::getTodayAttendanceOrCreate($ubication);
 
         if ($attendance->check_in) {
             toast('You have already clocked in', 'info');
         }
 
         if ($attendance->check_out) {
-            $attendance = AttendanceHelper::createAttendance(auth()->user(), now()->format('Y-m-d'));
+            $attendance = AttendanceHelper::createAttendance(auth()->user(), now()->format('Y-m-d'), $ubication);
         }
 
         $attendance->update([

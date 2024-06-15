@@ -19,6 +19,10 @@ class LeaveTypesSeeder extends Seeder
             ['name' => 'Vacaciones', 'data' => json_encode(['background' => '#6DE2A3', 'color' => '#ffffff'])]
         ];
 
+        foreach ($leaveTypes as $key => $status) {
+            $leaveTypes[$key]['portal_id'] = 1;
+        }
+
         LeaveType::insert($leaveTypes);
     }
 }

@@ -3,12 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;;
 
 class Department extends Model
 {
     use HasFactory;
+
+    public const PAGE_SIZE = 10;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +27,15 @@ class Department extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id')));
+
+        static::creating(function ($model) {
+            $model->portal_id = session('portal_id');
+        });
+    }
 
     public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

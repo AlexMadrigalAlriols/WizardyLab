@@ -29,6 +29,21 @@
             <span class="text-danger">{{ $errors->first('project_id') }}</span>
         @endif
     </div>
+
+    <div class="col-md-6 d-none" id="manual">
+        <div class="form-floating mt-3">
+            <select class="form-select @if($errors->has('client_id')) is-invalid @endif" id="client_id" name="client_id" aria-label="Client">
+                @foreach ($clients as $client)
+                    <option value="{{ $client->id }}" {{$invoice->client_id == $client->id || old('client_id') == $client->id ? 'selected' : ''}}>{{ $client->name }}</option>
+                @endforeach
+            </select>
+            <label for="floatingSelect">{{__('crud.invoices.fields.client')}}</label>
+        </div>
+
+        @if ($errors->has('client_id'))
+            <span class="text-danger">{{ $errors->first('client_id') }}</span>
+        @endif
+    </div>
 </div>
 <div id="tasks">
     <div class="row">
@@ -64,36 +79,6 @@
     </div>
 </div>
 
-<div id="manual" class="d-none">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-floating mt-3">
-                <select class="form-select @if($errors->has('client_id')) is-invalid @endif" id="client_id" name="client_id" aria-label="Client">
-                    @foreach ($clients as $client)
-                        <option value="{{ $client->id }}" {{$invoice->client_id == $client->id || old('client_id') == $client->id ? 'selected' : ''}}>{{ $client->name }}</option>
-                    @endforeach
-                </select>
-                <label for="floatingSelect">{{__('crud.invoices.fields.client')}}</label>
-            </div>
-
-            @if ($errors->has('client_id'))
-                <span class="text-danger">{{ $errors->first('client_id') }}</span>
-            @endif
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-floating mt-3">
-                <input type="text" class="form-control @if($errors->has('amount')) is-invalid @endif" id="amount" name="amount" placeholder="Amount" value="{{ old('amount') ?? $invoice->amount }}">
-                <label for="number">{{__('crud.invoices.fields.amount')}} <span class="text-danger">*</span></label>
-            </div>
-
-            @if ($errors->has('amount'))
-                <span class="text-danger">{{ $errors->first('amount') }}</span>
-            @endif
-        </div>
-    </div>
-</div>
-
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
@@ -117,6 +102,16 @@
 
         @if ($errors->has('issue_date'))
             <span class="text-danger">{{ $errors->first('issue_date') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="row d-none" id="manualValues">
+    <div class="col-md-12">
+        <expenses-form :inventory-items="{{json_encode($inventoryArray)}}" :assignments="{{json_encode([])}}"></expenses-form>
+
+        @if ($errors->has('items'))
+            <span class="text-danger">{{ $errors->first('items') }}</span>
         @endif
     </div>
 </div>

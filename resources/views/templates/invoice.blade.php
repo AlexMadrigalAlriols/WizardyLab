@@ -21,6 +21,7 @@
         }
         .header img {
             width: 150px;
+            float: right
         }
         .invoice-info {
             margin-bottom: 20px;
@@ -61,6 +62,7 @@
         .totals {
             width: 100%;
             margin-bottom: 20px;
+            margin-top: 3rem;
         }
         .totals th, .totals td {
             padding: 8px;
@@ -68,9 +70,13 @@
         }
         .totals th {
             text-align: right;
+            background-color: #f2f2f2;
         }
         .totals .total {
             font-weight: bold;
+        }
+        .totals tr td {
+            width: 9rem;
         }
         .footer {
             text-align: center;
@@ -86,16 +92,16 @@
         <div class="invoice-info">
             <h1>Factura #{{ $invoice->number }}</h1>
             <p>Fecha: {{ $invoice->issue_date }}</p>
-            <p>Cliente: {{ $invoice->client->name }} ({{$invoice->client->company->name}})</p>
+            <p>Cliente: {{ $invoice->client?->name }} ({{$invoice->client?->company?->name}})</p>
         </div>
         <div class="addresses">
             <div>
                 <h3>De:</h3>
-                <p>WizardyLab S.L</p>
-                <p>Carcel de Guantánamo</p>
-                <p>Cuba</p>
-                <p>Cuba</p>
-                <p>info@wizardylab.com</p>
+                <p>{{ $billingClient->name }}</p>
+                <p>{{ $billingClient->address }}</p>
+                <p>{{ $billingClient->city }}</p>
+                <p>{{ $billingClient->state }}</p>
+                <p>{{ $billingClient->email }}</p>
             </div>
             <div>
                 <h3>Para:</h3>
@@ -110,18 +116,27 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Horas</th>
-                    <th>Precio/hora</th>
+                    <th>Horas/Cantidad</th>
+                    <th>Precio</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tasks as $task)
+                @foreach ($tasks ?? [] as $task)
                     <tr>
                         <td>{{$task->title}}</td>
                         <td>{{$task->total_hours}}h</td>
                         <td>{{$price_per_hour}} {{$invoice->client->currency->symbol}}</td>
                         <td>{{$task->total_hours * $price_per_hour}} {{$invoice->client->currency->symbol}}</td>
+                    </tr>
+                @endforeach
+
+                @foreach ($items ?? [] as $item)
+                    <tr>
+                        <td>{{$item['name']}}</td>
+                        <td>{{$item['quantity']}}</td>
+                        <td>{{$item['amount']}} {{$invoice->client->currency->symbol}}</td>
+                        <td>{{$item['total']}} {{$invoice->client->currency->symbol}}</td>
                     </tr>
                 @endforeach
             </tbody>

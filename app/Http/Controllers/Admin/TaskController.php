@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\BoardHelper;
+use App\Helpers\FileSystemHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Helpers\LogHelper;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Tasks\StoreRequest;
 use App\Http\Requests\Tasks\UpdateRequest;
 use App\Models\Department;
@@ -25,6 +27,7 @@ use App\UseCases\Tasks\UpdateStatusUseCase;
 use App\UseCases\Tasks\UpdateUseCase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -81,6 +84,7 @@ class TaskController extends Controller
     {
         $task = new Task();
         [$users, $tasks, $departments, $projects, $task_statuses, $priorities, $tags] = $this->getData();
+        $request->session()->forget('dropzone_tasks_temp_paths');
 
         if($request->ajax()) {
             return view('partials.tasks.form', compact(
@@ -141,6 +145,7 @@ class TaskController extends Controller
     public function edit(Request $request, Task $task)
     {
         [$users, $tasks, $departments, $projects, $task_statuses, $priorities, $tags] = $this->getData();
+        $request->session()->forget('dropzone_tasks_temp_paths');
 
         if($request->ajax()) {
             return view('partials.projects.board.edit_modal', compact(
@@ -215,6 +220,15 @@ class TaskController extends Controller
         return back();
     }
 
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Task::whereIn('id', $ids)->delete();
+
+        toast('Tasks deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
     public function taskClockIn(Task $task)
     {
         TaskAttendanceHelper::clockAllTaskTimers();
@@ -270,23 +284,7 @@ class TaskController extends Controller
 
     public function uploadFile(Request $request)
     {
-        $request->session()->forget('dropzone_tasks_temp_paths');
-
-        if ($request->hasFile('dropzone_image')) {
-            $files = $request->file('dropzone_image');
-
-            foreach ($files as $idx => $file) {
-                $tempPath = $file->storeAs('temp', $file->getClientOriginalName());
-
-                $dropzoneTasksTempPaths = $request->session()->get('dropzone_tasks_temp_paths', []);
-                $dropzoneTasksTempPaths[] = $tempPath;
-                $request->session()->put('dropzone_tasks_temp_paths', $dropzoneTasksTempPaths);
-            }
-
-            return response()->json(['path' => $tempPath], 200);
-        }
-
-        return response()->json(['error' => 'No file uploaded.'], 400);
+        return FileSystemHelper::uploadFile($request, 'dropzone_tasks_temp_paths');
     }
 
     public function deleteFile(Request $request, TaskFile $taskFile)
@@ -355,17 +353,19 @@ class TaskController extends Controller
         return $counters;
     }
 
-    private function saveTaskFiles(Task $task, Request $request) {
+    private function saveTaskFiles(Task $task, Request $request)
+    {
+        $extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'zip', 'rar', '7z'];
+
         if ($request->session()->has('dropzone_tasks_temp_paths')) {
             foreach ($request->session()->get('dropzone_tasks_temp_paths', []) as $idx => $tempPath) {
-                $originalName = pathinfo($tempPath, PATHINFO_BASENAME);
-                $extension = pathinfo($tempPath, PATHINFO_EXTENSION);
-                $fileName = uniqid() . '.' . $extension;
-                $permanentPath = 'task_files/' . $task->id . '/' . $fileName;
-
-                $storaged = Storage::disk('public')->put($permanentPath, Storage::disk('local')->get($tempPath));
-                Storage::disk('local')->delete($tempPath);
-                $request->session()->forget('dropzone_tasks_temp_paths');
+                [$permanentPath, $originalName, $storaged] = FileSystemHelper::saveFile(
+                    $request,
+                    $tempPath,
+                    'dropzone_tasks_temp_paths',
+                    'task_files/' . $task->id . '/',
+                    $extensions
+                );
 
                 if ($storaged) {
                     (new TaskFilesStoreUseCase(

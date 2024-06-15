@@ -9,7 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 
 class AttendanceHelper {
-    public static function getTodayAttendanceOrCreate(): Attendance
+    public static function getTodayAttendanceOrCreate(?array $ubication = []): Attendance
     {
         $user = auth()->user();
         $today = now()->format('Y-m-d');
@@ -17,16 +17,17 @@ class AttendanceHelper {
         $attendance = $user->attendances()->where('date', $today)->orderBy('updated_at', 'desc')->first();
 
         if (!$attendance) {
-            $attendance = self::createAttendance($user, $today);
+            $attendance = self::createAttendance($user, $today, $ubication);
         }
 
         return $attendance;
     }
 
-    public static function createAttendance(User $user, string $date): Attendance
+    public static function createAttendance(User $user, string $date, array $ubication = []): Attendance
     {
         return $user->attendances()->create([
             'date' => $date,
+            'data' => $ubication
         ]);
     }
 

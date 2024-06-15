@@ -28,6 +28,7 @@ $(document).ready(function () {
     });
 
     initializeFlatPick();
+    $('#loader-overlay').addClass('d-none');
 });
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {
@@ -101,7 +102,7 @@ function parseSelect2Results(results) {
 }
 
 $(function() {
-    let timer = $('#timer');
+    let timer = $('#timerValue');
 
     function updateTimer() {
         var myTime = timer.html();
@@ -157,12 +158,18 @@ function checkObligatoryFields(obligatoryFields) {
     }
 }
 
-function generateDropZone(id, url, token, multiple = false) {
+function generateDropZone(id, url, token, multiple = false, only_image = false) {
+    var acceptedFiles = ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt";
+
+    if(only_image) {
+        acceptedFiles = ".jpeg,.jpg,.png,.gif";
+    }
+
     var myDropzone = new Dropzone(id, {
         url: url, // Ruta donde manejarás la carga de archivos
         paramName: "dropzone_image", // Nombre del campo de formulario para el archivo
         maxFilesize: 2, // Tamaño máximo en MB
-        acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt",
+        acceptedFiles: acceptedFiles,
         addRemoveLinks: true,
         uploadMultiple: multiple,
         headers: {
@@ -185,4 +192,12 @@ function generateDropZone(id, url, token, multiple = false) {
 
 function isPhoneDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/.test(navigator.userAgent);
+}
+
+const debounce = (fn, ms = 1000) => {
+    let timeout;
+    return function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(), ms);
+    };
 }

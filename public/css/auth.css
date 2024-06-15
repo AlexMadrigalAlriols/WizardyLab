@@ -5,6 +5,7 @@
     --middle-color: #374df1;
     --secondary-color: #36cbd2;
     --white-color: #f9f9f9;
+    --btn-text: #fff;
 }
 
 *{
@@ -184,7 +185,7 @@ a:hover{
 	background-image: linear-gradient(to right, var(--primary-color), var(--middle-color), var(--secondary-color));
 	background-size: 200%;
 	font-size: 1.2rem;
-	color: #fff;
+	color: var(--btn-text);
 	text-transform: uppercase;
     font-weight: 700;
 	margin: 1rem 0;
@@ -193,7 +194,7 @@ a:hover{
 }
 .btn:hover{
 	background-position: right;
-    color: white;
+    opacity: 0.8;
 }
 
 

@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Helpers\AttendanceHelper;
+use App\Models\Scopes\PortalScope;
 use App\Models\Traits\HasAttendance;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'portal_id',
         'name',
         'email',
         'password',
@@ -68,6 +70,15 @@ class User extends Authenticatable
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id')));
+
+        static::creating(function ($model) {
+            $model->portal_id = session('portal_id');
+        });
+    }
 
     public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -121,7 +132,7 @@ class User extends Authenticatable
 
     public function UserInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(UserInventories::class);
+        return $this->hasMany(UserInventory::class);
     }
 
 }

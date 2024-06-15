@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Inventories;
 
-use App\Models\Inventory;
+use App\Models\Item;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest

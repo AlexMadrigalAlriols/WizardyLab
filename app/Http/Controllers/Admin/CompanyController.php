@@ -4,25 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
+use App\Http\DataTables\CompaniesDataTable;
 use App\Http\Requests\Companies\StoreRequest;
 use App\Http\Requests\Companies\UpdateRequest;
+use App\Http\Requests\MassDestroyRequest;
 use App\Models\Company;
 use App\UseCases\Companies\StoreUseCase;
 use App\UseCases\Companies\UpdateUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
     public function index(Request $request)
     {
+        if($request->ajax()) {
+            $dataTable = new CompaniesDataTable('companies');
+            return $dataTable->make();
+        }
+
         $query = Company::query();
-
-        [$query, $pagination] = PaginationHelper::getQueryPaginated($query, $request, Company::class);
-
-        $companies = $query->get();
         $total = $query->count();
 
-        return view('dashboard.companies.index', compact('companies', 'total', 'pagination'));
+        return view('dashboard.companies.index', compact('total'));
     }
 
     public function create()
@@ -65,5 +69,14 @@ class CompanyController extends Controller
 
         toast('Company deleted', 'success');
         return back();
+    }
+
+    public function massDestroy(MassDestroyRequest $request)
+    {
+        $ids = $request->input('ids');
+        Company::whereIn('id', $ids)->delete();
+
+        toast('Companies deleted', 'success');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

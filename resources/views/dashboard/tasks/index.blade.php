@@ -15,9 +15,9 @@
             <div class="col-md-5">
                 <div class="d-flex justify-content-start mt-4">
                     <a class="ms-3 text-decoration-none {{ request('status') == null ? 'text-black' : '' }}" href="{{ route('dashboard.tasks.index') }}"><b>All</b> ({{ $counters['total'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 18 ? 'text-black' : '' }}" href="?status=18"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 19 ? 'text-black' : '' }}" href="?status=19"><b>Completed</b> ({{ $counters['completed'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 17 ? 'text-black' : '' }}" href="?status=17"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 6 ? 'text-black' : '' }}" href="?status=6"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 7 ? 'text-black' : '' }}" href="?status=7"><b>Completed</b> ({{ $counters['completed'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 5 ? 'text-black' : '' }}" href="?status=5"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
                 </div>
             </div>
             <div class="col-md-7 mt-1">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-12 mt-3 text-end">
-                            <a class="btn btn-change-view {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
+                            <a class="btn btn-change-view me-2 {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
                                 data-bs-placement="top">
                                 <i class='bx bx-list-ul'></i>
                             </a>
@@ -64,11 +64,17 @@
             </thead>
             <tbody>
                 @foreach ($tasks as $task)
+                    @php
+                        foreach ($task->subtasks()->pluck('id') as $stask_id) {
+                            $active = in_array($stask_id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray());
+                            break;
+                        }
+                    @endphp
                     <tr class="table-entry align-middle border-bottom">
                         <td class="text-nowrap">
                             @if($task->subtasks()->count())
                                 <a href="#" class="text-decoration-none text-dark me-2" onclick="toggleSubTasks({{$task->id}})">
-                                    <i class='bx bxs-right-arrow' id="toggler-{{$task->id}}"></i>
+                                    <i class='bx bxs-right-arrow {{$active ? 'bx-rotate-90' : ''}}' id="toggler-{{$task->id}}"></i>
                                 </a>
                             @endif
 
@@ -152,14 +158,14 @@
                     </tr>
 
                     @foreach ($task->subtasks as $subtask)
-                        <tr class="table-entry align-middle border-bottom subtasks-{{$task->id}} d-none">
-                            <td class="text-nowrap ps-5">
+                        <tr class="table-entry align-middle border-bottom subtasks-{{$task->id}} {{$active ? '' : 'd-none'}}">
+                            <td class="text-nowrap">
                                 @if(in_array($subtask->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
-                                    <a href="{{route('dashboard.task-clock-out', $subtask->id)}}" class="btn btn-attendance-task">
+                                    <a href="{{route('dashboard.task-clock-out', $subtask->id)}}" class="btn ms-5 btn-attendance-task">
                                         <i class='bx bx-stop-circle align-middle'></i>
                                     </a>
                                 @else
-                                    <a href="{{route('dashboard.task-clock-in', $subtask->id)}}" class="btn btn-attendance-task">
+                                    <a href="{{route('dashboard.task-clock-in', $subtask->id)}}" class="btn ms-5 btn-attendance-task">
                                         <i class='bx bx-play-circle align-middle'></i>
                                     </a>
                                 @endif

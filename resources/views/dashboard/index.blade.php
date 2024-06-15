@@ -1,5 +1,9 @@
 @extends('layouts.dashboard', ['section' => 'Dashboard'])
 
+@section('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
+@endsection
+
 @section('content')
     <div class="pb-4">
         <div class="row">
@@ -319,20 +323,73 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Clock In</h5>
+                    <h5 class="modal-title" id="modalLabel"><i class="bx bx-time-five"></i> Clock In</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('dashboard.user-clock-in') }}" method="GET">
                     @csrf
+                    <input type="hidden" name="longitude" id="longitude">
+                    <input type="hidden" name="latitude" id="latitude">
+
                     <div class="modal-body">
                         <h4><i class="bx bxs-time-five"></i> {{ now()->format('d/m/Y H:i') }}</h4>
+
+                        <div id="map" style="height: 500px;" class="mt-3"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Clock In</button>
+                        <button type="submit" class="btn btn-primary"><i class="bx bx-log-in-circle"></i> Clock In</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @parent
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#clockIn-modal').on('shown.bs.modal', function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+
+                        var map = L.map('map').setView([lat, lon], 17);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        L.marker([lat, lon]).addTo(map)
+                            .bindPopup('Tu ubicación actual')
+                            .openPopup();
+
+                        $('#latitude').val(lat)
+                        $('#longitude').val(lon)
+                    }, function(error) {
+                        Swal.fire({
+                            toast: true,
+                            title: 'Error with ubication',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            timer: 3000
+                        });
+                    });
+                } else {
+                    Swal.fire({
+                        toast: true,
+                        title: 'Geolocalización no soportada por este navegador',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        position: 'top-end',
+                        timer: 3000
+                    });
+                }
+            });
+        });
+    </script>
 @endsection
