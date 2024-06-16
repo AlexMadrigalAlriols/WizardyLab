@@ -17,7 +17,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control" id="birthday_date" name="birthday_date"
+            <input type="date" class="form-control flatpicker" id="birthday_date" name="birthday_date"
                 placeholder="Birthday Date" value="{{ old('birthday_date') ?? $user->birthday_date?->format('Y-m-d') }}">
             <label for="floatingSelect">Birthday <span class="text-danger">*</span></label>
         </div>
