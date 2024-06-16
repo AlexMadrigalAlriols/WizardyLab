@@ -12,14 +12,14 @@ use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Console\Command;
 
-class MakePortal extends Command
+class CreatePortal extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:portal';
+    protected $signature = 'portal:make';
 
     /**
      * The console command description.
@@ -29,7 +29,7 @@ class MakePortal extends Command
     protected $description = 'Make a new portal';
 
     /**
-     * Execute the console command.
+     * Execute the consoles command.
      */
     public function handle()
     {

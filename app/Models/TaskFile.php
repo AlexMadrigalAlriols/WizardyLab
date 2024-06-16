@@ -46,10 +46,10 @@ class TaskFile extends Model
     {
         return match($this->mime_type) {
             'image/jpeg', 'image/png', 'image/gif' => 'bx bx-image',
-            'application/pdf' => 'bx bx-file-pdf',
-            'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'bx bx-file-word',
-            'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'bx bx-file-excel',
-            'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'bx bx-file-ppt',
+            'application/pdf' => 'bx bxs-file-pdf',
+            'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'bx bxs-file-doc',
+            'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'bx bx-file-doc',
+            'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'bx bxs-file-doc',
             default => 'bx bx-file'
         };
     }

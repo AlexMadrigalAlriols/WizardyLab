@@ -41,6 +41,11 @@ class Portal extends Model
         return $this->hasMany(User::class);
     }
 
+    public function folders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DocumentFolder::class);
+    }
+
     public function getLogoAttribute()
     {
         if($this->data['logo'] && filter_var($this->data['logo'], FILTER_VALIDATE_URL)) {
@@ -48,6 +53,38 @@ class Portal extends Model
         }
 
         return asset('storage/' . $this->data['logo']) ?? null;
+    }
+
+    public function getPercentageUsedAttribute()
+    {
+        if($this->storage_size == 0) {
+            return 100;
+        }
+
+        $storage_size = $this->storage_size;
+        $byteSize = $this->getTotalFolderSize();
+        $currentSizeGB = $byteSize / (1024 * 1024 * 1024);
+
+        if($currentSizeGB >= $storage_size) {
+            return 100;
+        }
+
+        return round(($currentSizeGB / $storage_size) * 100, 2);
+    }
+
+    public function getStorageUsedAttribute()
+    {
+        $byteSize = $this->getTotalFolderSize();
+
+        return round($byteSize / 1024 / 1024 / 1024, 3);
+    }
+
+    public function getRemainingStorageAttribute()
+    {
+        $byteSize = $this->getTotalFolderSize();
+        $storage_size = $this->storage_size;
+
+        return ($storage_size * 1024 * 1024 * 1024 - $byteSize);
     }
 
     public function getSecondaryLightAttribute()
@@ -58,7 +95,7 @@ class Portal extends Model
         return $this->lightenColor($hexColor, $lightenPercent);
     }
 
-    function hexToRgb($hex) {
+    private function hexToRgb($hex) {
         $hex = ltrim($hex, '#');
 
         if (strlen($hex) == 3) {
@@ -72,7 +109,7 @@ class Portal extends Model
         return [$r, $g, $b];
     }
 
-    function lightenColor($hex, $percent) {
+    private function lightenColor($hex, $percent) {
         list($r, $g, $b) = $this->hexToRgb($hex);
 
         $r = min(255, round($r + (255 - $r) * $percent));
@@ -80,5 +117,15 @@ class Portal extends Model
         $b = min(255, round($b + (255 - $b) * $percent));
 
         return sprintf("rgba(%d, %d, %d, 1)", $r, $g, $b);
+    }
+
+    private function getTotalFolderSize(): int
+    {
+        $byteSize = 0;
+        foreach($this->folders as $folder) {
+            $byteSize += $folder->documents()->sum('size');
+        }
+
+        return $byteSize;
     }
 }

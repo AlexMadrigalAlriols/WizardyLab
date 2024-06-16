@@ -112,7 +112,6 @@
                 var lists = kanbanBoard.querySelectorAll('.list-container');
                 for (var i = 0; i < lists.length; i++) {
                     var list = lists[i];
-                    console.log(list)
                     var statusId = list.dataset.statusid;
                     var order = Array.from(lists).indexOf(list);
 
@@ -177,7 +176,6 @@
             var form = $(e).closest('form');
             var url = form.attr('action');
             var data = form.serialize();
-            console.log(form)
 
             $.ajax({
                 url: url,

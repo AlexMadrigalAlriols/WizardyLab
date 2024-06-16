@@ -66,6 +66,7 @@ class ExpenseController extends Controller
     {
         $project = Project::find($request->input('project_id'));
         $extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+        $storaged = false;
 
         if ($request->session()->has('dropzone_bills_temp_paths')) {
             foreach ($request->session()->get('dropzone_bills_temp_paths', []) as $idx => $tempPath) {
@@ -157,6 +158,7 @@ class ExpenseController extends Controller
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
             $item->cover = $item->cover;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
 
         return [$projects, $inventories];

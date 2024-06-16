@@ -60,7 +60,7 @@ class InvoicesDataTable extends DataTable
         });
 
         $table->editColumn('total', function($row) {
-            return $row->total ? $row->total . ' ' . $row->client->currency->symbol : '';
+            return $row->total ? $row->total . ' ' . $row->client?->currency?->symbol : '';
         });
 
         $table->rawColumns(['placeholder', 'actions']);
