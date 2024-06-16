@@ -12,7 +12,7 @@ use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Console\Command;
 
-class MakePortal extends Command
+class DisablePortal extends Command
 {
     /**
      * The name and signature of the console command.

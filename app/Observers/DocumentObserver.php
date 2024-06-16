@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentObserver
 {
-    public function deleting(Document $document)
+    public function deleted(Document $document)
     {
-        if(Storage::disk('public')->exists($document->path)) {
-            Storage::disk('public')->delete($document->path);
+        if(Storage::disk('public')->exists('storage/' . $document->path)) {
+            Storage::disk('public')->delete('storage/' . $document->path);
         }
     }
 }

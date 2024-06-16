@@ -20,7 +20,7 @@
                                     <form class="deleteFolderFrm" action="{{route('dashboard.documents.destroy', $folder->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="dropdown-item text-danger submitDeleteFrm" type="button">
+                                        <button class="dropdown-item text-danger submitDeleteFrm" type="button" data-folderid="{{$folder->id}}">
                                             <i class='bx bx-trash' ></i> Delete
                                         </button>
                                     </form>
@@ -36,7 +36,7 @@
 
 @if(count($folders) == 0)
     <div class="col-md-12 mt-5 text-center">
-        <img src="{{asset('img/no_folder_found.svg')}}" alt="" width="400px">
+        @include('images.no_folders_found')
         <p class="text-muted mt-3">No folders found here!</p>
     </div>
 @endif

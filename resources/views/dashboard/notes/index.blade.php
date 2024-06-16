@@ -46,7 +46,7 @@
 
         @if(!count($notes))
             <div class="col-md-12 mt-5 text-center">
-                <img src="{{asset('img/no_found/no_notes_found.svg')}}" alt="" width="250px">
+                @include('images.no_notes_found')
                 <p class="text-muted mt-3">No notes found here. Write something!</p>
             </div>
         @endif

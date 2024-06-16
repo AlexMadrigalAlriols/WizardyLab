@@ -21,7 +21,7 @@ class DocumentFolderController extends Controller
         $folders = DocumentFolder::orderBy('order')->get();
 
         if($request->ajax()) {
-            return view('partials.documentFolders.list', compact('folders'));
+            return view('partials.documentFolders.list', compact('folders', 'portal'));
         }
 
         return view('dashboard.documents.index', compact('folders', 'portal'));

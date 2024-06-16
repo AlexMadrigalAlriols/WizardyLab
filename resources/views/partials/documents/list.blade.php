@@ -51,7 +51,7 @@
 
 @if(count($documents) == 0)
 <div class="col-md-12 mt-5 text-center">
-    <img src="{{asset('img/no_files.svg')}}" alt="" width="400px">
+    @include('images.no_files_found')
     <p class="text-muted mt-4">No documents here</p>
 </div>
 @endif

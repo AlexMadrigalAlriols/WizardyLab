@@ -23,6 +23,7 @@ class DocumentController extends Controller
     public function index(Request $request, string $folder)
     {
         $request->session()->forget('dropzone_document_files_temp_paths');
+        $portal = SubdomainHelper::getPortal($request);
 
         if(is_string($folder)) {
             $fsearch = str_replace('+', ' ', $folder);
@@ -46,11 +47,11 @@ class DocumentController extends Controller
         $documents = $query->orderBy('created_at', 'desc')->get();
 
         if($request->ajax()) {
-            return view('partials.documents.list', compact('folder', 'documents'));
+            return view('partials.documents.list', compact('folder', 'documents', 'portal'));
         }
 
         $users = User::all();
-        return view('dashboard.documents.list', compact('folder', 'documents', 'users'));
+        return view('dashboard.documents.list', compact('folder', 'documents', 'users', 'portal'));
     }
 
     public function show(DocumentFolder $folder, Document $document)

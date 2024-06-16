@@ -67,7 +67,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::delete('/tasks/delete_file/{taskFile}', [TaskController::class, 'deleteFile'])->name('task.delete_file');
     Route::get('/tasks/download_file/{taskFile}', [TaskController::class, 'downloadFile'])->name('task.download_file');
     Route::post('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
-    Route::get('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
+    Route::get('/tasks/{task}/{action}/get', [TaskController::class, 'sendAction'])->name('tasks.action.get');
     Route::delete('massDestroy/tasks', [TaskController::class, 'massDestroy'])->name('tasks.massDestroy');
 
     //Comments
@@ -162,7 +162,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 
 Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
-    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
