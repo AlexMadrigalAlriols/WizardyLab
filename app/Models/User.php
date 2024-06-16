@@ -43,7 +43,8 @@ class User extends Authenticatable
         'reporting_user_id',
         'department_id',
         'role_id',
-        'country_id'
+        'country_id',
+        'attendance_template_id'
     ];
 
     /**
