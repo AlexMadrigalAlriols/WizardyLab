@@ -2,6 +2,7 @@
 
 namespace App\UseCases\Users;
 
+use App\Models\Portal;
 use App\Models\User;
 use App\UseCases\Core\UseCase;
 use Carbon\Carbon;
@@ -15,7 +16,6 @@ class StoreUseCase extends UseCase
         protected Carbon $birthday_date,
         protected string $email,
         protected ?string $reporting_user_id,
-        protected string $code,
         protected string $gender,
         protected int $department_id,
         protected int $country_id,
@@ -26,19 +26,40 @@ class StoreUseCase extends UseCase
 
     public function action(): User
     {
-        $UserInventories = User::create([
+        $code = $this->generateCode();
+
+        $user = User::create([
             'name' => $this->name,
             'birthday_date' => $this->birthday_date,
             'email' => $this->email,
             'reporting_user_id' => $this->reporting_user_id,
-            'code' => $this->code,
             'gender' => $this->gender,
             'department_id' => $this->department_id,
             'country_id' => $this->country_id,
             'role_id' => $this->role_id,
+            'code' => $code,
             'password' => Hash::make($this->password),
         ]);
 
-        return $UserInventories;
+        return $user;
+    }
+
+    public static function generateCode(): string
+    {
+        $query = User::query();
+
+        $query->orderBy('id', 'desc');
+        $user = $query->first();
+
+        if($user) {
+            $code = $user->code;
+            $code = substr($code, strpos($code, '-') + 1);
+            $code = (int) $code + 1;
+            $code = str_pad($code, 5, '0', STR_PAD_LEFT);
+
+            return 'U-' . $user->portal_id . $code;
+        }
+
+        return 'U-00001';
     }
 }

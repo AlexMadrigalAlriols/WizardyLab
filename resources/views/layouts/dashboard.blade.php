@@ -188,7 +188,7 @@
     <div class="l-navbar {{$isPhone ? '' : 'show'}}" id="nav-bar">
         <nav class="nav">
             <div class="scrollbar">
-                <a href="#" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
+                <a href="{{route('dashboard.index')}}" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
                 <div class="nav_list">
                     <hr>
                     <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
@@ -196,7 +196,7 @@
                         <span class="nav_name">{{__('global.dashboard')}}</span>
                     </a>
                     <hr>
-                    <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
+                    <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'CRM' ? 'active' : ''}}">
                         <i class='bx bx-buildings nav_icon'></i>
                         <span class="nav_name">CRM</span>
                     </a>
@@ -228,14 +228,14 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-group nav_icon'></i>
                                 <span class="nav_name ms-4">HR</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Documents' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' ? 'active' : ''}}">
                             <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
                                 <i class='bx bxs-plane-take-off nav_icon'></i>
                                 <span class="nav_name">Leaves</span>

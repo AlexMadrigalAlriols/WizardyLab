@@ -179,6 +179,7 @@
 
             checkObligatoryFields(obligatoryFields)
             countChars(limitedCharFields);
+checkObligatoryFields(obligatoryFields);
         });
     </script>
 @endsection

@@ -130,6 +130,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+    public function portal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Portal::class);
+    }
+
     public function UserInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserInventory::class);

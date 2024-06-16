@@ -12,6 +12,12 @@ class Portal extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const SUBSCRIPTION_TYPES = [
+        'basic' => 'Basic',
+        'pro' => 'Pro',
+        'enterprise' => 'Enterprise'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -127,5 +133,15 @@ class Portal extends Model
         }
 
         return $byteSize;
+    }
+
+    public function getUserCountAttribute()
+    {
+        return match($this->subscription_type) {
+            'Basic' => 15,
+            'Pro' => 40,
+            'Enterprise' => 1000,
+            default => 15
+        };
     }
 }

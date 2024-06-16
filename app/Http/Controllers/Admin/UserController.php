@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\PaginationHelper;
+use App\Helpers\SubdomainHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
 use App\Http\DataTables\UserDataTable;
@@ -27,6 +28,8 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        $portal = auth()->user()->portal;
+
         if($request->ajax()) {
             $dataTable = new UserDataTable('users');
             return $dataTable->make();
@@ -35,7 +38,7 @@ class UserController extends Controller
         $query = User::query();
         $total = $query->count();
 
-        return view('dashboard.users.index', compact('total'));
+        return view('dashboard.users.index', compact('total', 'portal'));
     }
 
     public function userAttendance(Request $request) {
@@ -98,8 +101,15 @@ class UserController extends Controller
         return redirect()->route('dashboard.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $portal = SubdomainHelper::getPortal($request);
+
+        if($portal->users()->count() >= $portal->user_count) {
+            toast('You have reached the maximum number of users', 'error');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $user = new User();
         $departments = Department::all();
         $roles = Role::all();
@@ -119,12 +129,18 @@ class UserController extends Controller
 
     public function store(StoreRequest $request)
     {
+        $portal = SubdomainHelper::getPortal($request);
+
+        if($portal->users()->count() >= $portal->user_count) {
+            toast('You have reached the maximum number of users', 'error');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $user = (new StoreUseCase(
             $request->input('name'),
             Carbon::parse($request->input('birthday_date')),
             $request->input('email'),
             $request->input('reporting_user_id'),
-            rand(100, 999),
             $request->input('gender'),
             $request->input('department_id'),
             $request->input('country_id'),

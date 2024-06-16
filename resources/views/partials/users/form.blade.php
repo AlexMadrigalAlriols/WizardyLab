@@ -129,7 +129,7 @@
     <div class="col-md-6">
         <div class="form-floating mt-3">
             <input type="password" class="form-control" id="password" name="password" placeholder="password" value="{{ old('password') }}">
-            <label for="floatingSelect">initial password</label>
+            <label for="floatingSelect">initial password <span class="text-danger">*</span></label>
         </div>
     </div>
 </div>

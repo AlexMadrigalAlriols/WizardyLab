@@ -47,6 +47,7 @@
         });
 
         countChars(limitedCharFields);
+checkObligatoryFields(obligatoryFields);
 
     </script>
 
