@@ -28,7 +28,7 @@
                 <div class="avatar-group mt-2">
                     @foreach ($task->users()->limit(3)->get() as $task_user)
                         <div class="avatar avatar-s">
-                            <img src="{{ $task_user->profile_img}}" alt="avatar" class="rounded-circle">
+                            <img src="{{ $task_user->profile_url }}" alt="avatar" class="rounded-circle">
                         </div>
                     @endforeach
 

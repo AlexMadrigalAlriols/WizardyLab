@@ -48,7 +48,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-3 col-3">
-                                        <img src="{{$document->user_signed->profile_img}}" alt="user_prof" class="rounded-circle img-fluid" style="max-width: 60px; max-height: 60px;">
+                                        <img src="{{$document->user_signed->profile_url}}" alt="user_prof" class="rounded-circle img-fluid" style="max-width: 60px; max-height: 60px;">
                                     </div>
                                     <div class="col-md-6 col-6 align-middle">
                                         <div class="align-middle mt-1">
