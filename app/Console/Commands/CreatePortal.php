@@ -2,14 +2,20 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Client;
+use App\Models\Company;
+use App\Models\Department;
 use App\Models\GlobalConfiguration;
 use App\Models\Invoice;
 use App\Models\LeaveType;
 use App\Models\Portal;
 use App\Models\Project;
+use App\Models\Role;
 use App\Models\Scopes\PortalScope;
 use App\Models\Status;
 use App\Models\Task;
+use App\Models\User;
+use App\UseCases\Users\StoreUseCase;
 use Illuminate\Console\Command;
 
 class CreatePortal extends Command
@@ -37,6 +43,11 @@ class CreatePortal extends Command
             $subdomain = $this->ask('Enter subdomain');
             $name = $this->ask('Enter name');
 
+            if(Portal::where('subdomain', $subdomain)->exists()) {
+                $this->error('Portal already exists');
+                return;
+            }
+
             $portal = Portal::create([
                 'subdomain' => $subdomain,
                 'name' => $name,
@@ -50,10 +61,14 @@ class CreatePortal extends Command
                 ]
             ]);
 
+            session(['portal_id' => $portal->id]);
+
             if($portal) {
+                $client = $this->createClient($portal);
                 $this->createStatuses($portal);
-                $this->createGlobalConfigs($portal);
+                $this->createGlobalConfigs($portal, $client);
                 $this->createLeaveTypes($portal);
+                $this->createUser($portal, $client);
             }
         } catch (\Throwable $th) {
             $this->error($th->getMessage());
@@ -87,14 +102,15 @@ class CreatePortal extends Command
         Status::withoutGlobalScope(new PortalScope($portal->id))->insert($statuses);
     }
 
-    private function createGlobalConfigs(Portal $portal) {
+    private function createGlobalConfigs(Portal $portal, Client $client) {
         $configs = [
+            ['type' => 'select-client', 'key' => 'invoice_client_id', 'value' => $client->id],
             ['type' => 'number', 'key' => 'price_per_hour', 'value' => '15'],
             ['type' => 'number', 'key' => 'tax_value', 'value' => '21'],
-            ['type' => 'select-status-task', 'key' => 'completed_task_status', 'value' => '7'],
-            ['type' => 'select-status-task', 'key' => 'facturated_task_status', 'value' => '9'],
-            ['type' => 'select-status-project', 'key' => 'completed_project_status', 'value' => '3'],
-            ['type' => 'select-status-invoice', 'key' => 'default_invoice_status', 'value' => '12'],
+            ['type' => 'select-status-task', 'key' => 'completed_task_status', 'value' => ''],
+            ['type' => 'select-status-task', 'key' => 'facturated_task_status', 'value' => ''],
+            ['type' => 'select-status-project', 'key' => 'completed_project_status', 'value' => ''],
+            ['type' => 'select-status-invoice', 'key' => 'default_invoice_status', 'value' => ''],
         ];
 
         foreach ($configs as $key => $status) {
@@ -117,5 +133,49 @@ class CreatePortal extends Command
         }
 
         LeaveType::withoutGlobalScope(new PortalScope($portal->id))->insert($leaveTypes);
+    }
+
+    private function createClient(Portal $portal): Client
+    {
+        $company = new Company();
+        $company->name = 'Default Company';
+        $company->active = 1;
+        $company->portal_id = $portal->id;
+        $company->save();
+
+        $client = new Client();
+        $client->name = 'Default Client';
+        $client->active = 1;
+        $client->portal_id = $portal->id;
+        $client->email = 'default@' . $portal->subdomain . '.com';
+        $client->company_id = $company->id;
+        $client->save();
+
+        return $client;
+    }
+
+    private function createUser(Portal $portal, Client $client)
+    {
+        $department = new Department();
+        $department->name = 'Default Department';
+        $department->portal_id = $portal->id;
+        $department->save();
+
+        $role = new Role();
+        $role->name = 'Admin';
+        $role->save();
+
+        $user = (new StoreUseCase(
+            'Admin',
+            now(),
+            'admin@' . $portal->subdomain . '.com',
+            null,
+            'other',
+            $department->id,
+            $role->id,
+            1,
+            'password',
+            $portal
+        ))->action();
     }
 }

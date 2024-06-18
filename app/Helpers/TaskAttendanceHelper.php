@@ -121,4 +121,17 @@ class TaskAttendanceHelper {
 
         return $total;
     }
+
+    public static function getDayAttendance(User $user, Carbon $date): string
+    {
+        $attendances = $user->taskAttendance()->where('date', $date)->get();
+        $total = '00h 00m';
+
+        // Want to
+        foreach ($attendances ?? [] as $attendance) {
+            $total = TimerHelper::addDailyTime($total, TimerHelper::getAttendanceTime($attendance));
+        }
+
+        return $total;
+    }
 }

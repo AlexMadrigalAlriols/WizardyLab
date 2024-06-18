@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
-use App\Helpers\PaginationHelper;
 use App\Helpers\SubdomainHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
@@ -12,11 +11,11 @@ use App\Http\DataTables\UserDataTable;
 use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Users\StoreRequest;
 use App\Http\Requests\Users\UpdateRequest;
+use App\Models\AttendanceTemplate;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
-use App\Notifications\CustomResetPassword;
 use App\UseCases\Users\StoreUseCase;
 use App\UseCases\Users\UpdateUseCase;
 use Carbon\Carbon;
@@ -115,17 +114,17 @@ class UserController extends Controller
         $roles = Role::all();
         $countries = Country::all();
         $qusers = User::all();
+        $attendanceTemplates = AttendanceTemplate::all();
 
         return view('dashboard.users.create', compact(
             'user',
             'departments',
             'roles',
             'countries',
-            'qusers'
+            'qusers',
+            'attendanceTemplates'
         ));
     }
-
-
 
     public function store(StoreRequest $request)
     {
@@ -181,13 +180,15 @@ class UserController extends Controller
         $roles = Role::all();
         $countries = Country::all();
         $qusers = User::all();
+        $attendanceTemplates = AttendanceTemplate::all();
 
         return view('dashboard.users.edit', compact(
             'user',
             'departments',
             'roles',
             'countries',
-            'qusers'
+            'qusers',
+            'attendanceTemplates'
         ));
     }
 

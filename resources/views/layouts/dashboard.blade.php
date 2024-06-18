@@ -241,7 +241,7 @@
                                 <span class="nav_name">Leaves</span>
                             </a>
                             <hr>
-                            <a href="#" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.attendance.index')}}" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
                                 <i class='bx bx-timer nav_icon'></i>
                                 <span class="nav_name">Attendance</span>
                             </a>
@@ -311,14 +311,14 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-cog nav_icon'></i>
                                 <span class="nav_name ms-4">Configuration</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
                                 <i class='bx bx-cog nav_icon'></i>
                                 <span class="nav_name">Configuration</span>
@@ -342,6 +342,11 @@
                             <a href="{{route('dashboard.leaveTypes.index')}}" class="nav_link {{ $section == 'Leave_Types' ? 'active' : ''}}">
                                 <i class='bx bxs-plane-alt nav_icon'></i>
                                 <span class="nav_name">{{__('crud.leaveTypes.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.attendanceTemplates.index')}}" class="nav_link {{ $section == 'AttendanceTemplates' ? 'active' : ''}}">
+                                <i class='bx bx-briefcase-alt nav_icon'></i>
+                                <span class="nav_name">Jornadas</span>
                             </a>
                         </div>
                     </div>

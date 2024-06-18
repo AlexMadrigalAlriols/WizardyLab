@@ -133,6 +133,17 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    @elseif ($globalConfig->type == 'select-client')
+                                        <div class="form-group mb-3">
+                                            <select class="form-select" id="{{ $globalConfig->key }}_value"
+                                                name="values[]">
+                                                @foreach ($clients as $client)
+                                                    <option value="{{ $client->id }}"
+                                                        @if ($globalConfig->value == $client->id) selected @endif>
+                                                        {{ $client->name }} ({{$client->email}})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

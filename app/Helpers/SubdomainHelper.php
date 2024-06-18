@@ -13,7 +13,7 @@ class SubdomainHelper
         $subdomain = explode('.', $request->getHost())[0];
 
         if (config('app.env') === 'local' && config('app.local_portal')) {
-            $portal = Portal::find(env('LOCAL_PORTAL'));
+            $portal = Portal::find(config('app.local_portal'));
 
             if ($portal) {
                 session(['portal_id' => $portal->id]);
