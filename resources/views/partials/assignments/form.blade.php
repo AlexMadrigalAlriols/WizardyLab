@@ -15,13 +15,13 @@
 <div class="row">
     <div class="col-md-5">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control" id="extract_date" name="extract_date" placeholder="Extract date" value="{{ old('extract_date') ?? $assignment->extract_date ?? now()->toDateString()}}">
+            <input type="date" class="form-control flatpicker" id="extract_date" name="extract_date" placeholder="Extract date" value="{{ old('extract_date') ?? $assignment->extract_date ?? now()->toDateString()}}">
             <label for="extract_date">Extract date</label>
         </div>
     </div>
     <div class="col-md-5">
         <div class="form-floating mt-3">
-            <input type="date" class="form-control" id="return_date" name="return_date" placeholder="Return date" value="{{ old('return_date') ?? $assignment->return_date }}">
+            <input type="date" class="form-control flatpicker" id="return_date" name="return_date" placeholder="Return date" value="{{ old('return_date') ?? $assignment->return_date }}">
             <label for="return_date">Return date</label>
         </div>
     </div>
