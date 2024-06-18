@@ -17,7 +17,7 @@ class UpdateRequest extends FormRequest
             'date' => 'required|date',
             'check_in' => 'required|array',
             'check_out' => 'required|array',
-            'ids' => 'required|array',
+            'ids' => 'nullable|array',
             'ids.*' => 'required|integer|exists:attendances,id'
         ];
     }
