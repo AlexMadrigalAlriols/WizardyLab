@@ -25,7 +25,7 @@ class CreatePortal extends Command
      *
      * @var string
      */
-    protected $signature = 'portal:make';
+    protected $signature = 'portal:make {subdomain}';
 
     /**
      * The console command description.
@@ -40,8 +40,8 @@ class CreatePortal extends Command
     public function handle()
     {
         try {
-            $subdomain = $this->ask('Enter subdomain');
-            $name = $this->ask('Enter name');
+            $subdomain = $this->argument('subdomain');
+            $name = ucfirst($subdomain) . ' Portal';
 
             if(Portal::where('subdomain', $subdomain)->exists()) {
                 $this->error('Portal already exists');
