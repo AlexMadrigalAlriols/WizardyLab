@@ -13,7 +13,7 @@
                 <div class="avatar-group d-inline-block align-middle ms-3">
                     @foreach ($project->users()->limit(3)->get() as $task_user)
                         <div class="avatar avatar-s">
-                            <img src="{{ auth()->user()->profile_img }}" alt="avatar" class="rounded-circle">
+                            <img src="{{ auth()->user()->profile_url }}" alt="avatar" class="rounded-circle">
                         </div>
                     @endforeach
 

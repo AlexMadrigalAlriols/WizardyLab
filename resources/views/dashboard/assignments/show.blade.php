@@ -90,7 +90,7 @@
                                                                             data-bs-trigger="hover focus"
                                                                             data-bs-content="{{ $assignment->user?->name }}"
                                                                             class="avatar avatar-s d-inline-block"><img
-                                                                                src="{{ $assignment->user->profile_img }}"
+                                                                                src="{{ $assignment->user->profile_url }}"
                                                                                 alt="user_image" class="rounded-circle">
                                                                         </div>
                                                                     </a></p>

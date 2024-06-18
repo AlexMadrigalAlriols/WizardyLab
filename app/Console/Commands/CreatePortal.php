@@ -176,7 +176,8 @@ class CreatePortal extends Command
             $role->id,
             1,
             'password',
-            $portal
+            $portal,
+            1
         ))->action();
     }
 }

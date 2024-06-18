@@ -1,6 +1,6 @@
 <div class="row p-3 border-bottom comment-card">
     <div class="col-md-1">
-        <img src="{{ $comment->user->profile_img }}" class="rounded-circle" width="45" height="45" alt="Profile">
+        <img src="{{ $comment->user->profile_url }}" class="rounded-circle" width="45" height="45" alt="Profile">
     </div>
     <div class="col-md-10">
         <p class="h6">{{ $comment->user->name }}</p>

@@ -154,7 +154,7 @@
                                         <div style="font-size: 13px;">
                                             <div class="row pt-3">
                                                 <div class="col-md-3 text-center">
-                                                    <img src="{{asset($notification->user->profile_img)}}" class="img-fluid rounded-circle border" width="50" alt="" style="height: 45px; width: 45px;">
+                                                    <img src="{{asset($notification->user->profile_url)}}" class="img-fluid rounded-circle border" width="50" alt="" style="height: 45px; width: 45px;">
                                                 </div>
                                                 <div class="col-md-9">
                                                     <span class="h6"><b>{{$notification->user->name}}</b></span>
