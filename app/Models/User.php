@@ -154,7 +154,7 @@ class User extends Authenticatable
 
     public function getProfileUrlAttribute()
     {
-        if($this->profile_img) {
+        if(!$this->profile_img) {
             return asset('img/default-user.png');
         }
 
