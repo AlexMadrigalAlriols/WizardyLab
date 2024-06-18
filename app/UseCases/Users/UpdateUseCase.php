@@ -19,6 +19,7 @@ class UpdateUseCase extends UseCase
         protected int $department_id,
         protected int $country_id,
         protected int $role_id,
+        protected int $attendance_template_id
     ) {
     }
 
@@ -33,6 +34,7 @@ class UpdateUseCase extends UseCase
             'department_id' => $this->department_id,
             'country_id' => $this->country_id,
             'role_id' => $this->role_id,
+            'attendance_template_id' => $this->attendance_template_id
         ]);
 
         return $this->User;

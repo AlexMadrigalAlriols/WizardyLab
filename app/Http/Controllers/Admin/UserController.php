@@ -145,6 +145,8 @@ class UserController extends Controller
             $request->input('country_id'),
             $request->input('role_id'),
             $request->input('password'),
+            $portal,
+            $request->input('attendance_template_id')
         ))->action();
 
         $this->saveTaskFiles($user, $request);
@@ -165,6 +167,7 @@ class UserController extends Controller
             $request->input('department_id'),
             $request->input('country_id'),
             $request->input('role_id'),
+            $request->input('attendance_template_id')
         ))->action();
 
         $this->saveTaskFiles($user, $request);

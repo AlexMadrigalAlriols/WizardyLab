@@ -41,6 +41,7 @@ class CreatePortal extends Command
     {
         try {
             $subdomain = strtolower($this->argument('subdomain'));
+
             $name = ucfirst($subdomain) . ' Portal';
 
             if(Portal::where('subdomain', $subdomain)->exists()) {
