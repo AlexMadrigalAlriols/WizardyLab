@@ -12,24 +12,18 @@ class SubdomainHelper
     {
         $subdomain = explode('.', $request->getHost())[0];
 
-        if(config('app.env')  === 'local' && config('app.local_portal')) {
-            $portal = Portal::find(env('LOCAL_PORTAL'));
+        if (config('app.env') === 'local' && config('app.local_portal')) {
+            $portal = Portal::find(config('app.local_portal'));
 
-            if($portal) {
+            if ($portal) {
                 session(['portal_id' => $portal->id]);
             }
 
             return $portal;
         }
 
-        $portal = Cache::get('portal_subdomain_' . $subdomain, function () use($subdomain) {
-            return  Portal::where('subdomain', $subdomain)->where('active', 1)->first();;
+        return Cache::lock('portal_subdomain_' . $subdomain)->get(function () use ($subdomain) {
+            return Portal::where('subdomain', $subdomain)->where('active', 1)->first();
         });
-
-        if($portal) {
-            session(['portal_id' => $portal->id]);
-        }
-
-        return $portal;
     }
 }

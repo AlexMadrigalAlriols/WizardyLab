@@ -92,7 +92,7 @@
                             <p class="h4"><b><i class='bx bx-user' ></i> Team Members</b></p>
                             <div>
                                 @foreach ($task->users as $user)
-                                    <img src="{{$user->profile_img}}" class="rounded-circle" width="45" height="45" alt="{{$user->name}}">
+                                    <img src="{{asset('storage/'.$user->profile_img)}}" class="rounded-circle" width="45" height="45" alt="{{$user->name}}">
                                 @endforeach
                             </div>
                         </div>

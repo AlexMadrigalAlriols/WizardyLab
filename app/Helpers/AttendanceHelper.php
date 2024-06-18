@@ -47,4 +47,22 @@ class AttendanceHelper {
     {
         return auth()->user()->attendances()->where('date', now()->format('Y-m-d'))->get();
     }
+
+    public static function getDayAttendance(User $user, Carbon $date): string
+    {
+        $attendances = $user->attendances()->where('date', $date)->get();
+        $total = '00h 00m';
+
+        // Want to
+        foreach ($attendances ?? [] as $attendance) {
+            $total = TimerHelper::addDailyTime($total, TimerHelper::getAttendanceTime($attendance));
+        }
+
+        return $total;
+    }
+
+    public static function getProductivity(Carbon $date)
+    {
+
+    }
 }

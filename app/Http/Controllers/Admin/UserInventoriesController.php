@@ -53,6 +53,7 @@ class UserInventoriesController extends Controller
         });
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
         $inventoryArray = array_values(array_filter($inventories->toArray()));
 
@@ -98,6 +99,7 @@ class UserInventoriesController extends Controller
         });
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
 
         foreach ($assignment->items as $assig) {

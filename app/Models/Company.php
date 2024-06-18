@@ -23,7 +23,8 @@ class Company extends Model
      */
     protected $fillable = [
         'name',
-        'active'
+        'active',
+        'portal_id'
     ];
 
     protected $casts = [

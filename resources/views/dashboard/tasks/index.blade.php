@@ -140,9 +140,9 @@
                                     <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $task->id)}}"><i class='bx bx-show' ></i> View</a></li>
                                     <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
                                     @if(request('archived'))
-                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action', [$task->id, 'unarchive'])}}"><i class='bx bx-box' ></i> UnArchive</a></li>
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action.get', [$task->id, 'unarchive'])}}"><i class='bx bx-box' ></i> UnArchive</a></li>
                                     @else
-                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action', [$task->id, 'archive'])}}"><i class='bx bx-box' ></i> Archive</a></li>
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action.get', [$task->id, 'archive'])}}"><i class='bx bx-box' ></i> Archive</a></li>
                                     @endif
                                     <li><hr class="dropdown-divider"></li>
                                     <li>

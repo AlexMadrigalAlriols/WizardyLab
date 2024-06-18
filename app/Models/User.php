@@ -16,6 +16,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasAttendance;
 
+    public const PAGE_SIZE = 10;
+
     public const GENDERS = [
         'female' => 'female',
         'male' => 'male',
@@ -28,6 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'portal_id',
         'name',
         'email',
         'password',
@@ -40,7 +43,9 @@ class User extends Authenticatable
         'reporting_user_id',
         'department_id',
         'role_id',
-        'country_id'
+        'country_id',
+        'attendance_template_id',
+        'portal_id'
     ];
 
     /**
@@ -63,7 +68,7 @@ class User extends Authenticatable
         'password' => 'hashed',
         'last_login_at' => 'datetime',
         'joining_date' => 'datetime',
-        'birthday_date' => 'date',
+        'birthday_date' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -127,9 +132,33 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
-    public function UsersInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function portal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Portal::class);
+    }
+
+    public function UserInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserInventory::class);
+    }
+
+    public function attendanceTemplate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(AttendanceTemplate::class);
+    }
+
+    public function leaveDays(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Leave::class);
+    }
+
+    public function getProfileUrlAttribute()
+    {
+        if($this->profile_img && filter_var($this->profile_img, FILTER_VALIDATE_URL)) {
+            return $this->profile_img;
+        }
+
+        return asset('storage/' . $this->profile_img) ?? null;
     }
 
 }

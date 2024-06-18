@@ -414,6 +414,10 @@ tr.selected {
     background-color: transparent;
     color: white;
 }
+.disabled-user > *{
+    color: grey!important;
+    text-decoration: none;
+
 .idea{
     border: 2px solid #374df1;
     position:relative;
@@ -509,6 +513,27 @@ opacity: 1;
     height: 120px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
+}
+
+.folder-card {
+    cursor: pointer;
+}
+.folder-card:hover {
+    background-color: #f2f2f2;
+}
+
+.confirm-btn {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--btn-text) !important;
+}
+
+.confirm-btn:focus,
+.confirm-btn:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--btn-text) !important;
+    box-shadow: 0 0 10px var(--primary-color) !important;
 }
 
 /* Animación del loader */

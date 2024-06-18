@@ -188,12 +188,17 @@
     <div class="l-navbar {{$isPhone ? '' : 'show'}}" id="nav-bar">
         <nav class="nav">
             <div class="scrollbar">
-                <a href="#" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
+                <a href="{{route('dashboard.index')}}" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
                 <div class="nav_list">
                     <hr>
                     <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
                         <i class='bx bx-home-alt nav_icon'></i>
                         <span class="nav_name">{{__('global.dashboard')}}</span>
+                    </a>
+                    <hr>
+                    <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'CRM' ? 'active' : ''}}">
+                        <i class='bx bx-buildings nav_icon'></i>
+                        <span class="nav_name">CRM</span>
                     </a>
                     <hr>
                     <div class="nav_item has-treeview">
@@ -223,20 +228,20 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Holiday' || $section == 'Hours_Reports' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-group nav_icon'></i>
                                 <span class="nav_name ms-4">HR</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' ? 'active' : ''}}">
                             <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
                                 <i class='bx bxs-plane-take-off nav_icon'></i>
                                 <span class="nav_name">Leaves</span>
                             </a>
                             <hr>
-                            <a href="#" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.attendance.index')}}" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
                                 <i class='bx bx-timer nav_icon'></i>
                                 <span class="nav_name">Attendance</span>
                             </a>
@@ -246,9 +251,14 @@
                                 <span class="nav_name">Holiday</span>
                             </a>
                             <hr>
-                            <a href="#" class="nav_link {{ $section == 'Hours_Reports' ? 'active' : ''}}">
+                            <a href="{{route('dashboard.documents.index')}}" class="nav_link {{ $section == 'Documents' ? 'active' : ''}}">
+                                <i class='bx bx-file nav_icon'></i>
+                                <span class="nav_name">Documents</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.users.index')}}" class="nav_link {{ $section == 'Users' ? 'active' : ''}}">
                                 <i class='bx bx-user-plus nav_icon'></i>
-                                <span class="nav_name">Hours Reports</span>
+                                <span class="nav_name">{{__('crud.users.title')}}</span>
                             </a>
                         </div>
                     </div>
@@ -301,14 +311,14 @@
                     </div>
                     <hr>
                     <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <div>
                                 <i class='bx bx-cog nav_icon'></i>
                                 <span class="nav_name ms-4">Configuration</span>
                             </div>
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                             <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
                                 <i class='bx bx-cog nav_icon'></i>
                                 <span class="nav_name">Configuration</span>
@@ -332,6 +342,11 @@
                             <a href="{{route('dashboard.leaveTypes.index')}}" class="nav_link {{ $section == 'Leave_Types' ? 'active' : ''}}">
                                 <i class='bx bxs-plane-alt nav_icon'></i>
                                 <span class="nav_name">{{__('crud.leaveTypes.title')}}</span>
+                            </a>
+                            <hr>
+                            <a href="{{route('dashboard.attendanceTemplates.index')}}" class="nav_link {{ $section == 'AttendanceTemplates' ? 'active' : ''}}">
+                                <i class='bx bx-briefcase-alt nav_icon'></i>
+                                <span class="nav_name">Jornadas</span>
                             </a>
                         </div>
                     </div>

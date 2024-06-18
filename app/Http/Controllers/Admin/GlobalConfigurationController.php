@@ -6,6 +6,7 @@ use App\Helpers\FileSystemHelper;
 use App\Helpers\SubdomainHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GlobalConfiguration\StoreRequest;
+use App\Models\Client;
 use App\Models\GlobalConfiguration;
 use App\Models\Invoice;
 use App\Models\Portal;
@@ -25,6 +26,7 @@ class GlobalConfigurationController extends Controller
         $taskStatuses = Status::where('morphable', Task::class)->get();
         $projectStatuses = Status::where('morphable', Project::class)->get();
         $invoiceStatuses = Status::where('morphable', Invoice::class)->get();
+        $clients = Client::where('active', 1)->get();
         $portal = SubdomainHelper::getPortal($request);
 
         return view('dashboard.globalConfigurations.index', compact(
@@ -32,7 +34,8 @@ class GlobalConfigurationController extends Controller
             'taskStatuses',
             'projectStatuses',
             'invoiceStatuses',
-            'portal'
+            'portal',
+            'clients'
         ));
     }
 

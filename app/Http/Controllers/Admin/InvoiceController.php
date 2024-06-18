@@ -56,6 +56,7 @@ class InvoiceController extends Controller
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
             $item->cover = $item->cover;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
         $inventoryArray = array_values(array_filter($inventories->toArray()));
 

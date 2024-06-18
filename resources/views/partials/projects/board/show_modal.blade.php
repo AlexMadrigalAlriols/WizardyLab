@@ -49,7 +49,7 @@
                 <div class="col-sm-9 col-8">
                    @foreach ($task->users as $user)
                     <a href="#" data-bs-toggle="tooltip" data-bs-title="{{$user->name}}" data-bs-placement="bottom">
-                        <img src="{{$user->profile_img}}" class="rounded-circle me-2" width="35" height="35">
+                        <img src="{{asset('storage/'.$user->profile_img)}}" class="rounded-circle me-2" width="35" height="35">
                     </a>
                    @endforeach
                 </div>
