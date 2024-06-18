@@ -32,7 +32,7 @@ class CreatePortal extends Command
      *
      * @var string
      */
-    protected $description = 'Make a new portal';
+    protected $description = 'Make a new portal {subdomain}';
 
     /**
      * Execute the consoles command.
@@ -40,7 +40,8 @@ class CreatePortal extends Command
     public function handle()
     {
         try {
-            $subdomain = $this->argument('subdomain');
+            $subdomain = strtolower($this->argument('subdomain'));
+
             $name = ucfirst($subdomain) . ' Portal';
 
             if(Portal::where('subdomain', $subdomain)->exists()) {
