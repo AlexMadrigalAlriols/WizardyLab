@@ -24,13 +24,14 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:60',
-            'email' => 'required|string|max:30|unique:users,email,'.$this->route('user')->id,
+            'email' => 'required|string|max:60|unique:users,email,'.$this->route('user')->id,
             'gender' => 'required|string|in:' . implode(',', array_keys(User::GENDERS)),
             'reporting_user_id' => 'nullable|int|exists:users,id|not_in:'.$this->route('user')->id.",".$this->route('user')->reportinguser,
             'birthday_date' => 'required|date',
             'department_id' => 'nullable|int|exists:departments,id',
             'country_id' => 'required|int|exists:countries,id',
             'role_id' => 'required|int|exists:roles,id',
+            'attendance_template_id' => 'nullable|int|exists:attendance_templates,id',
         ];
     }
 

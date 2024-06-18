@@ -31,7 +31,8 @@ class StoreRequest extends FormRequest
             'department_id' => 'nullable|int|exists:departments,id',
             'country_id' => 'required|int|exists:countries,id',
             'role_id' => 'nullable|int|exists:roles,id',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'attendance_template_id' => 'nullable|int|exists:attendance_templates,id'
         ];
     }
 }

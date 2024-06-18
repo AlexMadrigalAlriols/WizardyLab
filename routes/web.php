@@ -1,6 +1,8 @@
 <?php
 
 use App\Helpers\ConfigurationHelper;
+use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\AttendanceTemplateController;
 use App\Http\Controllers\Admin\BoardController;
 use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
@@ -43,6 +45,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::redirect('/', '/dashboard');
+
+Route::get('/template', [AttendanceController::class, 'downloadPdfExtract'])->name('template');
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal', 'throttle']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -159,6 +163,13 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::put('/my-documents/{folder}/{document}', [DocumentController::class, 'update'])->name('documents.update-file');
     Route::get('/my-documents/{folder}/{document}/view-sign', [DocumentController::class, 'viewSignFile'])->name('documents.view-sign');
     Route::post('/my-documents/{document}/sign', [DocumentController::class, 'signDocument'])->name('documents.sign');
+
+    //Atendance Front
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::resource('/attendanceTemplates', AttendanceTemplateController::class);
+    Route::delete('massDestroy/attendanceTemplates', [AttendanceTemplateController::class, 'massDestroy'])->name('attendanceTemplates.massDestroy');
+    Route::get('/attendance/download-extract', [AttendanceController::class, 'downloadPdfExtract'])->name('attendance.download-extract');
+    Route::put('/attendance', [AttendanceController::class, 'update'])->name('attendance.update');
 
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');

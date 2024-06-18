@@ -36,4 +36,9 @@ class Attendance extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getIsEditedAttribute(): bool
+    {
+        return $this->data['edited'] ?? false;
+    }
 }

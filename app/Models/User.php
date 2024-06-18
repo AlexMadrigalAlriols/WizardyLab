@@ -44,7 +44,8 @@ class User extends Authenticatable
         'department_id',
         'role_id',
         'country_id',
-        'attendance_template_id'
+        'attendance_template_id',
+        'portal_id'
     ];
 
     /**
@@ -139,6 +140,16 @@ class User extends Authenticatable
     public function UserInventories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserInventory::class);
+    }
+
+    public function attendanceTemplate(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(AttendanceTemplate::class);
+    }
+
+    public function leaveDays(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Leave::class);
     }
 
     public function getProfileUrlAttribute()

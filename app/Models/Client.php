@@ -34,7 +34,8 @@ class Client extends Model
         'country_id',
         'currency_id',
         'language_id',
-        'company_id'
+        'company_id',
+        'portal_id'
     ];
 
     protected $casts = [

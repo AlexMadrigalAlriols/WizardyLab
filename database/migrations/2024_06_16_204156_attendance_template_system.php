@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendance_template', function (Blueprint $table) {
+        Schema::create('attendance_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->time('duration');
+            $table->text('data')->nullable();
             $table->timestamps();
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('attendance_template_id')->nullable();
+            $table->foreignId('attendance_template_id')->nullable()->after('gender')->constrained();
         });
     }
 
@@ -30,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendance_template');
+        Schema::dropIfExists('attendance_templates');
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('attendance_template_id');
         });

@@ -21,14 +21,14 @@ class StoreUseCase extends UseCase
         protected int $country_id,
         protected int $role_id,
         protected string $password,
+        protected ?Portal $portal = null
     ) {
     }
 
     public function action(): User
     {
         $code = $this->generateCode();
-
-        $user = User::create([
+        $data = [
             'name' => $this->name,
             'birthday_date' => $this->birthday_date,
             'email' => $this->email,
@@ -39,7 +39,13 @@ class StoreUseCase extends UseCase
             'role_id' => $this->role_id,
             'code' => $code,
             'password' => Hash::make($this->password),
-        ]);
+        ];
+
+        if($this->portal) {
+            $data['portal_id'] = $this->portal->id;
+        }
+
+        $user = User::create($data);
 
         return $user;
     }
