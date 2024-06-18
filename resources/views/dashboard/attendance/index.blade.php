@@ -116,17 +116,17 @@
                                                 <input type="hidden" name="date" value="{{$date['day']->format('y-m-d')}}">
                                                 <div id="attendanceTimes-{{$idx}}">
                                                     @foreach ($date['attendances'] ?? [] as $id => $attendance)
-                                                    <input type="hidden" name="ids[{{$id}}]" value="{{$attendance->id}}">
-                                                    <div class="mt-3">
-                                                            <span class="me-3"><i class='bx bx-alarm-exclamation align-middle' style="font-size: 20px"></i></span>
-                                                            <input type="time" class="form-control w-25 d-inline-block" name="check_in[]" value="{{$attendance->check_in->format('H:i')}}" {{$month != $currentMonth ? 'disabled' : ''}}>
-                                                            <span class="mx-2">-</span>
-                                                            <input type="time" class="form-control w-25 d-inline-block" name="check_out[]" value="{{$attendance->check_out->format('H:i')}}" {{$month != $currentMonth ? 'disabled' : ''}}>
+                                                        <input type="hidden" name="ids[{{$id}}]" value="{{$attendance->id}}">
+                                                        <div class="mt-3">
+                                                                <span class="me-3"><i class='bx bx-alarm-exclamation align-middle' style="font-size: 20px"></i></span>
+                                                                <input type="time" class="form-control w-25 d-inline-block" name="check_in[]" value="{{$attendance->check_in?->format('H:i')}}" {{$month != $currentMonth ? 'disabled' : ''}}>
+                                                                <span class="mx-2">-</span>
+                                                                <input type="time" class="form-control w-25 d-inline-block" name="check_out[]" value="{{$attendance->check_out?->format('H:i')}}" {{$month != $currentMonth ? 'disabled' : ''}}>
 
-                                                            @if ($attendance->isEdited)
-                                                                <span class="ms-3" style="color: var(--primary-color)"><i class='bx bx-history align-middle' style="font-size: 20px"></i></span>
-                                                            @endif
-                                                    </div>
+                                                                @if ($attendance->isEdited)
+                                                                    <span class="ms-3" style="color: var(--primary-color)"><i class='bx bx-history align-middle' style="font-size: 20px"></i></span>
+                                                                @endif
+                                                        </div>
                                                     @endforeach
 
                                                     @if(!count($date['attendances']))

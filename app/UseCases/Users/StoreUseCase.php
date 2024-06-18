@@ -21,7 +21,8 @@ class StoreUseCase extends UseCase
         protected int $country_id,
         protected int $role_id,
         protected string $password,
-        protected ?Portal $portal = null
+        protected ?Portal $portal = null,
+        protected int $attendance_template_id
     ) {
     }
 
@@ -39,6 +40,7 @@ class StoreUseCase extends UseCase
             'role_id' => $this->role_id,
             'code' => $code,
             'password' => Hash::make($this->password),
+            'attendance_template_id' => $this->attendance_template_id,
         ];
 
         if($this->portal) {

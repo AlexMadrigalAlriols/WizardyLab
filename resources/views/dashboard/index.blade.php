@@ -46,7 +46,11 @@
                                 </div>
                                 <div class="col-7 col-md-8 col-lg-9">
                                     <h5 class="mb-0"><b>{{ $user->name }}</b></h5>
-                                    <span class="badge" style="{{$user->attendanceTemplate->styles}}">{{$user->attendanceTemplate->name}}</span>
+
+                                    @if ($user->attendanceTemplate)
+                                        <span class="badge" style="{{$user->attendanceTemplate->styles}}">{{$user->attendanceTemplate->name}}</span>
+                                    @endif
+
                                     <p class="mt-1">{{ $user->role?->name }} - {{ $user->department?->name }}</p>
                                     <p class="text-muted">ID: {{ $user->code }}</p>
                                 </div>
