@@ -11,10 +11,18 @@ use App\Http\Requests\DocumentFolder\UpdateRequest;
 use App\Models\Document;
 use App\Models\DocumentFolder;
 use App\Models\Task;
+use App\Traits\MiddlewareTrait;
 use Illuminate\Http\Request;
 
 class DocumentFolderController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('document');
+    }
+
     public function index(Request $request)
     {
         $portal = SubdomainHelper::getPortal($request);

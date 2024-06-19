@@ -6,6 +6,7 @@ use App\Helpers\BreadcrumbHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
+use App\Models\User;
 
 class DashboardController extends Controller
 {

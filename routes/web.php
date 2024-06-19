@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
@@ -170,6 +171,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::delete('massDestroy/attendanceTemplates', [AttendanceTemplateController::class, 'massDestroy'])->name('attendanceTemplates.massDestroy');
     Route::get('/attendance/download-extract', [AttendanceController::class, 'downloadPdfExtract'])->name('attendance.download-extract');
     Route::put('/attendance', [AttendanceController::class, 'update'])->name('attendance.update');
+
+    // Roles
+    Route::resource('roles', RoleController::class);
+    Route::delete('massDestroy/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
 
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');

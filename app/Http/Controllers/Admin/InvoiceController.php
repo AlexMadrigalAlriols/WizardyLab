@@ -15,6 +15,7 @@ use App\Models\Item;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Invoices\StoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -24,6 +25,13 @@ use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('invoice');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

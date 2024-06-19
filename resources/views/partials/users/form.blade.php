@@ -98,11 +98,11 @@
             <select class="form-select select2" id="role_id" name="role_id" aria-label="role_id">
                 @foreach ($roles as $role)
                     <option value="{{ $role->id }}"
-                        {{ $user->role_id == $role->id || old('role_id') == $role->id ? 'selected' : '' }}>
+                        {{ $user->role->id == $role->id || old('role_id') == $role->id ? 'selected' : '' }}>
                         {{ $role->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">{{ __('crud.users.fields.role') }}</label>
+            <label for="floatingSelect">{{ __('crud.users.fields.role') }} <span class="text-danger">*</span></label>
         </div>
     </div>
     <div class="col-md-6">
