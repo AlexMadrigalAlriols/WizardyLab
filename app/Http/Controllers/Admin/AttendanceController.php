@@ -10,6 +10,7 @@ use App\Helpers\TimerHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendances\UpdateRequest;
 use App\Models\Attendance;
+use App\Traits\MiddlewareTrait;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -19,6 +20,13 @@ use Spatie\FlareClient\Api;
 
 class AttendanceController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('attendance');
+    }
+
     public function index(Request $request)
     {
         $portal = SubdomainHelper::getPortal($request);

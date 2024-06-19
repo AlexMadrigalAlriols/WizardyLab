@@ -16,6 +16,7 @@ use App\Models\Country;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Users\StoreUseCase;
 use App\UseCases\Users\UpdateUseCase;
 use Carbon\Carbon;
@@ -25,6 +26,13 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('user');
+    }
+
     public function index(Request $request)
     {
         $portal = auth()->user()->portal;

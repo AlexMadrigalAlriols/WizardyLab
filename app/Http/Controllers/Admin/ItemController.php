@@ -11,6 +11,7 @@ use App\Http\Requests\Inventories\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
 use App\Models\Item;
 use App\Models\ItemFile;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Inventories\StoreUseCase as InventoriesStoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
 use App\UseCases\ItemFiles\StoreUseCase as ItemFilesStoreUseCase;
@@ -21,6 +22,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('item');
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Roles\StoreRequest;
 use App\Http\Requests\Roles\UpdateRequest;
 use App\Models\Role;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Roles\StoreUseCase;
 use App\UseCases\Roles\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -17,6 +18,14 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('role');
+    }
+
+
     /**
      * Display a listing of the resource.
      */

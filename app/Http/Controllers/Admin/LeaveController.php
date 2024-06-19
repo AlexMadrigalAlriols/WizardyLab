@@ -13,12 +13,20 @@ use App\Models\Leave;
 use App\Models\LeaveType;
 use App\Models\Notification;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Leaves\StoreUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class LeaveController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('leave');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

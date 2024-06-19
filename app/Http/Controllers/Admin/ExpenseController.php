@@ -11,6 +11,7 @@ use App\Models\Expense;
 use App\Models\ExpenseBill;
 use App\Models\Item;
 use App\Models\Project;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\ExpenseBills\StoreUseCase as ExpenseBillsStoreUseCase;
 use App\UseCases\Expenses\StoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
@@ -21,6 +22,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ExpenseController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('expense');
+    }
+
     /**
      * Display a listing of the resource.
      */

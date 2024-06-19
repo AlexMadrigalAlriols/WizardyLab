@@ -12,6 +12,7 @@ use App\Http\Requests\MassDestroyRequest;
 use App\Models\AttendanceTemplate;
 use App\Models\AttendanceTemplateDay;
 use App\Models\Note;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\AttendanceTemplates\StoreUseCase;
 use App\UseCases\AttendanceTemplates\UpdateUseCase;
 use Carbon\Carbon;
@@ -20,6 +21,13 @@ use Illuminate\Http\Response;
 
 class AttendanceTemplateController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('attendanceTemplate');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {
