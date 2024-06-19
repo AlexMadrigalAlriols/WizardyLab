@@ -7,6 +7,7 @@ use App\Models\User;
 use App\UseCases\Core\UseCase;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class StoreUseCase extends UseCase
@@ -37,7 +38,6 @@ class StoreUseCase extends UseCase
             'gender' => $this->gender,
             'department_id' => $this->department_id,
             'country_id' => $this->country_id,
-            'role_id' => $this->role_id,
             'code' => $code,
             'password' => Hash::make($this->password),
             'attendance_template_id' => $this->attendance_template_id,
@@ -48,6 +48,12 @@ class StoreUseCase extends UseCase
         }
 
         $user = User::create($data);
+        DB::table('model_has_roles')->insert([
+            'role_id' => $this->role_id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $user->id
+        ]);
+
 
         return $user;
     }

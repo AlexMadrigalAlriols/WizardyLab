@@ -17,6 +17,7 @@ use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Status;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Clients\StoreUseCase;
 use App\UseCases\Clients\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -25,6 +26,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('client');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

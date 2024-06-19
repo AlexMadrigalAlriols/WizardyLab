@@ -195,161 +195,211 @@
                         <i class='bx bx-home-alt nav_icon'></i>
                         <span class="nav_name">{{__('global.dashboard')}}</span>
                     </a>
-                    <hr>
-                    <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'CRM' ? 'active' : ''}}">
-                        <i class='bx bx-buildings nav_icon'></i>
-                        <span class="nav_name">CRM</span>
-                    </a>
-                    <hr>
-                    <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
-                            <div>
-                                <i class='bx bx-buildings nav_icon'></i>
-                                <span class="nav_name">Clients</span>
+                    @canany(['client_view', 'company_view', 'invoice_view'])
+                        <hr>
+                        <div class="nav_item has-treeview">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                                <div>
+                                    <i class='bx bx-buildings nav_icon'></i>
+                                    <span class="nav_name">Clients</span>
+                                </div>
+                                <i class='bx bx-chevron-right toggler'></i>
+                            </a>
+                            <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
+                                @can('client_view')
+                                    <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
+                                        <i class='bx bx-buildings nav_icon'></i>
+                                        <span class="nav_name">Clients</span>
+                                    </a>
+                                @endcan
+                                @can('company_view')
+                                    <hr>
+                                    <a href="{{route('dashboard.companies.index')}}" class="nav_link {{ $section == 'Companies' ? 'active' : ''}}">
+                                        <i class='bx bx-building-house nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.companies.title')}}</span>
+                                    </a>
+                                @endcan
+                                @can('invoice_view')
+                                    <hr>
+                                    <a href="{{route('dashboard.invoices.index')}}" class="nav_link {{ $section == 'Invoices' ? 'active' : ''}}">
+                                        <i class='bx bx-file nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.invoices.title')}}</span>
+                                    </a>
+                                @endcan
                             </div>
-                            <i class='bx bx-chevron-right toggler'></i>
-                        </a>
-                        <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
-                                <i class='bx bx-buildings nav_icon'></i>
-                                <span class="nav_name">Clients</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.companies.index')}}" class="nav_link {{ $section == 'Companies' ? 'active' : ''}}">
-                                <i class='bx bx-building-house nav_icon'></i>
-                                <span class="nav_name">{{__('crud.companies.title')}}</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.invoices.index')}}" class="nav_link {{ $section == 'Invoices' ? 'active' : ''}}">
-                                <i class='bx bx-file nav_icon'></i>
-                                <span class="nav_name">{{__('crud.invoices.title')}}</span>
-                            </a>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
-                            <div>
-                                <i class='bx bx-group nav_icon'></i>
-                                <span class="nav_name ms-4">HR</span>
+                    @endcan
+                    @canany(['leave_view', 'attendance_view', 'user_view', 'holiday_view', 'document_view'])
+                        <hr>
+                        <div class="nav_item has-treeview">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
+                                <div>
+                                    <i class='bx bx-group nav_icon'></i>
+                                    <span class="nav_name ms-4">HR</span>
+                                </div>
+                                <i class='bx bx-chevron-right toggler'></i>
+                            </a>
+                            <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' ? 'active' : ''}}">
+                                @can('leave_view')
+                                    <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
+                                        <i class='bx bxs-plane-take-off nav_icon'></i>
+                                        <span class="nav_name">Leaves</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('attendance_view')
+                                    <a href="{{route('dashboard.attendance.index')}}" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
+                                        <i class='bx bx-timer nav_icon'></i>
+                                        <span class="nav_name">Attendance</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('holiday_view')
+                                    <a href="#" class="nav_link {{ $section == 'Holiday' ? 'active' : ''}}">
+                                        <i class='bx bx-user-plus nav_icon'></i>
+                                        <span class="nav_name">Holiday</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('document_view')
+                                    <a href="{{route('dashboard.documents.index')}}" class="nav_link {{ $section == 'Documents' ? 'active' : ''}}">
+                                        <i class='bx bx-file nav_icon'></i>
+                                        <span class="nav_name">Documents</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('user_view')
+                                    <a href="{{route('dashboard.users.index')}}" class="nav_link {{ $section == 'Users' ? 'active' : ''}}">
+                                        <i class='bx bx-user-plus nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.users.title')}}</span>
+                                    </a>
+                                @endcan
                             </div>
-                            <i class='bx bx-chevron-right toggler'></i>
-                        </a>
-                        <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
-                                <i class='bx bxs-plane-take-off nav_icon'></i>
-                                <span class="nav_name">Leaves</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.attendance.index')}}" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
-                                <i class='bx bx-timer nav_icon'></i>
-                                <span class="nav_name">Attendance</span>
-                            </a>
-                            <hr>
-                            <a href="#" class="nav_link {{ $section == 'Holiday' ? 'active' : ''}}">
-                                <i class='bx bx-user-plus nav_icon'></i>
-                                <span class="nav_name">Holiday</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.documents.index')}}" class="nav_link {{ $section == 'Documents' ? 'active' : ''}}">
-                                <i class='bx bx-file nav_icon'></i>
-                                <span class="nav_name">Documents</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.users.index')}}" class="nav_link {{ $section == 'Users' ? 'active' : ''}}">
-                                <i class='bx bx-user-plus nav_icon'></i>
-                                <span class="nav_name">{{__('crud.users.title')}}</span>
-                            </a>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
-                            <div>
-                                <i class='bx bx-briefcase nav_icon'></i>
-                                <span class="nav_name ms-4">Work</span>
+                    @endcan
+                    @canany(['task_view', 'project_view'])
+                        <hr>
+                        <div class="nav_item has-treeview">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
+                                <div>
+                                    <i class='bx bx-briefcase nav_icon'></i>
+                                    <span class="nav_name ms-4">Work</span>
+                                </div>
+                                <i class='bx bx-chevron-right toggler'></i>
+                            </a>
+                            <div class="treeview {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
+                                @can('project_view')
+                                    <a href="{{route('dashboard.projects.index')}}" class="nav_link {{ $section == 'Projects' ? 'active' : ''}}">
+                                        <i class='bx bxs-dashboard nav_icon'></i>
+                                        <span class="nav_name">Projects</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('task_view')
+                                    <a href="{{route('dashboard.tasks.index')}}" class="nav_link {{ $section == 'Tasks' ? 'active' : ''}}">
+                                        <i class='bx bx-clipboard nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.tasks.title')}}</span>
+                                    </a>
+                                @endcan
                             </div>
-                            <i class='bx bx-chevron-right toggler'></i>
-                        </a>
-                        <div class="treeview {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.projects.index')}}" class="nav_link {{ $section == 'Projects' ? 'active' : ''}}">
-                                <i class='bx bxs-dashboard nav_icon'></i>
-                                <span class="nav_name">Projects</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.tasks.index')}}" class="nav_link {{ $section == 'Tasks' ? 'active' : ''}}">
-                                <i class='bx bx-clipboard nav_icon'></i>
-                                <span class="nav_name">{{__('crud.tasks.title')}}</span>
-                            </a>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
-                            <div>
-                                <i class='bx bx-package nav_icon'></i>
-                                <span class="nav_name ms-4">Inventory</span>
+                    @endcan
+                    @canany(['assignment_view', 'item_view', 'expense_view'])
+                        <hr>
+                        <div class="nav_item has-treeview">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
+                                <div>
+                                    <i class='bx bx-package nav_icon'></i>
+                                    <span class="nav_name ms-4">Inventory</span>
+                                </div>
+                                <i class='bx bx-chevron-right toggler'></i>
+                            </a>
+                            <div class="treeview {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
+                                @can('item_view')
+                                    <a href="{{route('dashboard.items.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
+                                        <i class='bx bx-desktop nav_icon'></i>
+                                        <span class="nav_name">Items</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('assignment_view')
+                                    <a href="{{route('dashboard.assignments.index')}}" class="nav_link {{ $section == 'Assignments' ? 'active' : ''}}">
+                                        <i class='bx bx-book-add nav_icon'></i>
+                                        <span class="nav_name">Assignments</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('expense_view')
+                                    <a href="{{route('dashboard.expenses.index')}}" class="nav_link {{ $section == 'Expenses' ? 'active' : ''}}">
+                                        <i class='bx bx-dollar nav_icon'></i>
+                                        <span class="nav_name">Expenses</span>
+                                    </a>
+                                @endcan
                             </div>
-                            <i class='bx bx-chevron-right toggler'></i>
-                        </a>
-                        <div class="treeview {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.items.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
-                                <i class='bx bx-desktop nav_icon'></i>
-                                <span class="nav_name">Items</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.assignments.index')}}" class="nav_link {{ $section == 'Assignments' ? 'active' : ''}}">
-                                <i class='bx bx-book-add nav_icon'></i>
-                                <span class="nav_name">Assignments</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.expenses.index')}}" class="nav_link {{ $section == 'Expenses' ? 'active' : ''}}">
-                                <i class='bx bx-dollar nav_icon'></i>
-                                <span class="nav_name">Expenses</span>
-                            </a>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="nav_item has-treeview">
-                        <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
-                            <div>
-                                <i class='bx bx-cog nav_icon'></i>
-                                <span class="nav_name ms-4">Configuration</span>
+                    @endcan
+                    @canany(['status_view', 'label_view', 'role_view', 'department_view', 'leaveType_view', 'attendanceTemplate_view', 'configuration_view'])
+                        <hr>
+                        <div class="nav_item has-treeview">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'Roles' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                                <div>
+                                    <i class='bx bx-cog nav_icon'></i>
+                                    <span class="nav_name ms-4">Configuration</span>
+                                </div>
+                                <i class='bx bx-chevron-right toggler'></i>
+                            </a>
+                            <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Roles' || $section == 'Departments' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                                @can('configuration_view')
+                                    <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
+                                        <i class='bx bx-cog nav_icon'></i>
+                                        <span class="nav_name">Configuration</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('status_view')
+                                    <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
+                                        <i class='bx bx-cylinder nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.status.title')}}</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('role_view')
+                                    <a href="{{route('dashboard.roles.index')}}" class="nav_link {{ $section == 'Roles' ? 'active' : ''}}">
+                                        <i class='bx bx-medal nav_icon'></i>
+                                        <span class="nav_name">Roles</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('department_view')
+                                    <a href="{{route('dashboard.departments.index')}}" class="nav_link {{ $section == 'Departments' ? 'active' : ''}}">
+                                        <i class='bx bx-folder-open nav_icon'></i>
+                                        <span class="nav_name">Departments</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('label_view')
+                                    <a href="{{route('dashboard.labels.index')}}" class="nav_link {{ $section == 'Labels' ? 'active' : ''}}">
+                                        <i class='bx bx-label nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.labels.title')}}</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('leaveType_view')
+                                    <a href="{{route('dashboard.leaveTypes.index')}}" class="nav_link {{ $section == 'Leave_Types' ? 'active' : ''}}">
+                                        <i class='bx bxs-plane-alt nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.leaveTypes.title')}}</span>
+                                    </a>
+                                    <hr>
+                                @endcan
+                                @can('attendanceTemplate_view')
+                                    <a href="{{route('dashboard.attendanceTemplates.index')}}" class="nav_link {{ $section == 'AttendanceTemplates' ? 'active' : ''}}">
+                                        <i class='bx bx-briefcase-alt nav_icon'></i>
+                                        <span class="nav_name">Jornadas</span>
+                                    </a>
+                                @endcan
                             </div>
-                            <i class='bx bx-chevron-right toggler'></i>
-                        </a>
-                        <div class="treeview {{ $section == 'Statuses' || $section == 'Labels' || $section == 'Departments' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
-                                <i class='bx bx-cog nav_icon'></i>
-                                <span class="nav_name">Configuration</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.statuses.index')}}" class="nav_link {{ $section == 'Statuses' ? 'active' : ''}}">
-                                <i class='bx bx-cylinder nav_icon'></i>
-                                <span class="nav_name">{{__('crud.status.title')}}</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.departments.index')}}" class="nav_link {{ $section == 'Departments' ? 'active' : ''}}">
-                                <i class='bx bx-folder-open nav_icon'></i>
-                                <span class="nav_name">Departments</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.labels.index')}}" class="nav_link {{ $section == 'Labels' ? 'active' : ''}}">
-                                <i class='bx bx-label nav_icon'></i>
-                                <span class="nav_name">{{__('crud.labels.title')}}</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.leaveTypes.index')}}" class="nav_link {{ $section == 'Leave_Types' ? 'active' : ''}}">
-                                <i class='bx bxs-plane-alt nav_icon'></i>
-                                <span class="nav_name">{{__('crud.leaveTypes.title')}}</span>
-                            </a>
-                            <hr>
-                            <a href="{{route('dashboard.attendanceTemplates.index')}}" class="nav_link {{ $section == 'AttendanceTemplates' ? 'active' : ''}}">
-                                <i class='bx bx-briefcase-alt nav_icon'></i>
-                                <span class="nav_name">Jornadas</span>
-                            </a>
                         </div>
-                    </div>
+                    @endcanany
                 </div>
             </div>
         </nav>

@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasAttendance;
+    use HasApiTokens, HasFactory, Notifiable, HasAttendance, HasRoles;
 
     public const PAGE_SIZE = 10;
 
@@ -42,7 +43,6 @@ class User extends Authenticatable
         'birthday_date',
         'reporting_user_id',
         'department_id',
-        'role_id',
         'country_id',
         'attendance_template_id',
         'portal_id'
@@ -87,9 +87,9 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
-    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
 
     public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -150,6 +150,11 @@ class User extends Authenticatable
     public function leaveDays(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Leave::class);
+    }
+
+    public function getRoleAttribute()
+    {
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id')->first();
     }
 
     public function getProfileUrlAttribute()
