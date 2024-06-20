@@ -135,6 +135,11 @@ class User extends Authenticatable
         return $this->hasMany(UserInventory::class);
     }
 
+    public function leaves(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Leave::class);
+    }
+
     public function getProfileUrlAttribute()
     {
         if($this->profile_img && filter_var($this->profile_img, FILTER_VALIDATE_URL)) {
