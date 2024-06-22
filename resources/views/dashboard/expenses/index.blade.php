@@ -4,10 +4,10 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Expenses </b><span class="text-muted">({{ $total }})</span>
+            <b>{{__('crud.expenses.title')}} </b><span class="text-muted">({{ $total }})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.expenses.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Expense</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('crud.expenses.add_new')}}</span>
         </a>
     </div>
 
@@ -16,12 +16,12 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">PROJECT</th>
-                    <th scope="col" class="border-bottom">ITEM</th>
-                    <th scope="col" class="border-bottom">QUANTITY</th>
-                    <th scope="col" class="border-bottom">AMOUNT</th>
-                    <th scope="col" class="border-bottom">FACTURABLE</th>
-                    <th scope="col" class="border-bottom">CREATED AT</th>
+                    <th scope="col" class="border-bottom">{{__('crud.expenses.fields.project')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.expenses.fields.item')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.expenses.fields.quantity')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.expenses.fields.amount')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.expenses.fields.facturable')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.expenses.fields.created_at')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

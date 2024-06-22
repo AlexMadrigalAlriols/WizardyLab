@@ -4,12 +4,12 @@
     <div class="row mt-2">
         <div class="col-md-8">
             <span class="h2 d-inline-block mt-1">
-                <b>Personal Folders</b> <span class="text-muted" id="folderCounter">({{ count($folders) }})</span>
+                <b>{{__('crud.documents.personal_folders')}}</b> <span class="text-muted" id="folderCounter">({{ count($folders) }})</span>
             </span>
 
             <button type="button" class="btn btn-primary d-inline-block ms-3 align-top" data-bs-toggle="modal"
                 data-bs-target="#createFolderModal">
-                <span class="px-4"><i class='bx bx-folder-plus mt-1'></i> Add new Folder</span>
+                <span class="px-4"><i class='bx bx-folder-plus mt-1'></i> {{__('crud.documents.add_folder')}}</span>
             </button>
         </div>
         <div class="col-md-4 text-center d-flex flex-column align-items-end mt-2">
@@ -45,8 +45,8 @@
                         <div class="row">
                             <div class="col-md-12 text-end">
                                 <button type="button" class="btn btn-secondary me-2"
-                                    data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                    data-bs-dismiss="modal">{{__('global.cancel')}}</button>
+                                <button type="submit" class="btn btn-primary">{{__('global.create')}}</button>
                             </div>
                         </div>
                     </form>

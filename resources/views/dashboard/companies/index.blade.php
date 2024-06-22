@@ -15,9 +15,9 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">NAME</th>
-                    <th scope="col" class="border-bottom">STATUS</th>
-                    <th scope="col" class="border-bottom">CREATED AT</th>
+                    <th scope="col" class="border-bottom">{{__('crud.companies.fields.name')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.companies.fields.status')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.companies.fields.created_at')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

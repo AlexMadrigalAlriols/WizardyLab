@@ -59,7 +59,7 @@
 
 <div class="row mt-3">
     <div class="col-md-12">
-        <textarea name="reason" id="reason" rows="3" class="form-control" placeholder="e.g. Feeling not well" maxlength="100"></textarea>
+        <textarea name="reason" id="reason" rows="3" class="form-control" placeholder="{{__('crud.leaves.example')}}" maxlength="100"></textarea>
         <div class="mt-0 text-end">
             <span class="text-muted"><span id="reasonCountChar">0</span>/100</span>
         </div>
