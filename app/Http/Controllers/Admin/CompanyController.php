@@ -9,6 +9,7 @@ use App\Http\Requests\Companies\StoreRequest;
 use App\Http\Requests\Companies\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
 use App\Models\Company;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Companies\StoreUseCase;
 use App\UseCases\Companies\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('company');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

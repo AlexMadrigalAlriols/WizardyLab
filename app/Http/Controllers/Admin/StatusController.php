@@ -11,6 +11,7 @@ use App\Http\Requests\Statuses\UpdateRequest;
 use App\Models\Company;
 use App\Models\Leave;
 use App\Models\Status;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Statuses\StoreUseCase;
 use App\UseCases\Statuses\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -18,6 +19,13 @@ use Illuminate\Http\Response;
 
 class StatusController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('status');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

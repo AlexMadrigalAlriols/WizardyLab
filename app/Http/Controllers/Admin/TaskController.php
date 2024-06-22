@@ -21,6 +21,7 @@ use App\Models\Status;
 use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\TaskFiles\StoreUseCase as TaskFilesStoreUseCase;
 use App\UseCases\Tasks\StoreUseCase;
 use App\UseCases\Tasks\UpdateStatusUseCase;
@@ -33,6 +34,13 @@ use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('task');
+    }
+
     public function index(Request $request)
     {
         $query = Auth::user()->tasks()
@@ -355,7 +363,7 @@ class TaskController extends Controller
 
     private function saveTaskFiles(Task $task, Request $request)
     {
-        $extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'zip', 'rar', '7z'];
+        $extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'];
 
         if ($request->session()->has('dropzone_tasks_temp_paths')) {
             foreach ($request->session()->get('dropzone_tasks_temp_paths', []) as $idx => $tempPath) {

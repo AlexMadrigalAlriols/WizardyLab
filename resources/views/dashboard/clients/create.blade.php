@@ -38,5 +38,6 @@
         });
 
         countChars(limitedCharFields);
+checkObligatoryFields(obligatoryFields);
     </script>
 @endsection

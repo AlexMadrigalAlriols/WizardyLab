@@ -15,6 +15,7 @@ use App\Models\Item;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Invoices\StoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -24,6 +25,13 @@ use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('invoice');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {
@@ -56,6 +64,7 @@ class InvoiceController extends Controller
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
             $item->cover = $item->cover;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
         $inventoryArray = array_values(array_filter($inventories->toArray()));
 

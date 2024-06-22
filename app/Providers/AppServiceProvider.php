@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Department;
+use App\Models\Document;
+use App\Models\DocumentFolder;
 use App\Models\Invoice;
 use App\Models\Item;
 use App\Models\ItemFile;
@@ -12,6 +14,8 @@ use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\User;
 use App\Observers\DepartmentObserver;
+use App\Observers\DocumentFolderObserver;
+use App\Observers\DocumentObserver;
 use App\Observers\InvoiceObserver;
 use App\Observers\ItemFilesObserver;
 use App\Observers\ItemInventoryObserver;
@@ -45,5 +49,7 @@ class AppServiceProvider extends ServiceProvider
         Item::observe(ItemObserver::class);
         ItemUserInventory::observe(ItemInventoryObserver::class);
         Invoice::observe(InvoiceObserver::class);
+        DocumentFolder::observe(DocumentFolderObserver::class);
+        Document::observe(DocumentObserver::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\SubdomainHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notes\StoreRequest;
 use App\Http\Requests\Notes\UpdateRequest;
@@ -17,10 +18,11 @@ class NoteController extends Controller
 {
     public function index(Request $request)
     {
+        $portal = SubdomainHelper::getPortal($request);
         $notes = Note::where('user_id', auth()->id())
             ->orderBy('updated_at', 'desc')->get();
 
-        return view('dashboard.notes.index', compact('notes'));
+        return view('dashboard.notes.index', compact('notes', 'portal'));
     }
 
     public function create()

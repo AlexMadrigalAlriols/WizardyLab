@@ -71,6 +71,13 @@ function initializeFlatPick() {
         dateFormat: "Y-m-d",
         minDate: "today"
     });
+
+    $('.flatpicker-time').flatpickr({
+        noCalendar: true,
+        enableTime: true,
+        dateFormat: 'h:i K',
+        type: 'range'
+    });
 }
 
 function countChars(limitedCharFields) {

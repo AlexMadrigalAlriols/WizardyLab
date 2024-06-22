@@ -1,12 +1,16 @@
 <?php
 
 use App\Helpers\ConfigurationHelper;
+use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\AttendanceTemplateController;
 use App\Http\Controllers\Admin\BoardController;
 use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\DocumentController;
+use App\Http\Controllers\Admin\DocumentFolderController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
@@ -17,6 +21,7 @@ use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TaskCommentController;
@@ -43,7 +48,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::redirect('/', '/dashboard');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal']], static function () {
+Route::get('/template', [AttendanceController::class, 'downloadPdfExtract'])->name('template');
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal', 'throttle']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     //Item
@@ -67,7 +74,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::delete('/tasks/delete_file/{taskFile}', [TaskController::class, 'deleteFile'])->name('task.delete_file');
     Route::get('/tasks/download_file/{taskFile}', [TaskController::class, 'downloadFile'])->name('task.download_file');
     Route::post('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
-    Route::get('/tasks/{task}/{action}', [TaskController::class, 'sendAction'])->name('tasks.action');
+    Route::get('/tasks/{task}/{action}/get', [TaskController::class, 'sendAction'])->name('tasks.action.get');
     Route::delete('massDestroy/tasks', [TaskController::class, 'massDestroy'])->name('tasks.massDestroy');
 
     //Comments
@@ -146,6 +153,30 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::delete('/expensesBill/delete_file/{expenseBill}', [ExpenseController::class, 'deleteFile'])->name('expenses.delete_file');
     Route::delete('massDestroy/expenses', [ExpenseController::class, 'massDestroy'])->name('expenses.massDestroy');
 
+    //Documents
+    Route::resource('documents', DocumentFolderController::class);
+    Route::get('/documents-update-order/{folder}', [DocumentFolderController::class, 'updateOrder'])->name('documents.update-order');
+    Route::get('/my-documents/{folder}', [DocumentController::class, 'index'])->name('documents.list');
+    Route::post('/my-documents/{folder}/upload-file', [DocumentController::class, 'uploadFile'])->name('documents.upload-file');
+    Route::post('/my-documents/{folder}/assign-file', [DocumentController::class, 'store'])->name('documents.assign-file');
+    Route::delete('/my-documents/{folder}/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy-document');
+    Route::get('/my-documents/{folder}/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::get('/my-documents/{folder}/{document}', [DocumentController::class, 'show'])->name('documents.view');
+    Route::put('/my-documents/{folder}/{document}', [DocumentController::class, 'update'])->name('documents.update-file');
+    Route::get('/my-documents/{folder}/{document}/view-sign', [DocumentController::class, 'viewSignFile'])->name('documents.view-sign');
+    Route::post('/my-documents/{document}/sign', [DocumentController::class, 'signDocument'])->name('documents.sign');
+
+    //Atendance Front
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::resource('/attendanceTemplates', AttendanceTemplateController::class);
+    Route::delete('massDestroy/attendanceTemplates', [AttendanceTemplateController::class, 'massDestroy'])->name('attendanceTemplates.massDestroy');
+    Route::get('/attendance/download-extract', [AttendanceController::class, 'downloadPdfExtract'])->name('attendance.download-extract');
+    Route::put('/attendance', [AttendanceController::class, 'update'])->name('attendance.update');
+
+    // Roles
+    Route::resource('roles', RoleController::class);
+    Route::delete('massDestroy/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
+
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
 
@@ -162,8 +193,8 @@ Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 
-Route::group(['middleware' => ['checkPortalExists']], static function () {
-    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false]);
+Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
+    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

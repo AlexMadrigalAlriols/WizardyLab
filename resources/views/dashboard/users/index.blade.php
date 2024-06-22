@@ -1,13 +1,19 @@
 @extends('layouts.dashboard', ['section' => 'Users'])
 
 @section('content')
-    <div class="mt-2">
-        <span class="h2 d-inline-block mt-1">
-            <b>Users</b><span class="text-muted">({{ $total }})</span>
-        </span>
-        <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.users.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new {{__('crud.users.title_singular')}}</span>
-        </a>
+    <div class="mt-2 row">
+        <div class="col-md-8">
+            <span class="h2 d-inline-block mt-1">
+                <b>Users</b><span class="text-muted">({{ $total }})</span>
+            </span>
+            <a class="btn btn-primary d-inline-block ms-3 align-top {{ $portal->users->count() >= $portal->user_count ? 'disabled' : ''}}" href="{{route('dashboard.users.create')}}">
+                <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new {{__('crud.users.title_singular')}}</span>
+            </a>
+        </div>
+
+        <div class="col-md-4 text-end">
+            <span class="text-muted h2">{{$portal->users()->count()}}/{{$portal->user_count}}</span> <span class="text-muted">Employees</span>
+        </div>
     </div>
 
     <div class="mt-4">

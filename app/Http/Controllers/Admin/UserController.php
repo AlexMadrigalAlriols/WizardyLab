@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
-use App\Helpers\PaginationHelper;
+use App\Helpers\SubdomainHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
 use App\Http\DataTables\UserDataTable;
 use App\Http\Requests\MassDestroyRequest;
 use App\Http\Requests\Users\StoreRequest;
 use App\Http\Requests\Users\UpdateRequest;
+use App\Models\AttendanceTemplate;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
-use App\Notifications\CustomResetPassword;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Users\StoreUseCase;
 use App\UseCases\Users\UpdateUseCase;
 use Carbon\Carbon;
@@ -25,8 +26,17 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('user');
+    }
+
     public function index(Request $request)
     {
+        $portal = auth()->user()->portal;
+
         if($request->ajax()) {
             $dataTable = new UserDataTable('users');
             return $dataTable->make();
@@ -35,7 +45,7 @@ class UserController extends Controller
         $query = User::query();
         $total = $query->count();
 
-        return view('dashboard.users.index', compact('total'));
+        return view('dashboard.users.index', compact('total', 'portal'));
     }
 
     public function userAttendance(Request $request) {
@@ -98,38 +108,53 @@ class UserController extends Controller
         return redirect()->route('dashboard.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $portal = SubdomainHelper::getPortal($request);
+
+        if($portal->users()->count() >= $portal->user_count) {
+            toast('You have reached the maximum number of users', 'error');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $user = new User();
         $departments = Department::all();
         $roles = Role::all();
         $countries = Country::all();
         $qusers = User::all();
+        $attendanceTemplates = AttendanceTemplate::all();
 
         return view('dashboard.users.create', compact(
             'user',
             'departments',
             'roles',
             'countries',
-            'qusers'
+            'qusers',
+            'attendanceTemplates'
         ));
     }
 
-
-
     public function store(StoreRequest $request)
     {
+        $portal = SubdomainHelper::getPortal($request);
+
+        if($portal->users()->count() >= $portal->user_count) {
+            toast('You have reached the maximum number of users', 'error');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $user = (new StoreUseCase(
             $request->input('name'),
             Carbon::parse($request->input('birthday_date')),
             $request->input('email'),
             $request->input('reporting_user_id'),
-            rand(100, 999),
             $request->input('gender'),
             $request->input('department_id'),
             $request->input('country_id'),
             $request->input('role_id'),
             $request->input('password'),
+            $portal,
+            $request->input('attendance_template_id')
         ))->action();
 
         $this->saveTaskFiles($user, $request);
@@ -150,6 +175,7 @@ class UserController extends Controller
             $request->input('department_id'),
             $request->input('country_id'),
             $request->input('role_id'),
+            $request->input('attendance_template_id')
         ))->action();
 
         $this->saveTaskFiles($user, $request);
@@ -165,13 +191,15 @@ class UserController extends Controller
         $roles = Role::all();
         $countries = Country::all();
         $qusers = User::all();
+        $attendanceTemplates = AttendanceTemplate::all();
 
         return view('dashboard.users.edit', compact(
             'user',
             'departments',
             'roles',
             'countries',
-            'qusers'
+            'qusers',
+            'attendanceTemplates'
         ));
     }
 

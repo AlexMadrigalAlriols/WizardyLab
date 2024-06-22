@@ -9,6 +9,7 @@ use App\Http\Requests\LeaveTypes\StoreRequest;
 use App\Http\Requests\LeaveTypes\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
 use App\Models\LeaveType;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\LeaveTypes\StoreUseCase;
 use App\UseCases\LeaveTypes\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ use Illuminate\Http\Response;
 
 class LeaveTypeController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('leaveType');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

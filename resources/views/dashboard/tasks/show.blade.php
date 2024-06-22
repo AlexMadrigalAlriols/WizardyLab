@@ -92,7 +92,7 @@
                             <p class="h4"><b><i class='bx bx-user' ></i> Team Members</b></p>
                             <div>
                                 @foreach ($task->users as $user)
-                                    <img src="{{asset('storage/'.$user->profile_img)}}" class="rounded-circle" width="45" height="45" alt="{{$user->name}}">
+                                    <img src="{{ $user->profile_url }}" class="rounded-circle" width="45" height="45" alt="{{$user->name}}">
                                 @endforeach
                             </div>
                         </div>
@@ -187,7 +187,7 @@
                     @foreach ($task_comments as $comment)
                         <div class="row p-3 border-bottom">
                             <div class="col-md-1">
-                                <img src="{{ $comment->user->profile_img }}" class="rounded-circle" width="45" height="45" alt="Profile">
+                                <img src="{{ $comment->user->profile_url }}" class="rounded-circle" width="45" height="45" alt="Profile">
                             </div>
                             <div class="col-md-10">
                                 <p class="h6">{{ $comment->user->name }}</p>

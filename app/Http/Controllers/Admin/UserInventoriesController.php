@@ -15,6 +15,7 @@ use App\Models\ItemUserInventory;
 use App\Models\User;
 use App\Models\UserInventories;
 use App\Models\UserInventory;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Inventories\UpdateUseCase;
 use App\UseCases\UserInventories\StoreUseCase;
 use App\UseCases\UserInventories\UpdateUseCase as UserInventoriesUpdateUseCase;
@@ -24,6 +25,13 @@ use Illuminate\Http\Response;
 
 class UserInventoriesController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('assignment');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -53,6 +61,7 @@ class UserInventoriesController extends Controller
         });
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
         $inventoryArray = array_values(array_filter($inventories->toArray()));
 
@@ -98,6 +107,7 @@ class UserInventoriesController extends Controller
         });
         foreach ($inventories ?? [] as $item) {
             $item->remaining_stock = $item->remaining_stock;
+            $item->name = $item->name . ' (' . $item->reference . ')';
         }
 
         foreach ($assignment->items as $assig) {

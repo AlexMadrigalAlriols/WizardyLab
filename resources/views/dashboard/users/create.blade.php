@@ -36,6 +36,7 @@
     });
 
     countChars(limitedCharFields);
+    checkObligatoryFields(obligatoryFields);
 
     $('[siEdit]').remove();
 
