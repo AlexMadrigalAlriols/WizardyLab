@@ -151,6 +151,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Leave::class);
     }
+   // [TODO] Change leaveDays or leaves
+    public function leaves(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Leave::class);
+    }
 
     public function getRoleAttribute()
     {

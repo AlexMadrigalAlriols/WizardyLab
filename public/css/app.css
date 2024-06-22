@@ -417,7 +417,7 @@ tr.selected {
 .disabled-user > *{
     color: grey!important;
     text-decoration: none;
-
+}
 .idea{
     border: 2px solid #374df1;
     position:relative;
@@ -515,6 +515,76 @@ opacity: 1;
     animation: spin 2s linear infinite;
 }
 
+.calendar-days>*{
+    width: calc(184px / 7);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.calendar-head>*{
+    width: calc(184px / 7);
+    display: inline-block;
+    text-align: center;
+    font-size: 12px;
+}
+
+.calendar-day-style{
+    border-radius: 10px;
+    overflow:hidden;
+    aspect-ratio: 1;
+    width:40px;
+    height:40px
+
+}
+
+.calendar-day-style > div:first-child{
+    background-color: #ff355e;
+    font-size:10px;
+    color:white;
+    box-sizing:content-box;
+    width:100%
+}
+
+#cards-container{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 325px;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#cards-container::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    background-color: #686868;
+  }
+
+#cards-container::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+#cards-container::-webkit-scrollbar {
+    height: 10px;
+    width: 5px;
+}
+
+.custom{
+    --bs-popover-max-width: 200px;
+    --bs-popover-border-color: var(--bd-violet-bg);
+    --bs-popover-bg: grey;
+    --bs-popover-body-color: white;
+    --bs-popover-header-color: var(--bs-white);
+    --bs-popover-body-padding-x: 1rem;
+    --bs-popover-body-padding-y: .5rem;
+  }
+
+
+  .popover-body{
+    width: 400px;
+  }
+
 .folder-card {
     cursor: pointer;
 }
@@ -576,3 +646,5 @@ opacity: 1;
         text-align: left !important;
     }
 }
+
+

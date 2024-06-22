@@ -255,7 +255,7 @@
                                     <hr>
                                 @endcan
                                 @can('holiday_view')
-                                    <a href="#" class="nav_link {{ $section == 'Holiday' ? 'active' : ''}}">
+                                    <a href="{{route('dashboard.holiday.index')}}" class="nav_link {{ $section == 'Holiday' ? 'active' : ''}}">
                                         <i class='bx bx-user-plus nav_icon'></i>
                                         <span class="nav_name">Holiday</span>
                                     </a>

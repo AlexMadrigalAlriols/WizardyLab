@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DocumentFolderController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
+use App\Http\Controllers\Admin\HolidayController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\LeaveController;
@@ -178,6 +179,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
 
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
+
+    //holidayscalendar
+    Route::get('holidays', [HolidayController::class, 'index'])->name('holiday.index');
 });
 
 // Password reset link request routes...
