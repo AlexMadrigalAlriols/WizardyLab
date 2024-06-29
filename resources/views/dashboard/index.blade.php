@@ -1,6 +1,7 @@
 @extends('layouts.dashboard', ['section' => 'Dashboard'])
 
 @section('styles')
+    @parent
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
 @endsection
 
@@ -145,6 +146,49 @@
                                         @endforeach
                                     </div>
                                 @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="card">
+                            <div class="card-header p-4 bg-white">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
+                                            <p class="text-muted mb-0">All employee birthdays</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @foreach ($birthdays as $birthday)
+                                <div class="row border-bottom">
+                                    <div class="col-7">
+                                        @include('partials.users.details', ['user' => $birthday])
+                                    </div>
+                                    <div class="col-2">
+                                        <span class="badge bg-primary align-baseline py-2 px-3 mt-4"><i class='bx bx-cake'></i> {{ $birthday->birthday_date->format('d M')}}</span>
+                                    </div>
+                                    <div class="col-2">
+                                        @if($days = $birthday->birthday_date->diffInDays(now()))
+                                            <span class="badge bg-secondary py-2 px-3 mt-4">in {{ $days }} days</span>
+                                        @else
+                                            <span class="badge bg-success py-2 px-3 mt-4">Today</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endforeach
+                                @if (!count($birthdays))
+                                    <div class="row">
+                                        <div class="col-12 text-center py-5">
+                                            <span class="text-muted">No birthdays found!</span>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
