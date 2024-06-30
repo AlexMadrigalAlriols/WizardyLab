@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DeliveryNoteController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\DocumentFolderController;
@@ -48,7 +49,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::redirect('/', '/dashboard');
 
-Route::get('/template', [AttendanceController::class, 'downloadPdfExtract'])->name('template');
+Route::get('/template/{deliveryNote}', [DeliveryNoteController::class, 'download'])->name('template');
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal', 'throttle']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -142,6 +143,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
     Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
+
+    // Delivery notes
+    Route::resource('deliveryNotes', DeliveryNoteController::class);
+    Route::get('/deliveryNotes/{deliveryNote}/download', [DeliveryNoteController::class, 'download'])->name('deliveryNotes.download');
+    Route::delete('massDestroy/deliveryNotes', [DeliveryNoteController::class, 'massDestroy'])->name('deliveryNotes.massDestroy');
 
     //users
     Route::resource('users', UserController::class);

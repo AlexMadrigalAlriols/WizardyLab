@@ -27,6 +27,10 @@ class PermissionSeeder extends Seeder
             'invoice_create',
             'invoice_edit',
             'invoice_delete',
+            'deliveryNote_view',
+            'deliveryNote_create',
+            'deliveryNote_edit',
+            'deliveryNote_delete',
             'leave_view',
             'leave_create',
             'leave_edit',
@@ -99,8 +103,12 @@ class PermissionSeeder extends Seeder
             'attendanceTemplate_delete'
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('permissions')->truncate();
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
-    public const PAGE_SIZE = 10;
+
 
     public static $filterable = [
         'id',

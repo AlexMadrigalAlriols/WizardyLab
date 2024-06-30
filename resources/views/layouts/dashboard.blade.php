@@ -194,17 +194,17 @@
                         <i class='bx bx-home-alt nav_icon'></i>
                         <span class="nav_name">{{__('global.dashboard')}}</span>
                     </a>
-                    @canany(['client_view', 'company_view', 'invoice_view'])
+                    @canany(['client_view', 'company_view', 'invoice_view', 'deliveryNote_view'])
                         <hr>
                         <div class="nav_item has-treeview">
-                            <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' || $section == 'DeliveryNotes' ? 'active' : ''}}">
                                 <div>
                                     <i class='bx bx-buildings nav_icon'></i>
                                     <span class="nav_name">Clients</span>
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
-                            <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
+                            <div class="treeview {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' || $section == 'DeliveryNotes' ? 'active' : ''}}">
                                 @can('client_view')
                                     <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
                                         <i class='bx bx-buildings nav_icon'></i>
@@ -223,6 +223,13 @@
                                     <a href="{{route('dashboard.invoices.index')}}" class="nav_link {{ $section == 'Invoices' ? 'active' : ''}}">
                                         <i class='bx bx-file nav_icon'></i>
                                         <span class="nav_name">{{__('crud.invoices.title')}}</span>
+                                    </a>
+                                @endcan
+                                @can('deliveryNote_view')
+                                    <hr>
+                                    <a href="{{route('dashboard.deliveryNotes.index')}}" class="nav_link {{ $section == 'DeliveryNotes' ? 'active' : ''}}">
+                                        <i class='bx bxs-file-export nav_icon'></i>
+                                        <span class="nav_name">{{__('crud.deliveryNotes.title')}}</span>
                                     </a>
                                 @endcan
                             </div>
