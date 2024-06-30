@@ -85,20 +85,25 @@ class LeaveController extends Controller
 
     public function update(Request $request, Leave $leave)
     {
-        $leave->approved = true;
-        $leave->save();
+        if(auth()->user()->can('leave_approve')) {
+            $leave->approved = true;
+            $leave->save();
 
-        if(auth()->user()->id !== $leave->user->id) {
-            NotificationHelper::notificate(
-                $leave->user,
-                Notification::TYPES['leave'],
-                'Leave approved',
-                $leave->id
-            );
+            if(auth()->user()->id !== $leave->user->id) {
+                NotificationHelper::notificate(
+                    $leave->user,
+                    Notification::TYPES['leave'],
+                    'Leave approved',
+                    $leave->id
+                );
+            }
+
+            toast('Leave approved', 'success');
+            return redirect()->route('dashboard.leaves.index');
         }
 
-        toast('Leave approved', 'success');
-        return redirect()->route('dashboard.leaves.index');
+        toast('You do not have permission to approve leaves', 'error');
+        return back();
     }
 
     public function destroy(Leave $leave)

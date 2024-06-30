@@ -86,7 +86,6 @@
                 <i class='bx bx-timer'></i> <span id="timerValue">{{ auth()->user()->timer }}</span>
             </button>
             <div class="d-inline-block align-middle">
-                <a href="#" class="text-dark me-4 navIconBtn"><i class="bx bx-search" style="font-size: 23px;"></i></a>
                 <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownTimers" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-time-five" style="font-size: 23px;"></i>

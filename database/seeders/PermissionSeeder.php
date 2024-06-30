@@ -31,6 +31,7 @@ class PermissionSeeder extends Seeder
             'leave_create',
             'leave_edit',
             'leave_delete',
+            'leave_approve',
             'attendance_view',
             'attendance_create',
             'attendance_edit',

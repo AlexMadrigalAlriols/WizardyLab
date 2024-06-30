@@ -29,7 +29,8 @@ class LeavesDataTable extends DataTable
                 $links[] = [
                     'href' => route('dashboard.leaves.approve', $row->id),
                     'icon' => 'bx bx-check',
-                    'text' => 'Approve'
+                    'text' => 'Approve',
+                    'permission' => 'leave_approve'
                 ];
             }
 

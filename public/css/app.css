@@ -605,6 +605,22 @@ opacity: 1;
     color: var(--btn-text) !important;
     box-shadow: 0 0 10px var(--primary-color) !important;
 }
+/* Sobrescribe el estilo del contenedor del toast */
+.swal2-container {
+    padding: 20px !important; /* Ajusta el padding del contenedor */
+}
+
+/* Sobrescribe el estilo del título del toast */
+.swal2-title {
+    margin-top: 0.6rem !important; /* Ajusta el margen inferior del título */
+    margin-left: 6rem !important;
+    margin-right: 6rem !important;
+}
+
+/* Sobrescribe el estilo del contenido del toast */
+.swal2-content {
+    margin-top: 10px !important; /* Ajusta el margen superior del contenido */
+}
 
 /* Animación del loader */
 @-webkit-keyframes spin {
