@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
@@ -44,8 +45,9 @@ class UserInventoriesController extends Controller
 
         $query = UserInventory::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(UserInventory::class);
 
-        return view('dashboard.assignments.index', compact('total'));
+        return view('dashboard.assignments.index', compact('total', 'advancedFilters'));
     }
 
     /**

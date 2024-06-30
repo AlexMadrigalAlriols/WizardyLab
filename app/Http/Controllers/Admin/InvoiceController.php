@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Helpers\InvoiceHelper;
 use App\Helpers\PaginationHelper;
@@ -49,7 +50,8 @@ class InvoiceController extends Controller
         }
 
         $statuses = json_encode($json_statuses, JSON_UNESCAPED_UNICODE);
-        return view('dashboard.invoices.index', compact('total', 'statuses'));
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Invoice::class);
+        return view('dashboard.invoices.index', compact('total', 'statuses', 'advancedFilters'));
     }
 
     public function create()

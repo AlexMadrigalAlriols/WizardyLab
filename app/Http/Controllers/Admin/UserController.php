@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\SubdomainHelper;
@@ -44,8 +45,9 @@ class UserController extends Controller
 
         $query = User::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(User::class);
 
-        return view('dashboard.users.index', compact('total', 'portal'));
+        return view('dashboard.users.index', compact('total', 'portal', 'advancedFilters'));
     }
 
     public function userAttendance(Request $request) {

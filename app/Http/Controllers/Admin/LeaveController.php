@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\NotificationHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
@@ -36,8 +37,9 @@ class LeaveController extends Controller
 
         $query = Leave::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Leave::class);
 
-        return view('dashboard.leaves.index', compact('total'));
+        return view('dashboard.leaves.index', compact('total', 'advancedFilters'));
     }
 
     public function create()

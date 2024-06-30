@@ -16,6 +16,15 @@ class Leave extends Model
     use HasFactory, SoftDeletes;
     public const PAGE_SIZE = 10;
 
+    public static $filterable = [
+        'date',
+        'reason',
+        'approved',
+        'user.name',
+        'user.email',
+        'leaveType.name'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -4,6 +4,7 @@ namespace App\Http\DataTables;
 
 use App\Models\Expense;
 use App\Models\Item;
+use App\Services\QueryBuilderService;
 use Termwind\Components\Span;
 
 class ExpensesDataTable extends DataTable
@@ -76,6 +77,17 @@ class ExpensesDataTable extends DataTable
         $quantity_max = request()?->get('quantity_max');
         $amount_min = request()?->get('amount_min');
         $amount_max = request()?->get('amount_max');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Expense::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['project', 'item']
+        );
 
         if(!empty($created_at_range)) {
             $range = str_replace(' a ', ' - ', $created_at_range);

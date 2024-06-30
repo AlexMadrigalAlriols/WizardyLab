@@ -227,7 +227,7 @@ function drawDataTable(selector, options, withFilters = false) {
                         }
                         break;
                     case 'advanced_filters':
-                        $(this).html(buttonModal('actions'));
+                        $(this).html(buttonModal('advanced_filters'));
                         break;
                     case 'text':
                     default:
@@ -241,6 +241,16 @@ function drawDataTable(selector, options, withFilters = false) {
     }
 
     function buttonModal(name) {
+        if(name === 'advanced_filters') {
+            return `
+                <div class="row d-flex justify-content-center">
+                    <button id="${name}ModalBtn" class="btn btn-secondary btn-sm w-50" data-toggle="modal" data-target="#${name}Modal">
+                        <i class="bx bx-filter" style="font-size: 22px"></i>
+                    </button>
+                </div>
+            `;
+        }
+
         return `
             <div class="row d-flex justify-content-center">
                 <button id="${name}FilterModalBtn" class="btn btn-secondary btn-sm w-50" data-toggle="modal" data-target="#${name}FilterModal">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Http\DataTables\CompaniesDataTable;
@@ -33,8 +34,9 @@ class CompanyController extends Controller
 
         $query = Company::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Company::class);
 
-        return view('dashboard.companies.index', compact('total'));
+        return view('dashboard.companies.index', compact('total', 'advancedFilters'));
     }
 
     public function create()

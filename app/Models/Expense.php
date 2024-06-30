@@ -12,6 +12,17 @@ class Expense extends Model
     use HasFactory, SoftDeletes;
     public const PAGE_SIZE = 10;
 
+    public static $filterable = [
+        'project.id',
+        'project.name',
+        'item.reference',
+        'item.name',
+        'item.stock',
+        'extract_date',
+        'quantity',
+        'amount',
+    ];
+
     protected $fillable = [
         'portal_id',
         'project_id',

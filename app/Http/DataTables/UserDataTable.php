@@ -4,6 +4,7 @@ namespace App\Http\DataTables;
 
 use App\Models\Client;
 use App\Models\User;
+use App\Services\QueryBuilderService;
 
 class UserDataTable extends DataTable
 {
@@ -62,6 +63,17 @@ class UserDataTable extends DataTable
 
         $email = request()?->get('email');
         $created_at_range = request()?->get('created_at_range');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            User::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['department', 'role', 'reportingUser']
+        );
 
         if($email) {
             $query->where('email', 'like', "%{$email}%");

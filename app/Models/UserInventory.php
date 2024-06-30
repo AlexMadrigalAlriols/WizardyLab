@@ -10,6 +10,17 @@ class UserInventory extends Model
     use HasFactory;
     public const PAGE_SIZE = 10;
 
+    public static $filterable = [
+        'user.id',
+        'user.name',
+        'user.email',
+        'items.item.reference',
+        'items.item.name',
+        'items.item.stock',
+        'extract_date',
+        'return_date'
+    ];
+
     protected $fillable = [
         'user_id',
         'extract_date',

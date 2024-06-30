@@ -16,6 +16,21 @@ class Client extends Model
     use HasFactory, SoftDeletes;
     public const PAGE_SIZE = 10;
 
+    public static $filterable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'zip',
+        'vat_number',
+        'company.id',
+        'company.name',
+        'currency.id',
+        'currency.name'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

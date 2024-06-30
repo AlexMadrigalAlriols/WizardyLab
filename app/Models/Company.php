@@ -16,6 +16,13 @@ class Company extends Model
     use HasFactory, SoftDeletes;
     public const PAGE_SIZE = 10;
 
+    public static $filterable = [
+        'name',
+        'clients.name',
+        'clients.email',
+        'clients.phone',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

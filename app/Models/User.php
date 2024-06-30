@@ -25,6 +25,18 @@ class User extends Authenticatable
         'other' => 'other',
     ];
 
+    public static $filterable = [
+        'name',
+        'email',
+        'code',
+        'gender',
+        'department.name',
+        'roles.name',
+        'country.name',
+        'reportingUser.name',
+        'projects.name',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

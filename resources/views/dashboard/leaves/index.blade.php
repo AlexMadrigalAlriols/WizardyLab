@@ -24,6 +24,8 @@
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -89,6 +91,11 @@
                         data.date_range = $('#date_range').val();
                         data.user_name = $('#users\\.name').val();
                         data.type = $('#leave_type_id').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -143,7 +150,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
@@ -41,8 +42,9 @@ class ItemController extends Controller
 
         $query = Item::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Item::class);
 
-        return view('dashboard.items.index', compact('total'));
+        return view('dashboard.items.index', compact('total', 'advancedFilters'));
     }
 
     /**

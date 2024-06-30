@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\FileSystemHelper;
 use App\Http\Controllers\Controller;
 use App\Http\DataTables\ExpensesDataTable;
@@ -41,8 +42,9 @@ class ExpenseController extends Controller
 
         $query = Expense::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Expense::class);
 
-        return view('dashboard.expenses.index', compact('total'));
+        return view('dashboard.expenses.index', compact('total', 'advancedFilters'));
     }
 
     /**
