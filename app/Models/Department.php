@@ -12,7 +12,7 @@ class Department extends Model
 {
     use HasFactory;
 
-    public const PAGE_SIZE = 10;
+
 
     /**
      * The attributes that are mass assignable.

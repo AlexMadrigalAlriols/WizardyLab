@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
-    public const PAGE_SIZE = 10;
+
 
     public static $filterable = [
         'number',

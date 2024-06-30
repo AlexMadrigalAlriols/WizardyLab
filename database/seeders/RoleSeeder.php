@@ -15,10 +15,15 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = Role::create(['name' => 'CEO', 'guard_name' => 'web', 'portal_id' => 1]);
-
         $permissions = Permission::all();
+        if($role = Role::where('name', 'CEO')->first()) {
+            foreach ($permissions as $permission) {
+                $role->permissions()->attach($permission->id);
+            }
+            return;
+        }
 
+        $role = Role::create(['name' => 'CEO', 'guard_name' => 'web', 'portal_id' => 1]);
         foreach ($permissions as $permission) {
             $role->permissions()->attach($permission->id);
         }

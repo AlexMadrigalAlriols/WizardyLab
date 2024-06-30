@@ -37,6 +37,6 @@
         });
 
         countChars(limitedCharFields);
-checkObligatoryFields(obligatoryFields);
+        checkObligatoryFields(obligatoryFields);
     </script>
 @endsection

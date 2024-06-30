@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserInventory extends Model
 {
     use HasFactory;
-    public const PAGE_SIZE = 10;
+
 
     public static $filterable = [
         'user.id',

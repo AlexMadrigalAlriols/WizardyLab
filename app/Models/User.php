@@ -17,7 +17,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasAttendance, HasRoles;
 
-    public const PAGE_SIZE = 10;
+
 
     public const GENDERS = [
         'female' => 'female',

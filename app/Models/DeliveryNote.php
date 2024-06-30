@@ -2,25 +2,24 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Models\Scopes\PortalScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-;
-
-class Company extends Model
+class DeliveryNote extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     public static $filterable = [
-        'name',
-        'clients.name',
-        'clients.email',
-        'clients.phone',
+        'number',
+        'issue_date',
+        'total',
+        'amount',
+        'tax',
+        'client.name',
+        'client.email',
+        'client.phone'
     ];
 
     /**
@@ -29,15 +28,21 @@ class Company extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'active',
-        'portal_id'
+        'number',
+        'issue_date',
+        'client_id',
+        'amount',
+        'tax',
+        'total',
+        'data'
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'issue_date' => 'date',
+        'data' => 'array'
     ];
 
     protected static function booted()
@@ -49,8 +54,17 @@ class Company extends Model
         });
     }
 
-    public function clients(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function portal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(Client::class);
+        return $this->belongsTo(Portal::class);
+    }
+
+    public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function getFilePathAttribute() {
+        return 'deliveryNotes/' . $this->portal_id . '/' . $this->number . '.pdf';
     }
 }
