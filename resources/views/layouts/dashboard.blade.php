@@ -197,7 +197,7 @@
                     @canany(['client_view', 'company_view', 'invoice_view'])
                         <hr>
                         <div class="nav_item has-treeview">
-                            <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' ? 'active' : ''}}">
+                            <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' ? 'active' : ''}}">
                                 <div>
                                     <i class='bx bx-buildings nav_icon'></i>
                                     <span class="nav_name">Clients</span>

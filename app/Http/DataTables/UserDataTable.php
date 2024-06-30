@@ -21,6 +21,16 @@ class UserDataTable extends DataTable
             $viewGate = 'user_show';
             $editGate = 'user_edit';
             $deleteGate = 'user_delete';
+            $links = [];
+
+            if(!$row->approved) {
+                $links[] = [
+                    'href' => route('dashboard.attendance.index') . '?user=' . $row->code,
+                    'icon' => 'bx bx-timer',
+                    'text' => 'Attendances',
+                    'permission' => 'attendance_seeAll'
+                ];
+            }
 
             return view('partials.datatables.actions', compact(
                 'row',
@@ -28,7 +38,8 @@ class UserDataTable extends DataTable
                 'model',
                 'viewGate',
                 'editGate',
-                'deleteGate'
+                'deleteGate',
+                'links'
             ));
         });
 

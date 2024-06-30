@@ -171,7 +171,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::resource('/attendanceTemplates', AttendanceTemplateController::class);
     Route::delete('massDestroy/attendanceTemplates', [AttendanceTemplateController::class, 'massDestroy'])->name('attendanceTemplates.massDestroy');
     Route::get('/attendance/download-extract', [AttendanceController::class, 'downloadPdfExtract'])->name('attendance.download-extract');
-    Route::put('/attendance', [AttendanceController::class, 'update'])->name('attendance.update');
+    Route::put('/attendance/{user}', [AttendanceController::class, 'update'])->name('attendance.update');
 
     // Roles
     Route::resource('roles', RoleController::class);

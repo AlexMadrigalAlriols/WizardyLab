@@ -36,6 +36,7 @@ class PermissionSeeder extends Seeder
             'attendance_create',
             'attendance_edit',
             'attendance_delete',
+            'attendance_seeAll',
             'holiday_view',
             'holiday_create',
             'holiday_edit',

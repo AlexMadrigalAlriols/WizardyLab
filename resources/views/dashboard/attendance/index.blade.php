@@ -5,14 +5,14 @@
         <div class="col-md-12">
             <div class="position-relative text-center mb-4">
                 @if($month > 1)
-                    <a class="me-4 h4 text-dark text-decoration-none" href="?month={{$month-1}}"><i class='bx bx-chevron-left'></i></a>
+                    <a class="me-4 h4 text-dark text-decoration-none" href="?month={{$month-1}}{{request()->has('user') ? '&user=' . request()->get('user') : ''}}"><i class='bx bx-chevron-left'></i></a>
                 @endif
                 <span class="h4">{{ date('F', mktime(0, 0, 0, $month, 1, $year)) }} {{$year}}</span>
                 @if($month < 12 && $month < $currentMonth)
-                    <a class="ms-4 h4 text-dark text-decoration-none" href="?month={{$month+1}}"><i class='bx bx-chevron-right'></i></a>
+                    <a class="ms-4 h4 text-dark text-decoration-none" href="?month={{$month+1}}{{request()->has('user') ? '&user=' . request()->get('user') : ''}}"><i class='bx bx-chevron-right'></i></a>
                 @endif
 
-                <a class="btn btn-primary mb-2 position-absolute align-top {{$month == $currentMonth ? 'disabled' : ''}}" href="{{route('dashboard.attendance.download-extract')}}{{request()->has('month') ? '?month=' . request()->input('month')  : ''}}" style="right: 0;">
+                <a class="btn btn-primary mb-2 position-absolute align-top {{$month == $currentMonth ? 'disabled' : ''}}" href="{{route('dashboard.attendance.download-extract')}}{{request()->has('month') ? '?month=' . request()->input('month')  : ''}}{{request()->has('user') ? '&user=' . request()->get('user') : ''}}" style="right: 0;">
                     <span class="px-4"><i class="bx bx-plus mt-1"></i>Exportar hoja de fichajes</span>
                 </a>
             </div>
@@ -111,7 +111,7 @@
                                 <td colspan="4">
                                     <div class="row p-4">
                                         <div class="col-md-4">
-                                            <form action="{{route('dashboard.attendance.update')}}" method="PUT" id="frmAttendance-{{$idx}}">
+                                            <form action="{{route('dashboard.attendance.update', $user->id)}}" method="PUT" id="frmAttendance-{{$idx}}">
                                                 @csrf
                                                 <input type="hidden" name="date" value="{{$date['day']->format('y-m-d')}}">
                                                 <div id="attendanceTimes-{{$idx}}">
@@ -145,9 +145,11 @@
                                             </form>
                                         </div>
                                         <div class="col-md-8 text-end">
-                                            @if ($month == $currentMonth && !$date['day']->isFuture())
-                                                <button class="btn btn-outline-primary save-attendances" type="button" data-idx="{{$idx}}">Guardar</button>
-                                            @endif
+                                            @can('attendance_edit')
+                                                @if ($month == $currentMonth && !$date['day']->isFuture())
+                                                    <button class="btn btn-outline-primary save-attendances" type="button" data-idx="{{$idx}}">Guardar</button>
+                                                @endif
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
