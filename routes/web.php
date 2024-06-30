@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
+use App\Http\Controllers\Admin\LandingController;
 use App\Models\Invoice;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -192,5 +193,8 @@ Route::get('js/translations.js', [TranslationController::class, 'index'])->name(
 Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
     Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
+
+Route::get('/landing', [LandingController::class, 'index'])->name('landing');
+Route::post('/landing', [LandingController::class, 'store'])->name('landing.store');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
