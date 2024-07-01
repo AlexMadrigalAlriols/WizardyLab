@@ -372,7 +372,7 @@
             </section>
         </div>
         <div class="row section" id="faq" bar-width="1090px">
-            <h2 class="text-center mb-5">FREQUENT ANSWERS AND QUESTIONS</h2>
+            <h2 class="text-center mb-5">{{__("crud.landing.faq_title")}}</h2>
             <div class="accordion" id="accordionExample">
                 @foreach ($faqs[ $lang ] as $faq)
                     <div class="accordion-item">

@@ -300,6 +300,7 @@ return [
         'try_14_days' => 'TRY 14-DAYS',
         'request_demo' => 'REQUEST DEMO',
         'get_started' => 'GET STARTED',
+        "faq_title" => "FREQUENT ANSWERS AND QUESTIONS",
         'clients' => [
             "title" => "CLIENTS",
             "funcionality" => "CLIENTS, COMPANIES, INVOICES",

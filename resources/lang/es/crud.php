@@ -308,6 +308,7 @@ return [
     'try_14_days' => 'PRUEBA 14 DIAS',
     'request_demo' => 'SOLICITAR DEMO',
     'get_started' => 'EMPEZAR',
+    "faq_title" => "PREGUNTAS FRECUENTES",
     'clients' => [
         "title" => "CLIENTES",
         "funcionality" => "CLIENTES, EMPRESAS, FACTURAS",
