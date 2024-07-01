@@ -54,8 +54,8 @@
                                 <div class="fs-5">
                                     <p><b>Name:</b><span class="ms-2 text-capitalize">{{ $expense->name }}</span></p>
                                     <p><b>Project</b> <span class="ms-2">{{ $expense->project->name }}</span></p>
-                                    <p><b>Amount:</b> <span class="ms-2">{{ $expense->amount }}</span></p>
-                                    <p><b>Quantity:</b> <span class="ms-2">{{ $expense->quantity ?? '-' }}</span> $</p>
+                                    <p><b>Amount:</b> <span class="ms-2">{{ $expense->amount }} $</span></p>
+                                    <p><b>Quantity:</b> <span class="ms-2">{{ $expense->quantity ?? '-' }}</span></p>
                                     <p>
                                         <b>Facturated:</b>
                                         <span class="ms-2 badge {{$expense->facturable ? 'bg-danger' : 'bg-success'}}">{{ $expense->facturable ? 'Non-Facturated' : 'Facturated' }}</span>

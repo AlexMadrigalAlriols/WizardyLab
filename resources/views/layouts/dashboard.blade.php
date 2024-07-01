@@ -67,7 +67,7 @@
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="d-inline-block ms-3 mt-1 bc-header-text">
                 <ol class="breadcrumb mb-0 fs-5">
-                    @foreach ($breadcrumbs ?? [['label' => $section, 'url' => '']] as $idx => $bc)
+                    @foreach ($breadcrumbs ?? [['label' => trans('global.' . strtolower($section)), 'url' => '']] as $idx => $bc)
                         @if ($idx == 0)
                             <li class="breadcrumb-item fs-4">
                                 <a href="{{ $bc['url'] }}" class="text-decoration-none text-dark"><b>{{ $bc['label'] }}</b></a>
@@ -82,7 +82,7 @@
             </nav>
         </div>
         <div>
-            <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="Attendance" data-bs-placement="bottom">
+            <button class="btn {{ auth()->user()->is_clock_in ? 'btn-primary' : 'btn-secondary' }} me-3 d-inline-block timer" id="timer" data-bs-toggle="tooltip" data-bs-title="{{__('crud.attendance.title_singular')}}" data-bs-placement="bottom">
                 <i class='bx bx-timer'></i> <span id="timerValue">{{ auth()->user()->timer }}</span>
             </button>
             <div class="d-inline-block align-middle">
@@ -99,7 +99,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownTimers">
                         <div class="py-2 border-bottom">
-                            <span class="px-3 h6"><i class="bx bxs-time-five"></i> Active Timers </span>
+                            <span class="px-3 h6"><i class="bx bxs-time-five"></i> {{__('global.active_timers')}}</span>
                         </div>
 
                         @foreach (auth()->user()->activeTaskTimers as $timer)
@@ -125,12 +125,13 @@
 
                         @if (auth()->user()->activeTaskTimers()->count() == 0)
                             <div class="text-center py-3">
-                                <span class="text-muted">No active timers</span>
+                                <span class="text-muted">{{__('global.no_active_timers')}}</span>
                             </div>
                         @endif
                     </ul>
                 </div>
-                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4 navIconBtn"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
+                <a href="{{route('dashboard.notes.index')}}" class="me-4 navIconBtn {{$section == 'Notes' ? 'active' : 'text-dark'}}"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
+
                 <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-bell" style="font-size: 23px;"></i>
@@ -143,7 +144,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="dropdownNotifications">
                         <div class="py-2 border-bottom">
-                            <span class="px-3 h6"><i class="bx bxs-bell"></i> Notifications </span>
+                            <span class="px-3 h6"><i class="bx bxs-bell"></i> {{__('global.notifications')}} </span>
                         </div>
 
                         <div class="scrollbar" style="max-height: 300px;">
@@ -169,18 +170,18 @@
 
                         @if (auth()->user()->notifications()->unread()->count() == 0)
                             <div class="text-center py-3">
-                                <span class="text-muted">No notifications</span>
+                                <span class="text-muted">{{ __('global.no_notifications')}}</span>
                             </div>
                         @else
                             <div class="text-center border-top pt-2">
                                 <a href="{{route('dashboard.notifications.read')}}" class="text-decoration-none">
-                                    <span>Mark all as read</span>
+                                    <span>{{ __('global.mark_all_as_read')}}</span>
                                 </a>
                             </div>
                         @endif
                     </ul>
                 </div>
-                <a href="{{route('logout')}}" class="text-dark me-1"><i class="bx bx-power-off" style="font-size: 23px;"></i></a>
+                <a href="{{route('logout')}}" class="text-dark me-1" data-bs-toggle="tooltip" data-bs-title="{{__('global.logout')}}" data-bs-placement="bottom"><i class="bx bx-power-off" style="font-size: 23px;"></i></a>
             </div>
         </div>
     </header>
@@ -245,7 +246,7 @@
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
-                            <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' ? 'active' : ''}}">
+                            <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
                                 @can('leave_view')
                                     <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
                                         <i class='bx bxs-plane-take-off nav_icon'></i>

@@ -15,12 +15,12 @@
         @endforeach
         @if (isset($viewGate))
             @can($viewGate)
-                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.show', $row->id)}}"><i class='bx bx-show' ></i> View</a></li>
+                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.show', $row->id)}}"><i class='bx bx-show' ></i>  {{__('global.view')}}</a></li>
             @endcan
         @endif
         @if (isset($editGate) && $editGate)
             @can($editGate)
-                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.edit', $row->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.edit', $row->id)}}"><i class='bx bx-edit' ></i>  {{__('global.edit')}}</a></li>
             @endcan
         @endif
         @if (isset($deleteGate) && $deleteGate)
@@ -30,7 +30,7 @@
                     <form action="{{route('dashboard.'.$crudRoutePart.'.destroy', $row->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> {{__('global.remove')}}</button>
                     </form>
                 </li>
             @endcan

@@ -49,8 +49,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::redirect('/', '/dashboard');
-
 Route::get('/template/{deliveryNote}', [DeliveryNoteController::class, 'download'])->name('template');
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal', 'throttle']], static function () {
@@ -199,16 +197,14 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
  Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
 
 
-Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
-
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 
 Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
-    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
+    Auth::routes(['logout' => false, 'register' => false, 'verify' => false, 'confirm' => false]);
 });
 
-Route::get('/landing', [LandingController::class, 'index'])->name('landing');
-Route::post('/landing', [LandingController::class, 'store'])->name('landing.store');
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::post('/', [LandingController::class, 'store'])->name('landing.store');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

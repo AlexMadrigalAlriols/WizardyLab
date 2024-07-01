@@ -622,6 +622,10 @@ opacity: 1;
     margin-top: 10px !important; /* Ajusta el margen superior del contenido */
 }
 
+.navIconBtn.active {
+    color: var(--primary-color) !important;
+}
+
 /* Animación del loader */
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }

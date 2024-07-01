@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-7 col-sm-9">
                     <span class="align-middle h5 ms-1"><b>{{$document->title}}</b></span>
-                    <p class="text-muted mb-0 ms-1" style="font-size: 14px;">{{$document->created_at->format('jS M, Y')}} - Subido por {{$document->userUpload->name}}</p>
+                    <p class="text-muted mb-0 ms-1" style="font-size: 14px;">{{$document->created_at->format('jS M, Y')}} - {{__('global.uploaded_by')}} {{$document->userUpload->name}}</p>
                 </div>
                 <div class="col-4 col-sm-2 text-end">
                     @if ($document->data['needSigned'])
@@ -29,14 +29,14 @@
                             <i class='bx bx-dots-horizontal-rounded' style="font-size: 14px;"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{route('dashboard.documents.download', [$folder->id, $document->id])}}"><i class='bx bxs-download' ></i> Download</a></li>
+                            <li><a class="dropdown-item" href="{{route('dashboard.documents.download', [$folder->id, $document->id])}}"><i class='bx bxs-download' ></i> {{__('global.download')}}</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form class="deleteDocumentFrm" action="{{route('dashboard.documents.destroy-document', [$folder->id, $document->id])}}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="dropdown-item text-danger">
-                                        <i class='bx bx-trash' ></i> Delete
+                                        <i class='bx bx-trash' ></i> {{__('global.remove')}}
                                     </button>
                                 </form>
                             </li>
@@ -52,7 +52,7 @@
 @if(count($documents) == 0)
 <div class="col-md-12 mt-5 text-center">
     @include('images.no_files_found')
-    <p class="text-muted mt-4">No documents here</p>
+    <p class="text-muted mt-4">{{__('global.no_data.no_files_found')}}!</p>
 </div>
 @endif
 

@@ -161,7 +161,9 @@
             };
 
             drawDataTable('.datatable-Clients', dtOverrideGlobals, true);
+        });
 
+        $(document).ready(function() {
             $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();

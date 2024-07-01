@@ -27,7 +27,7 @@ class InvoicesDataTable extends DataTable
                 [
                     'href' => route('dashboard.invoices.download', $row->id),
                     'icon' => 'bx bx-download',
-                    'text' => 'Download'
+                    'text' => __('global.download')
                 ]
             ];
 

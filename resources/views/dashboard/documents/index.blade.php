@@ -13,7 +13,7 @@
             </button>
         </div>
         <div class="col-md-4 text-center d-flex flex-column align-items-end mt-2">
-            <p class="mb-0">Espacio utilizado: {{ $portal->storage_used }} GB / {{ $portal->storage_size }} GB</p>
+            <p class="mb-0">{{__('global.space_used')}}: {{ $portal->storage_used }} GB / {{ $portal->storage_size }} GB</p>
             <div class="progress" style="width: 12rem">
                 <div class="progress-bar {{ $portal->percentage_used > 85 ? 'bg-danger' : 'bg-success' }}"
                     role="progressbar" style="width: {{ $portal->percentage_used }}%;" aria-valuenow="80" aria-valuemin="0"
@@ -31,7 +31,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createFolderModalLabel">New Folder</h5>
+                    <h5 class="modal-title" id="createFolderModalLabel">{{__('global.create')}} {{__('crud.documents.fields.folder')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

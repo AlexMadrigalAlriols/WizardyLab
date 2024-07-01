@@ -158,8 +158,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div>
-                                            <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
-                                            <p class="text-muted mb-0">All employee birthdays</p>
+                                            <h4 class="mb-0"><b><i class='bx bx-cake'></i> {{__('global.birthdays')}}</b></h4>
+                                            <p class="text-muted mb-0">{{__('global.birthdays_help')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -175,9 +175,9 @@
                                     </div>
                                     <div class="col-2">
                                         @if($days = $birthday->birthday_date->diffInDays(now()))
-                                            <span class="badge bg-secondary py-2 px-3 mt-4">in {{ $days }} days</span>
+                                            <span class="badge bg-secondary py-2 px-3 mt-4">{{__('global.in')}} {{ $days }} {{__('global.days')}}</span>
                                         @else
-                                            <span class="badge bg-success py-2 px-3 mt-4">Today</span>
+                                            <span class="badge bg-success py-2 px-3 mt-4">{{__('global.today')}}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                 @if (!count($birthdays))
                                     <div class="row">
                                         <div class="col-12 text-center py-5">
-                                            <span class="text-muted">No birthdays found!</span>
+                                            <span class="text-muted">{{__('global.no_more_birthdays')}}!</span>
                                         </div>
                                     </div>
                                 @endif
@@ -372,7 +372,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel"><i class="bx bx-time-five"></i> Clock In</h5>
+                    <h5 class="modal-title" id="modalLabel"><i class="bx bx-time-five"></i> {{__('crud.dashboard.fields.clock_in')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('dashboard.user-clock-in') }}" method="GET">
@@ -386,8 +386,8 @@
                         <div id="map" style="height: 500px;" class="mt-3"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary"><i class="bx bx-log-in-circle"></i> Clock In</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('global.close')}}</button>
+                        <button type="submit" class="btn btn-primary"><i class="bx bx-log-in-circle"></i> {{__('crud.dashboard.fields.clock_in')}}</button>
                     </div>
                 </form>
             </div>
@@ -413,7 +413,7 @@
                         }).addTo(map);
 
                         L.marker([lat, lon]).addTo(map)
-                            .bindPopup('Tu ubicación actual')
+                            .bindPopup('{{__('global.actual_ubication')}}')
                             .openPopup();
 
                         $('#latitude').val(lat)

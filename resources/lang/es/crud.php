@@ -67,7 +67,7 @@ return [
     ],
     'tasks' => [
         'title' => 'Tareas',
-        'title_singular' => 'Tareas',
+        'title_singular' => 'Tarea',
         'add_new' => 'Añadir nueva tarea',
         'no_tasks' => 'No se han encontrado tareas',
         'fields' => [
@@ -127,7 +127,7 @@ return [
             'tax' => 'Tasa',
             'total' => 'Total',
             'type' => 'Tipo',
-            'status' => 'Estatus',
+            'status' => 'Estado',
             'tasks' => 'Tareas',
             'client' => 'Cliente',
             'created_at' => 'Creado',
@@ -184,7 +184,7 @@ return [
             'name' => 'Nombre',
             'email' => 'Email',
             'mobile_number' => 'Numero de telefono',
-            'status' => 'Estatus',
+            'status' => 'Estado',
             'phone' => 'Telefono',
             'vat_number' => 'CIF',
             'language' => 'Lenguaje',
@@ -225,6 +225,7 @@ return [
         'personal_folders' => 'Carpetas personales',
         'add_folder' => 'Añadir carpeta',
         'fields' => [
+            'folder' => 'Carpeta',
         ],
 
     ],
@@ -260,6 +261,7 @@ return [
             'price' => 'Precio',
             'shop_place' => 'Sitio de compra',
             'stock' => 'Cantidad',
+            'files' => 'Imagenes',
             'created_at' => 'Creado',
             'updated_at' => 'Actualizado',
         ],
@@ -267,7 +269,7 @@ return [
     ],
     'assignments' => [
         'title' => 'Asignaciones',
-        'title_singular' => 'Asignaciones',
+        'title_singular' => 'Asignación',
         'add_new' => 'Añadir nueva asignacion',
         'fields' => [
             'user' => 'Usuario',
@@ -294,5 +296,25 @@ return [
             'updated_at' => 'Actualizado',
         ],
 
+    ],
+    'deliveryNotes' => [
+        'title' => 'Albaranes',
+        'title_singular' => 'Albarán',
+        'fields' => [
+            'id' => 'ID',
+            'number' => 'Número',
+            'generate_invoice' => 'Generar factura',
+            'substract_stock' => 'Restar stock',
+            'issue_date' => 'Fecha de emisión',
+            'amount' => 'Cantidad',
+            'tax' => 'Impuesto',
+            'total' => 'Total',
+            'type' => 'Tipo',
+            'type_helper' => 'Con "Valued" se mostraran los precios en el albaran.',
+            'observations' => 'Observaciones',
+            'client' => 'Cliente',
+            'created_at' => 'Creado el',
+            'updated_at' => 'Actualizado el',
+        ],
     ],
 ];
