@@ -55,6 +55,11 @@ class Item extends Model
         return $this->hasMany(ItemFile::class);
     }
 
+    public function stock_movements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockMovement::class);
+    }
+
     public function getRemainingStockAttribute(): int
     {
         return $this->stock - $this->assignments->sum('quantity');

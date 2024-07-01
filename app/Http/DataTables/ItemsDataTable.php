@@ -19,7 +19,7 @@ class ItemsDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'items';
             $model = 'item';
-            $viewGate = 'item_show';
+            $viewGate = 'item_view';
             $editGate = 'item_edit';
             $deleteGate = 'item_delete';
 

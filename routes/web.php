@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
+use App\Http\Controllers\Admin\StockMovementController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
@@ -60,6 +61,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::get('/items-files/download_file/{itemFile}', [ItemController::class, 'downloadFile'])->name('items.download_file');
     Route::get('/items-files/delete_file/{itemFile}', [ItemController::class, 'deleteFile'])->name('items.delete_file');
     Route::delete('massDestroy/items', [ItemController::class, 'massDestroy'])->name('items.massDestroy');
+
+    // Stock Movements
+    Route::post('/stock-movements/{item}', [StockMovementController::class, 'store'])->name('stock-movements.store');
 
     //Assignments
     Route::resource('assignments', UserInventoriesController::class);

@@ -21,9 +21,19 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="form-floating mt-3">
-            <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock" value="{{ old('stock') ?? $item->stock }}">
-            <label for="stock">Stock <span class="text-danger">*</span></label>
+        <div class="row">
+            <div class="col-9">
+                <div class="form-floating mt-3">
+                    <input type="number" class="form-control" {{ $item->id ? 'disabled' : ''}} id="stock" name="stock" placeholder="Stock" value="{{ old('stock') ?? $item->stock }}">
+                    <label for="stock">Stock <span class="text-danger">*</span></label>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="mt-4">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addStockMovementModal"><i class='bx bx-plus-medical' ></i></button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -31,7 +41,7 @@
     <div class="col-md-5">
         <div class="form-floating mt-3">
             <input type="number" step="any" class="form-control" id="price" name="price" placeholder="Price" value="{{ old('price') ?? $item->price }}">
-            <label for="reference">Price $</label>
+            <label for="reference">Price</label>
         </div>
 
     </div>

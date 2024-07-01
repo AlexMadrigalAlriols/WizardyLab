@@ -75,7 +75,7 @@
     <div class="col-md-12">
         <div class="form-floating mt-3">
             <textarea name="notes" id="notes" class="form-control" maxlength="200"></textarea>
-            <label for="issue_date">Observations <span class="text-danger">*</span></label>
+            <label for="issue_date">Observations</label>
         </div>
 
         <div class="mt-0 text-end">

@@ -19,7 +19,7 @@ class ExpensesDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'expenses';
             $model = 'expense';
-            $viewGate = 'expense_show';
+            $viewGate = 'expense_view';
             $editGate = false;
             $deleteGate = 'expense_delete';
 

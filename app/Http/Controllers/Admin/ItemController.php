@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\AdvancedFiltersHelper;
+use App\Helpers\ConfigurationHelper;
 use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\Http\DataTables\ItemsDataTable;
 use App\Http\Requests\Inventories\StoreRequest;
 use App\Http\Requests\Inventories\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
+use App\Models\Client;
 use App\Models\Item;
 use App\Models\ItemFile;
 use App\Traits\MiddlewareTrait;
@@ -91,7 +93,14 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return view('dashboard.items.show', compact('item'));
+        $client = Client::find(ConfigurationHelper::get('invoice_client_id'));
+
+        if(!$client) {
+            toast('You must set a client for the portal', 'error');
+            return back();
+        }
+
+        return view('dashboard.items.show', compact('item', 'client'));
     }
 
     /**
