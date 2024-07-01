@@ -19,6 +19,7 @@ use App\Models\StockMovement;
 use App\Models\Task;
 use App\Traits\MiddlewareTrait;
 use App\UseCases\Invoices\StoreUseCase;
+use App\UseCases\StockMovements\StoreUseCase as StockMovementsStoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -133,14 +134,13 @@ class InvoiceController extends Controller
 
         foreach ($data['items'] ?? [] as $dataItem) {
             if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
-                StockMovement::create([
-                    'item_id' => $item->id,
-                    'user_id' => auth()->id(),
-                    'quantity' => $dataItem['qty'],
-                    'type' => 'sub',
-                    'date' => Carbon::now(),
-                    'reason' => 'Invoice ' . $invoice->number
-                ]);
+                (new StockMovementsStoreUseCase(
+                    $item,
+                    auth()->user(),
+                    $dataItem['qty'],
+                    'sub',
+                    'Invoice ' . $invoice->number
+                ))->action();
             }
         }
 

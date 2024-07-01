@@ -17,6 +17,7 @@ use App\Models\Task;
 use App\Traits\MiddlewareTrait;
 use App\UseCases\DeliveryNotes\StoreUseCase;
 use App\UseCases\Invoices\StoreUseCase as InvoicesStoreUseCase;
+use App\UseCases\StockMovements\StoreUseCase as StockMovementsStoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -98,14 +99,13 @@ class DeliveryNoteController extends Controller
         if($request->input('generate_invoice') || ($request->input('substract_stock') && !$request->input('generate_invoice'))) {
             foreach ($request->input('items') ?? [] as $dataItem) {
                 if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
-                    StockMovement::create([
-                        'item_id' => $item->id,
-                        'user_id' => auth()->id(),
-                        'quantity' => $dataItem['qty'],
-                        'type' => 'sub',
-                        'date' => Carbon::now(),
-                        'reason' => 'Delivery Note ' . $deliveryNote->number
-                    ]);
+                    (new StockMovementsStoreUseCase(
+                        $item,
+                        auth()->user(),
+                        $dataItem['qty'],
+                        'sub',
+                        'Delivery Note ' . $deliveryNote->number
+                    ))->action();
                 }
             }
         }
