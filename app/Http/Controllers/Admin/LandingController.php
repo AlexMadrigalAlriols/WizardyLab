@@ -103,7 +103,9 @@ class LandingController extends Controller
                 ],
             ];
             $lang = $request->input("lang", "en");
-        return view('landing', compact("faqs", "lang"));
+            $langList = ["en"=>"en", "es"=>"es"];
+            unset($langList[$lang]);
+        return view('landing', compact("faqs", "lang", "langList"));
     }
 
     public function store(StoreRequest $request){
