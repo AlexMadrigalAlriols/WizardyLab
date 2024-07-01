@@ -44,7 +44,7 @@
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#contact">{{__("crud.landing.contact")}}</a>
+                        <a href="#contact">{{__("crud.landing.contact_menu")}}</a>
                         <div class="circle"></div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                       <li><a class="dropdown-item" href="#product">{{__("crud.landing.product")}}</a></li>
                       <li><a class="dropdown-item" href="#pricing">{{__("crud.landing.pricing")}}</a></li>
                       <li><a class="dropdown-item" href="#faq">{{__("crud.landing.faq")}}</a></li>
-                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact")}}</a></li>
+                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact_menu")}}</a></li>
                     </ul>
                 </div>
                 <a class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
@@ -247,35 +247,36 @@
                         width="900px">
                 </div>
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">INVENTORY SYSTEM</div>
-                    <div class="funcionality fs-2">ITEMS, ASSIGNMENTS AND EXPENSES</div>
+                    <div class="title fs-5">{{ __("crud.landing.inventory.title") }}</div>
+                    <div class="funcionality fs-2">{{ __("crud.landing.inventory.funcionality") }}</div>
                     <div class="selectors" id="selector-5">
                         <div class="selector" image="{{ asset('img/items-img.png') }}">
-                            <div>REGISTER ITEMS</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_1") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>REGISTER ITEMS</b></div>
+                            <div><b>{{ __("crud.landing.inventory.selector_5_1") }}</b></div>
                             <ul>
-                                <li>Filter by references</li>
-                                <li>Add photos to record status</li>
+                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_1") }}</li>
+                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_2") }}</li>
                             </ul>
                         </div>
                         <div class="selector" image="{{ asset('img/assignments-img.png') }}">
-                            <div>ASSIGNMENTS</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_2") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>ASSIGNMENTS</b></div>
-                            Assign multiple items to different users.
+                            <div><b>{{ __("crud.landing.inventory.selector_5_2") }}</b></div>
+                            {{ __("crud.landing.inventory.selector_5_2_desc") }}
                         </div>
                         <div class="selector" image="{{ asset('img/expenses-img.png') }}">
-                            <div>EXPENSES</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_3") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>EXPENSES</b></div>
-                            Allows you to create expenses so that you can invoice them later or simply record them.
+                            <div><b>{{ __("crud.landing.inventory.selector_5_3") }}</b></div>
+                            {{ __("crud.landing.inventory.selector_5_3_desc") }}
                         </div>
                     </div>
                 </div>
+
             </div>
 
 
@@ -375,7 +376,7 @@
         <div class="row section" id="faq" bar-width="1090px">
             <h2 class="text-center mb-5">FREQUENT ANSWERS AND QUESTIONS</h2>
             <div class="accordion" id="accordionExample">
-                @foreach ($faqs as $faq)
+                @foreach ($faqs[ $lang ] as $faq)
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -394,20 +395,18 @@
                 @endforeach
             </div>
         </div>
-        <div class="row section" id="contact" bar-width="1250px">
+        <div class="row section w-100" id="contact" bar-width="1250px">
             <div class="container mt-5 pt-5">
                 <div class="row justify-content-md-center">
                     <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-                        <h2 class="mb-4 display-5 text-center">Contact</h2>
-                        <p class="text-secondary mb-5 text-center">The best way to contact us is to use our contact
-                            form below. Please fill out all of the required fields and we will get back to you as soon
-                            as possible.</p>
+                        <h2 class="mb-4 display-5 text-center">{{ __("crud.landing.contact.title") }}</h2>
+                        <p class="text-secondary mb-5 text-center">{{ __("crud.landing.contact.description") }}</p>
                         <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
                     </div>
                 </div>
             </div>
             <div class="container">
-                <div class="row justify-content-lg-center">
+                <div class="row justify-content-center">
                     <div class="col-12 col-lg-9">
                         <div class="bg-white border rounded shadow-sm overflow-hidden">
 
@@ -415,13 +414,13 @@
                                 @csrf
                                 <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
                                     <div class="col-12">
-                                        <label for="name" class="form-label">Full Name <span
+                                        <label for="name" class="form-label">{{ __("crud.landing.contact.full_name") }} <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="" required>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label for="email" class="form-label">Email <span
+                                        <label for="email" class="form-label">{{ __("crud.landing.contact.email") }} <span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text">
@@ -436,7 +435,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label for="phone_number" class="form-label">Phone Number</label>
+                                        <label for="phone_number" class="form-label">{{ __("crud.landing.contact.phone_number") }}</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -450,14 +449,14 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="message" class="form-label">Message <span
+                                        <label for="message" class="form-label">{{ __("crud.landing.contact.message") }} <span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
                                             <button class="btn btn-lg" type="submit"
-                                                style="background-color:#374df1; color:white">Submit</button>
+                                                style="background-color:#374df1; color:white">{{ __("crud.landing.contact.submit_button") }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -467,6 +466,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </body>
 <script>
