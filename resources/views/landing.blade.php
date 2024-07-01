@@ -28,23 +28,23 @@
             <div class="d-flex flex-column justify-content-center gap-4">
                 <div class="links gap-5 nav-system rubik-font d-xl-flex d-none">
                     <div class="link">
-                        <a class="" href="#home">HOME</a>
+                        <a class="" href="#home">{{__("crud.landing.home")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#product">PRODUCT</a>
+                        <a href="#product">{{__("crud.landing.product")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#pricing">PRICING</a>
+                        <a href="#pricing">{{__("crud.landing.pricing")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#faq">FAQ</a>
+                        <a href="#faq">{{__("crud.landing.faq")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#contact">CONTACT</a>
+                        <a href="#contact">{{__("crud.landing.contact")}}</a>
                         <div class="circle"></div>
                     </div>
                 </div>
@@ -55,14 +55,14 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" aria-current="page" href="#home">Home</a></li>
-                      <li><a class="dropdown-item" href="#product">Product</a></li>
-                      <li><a class="dropdown-item" href="#pricing">Pricing</a></li>
-                      <li><a class="dropdown-item" href="#faq">FAQ</a></li>
-                      <li><a class="dropdown-item" href="#contact">Contact</a></li>
+                      <li><a class="dropdown-item" aria-current="page" href="#home">{{__("crud.landing.home")}}</a></li>
+                      <li><a class="dropdown-item" href="#product">{{__("crud.landing.product")}}</a></li>
+                      <li><a class="dropdown-item" href="#pricing">{{__("crud.landing.pricing")}}</a></li>
+                      <li><a class="dropdown-item" href="#faq">{{__("crud.landing.faq")}}</a></li>
+                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact")}}</a></li>
                     </ul>
                 </div>
-                <a class="ctm-button nab-button rubik-font d-xl-block d-none">GET STARTED</a>
+                <a class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
                 <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                      <span class="fi fi-us"></span> En
@@ -83,16 +83,21 @@
 
         <div class="row div-1 mb-5 section" id="home" bar-width="620px">
             <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
-                <h1 class="fs-1 d-none d-xl-block rubik-font"><span class="title-color">Seamless</span> Integration</h1>
-                <h1 class="fs-3 d-xl-none rubik-font"><span class="title-color">Seamless</span> Integration</h1>
-                <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">Elevate Your Enterprise with Our ERP</div>
-                <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">Elevate Your Enterprise with Our ERP</div>
-                <p class="rubik-font mt-2 text-wrap">Digital reports of time worked with clear timesheets.</p>
+                <h1 class="fs-1 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                <h1 class="fs-3 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
+                <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
+                <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
                 <div class="buttons d-flex gap-3 me-3">
-                    <button class="ctm-button-secondary rubik-font">Request demo</button>
-                    <a class="ctm-button rubik-font">Try 14-days</a>
+                    <button class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</button>
+                    <a class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
                 </div>
             </div>
+            <div class="col-12 col-xl-6 col-img">
+                <img class="shadow-lg mt-5 img" src="{{ asset('img/dashboard-1.png') }}" alt="dashboard photo" width="1000px"
+                    class="mt-5">
+            </div>
+        </div>
             <div class="col-12 col-xl-6 col-img">
                 <img class="shadow-lg mt-5 img" src="{{ asset('img/dashboard-1.png') }}" alt="Dashboard1" width="1000px"
                     class="mt-5">
@@ -101,33 +106,33 @@
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">CLIENTS</div>
-                    <div class="funcionality fs-2">CLIENTS, COMPANIES, INVOICES</div>
+                    <div class="title fs-5">{{ __('crud.landing.clients.title') }}</div>
+                    <div class="funcionality fs-2">{{ __('crud.landing.clients.funcionality') }}</div>
                     <div class="selectors" id="selector-1">
                         <div class="selector" image="{{ asset('img/clients-img.png') }}">
-                            <div>REGISTER CLIENTS</div>
+                            <div>{{ __('crud.landing.clients.selector_1') }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>REGISTER CLIENTS</b></div>
-                            Add, edit and remove clients to your database!
+                            <div><b>{{ __('crud.landing.clients.selector_1') }}</b></div>
+                            {{ __('crud.landing.clients.selector_1_desc') }}
                         </div>
                         <div class="selector" image="{{ asset('img/companies-img.png') }}">
-                            <div>ADD COMPANIES</div>
+                            <div>{{ __('crud.landing.clients.selector_2') }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>ADD COMPANIES</b></div>
-                            Organize your clients for companies.
+                            <div><b>{{ __('crud.landing.clients.selector_2') }}</b></div>
+                            {{ __('crud.landing.clients.selector_2_desc') }}
                         </div>
                         <div class="selector" image="{{ asset('img/invoices-img.png') }}">
-                            <div>INVOICES FOR YOUR CLIENTS</div>
+                            <div>{{ __('crud.landing.clients.selector_3') }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>INVOICES FOR YOUR CLIENTS</b></div>
-                            Create custom invoices for your clients.
+                            <div><b>{{ __('crud.landing.clients.selector_3') }}</b></div>
+                            {{ __('crud.landing.clients.selector_3_desc') }}
                             <ul>
-                                <li>Custom invoices</li>
-                                <li>Facture tasks per hours</li>
-                                <li>Facture entire proyect</li>
+                                <li>{{ __('crud.landing.clients.selector_3_ul_1') }}</li>
+                                <li>{{ __('crud.landing.clients.selector_3_ul_2') }}</li>
+                                <li>{{ __('crud.landing.clients.selector_3_ul_3') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -146,33 +151,33 @@
                         id="selector-2-img" src="{{ asset('img/leaves-img.png') }}" alt="" width="900px">
                 </div>
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">HUMAN RESOURCES</div>
-                    <div class="funcionality fs-2">LEAVES, ATTENDANCES, HOLIDAYS...</div>
+                    <div class="title fs-5">{{ __("crud.landing.hr.title") }}</div>
+                    <div class="funcionality fs-2">{{ __("crud.landing.hr.funcionality") }}</div>
                     <div class="selectors" id="selector-2">
                         <div class="selector" image="{{ asset('img/leaves-img.png') }}">
-                            <div>APROVE WORKERS LEAVES</div>
+                            <div>{{ __("crud.landing.hr.selector_1") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>APROVE WORKERS LEAVES</b></div>
-                            Centralize and manage your employees' vacations!
+                            <div><b>{{ __("crud.landing.hr.selector_1") }}</b></div>
+                            {{ __("crud.landing.hr.selector_1_desc") }}
                         </div>
                         <div class="selector" image="{{ asset('img/attendances-img.png') }}">
-                            <div>MANAGE ATTENDANCES</div>
+                            <div>{{ __("crud.landing.hr.selector_2") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>MANAGE ATTENDANCES</b></div>
-                            Centralize the attendances of your employees and generate your own records...
+                            <div><b>{{ __("crud.landing.hr.selector_2") }}</b></div>
+                            {{ __("crud.landing.hr.selector_2_desc") }}
                         </div>
                         <div class="selector" image="{{ asset('img/users-img.png') }}">
-                            <div>INVOICES FOR YOUR CLIENTS</div>
+                            <div>{{ __("crud.landing.hr.selector_3") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>Add employees to your system</b></div>
-                            Manage your employees and who has access to your system.
+                            <div><b>{{ __("crud.landing.hr.selector_3") }}</b></div>
+                            {{ __("crud.landing.hr.selector_3_desc") }}
                             <ul>
-                                <li>Assign managers</li>
-                                <li>Create departments</li>
-                                <li>Create your own work days</li>
+                                <li>{{ __("crud.landing.hr.selector_3_ul_1") }}</li>
+                                <li>{{ __("crud.landing.hr.selector_3_ul_2") }}</li>
+                                <li>{{ __("crud.landing.hr.selector_3_ul_3") }}</li>
                             </ul>
                         </div>
                     </div>
@@ -183,48 +188,49 @@
 
             <div class="row w-100 d-flex justify-content-center align-items-center product" id="3">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">WORKING SYSTEM</div>
-                    <div class="funcionality fs-2">PROYECTS AND TASKS</div>
+                    <div class="title fs-5">{{ __("crud.landing.working.title") }}</div>
+                    <div class="funcionality fs-2">{{ __("crud.landing.working.funcionality") }}</div>
                     <div class="selectors" id="selector-3">
                         <div class="selector" image="{{ asset('img/proyects-img.png') }}">
-                            <div>CREATE PROYECTS</div>
+                            <div>{{ __("crud.landing.working.selector_3_1") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>CREATE PROYECTS</b></div>
-                            Centralize and manage your employees' vacations!
+                            <div><b>{{ __("crud.landing.working.selector_3_1") }}</b></div>
+                            {{ __("crud.landing.working.selector_3_1_desc") }}
                             <ul>
-                                <li>Assign users</li>
-                                <li>Limit the hours of each project</li>
-                                <li>Assign the project by clients and departments</li>
+                                <li>{{ __("crud.landing.working.selector_3_1_ul_1") }}</li>
+                                <li>{{ __("crud.landing.working.selector_3_1_ul_2") }}</li>
+                                <li>{{ __("crud.landing.working.selector_3_1_ul_3") }}</li>
                             </ul>
                         </div>
                         <div class="selector" image="{{ asset('img/tasks-img.png') }}">
-                            <div>TASKS</div>
+                            <div>{{ __("crud.landing.working.selector_3_2") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>TASKS</b></div>
+                            <div><b>{{ __("crud.landing.working.selector_3_2") }}</b></div>
                             <ul>
-                                <li>Create tasks within projects</li>
-                                <li>Limit the hours of each task</li>
-                                <li>Add files and tags to identify tasks</li>
+                                <li>{{ __("crud.landing.working.selector_3_2_ul_1") }}</li>
+                                <li>{{ __("crud.landing.working.selector_3_2_ul_2") }}</li>
+                                <li>{{ __("crud.landing.working.selector_3_2_ul_3") }}</li>
                             </ul>
                         </div>
                         <div class="selector" image="{{ asset('img/canva-img.png') }}">
-                            <div>CANVA MANAGMENT</div>
+                            <div>{{ __("crud.landing.working.selector_3_3") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>CANVA MANAGMENT</b></div>
-                            Review the project and its tasks from a simple interactive canvas.
+                            <div><b>{{ __("crud.landing.working.selector_3_3") }}</b></div>
+                            {{ __("crud.landing.working.selector_3_3_desc") }}
                         </div>
                         <div class="selector" image="{{ asset('img/rules-img.png') }}">
-                            <div>AUTOMATIC RULES</div>
+                            <div>{{ __("crud.landing.working.selector_3_4") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>AUTOMATIC RULES</b></div>
-                            Create custom rules and automate processes.
+                            <div><b>{{ __("crud.landing.working.selector_3_4") }}</b></div>
+                            {{ __("crud.landing.working.selector_3_4_desc") }}
                         </div>
                     </div>
                 </div>
+
                 <div class="col-12 col-xl-6 d-flex justify-content-center">
                     <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
                         id="selector-3-img" src="{{ asset('img/proyects-img.png') }}" alt=""
