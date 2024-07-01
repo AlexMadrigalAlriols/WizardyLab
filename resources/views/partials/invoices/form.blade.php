@@ -7,7 +7,7 @@
                     <option value="{{ $type }}">{{ ucfirst($type) }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">Type <span class="text-danger">*</span></label>
+            <label for="floatingSelect">{{__('crud.invoices.fields.type')}} <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('type'))

@@ -200,7 +200,7 @@
                             <a href="#" class="nav_link has_submenu {{ $section == 'Clients' || $section == 'Companies' || $section == 'Invoices' || $section == 'DeliveryNotes' ? 'active' : ''}}">
                                 <div>
                                     <i class='bx bx-buildings nav_icon'></i>
-                                    <span class="nav_name">Clients</span>
+                                    <span class="nav_name">{{__('crud.clients.title')}}</span>
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
@@ -208,7 +208,7 @@
                                 @can('client_view')
                                     <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Clients' ? 'active' : ''}}">
                                         <i class='bx bx-buildings nav_icon'></i>
-                                        <span class="nav_name">Clients</span>
+                                        <span class="nav_name">{{__('crud.clients.title')}}</span>
                                     </a>
                                 @endcan
                                 @can('company_view')
@@ -249,28 +249,28 @@
                                 @can('leave_view')
                                     <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
                                         <i class='bx bxs-plane-take-off nav_icon'></i>
-                                        <span class="nav_name">Leaves</span>
+                                        <span class="nav_name">{{__('global.leaves')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
                                 @can('attendance_view')
                                     <a href="{{route('dashboard.attendance.index')}}" class="nav_link {{ $section == 'Attendance' ? 'active' : ''}}">
                                         <i class='bx bx-timer nav_icon'></i>
-                                        <span class="nav_name">Attendance</span>
+                                        <span class="nav_name">{{__('global.attendances')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
                                 @can('holiday_view')
                                     <a href="{{route('dashboard.holiday.index')}}" class="nav_link {{ $section == 'Holiday' ? 'active' : ''}}">
                                         <i class='bx bx-user-plus nav_icon'></i>
-                                        <span class="nav_name">Holiday</span>
+                                        <span class="nav_name">{{__('global.holiday')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
                                 @can('document_view')
                                     <a href="{{route('dashboard.documents.index')}}" class="nav_link {{ $section == 'Documents' ? 'active' : ''}}">
                                         <i class='bx bx-file nav_icon'></i>
-                                        <span class="nav_name">Documents</span>
+                                        <span class="nav_name">{{__('global.documents')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
@@ -289,7 +289,7 @@
                             <a href="#" class="nav_link has_submenu {{ $section == 'Tasks' || $section == 'Projects' ? 'active' : ''}}">
                                 <div>
                                     <i class='bx bx-briefcase nav_icon'></i>
-                                    <span class="nav_name ms-4">Work</span>
+                                    <span class="nav_name ms-4">{{__('global.work')}}</span>
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
@@ -297,7 +297,7 @@
                                 @can('project_view')
                                     <a href="{{route('dashboard.projects.index')}}" class="nav_link {{ $section == 'Projects' ? 'active' : ''}}">
                                         <i class='bx bxs-dashboard nav_icon'></i>
-                                        <span class="nav_name">Projects</span>
+                                        <span class="nav_name">{{__('global.projects')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
@@ -316,7 +316,7 @@
                             <a href="#" class="nav_link has_submenu {{ $section == 'Assignments' || $section == 'Items' || $section == 'Expenses' ? 'active' : ''}}">
                                 <div>
                                     <i class='bx bx-package nav_icon'></i>
-                                    <span class="nav_name ms-4">Inventory</span>
+                                    <span class="nav_name ms-4">{{__('global.inventory')}}</span>
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
@@ -324,21 +324,21 @@
                                 @can('item_view')
                                     <a href="{{route('dashboard.items.index')}}" class="nav_link {{ $section == 'Items' ? 'active' : ''}}">
                                         <i class='bx bx-desktop nav_icon'></i>
-                                        <span class="nav_name">Items</span>
+                                        <span class="nav_name">{{__('global.items')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
                                 @can('assignment_view')
                                     <a href="{{route('dashboard.assignments.index')}}" class="nav_link {{ $section == 'Assignments' ? 'active' : ''}}">
                                         <i class='bx bx-book-add nav_icon'></i>
-                                        <span class="nav_name">Assignments</span>
+                                        <span class="nav_name">{{__('global.assignments')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
                                 @can('expense_view')
                                     <a href="{{route('dashboard.expenses.index')}}" class="nav_link {{ $section == 'Expenses' ? 'active' : ''}}">
                                         <i class='bx bx-dollar nav_icon'></i>
-                                        <span class="nav_name">Expenses</span>
+                                        <span class="nav_name">{{__('global.expenses')}}</span>
                                     </a>
                                 @endcan
                             </div>
@@ -350,7 +350,7 @@
                             <a href="#" class="nav_link has_submenu {{ $section == 'Statuses' || $section == 'Labels' || $section == 'AttendanceTemplates' || $section == 'Leave_Types' || $section == 'Roles' || $section == 'Departments' || $section == 'GlobalConfigurations' ? 'active' : ''}}">
                                 <div>
                                     <i class='bx bx-cog nav_icon'></i>
-                                    <span class="nav_name ms-4">Configuration</span>
+                                    <span class="nav_name ms-4">{{__('global.configuration')}}</span>
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
@@ -358,7 +358,7 @@
                                 @can('configuration_view')
                                     <a href="{{route('dashboard.global-configurations.index')}}" class="nav_link {{ $section == 'GlobalConfigurations' ? 'active' : ''}}">
                                         <i class='bx bx-cog nav_icon'></i>
-                                        <span class="nav_name">Configuration</span>
+                                        <span class="nav_name">{{__('global.configuration')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
@@ -372,14 +372,14 @@
                                 @can('role_view')
                                     <a href="{{route('dashboard.roles.index')}}" class="nav_link {{ $section == 'Roles' ? 'active' : ''}}">
                                         <i class='bx bx-medal nav_icon'></i>
-                                        <span class="nav_name">Roles</span>
+                                        <span class="nav_name">{{__('global.roles')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
                                 @can('department_view')
                                     <a href="{{route('dashboard.departments.index')}}" class="nav_link {{ $section == 'Departments' ? 'active' : ''}}">
                                         <i class='bx bx-folder-open nav_icon'></i>
-                                        <span class="nav_name">Departments</span>
+                                        <span class="nav_name">{{__('global.departments')}}</span>
                                     </a>
                                     <hr>
                                 @endcan
@@ -400,7 +400,7 @@
                                 @can('attendanceTemplate_view')
                                     <a href="{{route('dashboard.attendanceTemplates.index')}}" class="nav_link {{ $section == 'AttendanceTemplates' ? 'active' : ''}}">
                                         <i class='bx bx-briefcase-alt nav_icon'></i>
-                                        <span class="nav_name">Jornadas</span>
+                                        <span class="nav_name">{{__('global.templates')}}</span>
                                     </a>
                                 @endcan
                             </div>

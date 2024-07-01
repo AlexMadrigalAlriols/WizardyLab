@@ -3,10 +3,10 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Tasks</b><span class="text-muted">({{count($tasks)}})</span>
+            <b>{{__('crud.tasks.title')}}</b><span class="text-muted">({{count($tasks)}})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.tasks.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Task</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('crud.tasks.add_new')}}</span>
         </a>
     </div>
 
@@ -14,10 +14,10 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="d-flex justify-content-start mt-4">
-                    <a class="ms-3 text-decoration-none {{ request('status') == null ? 'text-black' : '' }}" href="{{ route('dashboard.tasks.index') }}"><b>All</b> ({{ $counters['total'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 6 ? 'text-black' : '' }}" href="?status=6"><b>In progress</b> ({{ $counters['in_progress'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 7 ? 'text-black' : '' }}" href="?status=7"><b>Completed</b> ({{ $counters['completed'] }})</a>
-                    <a class="ms-3 text-decoration-none {{ request('status') == 5 ? 'text-black' : '' }}" href="?status=5"><b>Not Started</b> ({{ $counters['not_started'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == null ? 'text-black' : '' }}" href="{{ route('dashboard.tasks.index') }}"><b>{{__('global.all')}}</b> ({{ $counters['total'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 6 ? 'text-black' : '' }}" href="?status=6"><b>{{__('global.in_progress')}}</b> ({{ $counters['in_progress'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 7 ? 'text-black' : '' }}" href="?status=7"><b>{{__('global.completed')}}</b> ({{ $counters['completed'] }})</a>
+                    <a class="ms-3 text-decoration-none {{ request('status') == 5 ? 'text-black' : '' }}" href="?status=5"><b>{{__('global.not_started')}}</b> ({{ $counters['not_started'] }})</a>
                 </div>
             </div>
             <div class="col-md-7 mt-1">
@@ -32,11 +32,11 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-12 mt-3 text-end">
-                            <a class="btn btn-change-view me-2 {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="List View"
+                            <a class="btn btn-change-view me-2 {{request('archived') === null || request('archived') == 0 ? 'active' : ''}}" href="?archived=0" data-bs-toggle="tooltip" data-bs-title="{{__('global.list_view')}}"
                                 data-bs-placement="top">
                                 <i class='bx bx-list-ul'></i>
                             </a>
-                            <a class="btn btn-change-view {{request('archived') !== null && request('archived') == 1 ? 'active' : ''}}" href="?archived=1" data-bs-toggle="tooltip" data-bs-title="Archive"
+                            <a class="btn btn-change-view {{request('archived') !== null && request('archived') == 1 ? 'active' : ''}}" href="?archived=1" data-bs-toggle="tooltip" data-bs-title="{{__('global.archive')}}"
                                 data-bs-placement="top">
                                 <i class='bx bx-box'></i>
                             </a>
@@ -52,13 +52,13 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="min-width-0"></th>
-                    <th scope="col">TITLE</th>
-                    <th scope="col">ASSIGNESS</th>
-                    <th scope="col">START DATE</th>
-                    <th scope="col">DUE DATE</th>
-                    <th scope="col">STATUS</th>
-                    <th scope="col">PRIORITY</th>
-                    <th scope="col">HOURS LOGGED</th>
+                    <th scope="col">{{__('crud.tasks.fields.title')}}</th>
+                    <th scope="col">{{__('crud.tasks.fields.assigned_to')}}</th>
+                    <th scope="col">{{__('crud.tasks.fields.start_date')}}</th>
+                    <th scope="col">{{__('crud.tasks.fields.due_date')}}</th>
+                    <th scope="col">{{__('crud.tasks.fields.status')}}</th>
+                    <th scope="col">{{__('crud.tasks.fields.priority')}}</th>
+                    <th scope="col">{{__('crud.tasks.fields.hours_logged')}}</th>
                     <th scope="col"></th>
                 </tr>
             </thead>

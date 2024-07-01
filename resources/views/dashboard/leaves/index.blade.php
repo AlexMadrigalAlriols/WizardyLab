@@ -15,10 +15,10 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">EMPLOYEE</th>
-                    <th scope="col" class="border-bottom">DATE</th>
-                    <th scope="col" class="border-bottom">STATUS</th>
-                    <th scope="col" class="border-bottom">TYPE</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.employee')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.date')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.status')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.type')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

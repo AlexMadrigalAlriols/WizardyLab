@@ -11,9 +11,8 @@
                 @if($month < 12 && $month < $currentMonth)
                     <a class="ms-4 h4 text-dark text-decoration-none" href="?month={{$month+1}}{{request()->has('user') ? '&user=' . request()->get('user') : ''}}"><i class='bx bx-chevron-right'></i></a>
                 @endif
-
                 <a class="btn btn-primary mb-2 position-absolute align-top {{$month == $currentMonth ? 'disabled' : ''}}" href="{{route('dashboard.attendance.download-extract')}}{{request()->has('month') ? '?month=' . request()->input('month')  : ''}}{{request()->has('user') ? '&user=' . request()->get('user') : ''}}" style="right: 0;">
-                    <span class="px-4"><i class="bx bx-plus mt-1"></i>Exportar hoja de fichajes</span>
+                    <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('crud.attendance.fields.export_sheet')}}</span>
                 </a>
             </div>
         </div>
@@ -30,11 +29,11 @@
                         </div>
                         <div class="col-md-4 mb-2 text-center">
                             <p class="h3 text-muted mb-0 mt-2">{{$totals['worked_hours']}}</p>
-                            <span class="h6 text-muted">Horas trabajadas</span>
+                            <span class="h6 text-muted">{{__('crud.attendance.fields.worked_hours')}}</span>
                         </div>
                         <div class="col-md-4 mb-2 text-center">
                             <p class="h3 text-muted mb-0 mt-2">{{$totals['estimated_hours']}}</p>
-                            <span class="h6 text-muted">Horas estimadas</span>
+                            <span class="h6 text-muted">{{__('crud.attendance.fields.estimated_hours')}}</span>
                         </div>
                     </div>
                 </div>
@@ -44,7 +43,7 @@
             <div class="card">
                 <div class="card-body mb-2">
                     <p class="h3 mb-0 mt-2 {{ strpos($totals['balance'], '-') !== false ? 'text-danger' : 'text-muted'}}">{{ $totals['balance']}}</p>
-                    <span class="h6 text-muted">Balance</span>
+                    <span class="h6 text-muted">{{__('crud.attendance.fields.balance')}}</span>
                 </div>
             </div>
         </div>
@@ -56,28 +55,29 @@
                 <div class="row p-1">
                     <div class="col-md-9">
                         <div class="mt-2">
-                            <span class="text-muted me-2"><b>ESTADO</b></span>
+                            <span class="text-muted me-2"><b>{{__('crud.attendance.fields.state')}}</b></span>
                             @if($month < $currentMonth)
-                                <span class="badge bg-success me-3">CERRADO</span>
-                                <span class="text-muted">Esta hoja de fichajes corresponde a un periodo cerrado</span>
+                                <span class="badge bg-success me-3">{{__('crud.attendance.fields.close')}}</span>
+                                <span class="text-muted">{{__('crud.attendance.fields.close_period')}}</span>
                             @else
                                 <span class="badge bg-secondary me-3">IN PROGRESS</span>
-                                <span class="text-muted">Esta hoja de fichajes corresponde a un periodo abierto</span>
+                                <span class="text-muted">{{__('crud.attendance.fields.open_period')}}</span>
                             @endif
                         </div>
                     </div>
                     <div class="col-md-3 text-end">
-                        <button class="btn btn-outline-primary align-top" id="expandAll">Expandir todo <i class='bx bx-chevron-down'></i></button>
-                        <button class="btn btn-outline-primary align-top d-none" id="closeAll">Cerrar todo <i class='bx bx-chevron-up'></i></button>
+                        <button class="btn btn-outline-primary align-top" id="expandAll">{{__('crud.attendance.fields.open_all')}} <i class='
+                            bx bx-chevron-down'></i></button>
+                        <button class="btn btn-outline-primary align-top d-none" id="closeAll">{{__('crud.attendance.fields.close_all')}} <i class='bx bx-chevron-up'></i></button>
                     </div>
                 </div>
                 <hr>
                 <div id="attendanceDetails" class="table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th class="text-muted">Dia</th>
-                            <th>Horas trabajadas / Horas planificadas</th>
-                            <th class="text-muted">Ausencias</th>
+                            <th class="text-muted">{{__('global.day')}}</th>
+                            <th>{{__('crud.attendance.fields.worked_hours')}} / {{__('crud.attendance.fields.estimated_hours')}}</th>
+                            <th class="text-muted">{{__('global.leaves')}}</th>
                             <th></th>
                         </tr>
                         @foreach ($dates as $idx => $date)
@@ -140,14 +140,14 @@
                                                 </div>
 
                                                 @if($month == $currentMonth && !$date['day']->isFuture())
-                                                    <button class="btn btn-primary d-block mt-3" type="button" onclick="addTime({{$idx}})"><i class='bx bx-plus' ></i> Añadir</button>
+                                                    <button class="btn btn-primary d-block mt-3" type="button" onclick="addTime({{$idx}})"><i class='bx bx-plus' ></i> {{__('global.add')}}</button>
                                                 @endif
                                             </form>
                                         </div>
                                         <div class="col-md-8 text-end">
                                             @can('attendance_edit')
                                                 @if ($month == $currentMonth && !$date['day']->isFuture())
-                                                    <button class="btn btn-outline-primary save-attendances" type="button" data-idx="{{$idx}}">Guardar</button>
+                                                    <button class="btn btn-outline-primary save-attendances" type="button" data-idx="{{$idx}}">{{__('global.save')}}</button>
                                                 @endif
                                             @endcan
                                         </div>

@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <div class="form-floating mt-3">
             <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" maxlength="60" id="name" name="name" placeholder="Name" value="{{ old('name') ?? $client->name }}">
-            <label for="title">Name <span class="text-danger">*</span></label>
+            <label for="title">{{__('crud.clients.fields.name')}} <span class="text-danger">*</span></label>
         </div>
 
         <div class="mt-0 text-end">
@@ -21,7 +21,7 @@
                     <option value="{{ $company->id }}" {{$client->company_id == $company->id || old('company_id') == $company->id ? 'selected' : ''}}>{{ $company->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">Company</label>
+            <label for="floatingSelect">{{__('crud.clients.fields.company')}}</label>
         </div>
 
         @if ($errors->has('company_id'))
@@ -33,7 +33,7 @@
     <div class="col-md-4">
         <div class="form-floating mt-3">
             <input type="email" class="form-control @if($errors->has('email')) is-invalid @endif" maxlength="100" id="email" name="email" placeholder="Email" value="{{ old('email') ?? $client->email }}">
-            <label for="email">Email <span class="text-danger">*</span></label>
+            <label for="email">{{__('crud.clients.fields.email')}} <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('email'))
@@ -43,7 +43,7 @@
     <div class="col-md-4">
         <div class="form-floating mt-3">
             <input type="text" class="form-control @if($errors->has('phone')) is-invalid @endif" id="phone" name="phone" placeholder="Mobile Phone" value="{{ old('phone') ?? $client->phone }}">
-            <label for="phone">Phone</label>
+            <label for="phone">{{__('crud.clients.fields.phone')}}</label>
         </div>
 
         @if ($errors->has('phone'))
@@ -53,7 +53,7 @@
     <div class="col-md-4">
         <div class="form-floating mt-3">
             <input type="text" class="form-control" id="vat_number" name="vat_number" placeholder="Vat Number" value="{{ old('vat_number') ?? $client->vat_number }}">
-            <label for="vat_number">VAT Number</label>
+            <label for="vat_number">{{__('crud.clients.fields.vat_number')}}</label>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@
                     <option value="{{ $currency->id }}" {{$client->currency_id == $currency->id || old('currency_id') == $currency->id ? 'selected' : ''}}>{{ $currency->name }} ({{$currency->iso_code}})</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">Currency <span class="text-danger">*</span></label>
+            <label for="floatingSelect">{{__('crud.clients.fields.currency')}} <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('currency_id'))
@@ -80,7 +80,7 @@
                     <option value="{{ $language->id }}" {{$client->language_id == $language->id || old('language_id') == $language->id ? 'selected' : ''}}>{{ $language->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">Language</label>
+            <label for="floatingSelect">{{__('crud.clients.fields.language')}}</label>
         </div>
     </div>
 </div>
@@ -95,12 +95,12 @@
         </div>
     </div>
 </div>
-<h6 class="mt-4">Client Address</h6>
+<h6 class="mt-4">{{__('crud.clients.client_address')}}</h6>
 <div class="row">
     <div class="col-md-4">
         <div class="form-floating mt-3">
             <input type="text" class="form-control" id="address" name="address" maxlength="250" placeholder="Address" value="{{ old('address') ?? $client->address }}">
-            <label for="address">Address</label>
+            <label for="address">{{__('crud.clients.fields.address')}}</label>
         </div>
 
         <div class="mt-0 text-end">
@@ -110,7 +110,7 @@
     <div class="col-md-4">
         <div class="form-floating mt-3">
             <input type="text" class="form-control" id="city" name="city" placeholder="City" maxlength="50" value="{{ old('city') ?? $client->city }}">
-            <label for="city">City</label>
+            <label for="city">{{__('crud.clients.fields.city')}}</label>
         </div>
 
         <div class="mt-0 text-end">
@@ -120,7 +120,7 @@
     <div class="col-md-4">
         <div class="form-floating mt-3">
             <input type="text" class="form-control" id="zip" name="zip" maxlength="10" placeholder="Zip" value="{{ old('zip') ?? $client->zip }}">
-            <label for="zip">Zip</label>
+            <label for="zip">{{__('crud.clients.fields.zip')}}</label>
         </div>
 
         <div class="mt-0 text-end">
@@ -132,7 +132,7 @@
     <div class="col-md-6">
         <div class="form-floating mt-3">
             <input type="text" class="form-control" id="state" name="state" maxlength="50" placeholder="State" value="{{ old('state') ?? $client->state }}">
-            <label for="state">State</label>
+            <label for="state">{{__('crud.clients.fields.state')}}</label>
         </div>
 
         <div class="mt-0 text-end">
@@ -146,7 +146,7 @@
                     <option value="{{ $country->id }}" {{$client->country_id == $country->id || old('country_id') == $country->id ? 'selected' : ''}}>{{ $country->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">Country</label>
+            <label for="floatingSelect">{{__('crud.clients.fields.country')}}</label>
         </div>
     </div>
 </div>
