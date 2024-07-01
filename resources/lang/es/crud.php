@@ -296,10 +296,18 @@ return [
 
     ],
     'landing' => [
-    'seamless' => 'Integración perfecta',
-    'integration' => 'integración',
+    'seamless' => 'Integración',
+    'integration' => 'simple',
     'elevate_enterprise' => 'Eleve su empresa con nuestro ERP',
-    'digital_reports' => 'Reportes digitales del tiempo trabajado con hojas de tiempo claras.',
+    'digital_reports' => 'Reportes digitales del tiempo trabajado a tiempo real y facil de usar.',
+    'home' => 'INICIO',
+    'product' => 'PRODUCTO',
+    'pricing' => 'PRECIO',
+    'faq' => 'FAQ',
+    'contact_menu' => 'CONTACTO',
+    'try_14_days' => 'PRUEBA 14 DIAS',
+    'request_demo' => 'SOLICITAR DEMO',
+    'get_started' => 'EMPEZAR',
     'clients' => [
         "title" => "CLIENTES",
         "funcionality" => "CLIENTES, EMPRESAS, FACTURAS",
@@ -363,6 +371,11 @@ return [
         "phone_number" => "Número de teléfono",
         "message" => "Mensaje",
         "submit_button" => "Enviar"
+    ],
+    'pricing-f' => [
+        "title" => "Planes de precios",
+        "description" => "Elija el plan perfecto para las necesidades de su negocio. Desde startups hasta grandes empresas, ofrecemos opciones flexibles para apoyar su crecimiento y éxito.",
     ]
+
 ],
 ];

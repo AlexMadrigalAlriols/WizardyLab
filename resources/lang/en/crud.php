@@ -364,6 +364,10 @@ return [
             "phone_number" => "Phone Number",
             "message" => "Message",
             "submit_button" => "Submit"
+        ],
+        'pricing-f' =>[
+            "title" => "Pricing plans",
+            "description" => "Choose the perfect plan for your business needs. From startups to large enterprises, we offer flexible options to support your growth and success.",
         ]
     ],
 ];

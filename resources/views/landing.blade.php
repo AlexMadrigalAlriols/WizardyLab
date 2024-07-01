@@ -62,13 +62,16 @@
                       <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact_menu")}}</a></li>
                     </ul>
                 </div>
-                <a class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
+                <a href="#contact" class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
                 <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <span class="fi fi-us"></span> En
+                    <button class="dropdown-toggle text-capitalize" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     <span class="fi fi-{{$lang == "en"?"us":$lang}}"></span> {{$lang}}
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="?lang=es"><span class="fi fi-es"></span> Es</a></li>
+                        @foreach ($langList as $langl)
+                            <li><a class="dropdown-item text-capitalize" href="?lang={{$langl}}"><span class="fi fi-{{$langl == "en"?"us":$langl}}"></span> {{$langl}}</a></li>
+                        @endforeach
+
                     </ul>
                 </div>
             </div>
@@ -83,14 +86,14 @@
 
         <div class="row div-1 mb-5 section" id="home" bar-width="620px">
             <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
-                <h1 class="fs-1 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                <h1 class="fs-3 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
                 <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
                 <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
                 <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
                 <div class="buttons d-flex gap-3 me-3">
-                    <button class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</button>
-                    <a class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
+                    <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
+                    <a href="#contact" class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
                 </div>
             </div>
             <div class="col-12 col-xl-6 col-img">
@@ -98,11 +101,7 @@
                     class="mt-5">
             </div>
         </div>
-            <div class="col-12 col-xl-6 col-img">
-                <img class="shadow-lg mt-5 img" src="{{ asset('img/dashboard-1.png') }}" alt="Dashboard1" width="1000px"
-                    class="mt-5">
-            </div>
-        </div>
+    </div>
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
@@ -285,9 +284,8 @@
             <section id="pricing" class="pricing-content section-padding w-100">
                 <div class="container">
                     <div class="section-title text-center">
-                        <h2>Pricing Plans</h2>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout.</p>
+                        <h2>{{__("crud.landing.pricing-f.title")}}</h2>
+                        <p>{{__("crud.landing.pricing-f.description")}}</p>
                     </div>
                     <div class="row text-center d-flex justify-content-center align-items-center w-100 gap-3 gap-xl-0">
                         <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
