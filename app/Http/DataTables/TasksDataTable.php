@@ -21,7 +21,7 @@ class TasksDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'tasks';
             $model = 'task';
-            $viewGate = 'task_show';
+            $viewGate = 'task_view';
             $editGate = 'task_edit';
             $deleteGate = 'task_delete';
 

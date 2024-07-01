@@ -18,7 +18,7 @@ class UserDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'users';
             $model = 'user';
-            $viewGate = 'user_show';
+            $viewGate = 'user_view';
             $editGate = 'user_edit';
             $deleteGate = 'user_delete';
             $links = [];

@@ -12,10 +12,12 @@ use App\Models\Client;
 use App\Models\DeliveryNote;
 use App\Models\Item;
 use App\Models\Status;
+use App\Models\StockMovement;
 use App\Models\Task;
 use App\Traits\MiddlewareTrait;
 use App\UseCases\DeliveryNotes\StoreUseCase;
 use App\UseCases\Invoices\StoreUseCase as InvoicesStoreUseCase;
+use App\UseCases\StockMovements\StoreUseCase as StockMovementsStoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -80,12 +82,9 @@ class DeliveryNoteController extends Controller
         $client = Client::find($request->input('client_id'));
         $data = ['items' => $request->input('items'), 'type' => $request->input('type'), 'notes' => $request->input('notes')];
 
-        if($request->input('substract_stock') && !$request->input('generate_invoice')) {
-            foreach ($request->input('items') as $dataItem) {
-                if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
-                    $item->update(['stock' => $item->stock - $dataItem['qty']]);
-                }
-            }
+        if(!$request->input('items') || ($request->input('items') && !count($request->input('items')))) {
+            toast('You must add at least one item', 'error');
+            return back();
         }
 
         $deliveryNote = (new StoreUseCase(
@@ -97,13 +96,21 @@ class DeliveryNoteController extends Controller
             $data
         ))->action();
 
-        if($request->input('generate_invoice')) {
-            foreach ($request->input('items') as $dataItem) {
+        if($request->input('generate_invoice') || ($request->input('substract_stock') && !$request->input('generate_invoice'))) {
+            foreach ($request->input('items') ?? [] as $dataItem) {
                 if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
-                    $item->update(['stock' => $item->stock - $dataItem['qty']]);
+                    (new StockMovementsStoreUseCase(
+                        $item,
+                        auth()->user(),
+                        $dataItem['qty'],
+                        'sub',
+                        'Delivery Note ' . $deliveryNote->number
+                    ))->action();
                 }
             }
+        }
 
+        if($request->input('generate_invoice')) {
             $invoice = (new InvoicesStoreUseCase(
                 null,
                 Carbon::parse($request->input('issue_date')),

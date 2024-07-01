@@ -20,7 +20,7 @@ class AssignmentsDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'assignments';
             $model = 'assignment';
-            $viewGate = 'assignment_show';
+            $viewGate = 'assignment_view';
             $editGate = 'assignment_edit';
             $deleteGate = 'assignment_delete';
 
