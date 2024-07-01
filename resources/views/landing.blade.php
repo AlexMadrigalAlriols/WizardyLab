@@ -242,7 +242,7 @@
             <div class="row w-100 d-flex justify-content-center align-items-center product flex-column-reverse gap-5 gap-xl-0 flex-xl-row" id="5">
                 <div class="col-12 col-xl-6 d-flex justify-content-center">
                     <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-5-img" src="{{ asset('img/proyects-img.png') }}" alt=""
+                        id="selector-5-img" src="{{ asset('img/items-img.png') }}" alt=""
                         width="900px">
                 </div>
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
