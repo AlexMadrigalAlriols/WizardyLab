@@ -294,15 +294,6 @@ return [
         'integration' => 'integration',
         'elevate_enterprise' => 'Elevate Your Enterprise with Our ERP',
         'digital_reports' => 'Digital reports of time worked with clear timesheets.',
-        'home' => 'HOME',
-        'product' => 'PRODUCT',
-        'pricing' => 'PRICING',
-        'faq' => 'FAQ',
-        'contact_menu' => 'CONTACT',
-        'try_14_days' => 'TRY 14-DAYS',
-        'request_demo' => 'REQUEST DEMO',
-        'get_started' => 'GET STARTED',
-        "faq_title" => "FREQUENT ANSWERS AND QUESTIONS",
         'clients' => [
             "title" => "CLIENTS",
             "funcionality" => "CLIENTS, COMPANIES, INVOICES",
@@ -346,31 +337,6 @@ return [
             "selector_3_4" => "AUTOMATIC RULES",
             "selector_3_4_desc" => "Create custom rules and automate processes.",
         ],
-        'inventory' => [
-            "title" => "INVENTORY SYSTEM",
-            "funcionality" => "ITEMS, ASSIGNMENTS AND EXPENSES",
-            "selector_5_1" => "REGISTER ITEMS",
-            "selector_5_1_desc" => "",
-            "selector_5_1_ul_1" => "Filter by references",
-            "selector_5_1_ul_2" => "Add photos to record status",
-            "selector_5_2" => "ASSIGNMENTS",
-            "selector_5_2_desc" => "Assign multiple items to different users.",
-            "selector_5_3" => "EXPENSES",
-            "selector_5_3_desc" => "Allows you to create expenses so that you can invoice them later or simply record them.",
-
-        ],
-        'contact' =>[
-            "title" => "Contact",
-            "description" => "The best way to contact us is to use our contact form below. Please fill out all of the required fields and we will get back to you as soon as possible.",
-            "full_name" => "Full Name",
-            "email" => "Email",
-            "phone_number" => "Phone Number",
-            "message" => "Message",
-            "submit_button" => "Submit"
-        ],
-        'pricing-f' =>[
-            "title" => "Pricing plans",
-            "description" => "Choose the perfect plan for your business needs. From startups to large enterprises, we offer flexible options to support your growth and success.",
         'deliveryNotes' => [
             'title' => 'Delivery Notes',
             'title_singular' => 'Delivery Note',
