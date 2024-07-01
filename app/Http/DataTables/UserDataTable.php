@@ -4,6 +4,7 @@ namespace App\Http\DataTables;
 
 use App\Models\Client;
 use App\Models\User;
+use App\Services\QueryBuilderService;
 
 class UserDataTable extends DataTable
 {
@@ -17,9 +18,19 @@ class UserDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'users';
             $model = 'user';
-            $viewGate = 'user_show';
+            $viewGate = 'user_view';
             $editGate = 'user_edit';
             $deleteGate = 'user_delete';
+            $links = [];
+
+            if(!$row->approved) {
+                $links[] = [
+                    'href' => route('dashboard.attendance.index') . '?user=' . $row->code,
+                    'icon' => 'bx bx-timer',
+                    'text' => 'Attendances',
+                    'permission' => 'attendance_seeAll'
+                ];
+            }
 
             return view('partials.datatables.actions', compact(
                 'row',
@@ -27,7 +38,8 @@ class UserDataTable extends DataTable
                 'model',
                 'viewGate',
                 'editGate',
-                'deleteGate'
+                'deleteGate',
+                'links'
             ));
         });
 
@@ -62,6 +74,17 @@ class UserDataTable extends DataTable
 
         $email = request()?->get('email');
         $created_at_range = request()?->get('created_at_range');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            User::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['department', 'role', 'reportingUser']
+        );
 
         if($email) {
             $query->where('email', 'like', "%{$email}%");

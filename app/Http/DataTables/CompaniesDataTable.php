@@ -3,6 +3,7 @@
 namespace App\Http\DataTables;
 
 use App\Models\Company;
+use App\Services\QueryBuilderService;
 
 class CompaniesDataTable extends DataTable
 {
@@ -53,6 +54,17 @@ class CompaniesDataTable extends DataTable
         $query = Company::query();
 
         $created_at_range = request()?->get('created_at_range');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Company::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['clients']
+        );
 
         if(!empty($created_at_range)) {
             $range = str_replace(' a ', ' - ', $created_at_range);

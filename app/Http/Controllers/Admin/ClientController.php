@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\PaginationHelper;
@@ -42,8 +43,9 @@ class ClientController extends Controller
 
         $query = Client::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Client::class);
 
-        return view('dashboard.clients.index', compact('total'));
+        return view('dashboard.clients.index', compact('total', 'advancedFilters'));
     }
 
     public function show(Client $client)

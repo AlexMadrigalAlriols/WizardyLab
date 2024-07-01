@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;;
 class Label extends Model
 {
     use HasFactory;
-    public const PAGE_SIZE = 10;
+
 
     public const TYPE_ERROR = [
         'error' => 'error',

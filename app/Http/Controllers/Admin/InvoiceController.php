@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Helpers\InvoiceHelper;
 use App\Helpers\PaginationHelper;
@@ -14,9 +15,11 @@ use App\Models\Invoice;
 use App\Models\Item;
 use App\Models\Project;
 use App\Models\Status;
+use App\Models\StockMovement;
 use App\Models\Task;
 use App\Traits\MiddlewareTrait;
 use App\UseCases\Invoices\StoreUseCase;
+use App\UseCases\StockMovements\StoreUseCase as StockMovementsStoreUseCase;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -49,7 +52,8 @@ class InvoiceController extends Controller
         }
 
         $statuses = json_encode($json_statuses, JSON_UNESCAPED_UNICODE);
-        return view('dashboard.invoices.index', compact('total', 'statuses'));
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Invoice::class);
+        return view('dashboard.invoices.index', compact('total', 'statuses', 'advancedFilters'));
     }
 
     public function create()
@@ -110,12 +114,6 @@ class InvoiceController extends Controller
             $total = $amount + $tax;
             $client = Client::find($request->input('client_id'));
             $data = ['items' => $request->input('items')];
-
-            foreach ($request->input('items') as $dataItem) {
-                if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
-                    $item->update(['stock' => $item->stock - $dataItem['qty']]);
-                }
-            }
         }
 
         if($amount === 0) {
@@ -133,6 +131,18 @@ class InvoiceController extends Controller
             $data,
             $client
         ))->action();
+
+        foreach ($data['items'] ?? [] as $dataItem) {
+            if($dataItem['id'] && $item = Item::find($dataItem['id'])) {
+                (new StockMovementsStoreUseCase(
+                    $item,
+                    auth()->user(),
+                    $dataItem['qty'],
+                    'sub',
+                    'Invoice ' . $invoice->number
+                ))->action();
+            }
+        }
 
         toast('Invoice created', 'success');
         return redirect()->route('dashboard.invoices.index');

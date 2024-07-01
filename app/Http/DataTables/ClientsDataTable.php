@@ -3,6 +3,7 @@
 namespace App\Http\DataTables;
 
 use App\Models\Client;
+use App\Services\QueryBuilderService;
 
 class ClientsDataTable extends DataTable
 {
@@ -62,6 +63,17 @@ class ClientsDataTable extends DataTable
 
         $email = request()?->get('email');
         $created_at_range = request()?->get('created_at_range');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Client::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['company', 'currency']
+        );
 
         if($email) {
             $query->where('email', 'like', "%{$email}%");

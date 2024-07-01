@@ -10,6 +10,7 @@ use App\Helpers\TimerHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendances\UpdateRequest;
 use App\Models\Attendance;
+use App\Models\User;
 use App\Traits\MiddlewareTrait;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -39,9 +40,20 @@ class AttendanceController extends Controller
         } else {
             $month = $currentMonth;
         }
+
+        if($request->has('user') && $user->can('attendance_seeAll')) {
+            $user = User::where('code', $request->user)->first();
+
+            if(!$user) {
+                $user = auth()->user();
+                toast('Employee not exists', 'error');
+                return redirect()->route('dashboard.attendance.index');
+            }
+        }
+
         $month = $month > 12 || $month < 1 ? $currentMonth : $month;
         $year = $actualDate->year;
-        [$dates, $totals] = $this->getDates($month, $year);
+        [$dates, $totals] = $this->getDates($user, $month, $year);
 
         return view('dashboard.attendance.index', compact('dates', 'totals', 'month', 'year', 'currentMonth', 'user'));
     }
@@ -58,6 +70,16 @@ class AttendanceController extends Controller
             $month = $currentMonth;
         }
 
+        if($request->has('user') && $user->can('attendance_seeAll')) {
+            $user = User::where('code', $request->user)->first();
+
+            if(!$user) {
+                $user = auth()->user();
+                toast('Employee not exists', 'error');
+                return redirect()->route('dashboard.attendance.index');
+            }
+        }
+
         $month = $month > 12 || $month < 1 ? $currentMonth : $month;
 
         if($month == $currentMonth) {
@@ -66,7 +88,7 @@ class AttendanceController extends Controller
         }
 
         $year = $actualDate->year;
-        [$dates, $totals] = $this->getDates($month, $year);
+        [$dates, $totals] = $this->getDates($user, $month, $year);
         $month = Carbon::create($year, $month, 1);
         $logoPath = $portal->logo;
         $logoBase64 = base64_encode(file_get_contents($logoPath));
@@ -94,9 +116,9 @@ class AttendanceController extends Controller
         return Response::make($output, 200, $headers)->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
     }
 
-    private function getDates($month, $year): array
+    private function getDates($user, $month, $year): array
     {
-        $workTemplate = auth()->user()->attendanceTemplate;
+        $workTemplate = $user->attendanceTemplate;
 
         [$totalWorkedHours, $totalEstimatedHours, $totalExcessTime] = ['00h 00m', '00h 00m', '00h 00m'];
         $startDate = Carbon::create($year, $month, 1);
@@ -105,16 +127,16 @@ class AttendanceController extends Controller
 
         while ($startDate->lte($endDate)) {
             $holiday = false;
-            $workedHours = AttendanceHelper::getDayAttendance(auth()->user(), $startDate);
+            $workedHours = AttendanceHelper::getDayAttendance($user, $startDate);
             $hoursPerDay = $workTemplate->getHoursPerDay($startDate->isoFormat('dddd'));
-            if($leaveDay = auth()->user()->leaveDays()->where('date', $startDate->toDateString())->where('approved', true)->first()) {
+            if($leaveDay = $user->leaveDays()->where('date', $startDate->toDateString())->where('approved', true)->first()) {
                 $holiday = $leaveDay;
                 $hoursPerDay = '00h 00m';
             }
             $excessTime = TimerHelper::getExcessTime($workedHours, $holiday != false ? '00h 00m' : $hoursPerDay);
             $totalWorkedHours = TimerHelper::addDailyTime($totalWorkedHours, $workedHours, false);
             $totalEstimatedHours = TimerHelper::addDailyTime($totalEstimatedHours, $hoursPerDay, false);
-            $productivity = TaskAttendanceHelper::getDayAttendance(auth()->user(), $startDate);
+            $productivity = TaskAttendanceHelper::getDayAttendance($user, $startDate);
             $productivityPercentage = TimerHelper::getPercentage($productivity, $hoursPerDay);
 
             if(!$startDate->isFuture()) {
@@ -129,7 +151,7 @@ class AttendanceController extends Controller
                 'holiday' => $holiday,
                 'productivity' => $productivity,
                 'productivity_percentage' => $productivityPercentage,
-                'attendances' => auth()->user()->attendances()->where('date', $startDate->toDateString())->get(),
+                'attendances' => $user->attendances()->where('date', $startDate->toDateString())->get(),
             ];
             $startDate->addDay();
         }
@@ -143,9 +165,12 @@ class AttendanceController extends Controller
         return [$dates, $totals];
     }
 
-    public function update(UpdateRequest $request)
+    public function update(UpdateRequest $request, User $user)
     {
-        $user = auth()->user();
+        if(!auth()->user()->can('attendance_edit') || ($user->id !== auth()->user()->id && !auth()->user()->can('attendance_seeAll'))) {
+            return ApiResponse::error(['No tienes permisos para editar asistencias'], HttpResponse::HTTP_FORBIDDEN);
+        }
+
         $date = Carbon::parse($request->input('date'));
 
         foreach ($request->input('check_in') ?? [] as $idx => $timer) {
@@ -173,9 +198,9 @@ class AttendanceController extends Controller
 
         $holiday = false;
         $workTemplate = $user->attendanceTemplate;
-        $workedHours = AttendanceHelper::getDayAttendance(auth()->user(), $date);
+        $workedHours = AttendanceHelper::getDayAttendance($user, $date);
         $hoursPerDay = $workTemplate->getHoursPerDay($date->isoFormat('dddd'));
-        if($leaveDay = auth()->user()->leaveDays()->where('date', $date->toDateString())->where('approved', true)->first()) {
+        if($leaveDay = $user->leaveDays()->where('date', $date->toDateString())->where('approved', true)->first()) {
             $holiday = $leaveDay;
             $hoursPerDay = '00h 00m';
         }

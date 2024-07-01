@@ -10,7 +10,17 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
-    public const PAGE_SIZE = 10;
+
+
+    public static $filterable = [
+        'id',
+        'name',
+        'stock',
+        'price',
+        'description',
+        'shop_place',
+        'reference'
+    ];
 
     protected $fillable = [
         'name',
@@ -43,6 +53,11 @@ class Item extends Model
     public function files(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ItemFile::class);
+    }
+
+    public function stock_movements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockMovement::class);
     }
 
     public function getRemainingStockAttribute(): int

@@ -27,6 +27,8 @@
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -96,6 +98,11 @@
                         data.quantity_min = $('#quantity_min').val();
                         data.quantity_max = $('#quantity_max').val();
                         data.name = $('#name').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -160,7 +167,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,
@@ -187,7 +198,7 @@
             });
 
             $('#amountFilterModalBtn').on('click', function() {
-                $('#amountFilterModalBtn').modal('show');
+                $('#amountFilterModal').modal('show');
             });
         });
     </script>

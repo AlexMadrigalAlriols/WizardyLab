@@ -5,11 +5,17 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownActionsButton">
         @foreach ($links ?? [] as $link)
+        @if (isset($link['permission']))
+            @can($link['permission'])
+                <li><a class="dropdown-item" href="{{ $link['href'] }}"><i class='{{ $link['icon'] }}' ></i> {{ $link['text'] }}</a></li>
+            @endcan
+        @else
             <li><a class="dropdown-item" href="{{ $link['href'] }}"><i class='{{ $link['icon'] }}' ></i> {{ $link['text'] }}</a></li>
+        @endif
         @endforeach
         @if (isset($viewGate))
             @can($viewGate)
-            <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.show', $row->id)}}"><i class='bx bx-show' ></i> View</a></li>
+                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.show', $row->id)}}"><i class='bx bx-show' ></i> View</a></li>
             @endcan
         @endif
         @if (isset($editGate) && $editGate)

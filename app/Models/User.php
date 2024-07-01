@@ -17,12 +17,24 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasAttendance, HasRoles;
 
-    public const PAGE_SIZE = 10;
+
 
     public const GENDERS = [
         'female' => 'female',
         'male' => 'male',
         'other' => 'other',
+    ];
+
+    public static $filterable = [
+        'name',
+        'email',
+        'code',
+        'gender',
+        'department.name',
+        'roles.name',
+        'country.name',
+        'reportingUser.name',
+        'projects.name',
     ];
 
     /**
@@ -148,6 +160,11 @@ class User extends Authenticatable
     }
 
     public function leaveDays(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Leave::class);
+    }
+   // [TODO] Change leaveDays or leaves
+    public function leaves(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Leave::class);
     }

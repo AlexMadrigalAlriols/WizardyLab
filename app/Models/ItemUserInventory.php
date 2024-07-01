@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemUserInventory extends Model
 {
     use HasFactory;
-    public const PAGE_SIZE = 10;
+
 
     protected $fillable = [
         'user_inventory_id',

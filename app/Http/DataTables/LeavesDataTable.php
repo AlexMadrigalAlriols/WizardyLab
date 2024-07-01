@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\Leave;
 use App\Models\LeaveType;
 use App\Models\Status;
+use App\Services\QueryBuilderService;
 
 class LeavesDataTable extends DataTable
 {
@@ -28,7 +29,8 @@ class LeavesDataTable extends DataTable
                 $links[] = [
                     'href' => route('dashboard.leaves.approve', $row->id),
                     'icon' => 'bx bx-check',
-                    'text' => 'Approve'
+                    'text' => 'Approve',
+                    'permission' => 'leave_approve'
                 ];
             }
 
@@ -73,6 +75,17 @@ class LeavesDataTable extends DataTable
         $date_range = request()?->get('date_range');
         $user_name = request()?->get('user_name');
         $type = request()?->get('type');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Leave::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['user', 'leaveType']
+        );
 
         if(!empty($date_range)) {
             $range = str_replace(' a ', ' - ', $date_range);

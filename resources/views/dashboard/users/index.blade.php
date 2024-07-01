@@ -31,6 +31,8 @@
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -94,6 +96,11 @@
                     url: "{{ route('dashboard.users.index') }}",
                     data: function(data) {
                         data.created_at_range = $('#created_at_range').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -146,7 +153,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,

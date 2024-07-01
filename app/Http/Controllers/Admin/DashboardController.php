@@ -7,6 +7,7 @@ use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
 use App\Models\User;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -17,6 +18,14 @@ class DashboardController extends Controller
         $now_hour = now()->format('H:i');
         $weekday = now()->format('l');
         $events = [];
+        $today = Carbon::now();
+        $birthdays = User::whereMonth('birthday_date', '>', $today->month)
+            ->orWhere(function($query) use ($today) {
+                $query->whereMonth('birthday_date', $today->month)
+                    ->whereDay('birthday_date', '>=', $today->day);
+            })
+            ->orderByRaw('MONTH(birthday_date), DAY(birthday_date)')
+            ->get();
 
         $counters = [
             'tasks' => [
@@ -58,7 +67,8 @@ class DashboardController extends Controller
             'counters',
             'tasks',
             'weekdays',
-            'events'
+            'events',
+            'birthdays'
         ));
     }
 

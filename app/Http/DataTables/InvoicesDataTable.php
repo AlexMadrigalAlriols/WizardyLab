@@ -5,6 +5,7 @@ namespace App\Http\DataTables;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Status;
+use App\Services\QueryBuilderService;
 
 class InvoicesDataTable extends DataTable
 {
@@ -76,6 +77,17 @@ class InvoicesDataTable extends DataTable
         $client_name = request()?->get('client_name');
         $total_min = request()?->get('total_min');
         $total_max = request()?->get('total_max');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Invoice::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['project', 'item']
+        );
 
         if(!empty($issue_date_range)) {
             $range = str_replace(' a ', ' - ', $issue_date_range);
