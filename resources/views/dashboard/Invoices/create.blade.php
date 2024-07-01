@@ -13,7 +13,7 @@
             @include('partials.invoices.form')
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
-                    <a class="btn btn-outline-primary" href="{{route('dashboard.invoices.index')}}"><span class="px-2">{{ __('global.cancel') }}</span></a>
+                    <a class="btn btn-outline-primary" href="{{route('dashboard.invoices.index')}}"><span class="px-2">Cancel</span></a>
                     <button class="btn btn-primary ms-2" disabled id="submitBtn"><span class="px-5">{{__('global.create')}} {{__('crud.invoices.title_singular')}}</span></button>
                 </div>
             </div>

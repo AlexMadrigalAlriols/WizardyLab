@@ -222,7 +222,6 @@ return [
         'personal_folders' => 'Personal Folders',
         'add_folder' => 'Add Folder',
         'fields' => [
-            'folder' => 'Folder',
         ],
     ],
     'projects' => [
@@ -256,7 +255,6 @@ return [
             'price' => 'Price',
             'shop_place' => 'Shop Place',
             'stock' => 'Quantity',
-            'files' => 'Images',
             'created_at' => 'Created at',
             'updated_at' => 'Updated at',
         ],
@@ -371,25 +369,6 @@ return [
         'pricing-f' =>[
             "title" => "Pricing plans",
             "description" => "Choose the perfect plan for your business needs. From startups to large enterprises, we offer flexible options to support your growth and success.",
-        'deliveryNotes' => [
-            'title' => 'Delivery Notes',
-            'title_singular' => 'Delivery Note',
-            'fields' => [
-                'id' => 'ID',
-                'number' => 'Number',
-                'generate_invoice' => 'Generate Invoice',
-                'substract_stock' => 'Substact Stock',
-                'issue_date' => 'Issue Date',
-                'amount' => 'Amount',
-                'tax' => 'Tax',
-                'total' => 'Total',
-                'type' => 'Type',
-                'type_helper' => 'Con "Valued" se mostraran los precios en el albaran.',
-                'observations' => 'Observations',
-                'client' => 'Client',
-                'created_at' => 'Created at',
-                'updated_at' => 'Updated at',
-            ],
         ]
     ],
 ];
