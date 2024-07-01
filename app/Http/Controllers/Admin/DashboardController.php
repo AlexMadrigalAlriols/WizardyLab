@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\BreadcrumbHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
@@ -13,10 +12,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        Carbon::setLocale(config('app.locale'));
         $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
         $user = auth()->user();
         $now_hour = now()->format('H:i');
-        $weekday = now()->format('l');
+        $weekday = ucfirst(Carbon::now()->isoFormat('dddd'));
         $events = [];
         $today = Carbon::now();
         $birthdays = User::whereMonth('birthday_date', '>', $today->month)

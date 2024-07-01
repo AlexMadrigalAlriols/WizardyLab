@@ -15,6 +15,8 @@ class HolidayController extends Controller
      */
     public function index()
     {
+        Carbon::setLocale(config('app.locale'));
+
         $leaves = Auth::user()->leaves()->with('leaveType')->orderBy('date', 'desc')->get();
 
         $year = Carbon::now()->year;
