@@ -44,7 +44,7 @@
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#contact">{{__("crud.landing.contact")}}</a>
+                        <a href="#contact">{{__("crud.landing.contact_menu")}}</a>
                         <div class="circle"></div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                       <li><a class="dropdown-item" href="#product">{{__("crud.landing.product")}}</a></li>
                       <li><a class="dropdown-item" href="#pricing">{{__("crud.landing.pricing")}}</a></li>
                       <li><a class="dropdown-item" href="#faq">{{__("crud.landing.faq")}}</a></li>
-                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact")}}</a></li>
+                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact_menu")}}</a></li>
                     </ul>
                 </div>
                 <a class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
