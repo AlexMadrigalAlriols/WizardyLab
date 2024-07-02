@@ -7,9 +7,9 @@
                     <option value="{{ $type }}">{{ ucfirst($type) }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">{{__('crud.deliveryNotes.fields.type')}} <span class="text-danger">*</span></label>
+            <label for="floatingSelect">Type <span class="text-danger">*</span></label>
         </div>
-        <span class="text-muted">{{__('crud.deliveryNotes.fields.type_helper')}}</span>
+        <span class="text-muted">Con "Valued" se mostraran los precios en el albaran.</span>
 
         @if ($errors->has('type'))
             <span class="text-danger">{{ $errors->first('type') }}</span>
@@ -21,7 +21,7 @@
                 <option value="0">{{trans('global.no')}}</option>
                 <option value="1">{{trans('global.yes')}}</option>
             </select>
-            <label for="floatingSelect">{{__('crud.deliveryNotes.fields.generate_invoice')}} <span class="text-danger">*</span></label>
+            <label for="floatingSelect">Generate Invoice <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('generate_invoice'))
@@ -34,7 +34,7 @@
                 <option value="0">{{trans('global.no')}}</option>
                 <option value="1" selected>{{trans('global.yes')}}</option>
             </select>
-            <label for="floatingSelect">{{__('crud.deliveryNotes.fields.substract_stock')}} <span class="text-danger">*</span></label>
+            <label for="floatingSelect">Substract Stock <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('substract_stock'))
@@ -51,7 +51,7 @@
                     <option value="{{ $client->id }}" {{$deliveryNote->client_id == $client->id || old('client_id') == $client->id ? 'selected' : ''}}>{{ $client->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">{{__('crud.deliveryNotes.fields.client')}} <span class="text-danger">*</span></label>
+            <label for="floatingSelect">{{__('crud.invoices.fields.client')}} <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('client_id'))
@@ -62,7 +62,7 @@
     <div class="col-md-6">
         <div class="form-floating mt-3">
             <input type="date" class="form-control flatpicker @if($errors->has('issue_date')) is-invalid @endif" id="issue_date" name="issue_date" placeholder="Address" value="{{ old('issue_date') ?? now()->format('Y-m-d') }}">
-            <label for="issue_date">{{__('crud.deliveryNotes.fields.issue_date')}} <span class="text-danger">*</span></label>
+            <label for="issue_date">{{__('crud.invoices.fields.issue_date')}} <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('issue_date'))
@@ -75,7 +75,7 @@
     <div class="col-md-12">
         <div class="form-floating mt-3">
             <textarea name="notes" id="notes" class="form-control" maxlength="200"></textarea>
-            <label for="issue_date">{{__('crud.deliveryNotes.fields.observations')}}</label>
+            <label for="issue_date">Observations</label>
         </div>
 
         <div class="mt-0 text-end">

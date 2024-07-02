@@ -57,7 +57,7 @@
         </span>
 
         <button class="btn btn-primary d-inline-block ms-3 align-top" id="addFile">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.add')}} {{__('crud.documents.title_singular')}}</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add file</span>
         </button>
     </div>
 
@@ -66,7 +66,7 @@
             <div class="search-container w-100">
                 <i class="bx bx-search search-icon"></i>
                 <input type="text" class="search-input" id="search-input" name="search_input"
-                    placeholder="{{__('global.search')}} {{__('crud.documents.title_singular')}}">
+                    placeholder="Search Document">
             </div>
         </div>
     </div>
@@ -107,8 +107,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('global.cancel')}}</button>
-                        <button type="submit" class="btn btn-primary">{{__('global.upload')}}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Upload</button>
                     </div>
                 </form>
             </div>

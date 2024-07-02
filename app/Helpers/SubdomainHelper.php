@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Portal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
 class SubdomainHelper
@@ -19,11 +20,14 @@ class SubdomainHelper
                 session(['portal_id' => $portal->id]);
             }
 
+            App::setLocale(ConfigurationHelper::get('language'));
             return $portal;
         }
 
-        return Cache::lock('portal_subdomain_' . $subdomain)->get(function () use ($subdomain) {
+        $portal = Cache::lock('portal_subdomain_' . $subdomain)->get(function () use ($subdomain) {
             return Portal::where('subdomain', $subdomain)->where('active', 1)->first();
         });
+        App::setLocale(ConfigurationHelper::get('language'));
+        $portal;
     }
 }

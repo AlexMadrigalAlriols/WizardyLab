@@ -40,7 +40,6 @@ function drawDataTable(selector, options, withFilters = false) {
 
                             const flatpicker = $(`#${columnOptions.name}_range`).flatpickr({
                                 mode: 'range',
-                                locale: columnOptions.locale,
                                 defaultDate: columnOptions.value ? columnOptions.value.split(' - ') : [],
                                 onOpen: () => {
                                     $(`#${columnOptions.name}_range`).data('status', 'opened')

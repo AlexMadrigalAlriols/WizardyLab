@@ -196,12 +196,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
 // Password reset link request routes...
  Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
 
-
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 
 Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
-    Auth::routes(['logout' => false, 'register' => false, 'verify' => false, 'confirm' => false]);
+    Auth::routes(['register' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
