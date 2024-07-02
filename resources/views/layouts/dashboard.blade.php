@@ -130,7 +130,7 @@
                         @endif
                     </ul>
                 </div>
-                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4 navIconBtn"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
+                <a href="{{route('dashboard.notes.index')}}" class="text-dark me-4 navIconBtn {{ $section == 'Notes' ? 'active' : 'text-dark'}}"><i class="bx bxs-note" style="font-size: 23px;"></i></a>
                 <div class="dropdown d-inline-block navIconBtn">
                     <a class="text-dark text-decoration-none me-4 position-relative" href="#" role="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bxs-bell" style="font-size: 23px;"></i>

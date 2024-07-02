@@ -144,6 +144,16 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    @elseif ($globalConfig->type == 'select-language')
+                                        <div class="form-group mb-3">
+                                            <select class="form-select" id="{{ $globalConfig->key }}_value" name="values[]">
+                                                @foreach ($langs as $iso => $lang)
+                                                    <option value="{{ $iso }}"
+                                                        @if ($globalConfig->value == $iso) selected @endif>
+                                                        {{ $lang }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

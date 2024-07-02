@@ -105,6 +105,7 @@ class CreatePortal extends Command
 
     private function createGlobalConfigs(Portal $portal, Client $client) {
         $configs = [
+            ['type' => 'select-language', 'key' => 'language', 'value' => 'en'],
             ['type' => 'select-client', 'key' => 'invoice_client_id', 'value' => $client->id],
             ['type' => 'number', 'key' => 'price_per_hour', 'value' => '15'],
             ['type' => 'number', 'key' => 'tax_value', 'value' => '21'],

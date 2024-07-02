@@ -36,6 +36,12 @@ class GlobalConfigurationController extends Controller
         $invoiceStatuses = Status::where('morphable', Invoice::class)->get();
         $clients = Client::where('active', 1)->get();
         $portal = SubdomainHelper::getPortal($request);
+        $langs = [
+            'es' => 'Español',
+            'en' => 'Ingles',
+            'fr' => 'Frances',
+            'it' => 'Italiano'
+        ];
 
         return view('dashboard.globalConfigurations.index', compact(
             'globalConfigurations',
@@ -43,7 +49,8 @@ class GlobalConfigurationController extends Controller
             'projectStatuses',
             'invoiceStatuses',
             'portal',
-            'clients'
+            'clients',
+            'langs'
         ));
     }
 
