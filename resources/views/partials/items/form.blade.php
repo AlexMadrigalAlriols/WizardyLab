@@ -22,20 +22,18 @@
     </div>
     <div class="col-md-3">
         <div class="row">
-            <div class="{{$item->id ? 'col-9' : 'col-12'}}">
+            <div class="col-9">
                 <div class="form-floating mt-3">
                     <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock" value="{{ old('stock') ?? $item->stock }}">
                     <label for="stock">{{ __('crud.items.fields.stock') }} <span class="text-danger">*</span></label>
                 </div>
             </div>
 
-            @if ($item->id)
-                <div class="col-3">
-                    <div class="mt-4">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addStockMovementModal"><i class='bx bx-plus-medical' ></i></button>
-                    </div>
+            <div class="col-3">
+                <div class="mt-4">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addStockMovementModal"><i class='bx bx-plus-medical' ></i></button>
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 </div>

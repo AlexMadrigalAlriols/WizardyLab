@@ -21,7 +21,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button class="dropdown-item text-danger submitDeleteFrm" type="button" data-folderid="{{$folder->id}}">
-                                            <i class='bx bx-trash' ></i> {{__('global.remove')}}
+                                            <i class='bx bx-trash' ></i> Delete
                                         </button>
                                     </form>
                                 </li>
@@ -37,6 +37,6 @@
 @if(count($folders) == 0)
     <div class="col-md-12 mt-5 text-center">
         @include('images.no_folders_found')
-        <p class="text-muted mt-3">{{__('global.no_data.no_folders_found')}}!</p>
+        <p class="text-muted mt-3">No folders found here!</p>
     </div>
 @endif

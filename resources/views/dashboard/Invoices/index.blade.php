@@ -15,11 +15,11 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">{{__('crud.invoices.fields.number')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.invoices.fields.client')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.invoices.fields.status')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.invoices.fields.issue_date')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.invoices.fields.total')}}</th>
+                    <th scope="col" class="border-bottom">NUMBER</th>
+                    <th scope="col" class="border-bottom">CLIENT</th>
+                    <th scope="col" class="border-bottom">STATUS</th>
+                    <th scope="col" class="border-bottom">ISSUE_DATE</th>
+                    <th scope="col" class="border-bottom">TOTAL</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

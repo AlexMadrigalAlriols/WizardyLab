@@ -6,15 +6,15 @@
     <div class="col-md-8 col-sm-12">
         <div class="mt-1">
             <span class="h2 d-inline-block mt-1">
-                <b>{{__('global.create')}} {{__('crud.projects.title_singular')}}</b>
+                <b>Create a project</b>
             </span>
         </div>
         <form action="{{route('dashboard.projects.store')}}" method="POST" class="mt-2 pb-3">
             @include('partials.projects.form')
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
-                    <a class="btn btn-outline-primary" href="{{route('dashboard.projects.index')}}"><span class="px-2">{{ __('global.cancel')}}</span></a>
-                    <button class="btn btn-primary ms-2" disabled id="submitBtn"><span class="px-5">{{__('global.create')}} {{__('crud.projects.title_singular')}}</span></button>
+                    <a class="btn btn-outline-primary" href="{{route('dashboard.projects.index')}}"><span class="px-2">Cancel</span></a>
+                    <button class="btn btn-primary ms-2" disabled id="submitBtn"><span class="px-5">Create Project</span></button>
                 </div>
             </div>
         </form>

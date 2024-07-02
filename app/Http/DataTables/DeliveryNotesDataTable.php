@@ -25,7 +25,7 @@ class DeliveryNotesDataTable extends DataTable
                 [
                     'href' => route('dashboard.deliveryNotes.download', $row->id),
                     'icon' => 'bx bx-download',
-                    'text' => __('global.download')
+                    'text' => 'Download'
                 ]
             ];
 

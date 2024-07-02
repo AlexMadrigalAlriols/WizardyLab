@@ -98,30 +98,5 @@ return [
     'not_started' => 'Not started',
     'list_view' => 'List view',
     'archive' => 'Archived',
-    'active_timers' => 'Active timers',
-    'no_active_timers' => 'No active timers',
-    'notifications' => 'Notifications',
-    'no_notifications' => 'No notifications yet',
-    'mark_all_as_read' => 'Mark all as read',
-    'actual_ubication' => 'Your actual ubication',
-    'notes' => 'Notes',
-    'birthdays' => 'Birthdays',
-    'birthdays_help' => 'All employee birthdays.',
-    'no_more_birthdays' => 'No more birthdays',
-    'today' => 'Today',
-    'days' => 'Days',
-    'in' => 'in',
-    'its_you' => 'It\'s you',
-    'deliverynotes' => 'Delivery Notes',
-    'download' => 'Download',
-    'advanced_filters' => 'Advanced Filters',
-    'space_used' => 'Space used',
-    'uploaded_by' => 'Uploaded by',
-    'add' => 'Add',
-    'upload' => 'Upload',
-    'no_data' => [
-        'no_folders_found' => 'No folders found',
-        'no_files_found' => 'No files found'
-    ]
 ];
 

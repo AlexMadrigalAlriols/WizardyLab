@@ -5,7 +5,7 @@
     <div class="col-md-8 col-sm-12">
         <div class="mt-2">
             <span class="h2 d-inline-block mt-1">
-                <b>{{__('global.save')}} {{ $task->title }}</b>
+                <b>Edit {{ $task->title }}</b>
             </span>
         </div>
         <form action="{{route('dashboard.tasks.update', $task->id)}}" method="POST" class="mb-4 pb-2">
@@ -14,8 +14,8 @@
             @include('partials.tasks.form')
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
-                    <a class="btn btn-outline-primary" href="{{request()->has('board') ? route('dashboard.projects.board', request()->input('board')) : route('dashboard.tasks.index')}}"><span class="px-2">{{__('global.cancel')}}</span></a>
-                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">{{__('global.save')}} {{__('crud.tasks.title_singular')}}</span></button>
+                    <a class="btn btn-outline-primary" href="{{request()->has('board') ? route('dashboard.projects.board', request()->input('board')) : route('dashboard.tasks.index')}}"><span class="px-2">Cancel</span></a>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">Save Task</span></button>
                 </div>
             </div>
         </form>

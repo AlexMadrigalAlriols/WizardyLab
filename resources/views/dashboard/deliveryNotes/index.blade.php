@@ -15,10 +15,10 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">{{__('crud.deliveryNotes.fields.number')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.deliveryNotes.fields.client')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.deliveryNotes.fields.issue_date')}}</th>
-                    <th scope="col" class="border-bottom">{{__('crud.deliveryNotes.fields.total')}}</th>
+                    <th scope="col" class="border-bottom">NUMBER</th>
+                    <th scope="col" class="border-bottom">CLIENT</th>
+                    <th scope="col" class="border-bottom">ISSUE_DATE</th>
+                    <th scope="col" class="border-bottom">TOTAL</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
