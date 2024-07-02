@@ -169,7 +169,7 @@
 
                         @if (auth()->user()->notifications()->unread()->count() == 0)
                             <div class="text-center py-3">
-                                <span class="text-muted">No notifications</span>
+                                <span class="text-muted">{{ __('global.no_notifications')}} </span>
                             </div>
                         @else
                             <div class="text-center border-top pt-2">
