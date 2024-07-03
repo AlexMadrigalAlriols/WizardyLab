@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sunday', 'Saturday'];
         $user = auth()->user();
         $now_hour = now()->format('H:i');
         $weekday = now()->format('l');
@@ -26,6 +26,7 @@ class DashboardController extends Controller
             })
             ->orderByRaw('MONTH(birthday_date), DAY(birthday_date)')
             ->get();
+        $leaves = Leave::whereDate('date', Carbon::now()->format('Y-m-d'))->get();
 
         $counters = [
             'tasks' => [
@@ -67,7 +68,8 @@ class DashboardController extends Controller
             'tasks',
             'weekdays',
             'events',
-            'birthdays'
+            'birthdays',
+            'leaves'
         ));
     }
 

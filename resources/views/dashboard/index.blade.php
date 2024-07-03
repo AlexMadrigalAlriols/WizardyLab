@@ -76,120 +76,106 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12 mt-3">
-                        <div class="card pb-3">
-                            <div class="card-header p-4 bg-white">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div>
-                                            <h4 class="mb-0"><b><i class='bx bx-calendar'></i>{{__('crud.dashboard.fields.my_calendar')}}</b></h4>
-                                            <p class="text-muted mb-0">{{__('crud.dashboard.fields.all_events')}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-
-                                    </div>
+                <div class="row mt-3">
+                    <div class="card">
+                        <div class="card-header p-4 bg-white">
+                            <div class="row">
+                                <div class="ps-0">
+                                    <h4 class="mb-0"><b><i class='bx bx-time-five' ></i> Week Schedule</b></h4>
+                                    <p class="text-muted mb-0">Weekdays schedule times</p>
                                 </div>
                             </div>
-                            <div class="card-body scrollbar" style="max-height: 24rem">
-                                @foreach ($weekdays as $idx => $wday)
-                                    <div class="card rounded-0">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <span class="text-muted"><b>{{__('global.weekday.'.$wday) }}</b></span>
-                                                </div>
-                                                <div class="col-md-6 text-end">
-                                                    <span
-                                                        class="text-muted"><b>{{ now()->startOfWeek()->addDays(array_search($wday, $weekdays))->format('jS M, Y') }}</b></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @foreach ($events[$wday] as $event)
-                                            @if (get_class($event) == 'App\Models\Leave')
-                                                <div class="card border-0 rounded-0 card-event"
-                                                    style="{{ $event->leaveType->styles }}" data-bs-toggle="tooltip"
-                                                    data-bs-title="{{ $event->leaveType->name }}" data-bs-placement="top">
-                                                    <div class="card-body p-2">
-                                                        <div class="row p-0">
-                                                            <div class="col-md-3">
-                                                                {{__('crud.dashboard.fields.all_day')}}
-                                                            </div>
-                                                            <div class="col-md-9">
-                                                                <i class='bx bxs-plane-take-off me-2 align-middle'
-                                                                    style="font-size: 25px;"></i>
-                                                                <span>{{ $event->user->name }}</span>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <a class="card border-0 rounded-0 card-event bg-primary text-white text-decoration-none"
-                                                    href="{{ route('dashboard.tasks.show', $event->id) }}">
-                                                    <div class="card-body p-2">
-                                                        <div class="row p-0">
-                                                            <div class="col-md-3">
-                                                                {{__('crud.dashboard.fields.all_day')}}
-                                                            </div>
-                                                            <div class="col-md-9">
-                                                                <i class='bx bx-list-ul me-2 align-middle'
-                                                                    style="font-size: 25px;"></i>
-                                                                <span>{{ $event->title }}</span>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </a>
-                                            @endif
-                                        @endforeach
+                        </div>
+                        <div class="card-body">
+                            @foreach ($weekdays as $weekday)
+                                <div class="row py-2 border-bottom">
+                                    <div class="col-4 mt-2">
+                                        <span>{{ $weekday }}</span>
                                     </div>
-                                @endforeach
-                            </div>
+                                    <div class="col-4 ">
+                                        @php
+                                            $schedule = auth()->user()->attendanceTemplate->getDaySchedule($weekday);
+                                        @endphp
+                                        <span class="badge py-2 px-3 mt-1 ms-2 text-dark bg-white">{{$schedule}}</span>
+                                    </div>
+                                    <div class="col-4 mt-1 text-end">
+                                        @if ($user->attendanceTemplate && $schedule != '00:00 - 00:00')
+                                            <span class="badge" style="{{$user->attendanceTemplate->styles}}">{{$user->attendanceTemplate->name}}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12 mt-3">
-                        <div class="card">
-                            <div class="card-header p-4 bg-white">
+                <div class="row mt-3">
+                    <div class="card">
+                        <div class="card-header p-4 bg-white">
+                            <div class="row">
+                                <div class="ps-0">
+                                    <h4 class="mb-0"><b><i class='bx bxs-plane-take-off'></i> On Leave Today</b></h4>
+                                    <p class="text-muted mb-0">All employee today leaves</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @foreach ($leaves as $leave)
+                            <div class="row border-bottom">
+                                <div class="col-6">
+                                    @include('partials.users.details', ['user' => $leave->user, 'limit' => 15])
+                                </div>
+                                <div class="col-6">
+                                    <span class="badge py-2 px-3 mt-4 ms-2" style="{{$leave->leaveType->styles}}">{{$leave->leaveType->name}}</span>
+                                </div>
+                            </div>
+                            @endforeach
+                            @if (!count($leaves))
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div>
-                                            <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
-                                            <p class="text-muted mb-0">All employee birthdays</p>
-                                        </div>
+                                    <div class="col-12 text-center py-5">
+                                        <span class="text-muted">No Leaves today!</span>
                                     </div>
                                 </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="card">
+                        <div class="card-header p-4 bg-white">
+                            <div class="row">
+                                <div class="ps-0">
+                                    <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
+                                    <p class="text-muted mb-0">All employee birthdays</p>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                @foreach ($birthdays as $birthday)
-                                <div class="row border-bottom">
-                                    <div class="col-7">
-                                        @include('partials.users.details', ['user' => $birthday])
-                                    </div>
-                                    <div class="col-2">
-                                        <span class="badge bg-primary align-baseline py-2 px-3 mt-4"><i class='bx bx-cake'></i> {{ $birthday->birthday_date->format('d M')}}</span>
-                                    </div>
-                                    <div class="col-2">
-                                        @if($days = $birthday->birthday_date->diffInDays(now()))
-                                            <span class="badge bg-secondary py-2 px-3 mt-4">in {{ $days }} days</span>
-                                        @else
-                                            <span class="badge bg-success py-2 px-3 mt-4">Today</span>
-                                        @endif
+                        </div>
+                        <div class="card-body">
+                            @foreach ($birthdays as $birthday)
+                            <div class="row border-bottom">
+                                <div class="col-7">
+                                    @include('partials.users.details', ['user' => $birthday, 'limit' => 15])
+                                </div>
+                                <div class="col-2">
+                                    <span class="badge bg-primary align-baseline py-2 px-3 mt-4"><i class='bx bx-cake'></i> {{ $birthday->birthday_date->format('d M')}}</span>
+                                </div>
+                                <div class="col-3">
+                                    @if($days = $birthday->birthday_date->diffInDays(now()))
+                                        <span class="badge bg-secondary py-2 px-3 mt-4 ms-2">in {{ $days }} days</span>
+                                    @else
+                                        <span class="badge bg-success py-2 px-3 mt-4 ms-2">Today</span>
+                                    @endif
+                                </div>
+                            </div>
+                            @endforeach
+                            @if (!count($birthdays))
+                                <div class="row">
+                                    <div class="col-12 text-center py-5">
+                                        <span class="text-muted">No birthdays found!</span>
                                     </div>
                                 </div>
-                                @endforeach
-                                @if (!count($birthdays))
-                                    <div class="row">
-                                        <div class="col-12 text-center py-5">
-                                            <span class="text-muted">No birthdays found!</span>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -360,6 +346,80 @@
                                         </tfoot>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="card pb-3">
+                            <div class="card-header p-4 bg-white">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div>
+                                            <h4 class="mb-0"><b><i class='bx bx-calendar'></i>{{__('crud.dashboard.fields.my_calendar')}}</b></h4>
+                                            <p class="text-muted mb-0">{{__('crud.dashboard.fields.all_events')}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body scrollbar" style="max-height: 24rem">
+                                @foreach ($weekdays as $idx => $wday)
+                                    <div class="card rounded-0">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span class="text-muted"><b>{{__('global.weekday.'.$wday) }}</b></span>
+                                                </div>
+                                                <div class="col-md-6 text-end">
+                                                    <span
+                                                        class="text-muted"><b>{{ now()->startOfWeek()->addDays(array_search($wday, $weekdays))->format('jS M, Y') }}</b></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @foreach ($events[$wday] as $event)
+                                            @if (get_class($event) == 'App\Models\Leave')
+                                                <div class="card border-0 rounded-0 card-event"
+                                                    style="{{ $event->leaveType->styles }}" data-bs-toggle="tooltip"
+                                                    data-bs-title="{{ $event->leaveType->name }}" data-bs-placement="top">
+                                                    <div class="card-body p-2">
+                                                        <div class="row p-0">
+                                                            <div class="col-md-3">
+                                                                {{__('crud.dashboard.fields.all_day')}}
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <i class='bx bxs-plane-take-off me-2 align-middle'
+                                                                    style="font-size: 25px;"></i>
+                                                                <span>{{ $event->user->name }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <a class="card border-0 rounded-0 card-event bg-primary text-white text-decoration-none"
+                                                    href="{{ route('dashboard.tasks.show', $event->id) }}">
+                                                    <div class="card-body p-2">
+                                                        <div class="row p-0">
+                                                            <div class="col-md-3">
+                                                                {{__('crud.dashboard.fields.all_day')}}
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <i class='bx bx-list-ul me-2 align-middle'
+                                                                    style="font-size: 25px;"></i>
+                                                                <span>{{ $event->title }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

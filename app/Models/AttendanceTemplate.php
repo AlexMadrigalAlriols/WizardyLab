@@ -50,7 +50,7 @@ class AttendanceTemplate extends Model
 
     public function getHoursPerDay(string $weekday)
     {
-        $day = AttendanceTemplateDay::where('weekday', $weekday)->first();
+        $day = $this->days()->where('weekday', $weekday)->first();
 
         $startTime = Carbon::parse($day->start_time);
         $endTime = Carbon::parse($day->end_time);
@@ -66,6 +66,12 @@ class AttendanceTemplate extends Model
         $minutes = $effectiveWorkTime % 60;
 
         return sprintf('%02dh %02dm', $hours, $minutes);
+    }
+
+    public function getDaySchedule(string $weekday) {
+        $day = $this->days()->where('weekday', $weekday)->first();
+
+        return $day->start_time->format('H:i') . ' - ' . $day->end_time->format('H:i');
     }
 
     public function getStylesAttribute() {

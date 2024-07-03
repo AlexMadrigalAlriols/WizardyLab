@@ -128,7 +128,7 @@ class AttendanceController extends Controller
         while ($startDate->lte($endDate)) {
             $holiday = false;
             $workedHours = AttendanceHelper::getDayAttendance($user, $startDate);
-            $hoursPerDay = $workTemplate->getHoursPerDay($startDate->isoFormat('dddd'));
+            $hoursPerDay = $workTemplate->getHoursPerDay($startDate->format('l'));
             if($leaveDay = $user->leaveDays()->where('date', $startDate->toDateString())->where('approved', true)->first()) {
                 $holiday = $leaveDay;
                 $hoursPerDay = '00h 00m';
