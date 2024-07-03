@@ -47,8 +47,7 @@ class DashboardController extends Controller
             ->limit(5)->get();
 
         foreach ($weekdays as $wday) {
-            $events[$wday] = Leave::where('user_id', $user->id)
-                ->where('date', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
+            $events[$wday] = Leave::where('date', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
                 ->where('date', '>=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
                 ->where('approved', 1)
                 ->get();
