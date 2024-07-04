@@ -20,9 +20,8 @@
     <nav class="navbar bg-transparent fixed-top">
         <div class="container-fluid p-0" id="navbar">
             <a class="navbar-brand d-flex justify-content-center align-items-center ms-3 fs-3" href="#">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" width="70" height="70"
+                <img src="{{ asset('img/LogoLetters.png') }}" alt="Logo" width="225" height="70"
                     class="d-inline-block align-text-top">
-                WizardyLab
             </a>
 
             <div class="d-flex flex-column justify-content-center gap-4">
@@ -62,13 +61,16 @@
                       <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact_menu")}}</a></li>
                     </ul>
                 </div>
-                <a class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
+                <a href="#contact" class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
                 <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <span class="fi fi-us"></span> En
+                    <button class="dropdown-toggle text-capitalize" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     <span class="fi fi-{{$lang == "en"?"us":$lang}}"></span> {{$lang}}
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="?lang=es"><span class="fi fi-es"></span> Es</a></li>
+                        @foreach ($langList as $langl)
+                            <li><a class="dropdown-item text-capitalize" href="?lang={{$langl}}"><span class="fi fi-{{$langl == "en"?"us":$langl}}"></span> {{$langl}}</a></li>
+                        @endforeach
+
                     </ul>
                 </div>
             </div>
@@ -80,17 +82,16 @@
     </nav>
 
     <div class="body d-flex flex-column align-items-center justify-content-start rubik-font">
-
         <div class="row div-1 mb-5 section" id="home" bar-width="620px">
             <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
-                <h1 class="fs-1 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                <h1 class="fs-3 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
                 <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
                 <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
                 <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
                 <div class="buttons d-flex gap-3 me-3">
-                    <button class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</button>
-                    <a class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
+                    <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
+                    <a href="#contact" class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
                 </div>
             </div>
             <div class="col-12 col-xl-6 col-img">
@@ -98,11 +99,7 @@
                     class="mt-5">
             </div>
         </div>
-            <div class="col-12 col-xl-6 col-img">
-                <img class="shadow-lg mt-5 img" src="{{ asset('img/dashboard-1.png') }}" alt="Dashboard1" width="1000px"
-                    class="mt-5">
-            </div>
-        </div>
+    </div>
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
@@ -243,39 +240,40 @@
             <div class="row w-100 d-flex justify-content-center align-items-center product flex-column-reverse gap-5 gap-xl-0 flex-xl-row" id="5">
                 <div class="col-12 col-xl-6 d-flex justify-content-center">
                     <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-5-img" src="{{ asset('img/proyects-img.png') }}" alt=""
+                        id="selector-5-img" src="{{ asset('img/items-img.png') }}" alt=""
                         width="900px">
                 </div>
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">INVENTORY SYSTEM</div>
-                    <div class="funcionality fs-2">ITEMS, ASSIGNMENTS AND EXPENSES</div>
+                    <div class="title fs-5">{{ __("crud.landing.inventory.title") }}</div>
+                    <div class="funcionality fs-2">{{ __("crud.landing.inventory.funcionality") }}</div>
                     <div class="selectors" id="selector-5">
                         <div class="selector" image="{{ asset('img/items-img.png') }}">
-                            <div>REGISTER ITEMS</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_1") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>REGISTER ITEMS</b></div>
+                            <div><b>{{ __("crud.landing.inventory.selector_5_1") }}</b></div>
                             <ul>
-                                <li>Filter by references</li>
-                                <li>Add photos to record status</li>
+                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_1") }}</li>
+                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_2") }}</li>
                             </ul>
                         </div>
                         <div class="selector" image="{{ asset('img/assignments-img.png') }}">
-                            <div>ASSIGNMENTS</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_2") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>ASSIGNMENTS</b></div>
-                            Assign multiple items to different users.
+                            <div><b>{{ __("crud.landing.inventory.selector_5_2") }}</b></div>
+                            {{ __("crud.landing.inventory.selector_5_2_desc") }}
                         </div>
                         <div class="selector" image="{{ asset('img/expenses-img.png') }}">
-                            <div>EXPENSES</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_3") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>EXPENSES</b></div>
-                            Allows you to create expenses so that you can invoice them later or simply record them.
+                            <div><b>{{ __("crud.landing.inventory.selector_5_3") }}</b></div>
+                            {{ __("crud.landing.inventory.selector_5_3_desc") }}
                         </div>
                     </div>
                 </div>
+
             </div>
 
 
@@ -284,9 +282,8 @@
             <section id="pricing" class="pricing-content section-padding w-100">
                 <div class="container">
                     <div class="section-title text-center">
-                        <h2>Pricing Plans</h2>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout.</p>
+                        <h2>{{__("crud.landing.pricing-f.title")}}</h2>
+                        <p>{{__("crud.landing.pricing-f.description")}}</p>
                     </div>
                     <div class="row text-center d-flex justify-content-center align-items-center w-100 gap-3 gap-xl-0">
                         <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
@@ -373,9 +370,9 @@
             </section>
         </div>
         <div class="row section" id="faq" bar-width="1090px">
-            <h2 class="text-center mb-5">FREQUENT ANSWERS AND QUESTIONS</h2>
+            <h2 class="text-center mb-5">{{__("crud.landing.faq_title")}}</h2>
             <div class="accordion" id="accordionExample">
-                @foreach ($faqs as $faq)
+                @foreach ($faqs[ $lang ] as $faq)
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -394,20 +391,18 @@
                 @endforeach
             </div>
         </div>
-        <div class="row section" id="contact" bar-width="1250px">
+        <div class="row section w-100" id="contact" bar-width="1250px">
             <div class="container mt-5 pt-5">
                 <div class="row justify-content-md-center">
                     <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-                        <h2 class="mb-4 display-5 text-center">Contact</h2>
-                        <p class="text-secondary mb-5 text-center">The best way to contact us is to use our contact
-                            form below. Please fill out all of the required fields and we will get back to you as soon
-                            as possible.</p>
+                        <h2 class="mb-4 display-5 text-center">{{ __("crud.landing.contact.title") }}</h2>
+                        <p class="text-secondary mb-5 text-center">{{ __("crud.landing.contact.description") }}</p>
                         <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
                     </div>
                 </div>
             </div>
             <div class="container">
-                <div class="row justify-content-lg-center">
+                <div class="row justify-content-center">
                     <div class="col-12 col-lg-9">
                         <div class="bg-white border rounded shadow-sm overflow-hidden">
 
@@ -415,13 +410,13 @@
                                 @csrf
                                 <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
                                     <div class="col-12">
-                                        <label for="name" class="form-label">Full Name <span
+                                        <label for="name" class="form-label">{{ __("crud.landing.contact.full_name") }} <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="" required>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label for="email" class="form-label">Email <span
+                                        <label for="email" class="form-label">{{ __("crud.landing.contact.email") }} <span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text">
@@ -436,7 +431,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label for="phone_number" class="form-label">Phone Number</label>
+                                        <label for="phone_number" class="form-label">{{ __("crud.landing.contact.phone_number") }}</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -450,14 +445,14 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="message" class="form-label">Message <span
+                                        <label for="message" class="form-label">{{ __("crud.landing.contact.message") }} <span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
                                             <button class="btn btn-lg" type="submit"
-                                                style="background-color:#374df1; color:white">Submit</button>
+                                                style="background-color:#374df1; color:white">{{ __("crud.landing.contact.submit_button") }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -467,6 +462,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </body>
 <script>
