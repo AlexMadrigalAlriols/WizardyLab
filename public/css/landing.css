@@ -469,6 +469,10 @@
         margin-top: 10rem;
     }
 
+    #LogoNav {
+        width: 225px;
+    }
+
     @media (max-width: 1200px) {
         .col-img{
             display: flex;
@@ -500,7 +504,13 @@
         .accordion{
             width: 90%;
         }
-
+        #LogoNav {
+            width: 130px !important;
+            height: 50px !important;
+        }
+        .mt-20 {
+            margin-top: 5rem;
+        }
       }
 
       @media (min-width: 1200px) {
