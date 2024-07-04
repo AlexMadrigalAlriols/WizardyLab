@@ -92,11 +92,13 @@
     <div class="body d-flex flex-column align-items-center justify-content-start rubik-font">
         <div class="row div-1 mb-5 section" id="home" bar-width="620px">
             <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
-                <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
+                <div class="p-4">
+                    <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                    <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                    <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
+                    <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
+                    <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
+                </div>
                 <div class="buttons d-flex gap-3 me-3">
                     <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
                     <a href="#contact" class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
@@ -286,40 +288,38 @@
 
 
         </div>
-        <div class="row section d-flex flex-column align-items-center w-100" id="pricing" bar-width="950px">
-            <section id="pricing" class="pricing-content section-padding w-100">
+        <div class="row section d-flex flex-column align-items-center" id="pricing" bar-width="950px">
+            <section id="pricing" class="pricing-content section-padding">
                 <div class="container">
                     <div class="section-title text-center">
                         <h2>{{__("crud.landing.pricing-f.title")}}</h2>
                         <p>{{__("crud.landing.pricing-f.description")}}</p>
                     </div>
-                    <div class="row text-center d-flex justify-content-center align-items-center w-100 gap-3 gap-xl-0">
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
+                    <div class="row text-center d-flex justify-content-center align-items-center gap-3 gap-xl-0">
+                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
                             data-wow-delay="0.1s" data-wow-offset="0"
                             style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;">
                             <div class="pricing_design">
                                 <div class="single-pricing">
                                     <div class="price-head">
-                                        <h2>TEAM</h2>
-                                        <h1>80€</h1>
-                                        <span>/Monthly</span>
+                                        <h2>BASIC</h2>
+                                        <span class="h1">80€</span><br>
+                                        <span>/{{trans('plans.monthly')}}</span>
                                     </div>
                                     <ul>
-                                        <li><b>15</b> website</li>
-                                        <li><b>50GB</b> Disk Space</li>
-                                        <li><b>50</b> Email</li>
-                                        <li><b>50GB</b> Bandwidth</li>
-                                        <li><b>10</b> Subdomains</li>
-                                        <li><b>Unlimited</b> Support</li>
+                                        <li>{!! trans('plans.employee_accounts', ['count' => 15]) !!}</li>
+                                        <li>{!! trans('plans.disk_space', ['size' => '10gb']) !!}</li>
+                                        <li>{!! trans('plans.onboarding') !!}</li>
+                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                        <li>{!! trans('plans.unlimited_support') !!}</li>
                                     </ul>
-                                    <div class="pricing-price">
-
+                                    <div class="pricing-price mt-auto">
+                                        <a href="#contact" class="price_btn">START TRIAL</a>
                                     </div>
-                                    <a href="#" class="price_btn">START TRIAL</a>
                                 </div>
                             </div>
                         </div><!--- END COL -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
+                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
                             data-wow-delay="0.2s" data-wow-offset="0"
                             style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeInUp;">
                             <div class="pricing_design">
@@ -327,27 +327,29 @@
                                     <span class="badge">Popular</span>
                                 </div>
                                 <div class="single-pricing">
-                                    <div class="price-head">
-                                        <h2>BUSINESS</h2>
-                                        <h1 class="price">120€</h1>
-                                        <span>/Monthly</span>
+                                    <div    >
+                                        <div class="price-head">
+                                            <h2>PROFESSIONAL</h2>
+                                            <span class="original-price">140€</span>
+                                            <span class="h1">120€</span><br>
+                                            <span>/{{trans('plans.monthly')}}</span>
+                                        </div>
+                                        <ul>
+                                            <li>{!! trans('plans.employee_accounts', ['count' => 60]) !!}</li>
+                                            <li>{!! trans('plans.disk_space', ['size' => '30gb']) !!}</li>
+                                            <li>{!! trans('plans.onboarding') !!}</li>
+                                            <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                            <li>{!! trans('plans.custom_migration') !!}</li>
+                                            <li>{!! trans('plans.unlimited_support') !!}</li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        <li><b>15</b> website</li>
-                                        <li><b>50GB</b> Disk Space</li>
-                                        <li><b>50</b> Email</li>
-                                        <li><b>50GB</b> Bandwidth</li>
-                                        <li><b>10</b> Subdomains</li>
-                                        <li><b>Unlimited</b> Support</li>
-                                    </ul>
-                                    <div class="pricing-price">
-
+                                    <div class="pricing-price mt-auto">
+                                        <a href="#contact" class="price_btn">CONTACT US</a>
                                     </div>
-                                    <a href="#" class="price_btn">START TRIAL</a>
                                 </div>
                             </div>
                         </div><!--- END COL -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
+                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
                             data-wow-delay="0.3s" data-wow-offset="0"
                             style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;">
                             <div class="pricing_design">
@@ -355,21 +357,24 @@
                                 <div class="single-pricing">
                                     <div class="price-head">
                                         <h2>ENTERPRISE</h2>
-                                        <h1 class="price">160€</h1>
-                                        <span>/Monthly</span>
+                                        <span class="original-price">200€</span>
+                                        <span class="h1">160€</span><br>
+                                        <span>/{{trans('plans.monthly')}}</span>
                                     </div>
                                     <ul>
-                                        <li><b>15</b> website</li>
-                                        <li><b>50GB</b> Disk Space</li>
-                                        <li><b>50</b> Email</li>
-                                        <li><b>50GB</b> Bandwidth</li>
-                                        <li><b>10</b> Subdomains</li>
-                                        <li><b>Unlimited</b> Support</li>
+                                        <li>{!! trans('plans.employee_accounts', ['count' => 'Unlimited']) !!}</li>
+                                        <li>{!! trans('plans.disk_space', ['size' => '100gb']) !!}</li>
+                                        <li>{!! trans('plans.onboarding') !!}</li>
+                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                        <li>{!! trans('plans.custom_migration') !!}</li>
+                                        <li>{!! trans('plans.hiring_module') !!}</li>
+                                        <li>{!! trans('plans.route_module') !!}</li>
+                                        <li>{!! trans('plans.custom_modules') !!}</li>
+                                        <li>{!! trans('plans.unlimited_support') !!}</li>
                                     </ul>
-                                    <div class="pricing-price">
-
+                                    <div class="pricing-price mt-auto">
+                                        <a href="#contact" class="price_btn">CONTACT US</a>
                                     </div>
-                                    <a href="#" class="price_btn">START TRIAL</a>
                                 </div>
                             </div>
                         </div><!--- END COL -->
@@ -399,7 +404,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="row section w-100" id="contact" bar-width="1250px">
+        <div class="row section w-100 pb-5" id="contact" bar-width="1250px">
             <div class="container mt-5 pt-5">
                 <div class="row justify-content-md-center">
                     <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
