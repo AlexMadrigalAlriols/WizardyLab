@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-4 ">
                                         @php
-                                            $schedule = auth()->user()->attendanceTemplate->getDaySchedule($weekday);
+                                            $schedule = $user->attendanceTemplate ? $user->attendanceTemplate->getDaySchedule($weekday) : '00:00 - 00:00';
                                         @endphp
                                         <span class="badge py-2 px-3 mt-1 ms-2 text-dark bg-white">{{$schedule}}</span>
                                     </div>
