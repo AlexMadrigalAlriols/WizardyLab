@@ -20,9 +20,8 @@
     <nav class="navbar bg-transparent fixed-top">
         <div class="container-fluid p-0" id="navbar">
             <a class="navbar-brand d-flex justify-content-center align-items-center ms-3 fs-3" href="#">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" width="70" height="70"
+                <img src="{{ asset('img/LogoLetters.png') }}" alt="Logo" width="225" height="70"
                     class="d-inline-block align-text-top">
-                WizardyLab
             </a>
 
             <div class="d-flex flex-column justify-content-center gap-4">
@@ -83,7 +82,6 @@
     </nav>
 
     <div class="body d-flex flex-column align-items-center justify-content-start rubik-font">
-
         <div class="row div-1 mb-5 section" id="home" bar-width="620px">
             <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
                 <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
