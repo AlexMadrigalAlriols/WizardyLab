@@ -21,6 +21,19 @@
     <link rel="mask-icon" href="{{asset('img/favicons/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="Wizardylab ofrece soluciones innovadoras de ERP, gestor de empresas y PIM para optimizar la gestión y productividad de su negocio.">
+    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Wizardylab">
+    <meta property="og:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
+    <meta property="og:description" content="Descubra cómo Wizardylab puede mejorar la eficiencia y gestión de su negocio con nuestras soluciones ERP, gestor de empresas y PIM.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wizardylab.com">
+    <meta property="og:image" content="{{asset('img/favicons/favicon-32x32.png')}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
+    <meta name="twitter:description" content="Optimice la gestión de su negocio con las soluciones de ERP, gestor de empresas y PIM de Wizardylab.">
 </head>
 
 <body class="body-class" style=" background-repeat: no-repeat; height: 100vh">
@@ -28,7 +41,7 @@
     <nav class="navbar bg-transparent fixed-top">
         <div class="container-fluid p-0" id="navbar">
             <a class="navbar-brand d-flex justify-content-center align-items-center ms-3 fs-3" href="#">
-                <img src="{{ asset('img/LogoLetters.png') }}" alt="Logo" width="225" height="70"
+                <img src="{{ asset('img/LogoLetters.png') }}" id="LogoNav" alt="Logo" width="225" height="70"
                     class="d-inline-block align-text-top">
             </a>
 
@@ -57,22 +70,9 @@
                 </div>
             </div>
             <div class="buttons d-flex gap-3 me-5">
-                  <div class="dropdown d-xl-none">
-                    <button class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" aria-current="page" href="#home">{{__("crud.landing.home")}}</a></li>
-                      <li><a class="dropdown-item" href="#product">{{__("crud.landing.product")}}</a></li>
-                      <li><a class="dropdown-item" href="#pricing">{{__("crud.landing.pricing")}}</a></li>
-                      <li><a class="dropdown-item" href="#faq">{{__("crud.landing.faq")}}</a></li>
-                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact_menu")}}</a></li>
-                    </ul>
-                </div>
-                <a href="#contact" class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
                 <div class="dropdown">
                     <button class="dropdown-toggle text-capitalize" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <span class="fi fi-{{$lang == "en"?"us":$lang}}"></span> {{$lang}}
+                        <span class="fi fi-{{$lang == "en"?"us":$lang}}"></span> {{$lang}}
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($langList as $langl)

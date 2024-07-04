@@ -27,7 +27,8 @@ class SubdomainHelper
         $portal = Cache::lock('portal_subdomain_' . $subdomain)->get(function () use ($subdomain) {
             return Portal::where('subdomain', $subdomain)->where('active', 1)->first();
         });
+
         App::setLocale(ConfigurationHelper::get('language'));
-        $portal;
+        return $portal;
     }
 }
