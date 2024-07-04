@@ -281,12 +281,20 @@
         animation: light 500ms ease;
     }
 
+    .buttons {
+        margin-left: 1rem;
+    }
+
     .ctm-button:hover::after {
         animation: light 500ms ease;
     }
 
-    .body {
-        overflow-x: hidden;
+    body {
+        overflow-x: hidden !important;
+    }
+
+    .row {
+        --bs-gutter-x: 0;
     }
 
     .active {
@@ -376,6 +384,19 @@
         box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .2);
         position: relative;
         z-index: 1;
+        min-height: 44rem !important;
+    }
+
+    .single-pricing {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        color: red;
+        font-size: 1.2em;
     }
 
     .pricing_design .single-pricing:before {
