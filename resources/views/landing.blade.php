@@ -21,6 +21,19 @@
     <link rel="mask-icon" href="{{asset('img/favicons/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="Wizardylab ofrece soluciones innovadoras de ERP, gestor de empresas y PIM para optimizar la gestión y productividad de su negocio.">
+    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Wizardylab">
+    <meta property="og:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
+    <meta property="og:description" content="Descubra cómo Wizardylab puede mejorar la eficiencia y gestión de su negocio con nuestras soluciones ERP, gestor de empresas y PIM.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wizardylab.com">
+    <meta property="og:image" content="{{asset('img/favicons/favicon-32x32.png')}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
+    <meta name="twitter:description" content="Optimice la gestión de su negocio con las soluciones de ERP, gestor de empresas y PIM de Wizardylab.">
 </head>
 
 <body class="body-class" style=" background-repeat: no-repeat; height: 100vh">
