@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+@php
+    use App\Helpers\SubdomainHelper;
+
+    $portal = SubdomainHelper::getPortal(request());
+@endphp
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +22,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{{ trans('global.site_title') }} | {{ __('global.auth.' . strtolower($section) . '_box_title') }}</title>
+    <title>{{ $portal->name }} | {{ __('global.auth.' . strtolower($section) . '_box_title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
