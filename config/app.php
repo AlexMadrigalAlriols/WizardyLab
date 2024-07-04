@@ -173,6 +173,7 @@ return [
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
     ])->toArray(),
 
     /*
