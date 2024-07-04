@@ -5,6 +5,7 @@ namespace App\Http\DataTables;
 use App\Models\Client;
 use App\Models\Item;
 use App\Models\UserInventory;
+use App\Services\QueryBuilderService;
 
 class AssignmentsDataTable extends DataTable
 {
@@ -19,7 +20,7 @@ class AssignmentsDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'assignments';
             $model = 'assignment';
-            $viewGate = 'assignment_show';
+            $viewGate = 'assignment_view';
             $editGate = 'assignment_edit';
             $deleteGate = 'assignment_delete';
 
@@ -63,6 +64,17 @@ class AssignmentsDataTable extends DataTable
     public function query()
     {
         $query = UserInventory::query();
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            UserInventory::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['user', 'items']
+        );
 
         $extracted_date_range = request()?->get('extract_date_range');
         $return_date_range = request()?->get('return_date_range');

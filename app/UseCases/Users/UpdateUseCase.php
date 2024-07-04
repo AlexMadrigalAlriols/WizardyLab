@@ -6,11 +6,12 @@ namespace App\UseCases\Users;
 use App\Models\User;
 use App\UseCases\Core\UseCase;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UpdateUseCase extends UseCase
 {
     public function __construct(
-        protected User $User,
+        protected User $user,
         protected string $name,
         protected Carbon $birthday_date,
         protected string $email,
@@ -25,7 +26,7 @@ class UpdateUseCase extends UseCase
 
     public function action(): User
     {
-        $this->User->update([
+        $this->user->update([
             'name' => $this->name,
             'birthday_date' => $this->birthday_date,
             'email' => $this->email,
@@ -37,6 +38,13 @@ class UpdateUseCase extends UseCase
             'attendance_template_id' => $this->attendance_template_id
         ]);
 
-        return $this->User;
+        DB::table('model_has_roles')->where('model_id', $this->user->id)->delete();
+        DB::table('model_has_roles')->insert([
+            'role_id' => $this->role_id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $this->user->id
+        ]);
+
+        return $this->user;
     }
 }

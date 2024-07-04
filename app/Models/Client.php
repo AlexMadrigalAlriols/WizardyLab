@@ -14,7 +14,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Client extends Model
 {
     use HasFactory, SoftDeletes;
-    public const PAGE_SIZE = 10;
+
+
+    public static $filterable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'zip',
+        'vat_number',
+        'company.id',
+        'company.name',
+        'currency.id',
+        'currency.name'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -81,5 +96,10 @@ class Client extends Model
     public function invoices(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function deliveryNotes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DeliveryNote::class);
     }
 }

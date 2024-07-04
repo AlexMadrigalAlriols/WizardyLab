@@ -21,6 +21,7 @@ use App\Models\Status;
 use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\TaskFiles\StoreUseCase as TaskFilesStoreUseCase;
 use App\UseCases\Tasks\StoreUseCase;
 use App\UseCases\Tasks\UpdateStatusUseCase;
@@ -33,6 +34,13 @@ use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('task');
+    }
+
     public function index(Request $request)
     {
         $query = Auth::user()->tasks()

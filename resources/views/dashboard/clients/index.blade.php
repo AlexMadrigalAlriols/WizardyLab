@@ -3,10 +3,10 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Clients</b><span class="text-muted">({{$total}})</span>
+            <b>{{__('crud.clients.title')}}</b><span class="text-muted">({{$total}})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.clients.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Client</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.add_new')}} {{__('crud.clients.title_singular')}}</span>
         </a>
     </div>
 
@@ -15,16 +15,18 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">NAME</th>
-                    <th scope="col" class="border-bottom">EMAIL</th>
-                    <th scope="col" class="border-bottom">MOBILE NUMBER</th>
-                    <th scope="col" class="border-bottom">STATUS</th>
-                    <th scope="col" class="border-bottom">CREATED AT</th>
+                    <th scope="col" class="border-bottom">{{__('crud.clients.fields.name')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.clients.fields.email')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.clients.fields.mobile_number')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.clients.fields.status')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.clients.fields.created_at')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -88,6 +90,11 @@
                     url: "{{ route('dashboard.clients.index') }}",
                     data: function(data) {
                         data.created_at_range = $('#created_at_range').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -138,7 +145,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,

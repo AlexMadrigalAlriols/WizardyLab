@@ -13,14 +13,30 @@
     let languages = {
         'es': '{{ asset('js/datatables/plugins/Spanish.json') }}'
     };
+    @php
+        $languages = [
+            'es' => 'js/datatables/plugins/Spanish.json',
+            'it' => 'js/datatables/plugins/Italian.json',
+            'fr' => 'js/datatables/plugins/French.json'
+        ];
+    @endphp
+
+    let translations = @php
+        if(isset($languages[app()->getLocale()])) {
+            $jsonPath = public_path($languages[app()->getLocale()]);
+            $jsonContent = file_get_contents($jsonPath);
+
+            echo json_encode(json_decode($jsonContent, true));
+        } else {
+            echo '""';
+        }
+    @endphp;
 
     $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
         className: 'btn btn-sm me-2 mb-3 mt-2'
     })
     $.extend(true, $.fn.dataTable.defaults, {
-        language: {
-            url: languages['{{ app()->getLocale() }}']
-        },
+        language: translations,
         columnDefs: [{
             orderable: false,
             className: 'select-checkbox',

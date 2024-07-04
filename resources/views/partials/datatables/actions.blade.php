@@ -5,23 +5,35 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownActionsButton">
         @foreach ($links ?? [] as $link)
-        <li><a class="dropdown-item" href="{{ $link['href'] }}"><i class='{{ $link['icon'] }}' ></i> {{ $link['text'] }}</a></li>
+        @if (isset($link['permission']))
+            @can($link['permission'])
+                <li><a class="dropdown-item" href="{{ $link['href'] }}"><i class='{{ $link['icon'] }}' ></i> {{ $link['text'] }}</a></li>
+            @endcan
+        @else
+            <li><a class="dropdown-item" href="{{ $link['href'] }}"><i class='{{ $link['icon'] }}' ></i> {{ $link['text'] }}</a></li>
+        @endif
         @endforeach
-        @if (isset($viewGate) && $viewGate)
-            <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.show', $row->id)}}"><i class='bx bx-show' ></i> View</a></li>
+        @if (isset($viewGate))
+            @can($viewGate)
+                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.show', $row->id)}}"><i class='bx bx-show' ></i> View</a></li>
+            @endcan
         @endif
         @if (isset($editGate) && $editGate)
-            <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.edit', $row->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+            @can($editGate)
+                <li><a class="dropdown-item" href="{{route('dashboard.'.$crudRoutePart.'.edit', $row->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+            @endcan
         @endif
         @if (isset($deleteGate) && $deleteGate)
-            <li><hr class="dropdown-divider"></li>
-            <li>
-                <form action="{{route('dashboard.'.$crudRoutePart.'.destroy', $row->id)}}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
-                </form>
-            </li>
+            @can($deleteGate)
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form action="{{route('dashboard.'.$crudRoutePart.'.destroy', $row->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                    </form>
+                </li>
+            @endcan
         @endif
     </ul>
 </div>

@@ -7,12 +7,12 @@
                 <b>Users</b><span class="text-muted">({{ $total }})</span>
             </span>
             <a class="btn btn-primary d-inline-block ms-3 align-top {{ $portal->users->count() >= $portal->user_count ? 'disabled' : ''}}" href="{{route('dashboard.users.create')}}">
-                <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new {{__('crud.users.title_singular')}}</span>
+                <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('crud.users.add_new')}}</span>
             </a>
         </div>
 
         <div class="col-md-4 text-end">
-            <span class="text-muted h2">{{$portal->users()->count()}}/{{$portal->user_count}}</span> <span class="text-muted">Employees</span>
+            <span class="text-muted h2">{{$portal->users()->count()}}/{{$portal->user_count}}</span> <span class="text-muted">{{__('global.employees')}}</span>
         </div>
     </div>
 
@@ -21,16 +21,18 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">PROFILE IMAGE</th>
-                    <th scope="col" class="border-bottom">NAME</th>
-                    <th scope="col" class="border-bottom">EMAIL</th>
-                    <th scope="col" class="border-bottom">DEPARTMENT</th>
-                    <th scope="col" class="border-bottom">ROLE</th>
+                    <th scope="col" class="border-bottom">{{__('crud.users.fields.profile_img')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.users.fields.name')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.users.fields.email')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.users.fields.department')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.users.fields.role')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -94,6 +96,11 @@
                     url: "{{ route('dashboard.users.index') }}",
                     data: function(data) {
                         data.created_at_range = $('#created_at_range').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -146,7 +153,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,

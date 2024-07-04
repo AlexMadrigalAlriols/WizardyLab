@@ -15,15 +15,17 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">EMPLOYEE</th>
-                    <th scope="col" class="border-bottom">DATE</th>
-                    <th scope="col" class="border-bottom">STATUS</th>
-                    <th scope="col" class="border-bottom">TYPE</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.employee')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.date')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.status')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.leaves.fields.type')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -89,6 +91,11 @@
                         data.date_range = $('#date_range').val();
                         data.user_name = $('#users\\.name').val();
                         data.type = $('#leave_type_id').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -143,7 +150,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,

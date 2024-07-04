@@ -6,16 +6,27 @@ use App\Helpers\BreadcrumbHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
+use App\Models\User;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sunday', 'Saturday'];
         $user = auth()->user();
         $now_hour = now()->format('H:i');
         $weekday = now()->format('l');
         $events = [];
+        $today = Carbon::now();
+        $birthdays = User::whereMonth('birthday_date', '>', $today->month)
+            ->orWhere(function($query) use ($today) {
+                $query->whereMonth('birthday_date', $today->month)
+                    ->whereDay('birthday_date', '>=', $today->day);
+            })
+            ->orderByRaw('MONTH(birthday_date), DAY(birthday_date)')
+            ->get();
+        $leaves = Leave::whereDate('date', Carbon::now()->format('Y-m-d'))->get();
 
         $counters = [
             'tasks' => [
@@ -37,8 +48,7 @@ class DashboardController extends Controller
             ->limit(5)->get();
 
         foreach ($weekdays as $wday) {
-            $events[$wday] = Leave::where('user_id', $user->id)
-                ->where('date', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
+            $events[$wday] = Leave::where('date', '<=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
                 ->where('date', '>=', now()->startOfWeek()->addDays(array_search($wday, $weekdays)))
                 ->where('approved', 1)
                 ->get();
@@ -57,7 +67,9 @@ class DashboardController extends Controller
             'counters',
             'tasks',
             'weekdays',
-            'events'
+            'events',
+            'birthdays',
+            'leaves'
         ));
     }
 

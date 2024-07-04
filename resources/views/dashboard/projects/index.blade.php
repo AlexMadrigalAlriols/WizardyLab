@@ -3,10 +3,10 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Projects</b><span class="text-muted">({{ $total }})</span>
+            <b>{{__('crud.projects.title')}}</b><span class="text-muted">({{ $total }})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.projects.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Project</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('crud.projects.add_new')}}</span>
         </a>
     </div>
 
@@ -15,12 +15,12 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">CODE</th>
-                    <th scope="col" class="border-bottom">TITLE</th>
-                    <th scope="col" class="border-bottom">START DATE</th>
-                    <th scope="col" class="border-bottom">DUE DATE</th>
-                    <th scope="col" class="border-bottom">STATUS</th>
-                    <th scope="col" class="border-bottom">HOURS LOGGED</th>
+                    <th scope="col" class="border-bottom">{{__('crud.projects.fields.code')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.projects.fields.title')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.projects.fields.start_date')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.projects.fields.due_date')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.projects.fields.status')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.projects.fields.hours_logged')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

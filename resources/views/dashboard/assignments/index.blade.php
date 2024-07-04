@@ -3,10 +3,10 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Assignments</b><span class="text-muted">({{ $total }})</span>
+            <b>{{__('crud.assignments.title')}}</b><span class="text-muted">({{ $total }})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{ route('dashboard.assignments.create') }}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add new Assignment</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('crud.assignments.add_new')}}</span>
         </a>
     </div>
 
@@ -15,15 +15,17 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">USER</th>
-                    <th scope="col" class="border-bottom">ITEMS</th>
-                    <th scope="col" class="border-bottom">EXTRACT DATE</th>
-                    <th scope="col" class="border-bottom">RETURN DATE</th>
+                    <th scope="col" class="border-bottom">{{__('crud.assignments.fields.user')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.assignments.fields.items')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.assignments.fields.extract_date')}}</th>
+                    <th scope="col" class="border-bottom">{{__('crud.assignments.fields.return_date')}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>
         </table>
     </div>
+
+    @include('partials.advancedFiltersModal')
 @endsection
 
 @section('scripts')
@@ -91,6 +93,11 @@
                         data.user_name = $('#users\\.name').val();
 
                         data.items = $('#items').val();
+
+                        data.conditions = getInputValue("condition");
+                        data.fields = getInputValue("field");
+                        data.values = getInputValue("value");
+                        data.operators = getInputValue("operator");
                     }
                 },
                 columns: [
@@ -138,7 +145,11 @@
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}',
-                        width: 20
+                        width: 50,
+                        filter: true,
+                        searchable: false,
+                        type: 'advanced_filters',
+                        field: 'actions'
                     }
                 ],
                 orderCellsTop: true,

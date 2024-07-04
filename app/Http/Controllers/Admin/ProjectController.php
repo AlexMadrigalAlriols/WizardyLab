@@ -16,6 +16,7 @@ use App\Models\ProjectStatuses;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Projects\StoreUseCase;
 use App\UseCases\Projects\UpdateStatusUseCase;
 use App\UseCases\Projects\UpdateUseCase;
@@ -26,6 +27,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('project');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {

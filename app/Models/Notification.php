@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Notification extends Model
 {
     use HasFactory, SoftDeletes;
-    public const PAGE_SIZE = 10;
+
 
     public const TYPES = [
         'task' => 'task',

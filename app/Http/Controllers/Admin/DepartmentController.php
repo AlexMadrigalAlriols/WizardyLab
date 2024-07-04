@@ -9,6 +9,7 @@ use App\Http\Requests\Departments\StoreRequest;
 use App\Http\Requests\Departments\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
 use App\Models\Department;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Departments\StoreUseCase;
 use App\UseCases\Departments\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ use Illuminate\Http\Response;
 
 class DepartmentController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('department');
+    }
+
     /**
      * Display a listing of the resource.
      */

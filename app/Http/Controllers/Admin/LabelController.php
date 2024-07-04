@@ -9,6 +9,7 @@ use App\Http\Requests\Labels\StoreRequest;
 use App\Http\Requests\Labels\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
 use App\Models\Label;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Labels\StoreUseCase;
 use App\UseCases\Labels\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -16,6 +17,14 @@ use Illuminate\Http\Response;
 
 class LabelController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('label');
+    }
+
+
     public function index(Request $request)
     {
         if($request->ajax()) {

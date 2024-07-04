@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Note extends Model
 {
     use HasFactory, SoftDeletes;
-    public const PAGE_SIZE = 10;
+
 
     /**
      * The attributes that are mass assignable.

@@ -8,20 +8,24 @@ use App\Http\Controllers\Admin\BoardRuleController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DeliveryNoteController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\DocumentFolderController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\GlobalConfigurationController;
+use App\Http\Controllers\Admin\HolidayController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SearchListOptionsController;
 use App\Http\Controllers\Admin\StatusController;
+use App\Http\Controllers\Admin\StockMovementController;
 use App\Http\Controllers\Admin\TaskCommentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UserController;
@@ -29,6 +33,7 @@ use App\Http\Controllers\Admin\UserInventoriesController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
+use App\Http\Controllers\Admin\LandingController;
 use App\Models\Invoice;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -44,9 +49,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::redirect('/', '/dashboard');
-
-Route::get('/template', [AttendanceController::class, 'downloadPdfExtract'])->name('template');
+Route::get('/template/{deliveryNote}', [DeliveryNoteController::class, 'download'])->name('template');
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['checkPortal', 'throttle']], static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -57,6 +60,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::get('/items-files/download_file/{itemFile}', [ItemController::class, 'downloadFile'])->name('items.download_file');
     Route::get('/items-files/delete_file/{itemFile}', [ItemController::class, 'deleteFile'])->name('items.delete_file');
     Route::delete('massDestroy/items', [ItemController::class, 'massDestroy'])->name('items.massDestroy');
+
+    // Stock Movements
+    Route::post('/stock-movements/{item}', [StockMovementController::class, 'store'])->name('stock-movements.store');
 
     //Assignments
     Route::resource('assignments', UserInventoriesController::class);
@@ -141,6 +147,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
     Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
 
+    // Delivery notes
+    Route::resource('deliveryNotes', DeliveryNoteController::class);
+    Route::get('/deliveryNotes/{deliveryNote}/download', [DeliveryNoteController::class, 'download'])->name('deliveryNotes.download');
+    Route::delete('massDestroy/deliveryNotes', [DeliveryNoteController::class, 'massDestroy'])->name('deliveryNotes.massDestroy');
+
     //users
     Route::resource('users', UserController::class);
     Route::post('/users/upload_file', [UserController::class, 'uploadFile'])->name('user.upload_file');
@@ -169,23 +180,30 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::resource('/attendanceTemplates', AttendanceTemplateController::class);
     Route::delete('massDestroy/attendanceTemplates', [AttendanceTemplateController::class, 'massDestroy'])->name('attendanceTemplates.massDestroy');
     Route::get('/attendance/download-extract', [AttendanceController::class, 'downloadPdfExtract'])->name('attendance.download-extract');
-    Route::put('/attendance', [AttendanceController::class, 'update'])->name('attendance.update');
+    Route::put('/attendance/{user}', [AttendanceController::class, 'update'])->name('attendance.update');
+
+    // Roles
+    Route::resource('roles', RoleController::class);
+    Route::delete('massDestroy/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
 
     // Select 2 Search list
     Route::get('search-list-options', SearchListOptionsController::class)->name('searchListOptions.index');
+
+    //holidayscalendar
+    Route::get('holidays', [HolidayController::class, 'index'])->name('holiday.index');
 });
 
 // Password reset link request routes...
  Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
 
-
-Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
-
 //Translations
 Route::get('js/translations.js', [TranslationController::class, 'index'])->name('translations');
 
 Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static function () {
-    Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
+    Auth::routes(['register' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
+
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::post('/', [LandingController::class, 'store'])->name('landing.store');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

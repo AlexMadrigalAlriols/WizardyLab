@@ -19,7 +19,7 @@
         <div class="form-floating mt-3">
             <input type="date" class="form-control flatpicker" id="birthday_date" name="birthday_date"
                 placeholder="Birthday Date" value="{{ old('birthday_date') ?? $user->birthday_date?->format('Y-m-d') }}">
-            <label for="floatingSelect">Birthday <span class="text-danger">*</span></label>
+            <label for="floatingSelect">{{ __('crud.users.fields.birthday') }} <span class="text-danger">*</span></label>
         </div>
 
         @if ($errors->has('birthday_date'))
@@ -98,11 +98,11 @@
             <select class="form-select select2" id="role_id" name="role_id" aria-label="role_id">
                 @foreach ($roles as $role)
                     <option value="{{ $role->id }}"
-                        {{ $user->role_id == $role->id || old('role_id') == $role->id ? 'selected' : '' }}>
+                        {{ $user->role?->id == $role->id || old('role_id') == $role->id ? 'selected' : '' }}>
                         {{ $role->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">{{ __('crud.users.fields.role') }}</label>
+            <label for="floatingSelect">{{ __('crud.users.fields.role') }} <span class="text-danger">*</span></label>
         </div>
     </div>
     <div class="col-md-6">
@@ -149,7 +149,7 @@
         <div class="form-floating mt-3">
             <input type="password" class="form-control" id="password" name="password" placeholder="password"
                 value="{{ old('password') }}">
-            <label for="floatingSelect">initial password <span class="text-danger">*</span></label>
+            <label for="floatingSelect">{{ __('crud.users.fields.initial_password') }} <span class="text-danger">*</span></label>
         </div>
     </div>
 </div>

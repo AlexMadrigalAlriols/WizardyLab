@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\FileSystemHelper;
 use App\Http\Controllers\Controller;
 use App\Http\DataTables\ExpensesDataTable;
@@ -11,6 +12,7 @@ use App\Models\Expense;
 use App\Models\ExpenseBill;
 use App\Models\Item;
 use App\Models\Project;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\ExpenseBills\StoreUseCase as ExpenseBillsStoreUseCase;
 use App\UseCases\Expenses\StoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
@@ -21,6 +23,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ExpenseController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('expense');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,8 +42,9 @@ class ExpenseController extends Controller
 
         $query = Expense::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Expense::class);
 
-        return view('dashboard.expenses.index', compact('total'));
+        return view('dashboard.expenses.index', compact('total', 'advancedFilters'));
     }
 
     /**

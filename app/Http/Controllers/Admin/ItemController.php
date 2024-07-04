@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
+use App\Helpers\ConfigurationHelper;
 use App\Helpers\FileSystemHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
@@ -9,8 +11,10 @@ use App\Http\DataTables\ItemsDataTable;
 use App\Http\Requests\Inventories\StoreRequest;
 use App\Http\Requests\Inventories\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
+use App\Models\Client;
 use App\Models\Item;
 use App\Models\ItemFile;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Inventories\StoreUseCase as InventoriesStoreUseCase;
 use App\UseCases\Inventories\UpdateUseCase;
 use App\UseCases\ItemFiles\StoreUseCase as ItemFilesStoreUseCase;
@@ -21,6 +25,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('item');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,8 +44,9 @@ class ItemController extends Controller
 
         $query = Item::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Item::class);
 
-        return view('dashboard.items.index', compact('total'));
+        return view('dashboard.items.index', compact('total', 'advancedFilters'));
     }
 
     /**
@@ -81,7 +93,14 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return view('dashboard.items.show', compact('item'));
+        $client = Client::find(ConfigurationHelper::get('invoice_client_id'));
+
+        if(!$client) {
+            toast('You must set a client for the portal', 'error');
+            return back();
+        }
+
+        return view('dashboard.items.show', compact('item', 'client'));
     }
 
     /**

@@ -20,6 +20,8 @@
                 </div>
             </div>
         </form>
+
+        @include('partials.items.stockModal')
     </div>
     <div class="col-md-4 px-3 border-start">
 

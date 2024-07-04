@@ -13,6 +13,7 @@ use App\Models\Document;
 use App\Models\DocumentFolder;
 use App\Models\Task;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Documents\StoreUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,13 @@ use Spatie\FlareClient\Api;
 
 class DocumentController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('document');
+    }
+
     public function index(Request $request, string $folder)
     {
         $request->session()->forget('dropzone_document_files_temp_paths');

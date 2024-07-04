@@ -13,12 +13,20 @@ use App\Models\Portal;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Portals\UpdateUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class GlobalConfigurationController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('configuration');
+    }
+
     public function index(Request $request)
     {
         $request->session()->forget('dropzone_logo_temp_paths');
@@ -28,6 +36,12 @@ class GlobalConfigurationController extends Controller
         $invoiceStatuses = Status::where('morphable', Invoice::class)->get();
         $clients = Client::where('active', 1)->get();
         $portal = SubdomainHelper::getPortal($request);
+        $langs = [
+            'es' => 'Español',
+            'en' => 'Ingles',
+            'fr' => 'Frances',
+            'it' => 'Italiano'
+        ];
 
         return view('dashboard.globalConfigurations.index', compact(
             'globalConfigurations',
@@ -35,7 +49,8 @@ class GlobalConfigurationController extends Controller
             'projectStatuses',
             'invoiceStatuses',
             'portal',
-            'clients'
+            'clients',
+            'langs'
         ));
     }
 

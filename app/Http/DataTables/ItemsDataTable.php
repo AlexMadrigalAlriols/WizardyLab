@@ -4,6 +4,7 @@ namespace App\Http\DataTables;
 
 use App\Models\Client;
 use App\Models\Item;
+use App\Services\QueryBuilderService;
 
 class ItemsDataTable extends DataTable
 {
@@ -18,7 +19,7 @@ class ItemsDataTable extends DataTable
         $table->editColumn('actions', function($row) {
             $crudRoutePart = 'items';
             $model = 'item';
-            $viewGate = 'item_show';
+            $viewGate = 'item_view';
             $editGate = 'item_edit';
             $deleteGate = 'item_delete';
 
@@ -64,6 +65,16 @@ class ItemsDataTable extends DataTable
         $created_at_range = request()?->get('created_at_range');
         $stock_min = request()?->get('stock_min');
         $stock_max = request()?->get('stock_max');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Item::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ]
+        );
 
         if(!empty($created_at_range)) {
             $range = str_replace(' a ', ' - ', $created_at_range);

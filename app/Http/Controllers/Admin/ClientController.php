@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\PaginationHelper;
@@ -17,6 +18,7 @@ use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Status;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Clients\StoreUseCase;
 use App\UseCases\Clients\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -25,6 +27,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('client');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {
@@ -34,8 +43,9 @@ class ClientController extends Controller
 
         $query = Client::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Client::class);
 
-        return view('dashboard.clients.index', compact('total'));
+        return view('dashboard.clients.index', compact('total', 'advancedFilters'));
     }
 
     public function show(Client $client)

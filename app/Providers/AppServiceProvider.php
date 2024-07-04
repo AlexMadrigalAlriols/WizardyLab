@@ -10,6 +10,7 @@ use App\Models\Item;
 use App\Models\ItemFile;
 use App\Models\ItemUserInventory;
 use App\Models\Project;
+use App\Models\StockMovement;
 use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\User;
@@ -21,6 +22,7 @@ use App\Observers\ItemFilesObserver;
 use App\Observers\ItemInventoryObserver;
 use App\Observers\ItemObserver;
 use App\Observers\ProjectObserver;
+use App\Observers\StockMovementObserver;
 use App\Observers\TaskFilesObserver;
 use App\Observers\TaskObserver;
 use App\Observers\UserObserver;
@@ -51,5 +53,6 @@ class AppServiceProvider extends ServiceProvider
         Invoice::observe(InvoiceObserver::class);
         DocumentFolder::observe(DocumentFolderObserver::class);
         Document::observe(DocumentObserver::class);
+        StockMovement::observe(StockMovementObserver::class);
     }
 }

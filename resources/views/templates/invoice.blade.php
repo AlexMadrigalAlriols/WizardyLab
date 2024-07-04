@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Factura</title>
+    <title>{{$invoice->number}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;

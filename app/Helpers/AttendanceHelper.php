@@ -60,9 +60,4 @@ class AttendanceHelper {
 
         return $total;
     }
-
-    public static function getProductivity(Carbon $date)
-    {
-
-    }
 }

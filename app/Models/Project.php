@@ -12,7 +12,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    public const PAGE_SIZE = 10;
+
 
     public const DEFAULT_STATUSES = [5, 6, 7, 8];
 

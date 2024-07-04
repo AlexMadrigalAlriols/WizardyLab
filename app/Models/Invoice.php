@@ -12,7 +12,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
-    public const PAGE_SIZE = 10;
+
+
+    public static $filterable = [
+        'number',
+        'issue_date',
+        'total',
+        'amount',
+        'tax',
+        'client.name',
+        'client.email',
+        'client.phone',
+        'project.id',
+        'project.name',
+        'status.name'
+    ];
 
     /**
      * The attributes that are mass assignable.

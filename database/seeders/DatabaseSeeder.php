@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             CurrenciesTableSeeder::class,
             StatusesSeeder::class,
             GlobalConfigSeeder::class,
-            LeaveTypesSeeder::class
+            LeaveTypesSeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }

@@ -7,7 +7,7 @@
                 <option value="{{$user->id}}" {{($assignment->user_id == $user->id || old('project') == $user->id) ? 'selected' : ''}}>{{ $user->name }}</option>
               @endforeach
             </select>
-            <label for="floatingSelect">User <span class="text-danger">*</span></label>
+            <label for="floatingSelect">{{ __('crud.assignments.fields.user') }} <span class="text-danger">*</span></label>
         </div>
     </div>
 </div>
@@ -16,13 +16,13 @@
     <div class="col-md-5">
         <div class="form-floating mt-3">
             <input type="date" class="form-control flatpicker" id="extract_date" name="extract_date" placeholder="Extract date" value="{{ old('extract_date') ?? $assignment->extract_date ?? now()->toDateString()}}">
-            <label for="extract_date">Extract date</label>
+            <label for="extract_date">{{ __('crud.assignments.fields.extract_date') }}</label>
         </div>
     </div>
     <div class="col-md-5">
         <div class="form-floating mt-3">
             <input type="date" class="form-control flatpicker" id="return_date" name="return_date" placeholder="Return date" value="{{ old('return_date') ?? $assignment->return_date }}">
-            <label for="return_date">Return date</label>
+            <label for="return_date">{{ __('crud.assignments.fields.return_date') }}</label>
         </div>
     </div>
 </div>

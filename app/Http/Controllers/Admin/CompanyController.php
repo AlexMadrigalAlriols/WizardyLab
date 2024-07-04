@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
 use App\Http\DataTables\CompaniesDataTable;
@@ -9,6 +10,7 @@ use App\Http\Requests\Companies\StoreRequest;
 use App\Http\Requests\Companies\UpdateRequest;
 use App\Http\Requests\MassDestroyRequest;
 use App\Models\Company;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Companies\StoreUseCase;
 use App\UseCases\Companies\UpdateUseCase;
 use Illuminate\Http\Request;
@@ -16,6 +18,13 @@ use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('company');
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {
@@ -25,8 +34,9 @@ class CompanyController extends Controller
 
         $query = Company::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(Company::class);
 
-        return view('dashboard.companies.index', compact('total'));
+        return view('dashboard.companies.index', compact('total', 'advancedFilters'));
     }
 
     public function create()

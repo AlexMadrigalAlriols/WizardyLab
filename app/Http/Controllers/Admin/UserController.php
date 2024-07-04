@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AdvancedFiltersHelper;
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
 use App\Helpers\SubdomainHelper;
@@ -16,6 +17,7 @@ use App\Models\Country;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
+use App\Traits\MiddlewareTrait;
 use App\UseCases\Users\StoreUseCase;
 use App\UseCases\Users\UpdateUseCase;
 use Carbon\Carbon;
@@ -25,6 +27,13 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    use MiddlewareTrait;
+
+    public function __construct()
+    {
+        $this->setMiddleware('user');
+    }
+
     public function index(Request $request)
     {
         $portal = auth()->user()->portal;
@@ -36,8 +45,9 @@ class UserController extends Controller
 
         $query = User::query();
         $total = $query->count();
+        $advancedFilters = AdvancedFiltersHelper::getFilters(User::class);
 
-        return view('dashboard.users.index', compact('total', 'portal'));
+        return view('dashboard.users.index', compact('total', 'portal', 'advancedFilters'));
     }
 
     public function userAttendance(Request $request) {
