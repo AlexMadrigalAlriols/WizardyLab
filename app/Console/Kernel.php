@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('timers:stop')->cron('55 23 * * *');
+        $schedule->command('portal:disable_unsuscribed')->cron('05 00 * * *');
+        $schedule->command('tmp_files:delete')->cron('01 00 * * *');
     }
 
     /**
