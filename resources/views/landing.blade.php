@@ -306,7 +306,7 @@
                                         <span class="h1">80€</span><br>
                                         <span>/{{trans('plans.monthly')}}</span>
                                     </div>
-                                    <ul>
+                                    <ul class="ps-0">
                                         <li>{!! trans('plans.employee_accounts', ['count' => 15]) !!}</li>
                                         <li>{!! trans('plans.disk_space', ['size' => '10gb']) !!}</li>
                                         <li>{!! trans('plans.onboarding') !!}</li>
@@ -334,7 +334,7 @@
                                             <span class="h1">120€</span><br>
                                             <span>/{{trans('plans.monthly')}}</span>
                                         </div>
-                                        <ul>
+                                        <ul class="ps-0">
                                             <li>{!! trans('plans.employee_accounts', ['count' => 60]) !!}</li>
                                             <li>{!! trans('plans.disk_space', ['size' => '30gb']) !!}</li>
                                             <li>{!! trans('plans.onboarding') !!}</li>
@@ -361,7 +361,7 @@
                                         <span class="h1">160€</span><br>
                                         <span>/{{trans('plans.monthly')}}</span>
                                     </div>
-                                    <ul>
+                                    <ul class="ps-0">
                                         <li>{!! trans('plans.employee_accounts', ['count' => 'Unlimited']) !!}</li>
                                         <li>{!! trans('plans.disk_space', ['size' => '100gb']) !!}</li>
                                         <li>{!! trans('plans.onboarding') !!}</li>

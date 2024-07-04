@@ -384,7 +384,7 @@
         box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .2);
         position: relative;
         z-index: 1;
-        min-height: 44rem !important;
+        min-height: 40rem !important;
     }
 
     .single-pricing {
