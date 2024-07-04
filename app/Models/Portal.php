@@ -101,6 +101,14 @@ class Portal extends Model
         return $this->lightenColor($hexColor, $lightenPercent);
     }
 
+    public function getPrimaryLightAttribute()
+    {
+        $hexColor = $this->data['primary_color']; // Aquí iría tu color dinámico
+        $lightenPercent = 0.4; // Ajusta el porcentaje para hacer el color más claro
+
+        return $this->lightenColor($hexColor, $lightenPercent);
+    }
+
     private function hexToRgb($hex) {
         $hex = ltrim($hex, '#');
 
