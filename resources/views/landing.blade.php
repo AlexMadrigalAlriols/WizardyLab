@@ -304,14 +304,14 @@
                                     <div class="price-head">
                                         <h2>BASIC</h2>
                                         <span class="h1">80€</span><br>
-                                        <span>/Monthly</span>
+                                        <span>/{{trans('plans.monthly')}}</span>
                                     </div>
                                     <ul>
-                                        <li><b>15</b> Employee accounts</li>
-                                        <li><b>10gb</b> Disk Space</li>
-                                        <li><b>Onboarding</b> To app</li>
-                                        <li>Acces to<b> All basic modules</b></li>
-                                        <li><b>Unlimited</b> Support</li>
+                                        <li>{!! trans('plans.employee_accounts', ['count' => 15]) !!}</li>
+                                        <li>{!! trans('plans.disk_space', ['size' => '10gb']) !!}</li>
+                                        <li>{!! trans('plans.onboarding') !!}</li>
+                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                        <li>{!! trans('plans.unlimited_support') !!}</li>
                                     </ul>
                                     <div class="pricing-price mt-auto">
                                         <a href="#contact" class="price_btn">START TRIAL</a>
@@ -332,15 +332,15 @@
                                             <h2>PROFESSIONAL</h2>
                                             <span class="original-price">140€</span>
                                             <span class="h1">120€</span><br>
-                                            <span>/Monthly</span>
+                                            <span>/{{trans('plans.monthly')}}</span>
                                         </div>
                                         <ul>
-                                            <li><b>60</b> Employee accounts</li>
-                                            <li><b>30gb</b> Disk Space</li>
-                                            <li><b>Onboarding</b> To app</li>
-                                            <li>Acces to<b> All basic modules</b></li>
-                                            <li><b>Custom</b> Migration</li>
-                                            <li><b>Unlimited</b> Support</li>
+                                            <li>{!! trans('plans.employee_accounts', ['count' => 60]) !!}</li>
+                                            <li>{!! trans('plans.disk_space', ['size' => '30gb']) !!}</li>
+                                            <li>{!! trans('plans.onboarding') !!}</li>
+                                            <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                            <li>{!! trans('plans.custom_migration') !!}</li>
+                                            <li>{!! trans('plans.unlimited_support') !!}</li>
                                         </ul>
                                     </div>
                                     <div class="pricing-price mt-auto">
@@ -359,18 +359,18 @@
                                         <h2>ENTERPRISE</h2>
                                         <span class="original-price">200€</span>
                                         <span class="h1">160€</span><br>
-                                        <span>/Monthly</span>
+                                        <span>/{{trans('plans.monthly')}}</span>
                                     </div>
                                     <ul>
-                                        <li><b>60</b> Employee accounts</li>
-                                        <li><b>30gb</b> Disk Space</li>
-                                        <li><b>Onboarding</b> To app</li>
-                                        <li>Acces to<b> All basic modules</b></li>
-                                        <li><b>Custom</b> Migration</li>
-                                        <li><b>Hiring</b> Module</li>
-                                        <li><b>Route</b> Module</li>
-                                        <li><b>Custom</b> Modules</li>
-                                        <li><b>Unlimited</b> Support</li>
+                                        <li>{!! trans('plans.employee_accounts', ['count' => 'Unlimited']) !!}</li>
+                                        <li>{!! trans('plans.disk_space', ['size' => '100gb']) !!}</li>
+                                        <li>{!! trans('plans.onboarding') !!}</li>
+                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                        <li>{!! trans('plans.custom_migration') !!}</li>
+                                        <li>{!! trans('plans.hiring_module') !!}</li>
+                                        <li>{!! trans('plans.route_module') !!}</li>
+                                        <li>{!! trans('plans.custom_modules') !!}</li>
+                                        <li>{!! trans('plans.unlimited_support') !!}</li>
                                     </ul>
                                     <div class="pricing-price mt-auto">
                                         <a href="#contact" class="price_btn">CONTACT US</a>
