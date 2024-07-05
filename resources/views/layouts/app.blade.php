@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+@php
+    use App\Helpers\SubdomainHelper;
+
+    $portal = SubdomainHelper::getPortal(request());
+@endphp
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="locale" content="{{ app()->getLocale() }}">
+    <meta name="robots" content="noindex,nofollow">
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicons/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicons/favicon-32x32.png')}}">
@@ -17,7 +23,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{{ trans('global.site_title') }} | {{ __('global.auth.' . strtolower($section) . '_box_title') }}</title>
+    <title>{{ $portal->name }} | {{ __('global.auth.' . strtolower($section) . '_box_title') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

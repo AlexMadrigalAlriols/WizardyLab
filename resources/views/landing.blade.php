@@ -12,7 +12,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-    <title>WizardyLab</title>
+    <title>{{ trans('global.site_title') }}</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicons/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicons/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicons/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('img/favicons/site.webmanifest')}}">
+    <link rel="mask-icon" href="{{asset('img/favicons/safari-pinned-tab.svg')}}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="Wizardylab ofrece soluciones innovadoras de ERP, gestor de empresas y PIM para optimizar la gestión y productividad de su negocio.">
+    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Wizardylab">
+    <meta property="og:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
+    <meta property="og:description" content="Descubra cómo Wizardylab puede mejorar la eficiencia y gestión de su negocio con nuestras soluciones ERP, gestor de empresas y PIM.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.wizardylab.com">
+    <meta property="og:image" content="{{asset('img/favicons/favicon-32x32.png')}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
+    <meta name="twitter:description" content="Optimice la gestión de su negocio con las soluciones de ERP, gestor de empresas y PIM de Wizardylab.">
 </head>
 
 <body class="body-class" style=" background-repeat: no-repeat; height: 100vh">
@@ -20,9 +41,8 @@
     <nav class="navbar bg-transparent fixed-top">
         <div class="container-fluid p-0" id="navbar">
             <a class="navbar-brand d-flex justify-content-center align-items-center ms-3 fs-3" href="#">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" width="70" height="70"
+                <img src="{{ asset('img/LogoLetters.png') }}" id="LogoNav" alt="Logo" width="225" height="70"
                     class="d-inline-block align-text-top">
-                WizardyLab
             </a>
 
             <div class="d-flex flex-column justify-content-center gap-4">
@@ -50,25 +70,15 @@
                 </div>
             </div>
             <div class="buttons d-flex gap-3 me-5">
-                  <div class="dropdown d-xl-none">
-                    <button class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" aria-current="page" href="#home">{{__("crud.landing.home")}}</a></li>
-                      <li><a class="dropdown-item" href="#product">{{__("crud.landing.product")}}</a></li>
-                      <li><a class="dropdown-item" href="#pricing">{{__("crud.landing.pricing")}}</a></li>
-                      <li><a class="dropdown-item" href="#faq">{{__("crud.landing.faq")}}</a></li>
-                      <li><a class="dropdown-item" href="#contact">{{__("crud.landing.contact_menu")}}</a></li>
-                    </ul>
-                </div>
-                <a class="ctm-button nab-button rubik-font d-xl-block d-none">{{__("crud.landing.get_started")}}</a>
                 <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <span class="fi fi-us"></span> En
+                    <button class="dropdown-toggle text-capitalize" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="fi fi-{{$lang == "en"?"us":$lang}}"></span> {{$lang}}
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="?lang=es"><span class="fi fi-es"></span> Es</a></li>
+                        @foreach ($langList as $langl)
+                            <li><a class="dropdown-item text-capitalize" href="?lang={{$langl}}"><span class="fi fi-{{$langl == "en"?"us":$langl}}"></span> {{$langl}}</a></li>
+                        @endforeach
+
                     </ul>
                 </div>
             </div>
@@ -80,17 +90,18 @@
     </nav>
 
     <div class="body d-flex flex-column align-items-center justify-content-start rubik-font">
-
         <div class="row div-1 mb-5 section" id="home" bar-width="620px">
             <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
-                <h1 class="fs-1 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                <h1 class="fs-3 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
+                <div class="p-4">
+                    <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                    <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
+                    <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
+                    <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
+                    <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
+                </div>
                 <div class="buttons d-flex gap-3 me-3">
-                    <button class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</button>
-                    <a class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
+                    <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
+                    <a href="#contact" class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
                 </div>
             </div>
             <div class="col-12 col-xl-6 col-img">
@@ -98,11 +109,7 @@
                     class="mt-5">
             </div>
         </div>
-            <div class="col-12 col-xl-6 col-img">
-                <img class="shadow-lg mt-5 img" src="{{ asset('img/dashboard-1.png') }}" alt="Dashboard1" width="1000px"
-                    class="mt-5">
-            </div>
-        </div>
+    </div>
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
@@ -243,78 +250,76 @@
             <div class="row w-100 d-flex justify-content-center align-items-center product flex-column-reverse gap-5 gap-xl-0 flex-xl-row" id="5">
                 <div class="col-12 col-xl-6 d-flex justify-content-center">
                     <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-5-img" src="{{ asset('img/proyects-img.png') }}" alt=""
+                        id="selector-5-img" src="{{ asset('img/items-img.png') }}" alt=""
                         width="900px">
                 </div>
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">INVENTORY SYSTEM</div>
-                    <div class="funcionality fs-2">ITEMS, ASSIGNMENTS AND EXPENSES</div>
+                    <div class="title fs-5">{{ __("crud.landing.inventory.title") }}</div>
+                    <div class="funcionality fs-2">{{ __("crud.landing.inventory.funcionality") }}</div>
                     <div class="selectors" id="selector-5">
                         <div class="selector" image="{{ asset('img/items-img.png') }}">
-                            <div>REGISTER ITEMS</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_1") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>REGISTER ITEMS</b></div>
+                            <div><b>{{ __("crud.landing.inventory.selector_5_1") }}</b></div>
                             <ul>
-                                <li>Filter by references</li>
-                                <li>Add photos to record status</li>
+                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_1") }}</li>
+                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_2") }}</li>
                             </ul>
                         </div>
                         <div class="selector" image="{{ asset('img/assignments-img.png') }}">
-                            <div>ASSIGNMENTS</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_2") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>ASSIGNMENTS</b></div>
-                            Assign multiple items to different users.
+                            <div><b>{{ __("crud.landing.inventory.selector_5_2") }}</b></div>
+                            {{ __("crud.landing.inventory.selector_5_2_desc") }}
                         </div>
                         <div class="selector" image="{{ asset('img/expenses-img.png') }}">
-                            <div>EXPENSES</div>
+                            <div>{{ __("crud.landing.inventory.selector_5_3") }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>EXPENSES</b></div>
-                            Allows you to create expenses so that you can invoice them later or simply record them.
+                            <div><b>{{ __("crud.landing.inventory.selector_5_3") }}</b></div>
+                            {{ __("crud.landing.inventory.selector_5_3_desc") }}
                         </div>
                     </div>
                 </div>
+
             </div>
 
 
         </div>
-        <div class="row section d-flex flex-column align-items-center w-100" id="pricing" bar-width="950px">
-            <section id="pricing" class="pricing-content section-padding w-100">
+        <div class="row section d-flex flex-column align-items-center" id="pricing" bar-width="950px">
+            <section id="pricing" class="pricing-content section-padding">
                 <div class="container">
                     <div class="section-title text-center">
-                        <h2>Pricing Plans</h2>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout.</p>
+                        <h2>{{__("crud.landing.pricing-f.title")}}</h2>
+                        <p>{{__("crud.landing.pricing-f.description")}}</p>
                     </div>
-                    <div class="row text-center d-flex justify-content-center align-items-center w-100 gap-3 gap-xl-0">
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
+                    <div class="row text-center d-flex justify-content-center align-items-center gap-3 gap-xl-0">
+                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
                             data-wow-delay="0.1s" data-wow-offset="0"
                             style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;">
                             <div class="pricing_design">
                                 <div class="single-pricing">
                                     <div class="price-head">
-                                        <h2>TEAM</h2>
-                                        <h1>80€</h1>
-                                        <span>/Monthly</span>
+                                        <h2>BASIC</h2>
+                                        <span class="h1">80€</span><br>
+                                        <span>/{{trans('plans.monthly')}}</span>
                                     </div>
-                                    <ul>
-                                        <li><b>15</b> website</li>
-                                        <li><b>50GB</b> Disk Space</li>
-                                        <li><b>50</b> Email</li>
-                                        <li><b>50GB</b> Bandwidth</li>
-                                        <li><b>10</b> Subdomains</li>
-                                        <li><b>Unlimited</b> Support</li>
+                                    <ul class="ps-0">
+                                        <li>{!! trans('plans.employee_accounts', ['count' => 15]) !!}</li>
+                                        <li>{!! trans('plans.disk_space', ['size' => '10gb']) !!}</li>
+                                        <li>{!! trans('plans.onboarding') !!}</li>
+                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                        <li>{!! trans('plans.unlimited_support') !!}</li>
                                     </ul>
-                                    <div class="pricing-price">
-
+                                    <div class="pricing-price mt-auto">
+                                        <a href="#contact" class="price_btn">START TRIAL</a>
                                     </div>
-                                    <a href="#" class="price_btn">START TRIAL</a>
                                 </div>
                             </div>
                         </div><!--- END COL -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
+                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
                             data-wow-delay="0.2s" data-wow-offset="0"
                             style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeInUp;">
                             <div class="pricing_design">
@@ -322,27 +327,29 @@
                                     <span class="badge">Popular</span>
                                 </div>
                                 <div class="single-pricing">
-                                    <div class="price-head">
-                                        <h2>BUSINESS</h2>
-                                        <h1 class="price">120€</h1>
-                                        <span>/Monthly</span>
+                                    <div    >
+                                        <div class="price-head">
+                                            <h2>PROFESSIONAL</h2>
+                                            <span class="original-price">140€</span>
+                                            <span class="h1">120€</span><br>
+                                            <span>/{{trans('plans.monthly')}}</span>
+                                        </div>
+                                        <ul class="ps-0">
+                                            <li>{!! trans('plans.employee_accounts', ['count' => 60]) !!}</li>
+                                            <li>{!! trans('plans.disk_space', ['size' => '30gb']) !!}</li>
+                                            <li>{!! trans('plans.onboarding') !!}</li>
+                                            <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                            <li>{!! trans('plans.custom_migration') !!}</li>
+                                            <li>{!! trans('plans.unlimited_support') !!}</li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        <li><b>15</b> website</li>
-                                        <li><b>50GB</b> Disk Space</li>
-                                        <li><b>50</b> Email</li>
-                                        <li><b>50GB</b> Bandwidth</li>
-                                        <li><b>10</b> Subdomains</li>
-                                        <li><b>Unlimited</b> Support</li>
-                                    </ul>
-                                    <div class="pricing-price">
-
+                                    <div class="pricing-price mt-auto">
+                                        <a href="#contact" class="price_btn">CONTACT US</a>
                                     </div>
-                                    <a href="#" class="price_btn">START TRIAL</a>
                                 </div>
                             </div>
                         </div><!--- END COL -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-duration="1s"
+                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
                             data-wow-delay="0.3s" data-wow-offset="0"
                             style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;">
                             <div class="pricing_design">
@@ -350,21 +357,24 @@
                                 <div class="single-pricing">
                                     <div class="price-head">
                                         <h2>ENTERPRISE</h2>
-                                        <h1 class="price">160€</h1>
-                                        <span>/Monthly</span>
+                                        <span class="original-price">200€</span>
+                                        <span class="h1">160€</span><br>
+                                        <span>/{{trans('plans.monthly')}}</span>
                                     </div>
-                                    <ul>
-                                        <li><b>15</b> website</li>
-                                        <li><b>50GB</b> Disk Space</li>
-                                        <li><b>50</b> Email</li>
-                                        <li><b>50GB</b> Bandwidth</li>
-                                        <li><b>10</b> Subdomains</li>
-                                        <li><b>Unlimited</b> Support</li>
+                                    <ul class="ps-0">
+                                        <li>{!! trans('plans.employee_accounts', ['count' => 'Unlimited']) !!}</li>
+                                        <li>{!! trans('plans.disk_space', ['size' => '100gb']) !!}</li>
+                                        <li>{!! trans('plans.onboarding') !!}</li>
+                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
+                                        <li>{!! trans('plans.custom_migration') !!}</li>
+                                        <li>{!! trans('plans.hiring_module') !!}</li>
+                                        <li>{!! trans('plans.route_module') !!}</li>
+                                        <li>{!! trans('plans.custom_modules') !!}</li>
+                                        <li>{!! trans('plans.unlimited_support') !!}</li>
                                     </ul>
-                                    <div class="pricing-price">
-
+                                    <div class="pricing-price mt-auto">
+                                        <a href="#contact" class="price_btn">CONTACT US</a>
                                     </div>
-                                    <a href="#" class="price_btn">START TRIAL</a>
                                 </div>
                             </div>
                         </div><!--- END COL -->
@@ -373,9 +383,9 @@
             </section>
         </div>
         <div class="row section" id="faq" bar-width="1090px">
-            <h2 class="text-center mb-5">FREQUENT ANSWERS AND QUESTIONS</h2>
+            <h2 class="text-center mb-5">{{__("crud.landing.faq_title")}}</h2>
             <div class="accordion" id="accordionExample">
-                @foreach ($faqs as $faq)
+                @foreach ($faqs[ $lang ] as $faq)
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -394,20 +404,18 @@
                 @endforeach
             </div>
         </div>
-        <div class="row section" id="contact" bar-width="1250px">
+        <div class="row section w-100 pb-5" id="contact" bar-width="1250px">
             <div class="container mt-5 pt-5">
                 <div class="row justify-content-md-center">
                     <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-                        <h2 class="mb-4 display-5 text-center">Contact</h2>
-                        <p class="text-secondary mb-5 text-center">The best way to contact us is to use our contact
-                            form below. Please fill out all of the required fields and we will get back to you as soon
-                            as possible.</p>
+                        <h2 class="mb-4 display-5 text-center">{{ __("crud.landing.contact.title") }}</h2>
+                        <p class="text-secondary mb-5 text-center">{{ __("crud.landing.contact.description") }}</p>
                         <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
                     </div>
                 </div>
             </div>
             <div class="container">
-                <div class="row justify-content-lg-center">
+                <div class="row justify-content-center">
                     <div class="col-12 col-lg-9">
                         <div class="bg-white border rounded shadow-sm overflow-hidden">
 
@@ -415,13 +423,13 @@
                                 @csrf
                                 <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
                                     <div class="col-12">
-                                        <label for="name" class="form-label">Full Name <span
+                                        <label for="name" class="form-label">{{ __("crud.landing.contact.full_name") }} <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="" required>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label for="email" class="form-label">Email <span
+                                        <label for="email" class="form-label">{{ __("crud.landing.contact.email") }} <span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text">
@@ -436,7 +444,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label for="phone_number" class="form-label">Phone Number</label>
+                                        <label for="phone_number" class="form-label">{{ __("crud.landing.contact.phone_number") }}</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -450,14 +458,14 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="message" class="form-label">Message <span
+                                        <label for="message" class="form-label">{{ __("crud.landing.contact.message") }} <span
                                                 class="text-danger">*</span></label>
                                         <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
                                             <button class="btn btn-lg" type="submit"
-                                                style="background-color:#374df1; color:white">Submit</button>
+                                                style="background-color:#374df1; color:white">{{ __("crud.landing.contact.submit_button") }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -467,6 +475,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </body>
 <script>

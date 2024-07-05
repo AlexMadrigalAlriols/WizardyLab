@@ -1,6 +1,6 @@
 @extends('layouts.app', ['section' => 'Login'])
 @section('content')
-    <img class="wave" src="{{ asset('img/wave.png') }}">
+    @include('auth.svg_wave', ['portal' => $portal])
     <div class="row h-100">
         <div class="col-md-8 col-lg-9 img-container d-flex align-items-center justify-content-center">
             @include('auth.svg_image', ['portal' => $portal])
