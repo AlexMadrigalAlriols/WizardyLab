@@ -51,7 +51,7 @@
 
                             <div>
                                 <p><b>{{__('crud.users.fields.email')}}:</b> <a href="mailto:{{$user->email}}" class="ms-2">{{$user->email}}</a></p>
-                                <p><b>{{__('crud.users.fields.gender')}}:</b> {{$user->gender ?? '-'}}</p>
+                                <p><b>{{__('crud.users.fields.gender')}}:</b> {{__("crud.users.".$user->gender) ?? '-'}}</p>
                                 <p><b>{{__('crud.users.fields.country')}}:</b> <span class="text-muted ms-2">{{$user->country?->name ?? '-'}}</span></p>
                                 <p><b>{{__('crud.users.fields.role')}}:</b> <span class="text-muted ms-2">{{$user->role?->name ?? '-'}}</span></p>
                                 <p><b>{{__('crud.users.fields.report_to')}}:</b> <a href="{{$user->reportinguser?->id?route("dashboard.users.show", $user->reportinguser?->id):"#"}}"><span class="ms-2">{{$user->reportinguser?->name ?? '-'}}</span></a></p>

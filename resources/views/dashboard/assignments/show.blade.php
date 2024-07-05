@@ -12,7 +12,7 @@
                                     <
                                 </span>
                             </a>
-                            <b class="text-capitalize ms-2">Assignment {{ $assignment->user?->name }}</b>
+                            <b class="text-capitalize ms-2">{{__("crud.assignments.assigned_to")}} {{ $assignment->user?->name }}</b>
                         </span>
                         <br>
                     </div>
@@ -27,7 +27,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item"
                                             href="{{ route('dashboard.assignments.edit', $assignment->id) }}"><i
-                                                class='bx bx-edit'></i> Edit</a></li>
+                                                class='bx bx-edit'></i> {{__("global.edit")}}</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -37,7 +37,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button class="dropdown-item text-danger"><i class='bx bx-trash'></i>
-                                                Remove</button>
+                                                {{__("global.remove")}}</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -53,19 +53,19 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <p class="h3 mb-4">
-                                    <b><i class='bx bx-info-circle'></i> Details @if ($assignment->return_date)
+                                    <b><i class='bx bx-info-circle'></i> {{__("global.details")}} @if ($assignment->return_date)
                                             <span class="fs-6 text-muted">({{ $assignment->return_date }})</span>
                                         @endif
                                     </b>
                                 </p>
 
                                 <div class="fs-5">
-                                    <p><b>User:</b><span class="ms-2 text-capitalize">{{ $assignment->user?->name }}</span>
+                                    <p><b>{{__("crud.assignments.fields.user")}}:</b><span class="ms-2 text-capitalize">{{ $assignment->user?->name }}</span>
                                     </p>
-                                    <p><b>Extract date:</b> <span
+                                    <p><b>{{__("crud.assignments.fields.extract_date")}}:</b> <span
                                             class="ms-2 text-muted">{{ $assignment->extract_date ? $assignment->extract_date : '-' }}</span>
                                     </p>
-                                    <p class=""><b>Shop place:</b> <span
+                                    <p class=""><b>{{__("crud.assignments.fields.return_date")}}:</b> <span
                                             class="ms-2 {{ $assignment->return_date < now() ? 'text-danger' : 'text-muted' }}">{{ $assignment->return_date ? $assignment->return_date : '-' }}</span>
                                     </p>
                                 </div>
@@ -80,10 +80,9 @@
                                                 <div class="row">
                                                     <div class="col-8">
                                                         <div>
-                                                            <h4 class="mb-0"><b><i class='bx bx-clipboard'></i> Items
-                                                                    assigned</b></h4>
+                                                            <h4 class="mb-0"><b><i class='bx bx-clipboard'></i> {{__("crud.assignments.title")}}</b></h4>
                                                             <div class="d-flex align-items-center">
-                                                                <p class="text-muted mb-0 d-flex">Assigned to&nbsp;&nbsp;<a
+                                                                <p class="text-muted mb-0 d-flex">{{__("crud.assignments.assigned_to")}}&nbsp;&nbsp;<a
                                                                         href="{{ route('dashboard.items.show', $assignment->user?->id) }}"
                                                                         class="text-decoration-none text-capitalize">
                                                                         <div tabindex="0" data-bs-toggle="popover"
