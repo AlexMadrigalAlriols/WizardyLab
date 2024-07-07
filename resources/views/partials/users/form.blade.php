@@ -50,7 +50,7 @@
                 @foreach ($user::GENDERS as $gender)
                     <option value="{{ $gender }}"
                         {{ $user->gender == $gender || old('gender') == $gender ? 'selected' : '' }}>
-                        {{ $gender }}</option>
+                        {{ __("crud.users.".$gender)}}</option>
                 @endforeach
             </select>
             <label for="phone">{{ __('crud.users.fields.gender') }}</label>

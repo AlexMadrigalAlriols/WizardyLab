@@ -70,6 +70,13 @@ return [
         'title_singular' => 'Task',
         'add_new' => 'Add New Task',
         'no_tasks' => 'No Tasks Found',
+        'work_loads' => 'Work loads',
+        'recent_activity' => 'Recent Activity',
+        'team_members' => 'Team Members',
+        'comments' => 'Comments',
+        'comment' => 'Comment',
+        'add_comment' => 'Add comments',
+        'not_comments' => 'Not comments yet',
         'fields' => [
             'id' => 'ID',
             'title' => 'Title',
@@ -84,6 +91,7 @@ return [
             'project' => 'Project',
             'task' => 'Task',
             'upload_files' => 'Files',
+            'total_hours' => 'Total hours',
             'department' => 'Department',
             'parent_task' => 'Parent Task',
             'departments' => 'Departments',
@@ -118,6 +126,8 @@ return [
     'invoices' => [
         'title' => 'Invoices',
         'title_singular' => 'Invoice',
+        'paid' => 'Paid',
+        'no_paid' => 'No Paid',
         'fields' => [
             'id' => 'ID',
             'number' => 'Number',
@@ -138,6 +148,9 @@ return [
         'title' => 'Users',
         'title_singular' => 'User',
         'add_new' => 'Add New User',
+        'male' => 'Male',
+        'female' => 'Female',
+        'other' => 'Other',
         'fields' => [
             'id' => 'ID',
             'profile_img' => 'Profile Image',
@@ -221,6 +234,9 @@ return [
         'title_singular' => 'Document',
         'personal_folders' => 'Personal Folders',
         'add_folder' => 'Add Folder',
+        'new_folder' => 'New Folder',
+        'add_file' => 'Add File',
+        'search_file' => 'Search File',
         'fields' => [
         ],
     ],
@@ -255,6 +271,8 @@ return [
             'price' => 'Price',
             'shop_place' => 'Shop Place',
             'stock' => 'Quantity',
+            'edit_item' => 'Edit item',
+            'files' => 'Files',
             'created_at' => 'Created at',
             'updated_at' => 'Updated at',
         ],
@@ -263,6 +281,7 @@ return [
         'title' => 'Assignments',
         'title_singular' => 'Assignment',
         'add_new' => 'Add New Assignment',
+        'assigned_to' => 'Assigned to',
         'fields' => [
             'user' => 'User',
             'items' => 'Items',

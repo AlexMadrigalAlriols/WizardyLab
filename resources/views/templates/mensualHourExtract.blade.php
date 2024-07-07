@@ -166,7 +166,7 @@
             <tbody>
                 @foreach ($dates as $date)
                     <tr>
-                        <td>{{ $date['day']->format('d/m/y'); }}</td>
+                        <td>{{ $date['day']->format('d/m/y') }}</td>
                         <td>{{ $date['worked_hours'] }}</td>
                         <td>{{ $date['hours_per_day'] }}</td>
                         <td>

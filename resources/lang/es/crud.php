@@ -70,6 +70,13 @@ return [
         'title_singular' => 'Tarea',
         'add_new' => 'Añadir nueva tarea',
         'no_tasks' => 'No se han encontrado tareas',
+        'work_loads' => 'Registros de trabajo',
+        'recent_activity' => 'Actividad reciente',
+        'team_members' => 'Miembros del equipo',
+        'comments' => 'Comentarios',
+        'add_comment' => 'Añadir comentarios',
+        'not_comments' => 'No hay comentarios aun',
+        'comment' => 'Comentar',
         'fields' => [
             'id' => 'ID',
             'title' => 'Título',
@@ -84,6 +91,7 @@ return [
             'project' => 'Proyecto',
             'task' => 'Tarea',
             'upload_files' => 'Archivos',
+            'total_hours' => 'Horas totales',
             'department' => 'Departamento',
             'parent_task' => 'Tarea principal',
             'departments' => 'Departamentos',
@@ -92,6 +100,25 @@ return [
             'updated_at' => 'Actualizado',
         ],
     ],
+    'items' => [
+    'title' => 'Artículos',
+    'title_singular' => 'Artículo',
+    'add_new' => 'Añadir Nuevo Artículo',
+    'fields' => [
+        'cover' => 'Foto',
+        'name' => 'Nombre',
+        'edit_item' => 'Editar item',
+        'reference' => 'Referencia',
+        'upload_files' => 'Archivos',
+        'price' => 'Precio',
+        'shop_place' => 'Lugar de Compra',
+        'stock' => 'Cantidad',
+        'files' => 'Archivos',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+],
+
     'notes' => [
         'title' => 'Notas',
         'title_singular' => 'Nota',
@@ -118,6 +145,8 @@ return [
     'invoices' => [
         'title' => 'Facturas',
         'title_singular' => 'Factura',
+        'paid' => 'Pagado',
+        'no_paid' => 'No Pagado',
         'fields' => [
             'id' => 'ID',
             'number' => 'Número',
@@ -138,6 +167,9 @@ return [
         'title' => 'Usuarios',
         'title_singular' => 'Usuario',
         'add_new' => 'Añadir nuevo usuario',
+        'male' => 'Hombre',
+        'female' => 'Mujer',
+        'other' => 'Otro',
         'fields' => [
             'id' => 'ID',
             'profile_img' => 'Imagen de perfil',
@@ -224,6 +256,9 @@ return [
         'title_singular' => 'Documento',
         'personal_folders' => 'Carpetas personales',
         'add_folder' => 'Añadir carpeta',
+        'new_folder' => 'Nueva Carpeta',
+        'add_file' => 'Añádir Archivo',
+        'search_file' => 'Buscar Archivo',
         'fields' => [],
 
     ],
@@ -246,6 +281,23 @@ return [
         ],
 
     ],
+
+    'assignments' => [
+    'title' => 'Asignaciones',
+    'title_singular' => 'Asignación',
+    'add_new' => 'Añadir Nueva Asignación',
+    'assigned_to' => 'Asignado a',
+    'fields' => [
+        'user' => 'Usuario',
+        'items' => 'Artículos',
+        'extract_date' => 'Fecha de Extracción',
+        'return_date' => 'Fecha de Devolución',
+        'quantity' => 'Cantidad',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+],
+
     'assets' => [
         'title' => 'Activos',
         'title_singular' => 'Activo',

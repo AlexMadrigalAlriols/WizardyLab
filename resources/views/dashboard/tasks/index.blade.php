@@ -137,19 +137,19 @@
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $task->id)}}"><i class='bx bx-show' ></i> View</a></li>
-                                    <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.tasks.show', $task->id)}}"><i class='bx bx-show' ></i> {{__("global.view")}}</a></li>
+                                    <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> {{__("global.edit")}}</a></li>
                                     @if(request('archived'))
-                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action.get', [$task->id, 'unarchive'])}}"><i class='bx bx-box' ></i> UnArchive</a></li>
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action.get', [$task->id, 'unarchive'])}}"><i class='bx bx-box' ></i> {{__("global.unarchive")}}</a></li>
                                     @else
-                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action.get', [$task->id, 'archive'])}}"><i class='bx bx-box' ></i> Archive</a></li>
+                                        <li><a class="dropdown-item" href="{{route('dashboard.tasks.action.get', [$task->id, 'archive'])}}"><i class='bx bx-box' ></i> {{__("global.archived")}}</a></li>
                                     @endif
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{route('dashboard.tasks.destroy', $task->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> {{__("global.remove")}}</button>
                                         </form>
                                     </li>
                                 </ul>

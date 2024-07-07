@@ -17,11 +17,11 @@
 
                     @if(in_array($task->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray()))
                         <a href="{{route('dashboard.task-clock-out', $task->id)}}" class="btn btn-outline-secondary mt-1">
-                            <i class='bx bx-stop-circle align-middle'></i> <span>Stop Timer</span>
+                            <i class='bx bx-stop-circle align-middle'></i> <span>{{__("crud.dashboard.fields.clock_out")}}</span>
                         </a>
                     @else
                         <a href="{{route('dashboard.task-clock-in', $task->id)}}" class="btn btn-outline-secondary mt-1">
-                            <i class='bx bx-play-circle align-middle'></i> <span>Start Timer</span>
+                            <i class='bx bx-play-circle align-middle'></i> <span>{{__("crud.dashboard.fields.clock_in")}}</span>
                         </a>
                     @endif
 
@@ -38,13 +38,13 @@
                                 <i class='bx bx-dots-horizontal-rounded'></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> Edit</a></li>
+                                <li><a class="dropdown-item" href="{{route('dashboard.tasks.edit', $task->id)}}"><i class='bx bx-edit' ></i> {{__("global.edit")}}</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form action="{{route('dashboard.tasks.destroy', $task->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                        <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> {{__("global.remove")}}</button>
                                     </form>
                                 </li>
                             </ul>
@@ -64,17 +64,17 @@
                             </p>
 
                             <div>
-                                <p><b>Project:</b> <a href="{{route('dashboard.projects.board', $task->project->id)}}" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
-                                <p><b>Asssigned By:</b> <a href="#" class="ms-2">{{$task->assignee->name}}</a></p>
-                                <p><b>Start Date:</b> <span class="text-muted ms-2">{{$task->start_date?->format('jS M, Y') ?? '-'}}</span></p>
-                                <p><b>Due Date:</b> <span class="text-muted ms-2">{{$task->duedate?->format('jS M, Y') ?? '-'}}</span></p>
-                                <p><b>Total Hours:</b> <span class="text-muted ms-2">{{$task->total_hours}}h</span></p>
+                                <p><b>{{__("crud.tasks.fields.project")}}:</b> <a href="{{route('dashboard.projects.board', $task->project->id)}}" class="ms-2">{{$task->project->name ?? '-'}}</a></p>
+                                <p><b>{{__("crud.tasks.fields.assigned_to")}}:</b> <a href="#" class="ms-2">{{$task->assignee->name}}</a></p>
+                                <p><b>{{__("crud.tasks.fields.start_date")}}:</b> <span class="text-muted ms-2">{{$task->start_date?->format('jS M, Y') ?? '-'}}</span></p>
+                                <p><b>{{__("crud.tasks.fields.due_date")}}:</b> <span class="text-muted ms-2">{{$task->duedate?->format('jS M, Y') ?? '-'}}</span></p>
+                                <p><b>{{__("crud.tasks.fields.total_hours")}}:</b> <span class="text-muted ms-2">{{$task->total_hours}}h</span></p>
                             </div>
                         </div>
 
                         <div class="row">
                             <p class="h4 mt-4">
-                                <b><i class='bx bx-pie-chart-alt-2' ></i> Work loads</b>
+                                <b><i class='bx bx-pie-chart-alt-2' ></i> {{__("crud.tasks.work_loads")}}</b>
                             </p>
 
                             <canvas id="hoursChart" style="width:100%;max-width:700px"></canvas>
@@ -83,13 +83,13 @@
                     <div class="col-md-7">
                         <div class="row mb-1">
                             <p class="h4 d-inline-block mt-1">
-                                <b><i class='bx bx-line-chart'></i> Recent Activity</b>
+                                <b><i class='bx bx-line-chart'></i> {{__("crud.tasks.recent_activity")}}</b>
                             </p>
 
                             <canvas id="activityChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                         <div class="row mt-4 mb-1">
-                            <p class="h4"><b><i class='bx bx-user' ></i> Team Members</b></p>
+                            <p class="h4"><b><i class='bx bx-user' ></i> {{__("crud.tasks.team_members")}}</b></p>
                             <div>
                                 @foreach ($task->users as $user)
                                     <img src="{{ $user->profile_url }}" class="rounded-circle" width="45" height="45" alt="{{$user->name}}">
@@ -139,13 +139,13 @@
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{$file->download_link}}"><i class='bx bxs-download' ></i> Download</a></li>
+                                    <li><a class="dropdown-item" href="{{$file->download_link}}"><i class='bx bxs-download' ></i> {{__("global.download")}}</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{route('dashboard.task.delete_file', $file->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                            <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> {{__("global.remove")}}</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -168,16 +168,16 @@
     <div class="col-md-8">
         <div class="mt-4">
             <p class="h4 d-inline-block mt-1">
-                <b><i class='bx bx-comment-detail' ></i> Comments</b>
+                <b><i class='bx bx-comment-detail' ></i> {{__("crud.tasks.comments")}}</b>
             </p>
             <div class="row">
                 <div class="col-md-12">
                     <form action="{{route('dashboard.comments.store', $task->id)}}" method="POST">
                         @csrf
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="comment" placeholder="Add a comment" aria-label="Add a comment" aria-describedby="button-addon2">
+                            <input type="text" class="form-control" name="comment" placeholder="{{__("crud.tasks.add_comment")}}" aria-label="Add a comment" aria-describedby="button-addon2">
                             <button class="btn btn-white" type="button" id="button-addon3"><i class='bx bx-paperclip' ></i></button>
-                            <button class="btn btn-primary" type="submit" id="button-addon2"><i class='bx bx-send' ></i> Comment</button>
+                            <button class="btn btn-primary" type="submit" id="button-addon2"><i class='bx bx-send' ></i> {{__("crud.tasks.comment")}}</button>
                         </div>
                     </form>
                 </div>
@@ -204,7 +204,7 @@
                                             <form action="{{route('dashboard.comments.destroy', [$task->id, $comment->id])}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> Remove</button>
+                                                <button class="dropdown-item text-danger"><i class='bx bx-trash' ></i> {{__("global.remove")}}</button>
                                             </form>
                                         </li>
                                     </ul>
@@ -215,7 +215,7 @@
 
                     @if ($task_comments->isEmpty())
                         <div class="text-center p-3">
-                            <p class="text-muted">No comments yet!</p>
+                            <p class="text-muted">{{__("crud.tasks.not_comments")}}!</p>
                         </div>
 
                     @endif
