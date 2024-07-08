@@ -246,8 +246,9 @@ table.dataTable tbody th.select-checkbox::after {
 }
 
 .form-floating .select2-container .select2-selection {
-    height: calc(4rem + 2px);
+    height: fit-content;
     padding: 1rem;
+    padding-bottom: 0.5rem;
     border-radius: 0.375rem !important;
 }
 
@@ -580,6 +581,9 @@ opacity: 1;
     --bs-popover-body-padding-y: .5rem;
   }
 
+  .form-floating .select2-container .select2-selection{
+    height: auto;
+  }
 
   .popover-body{
     width: 400px;

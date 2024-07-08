@@ -117,7 +117,7 @@ class RoleController extends Controller
         $permissions = [];
 
         foreach ($input as $name => $value) {
-            $permissions[] = $name;
+            $permissions[] = $value;
         }
 
         return $permissions;
