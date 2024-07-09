@@ -30,7 +30,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'assignment') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.assignments.title') }}</label>
@@ -42,7 +42,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'clients') || stripos($tag['name'], 'client') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.clients.title') }}</label>
@@ -54,7 +54,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'leave') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.leaves.title') }}</label>
@@ -66,7 +66,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'holiday') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('global.holiday') }}</label>
@@ -78,7 +78,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'document') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.documents.title') }}</label>
@@ -90,7 +90,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'user') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.users.title') }}</label>
@@ -102,7 +102,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'item') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.items.title') }}</label>
@@ -114,7 +114,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'configuration') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('global.configuration') }}</label>
@@ -126,7 +126,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'expense') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.expenses.title') }}</label>
@@ -138,7 +138,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'status') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.status.title') }}</label>
@@ -150,7 +150,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'label') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.labels.title') }}</label>
@@ -162,7 +162,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'leavetype') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('global.leave_types') }}</label>
@@ -174,7 +174,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'department') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.departments.title') }}</label>
@@ -186,7 +186,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'role') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('global.roles') }}</label>
@@ -198,7 +198,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'project') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.projects.title') }}</label>
@@ -209,7 +209,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'task') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.tasks.title') }}</label>
@@ -221,7 +221,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'invoice') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.invoices.title') }}</label>
@@ -233,7 +233,7 @@
                 @foreach ($permissions->filter(function ($tag){
                     return stripos($tag->name, 'company') !== false;
                 }) as $tag)
-                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ $tag->name }}</option>
+                     <option value="{{ $tag->id }}" {{$role->permissions?->where("id", $tag->id)->first() || old('tags') == $tag->id ? 'selected' : ''}}>{{ __('crud.roles.'.$tag->name) }}</option>
                 @endforeach
              </select>
              <label for="floatingSelect">{{ __('crud.companies.title') }}</label>
