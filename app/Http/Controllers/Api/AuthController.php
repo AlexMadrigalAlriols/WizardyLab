@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
+use App\Helpers\AttendanceHelper;
+use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -50,13 +52,22 @@ class AuthController extends Controller
             'secondary_light_color' => $portal->secondary_light
         ];
         $portal->data = array_merge($portal->data, $data);
+        $portal->language = ConfigurationHelper::get('language') ?? 'es';
 
         if(!$portal->active) {
             return ApiResponse::fail('Portal not active!');
         }
 
+        $user = auth()->user();
+        $user->profile_img = $user->profile_url;
+        $user->is_clockIn = $user->is_clockIn;
+        $user->timer = $user->timer;
+        $user->break = $user->attendanceTemplate->getBreakPerDay(now()->format('l'));
+        $user->estimated_work_hours = $user->attendanceTemplate->getHoursPerDay(now()->format('l'));
+
         return ApiResponse::ok([
             'portal' => auth()->user()->portal,
+            'user' => $user
         ]);
     }
 }
