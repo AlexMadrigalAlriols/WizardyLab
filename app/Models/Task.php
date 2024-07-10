@@ -149,4 +149,9 @@ class Task extends Model
     {
         return TaskAttendanceHelper::getTimer($this);
     }
+
+    public function getisClockInAttribute(): bool
+    {
+        return in_array($this->id, auth()->user()->activeTaskTimers()->pluck('task_id')->toArray());
+    }
 }

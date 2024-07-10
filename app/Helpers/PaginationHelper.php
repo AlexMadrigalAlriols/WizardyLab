@@ -22,6 +22,12 @@ class PaginationHelper {
         if($page && $page != 'all' && is_numeric($page)) {
             $pagination['skip'] = $model::PAGE_SIZE * ($page - 1);
             $pagination['take'] = $model::PAGE_SIZE;
+            $pagination['total'] = $query->count();
+
+            if($request->input('search')) {
+                $query->where('title', 'like', '%' . $request->input('search') . '%');
+            }
+
             $query->skip($pagination['skip']);
             $query->take($pagination['take']);
         }

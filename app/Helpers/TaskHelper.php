@@ -33,7 +33,7 @@ class TaskHelper {
             $num = 0001;
 
             $code = 'T-' . $num;
-
+            $num = str_pad($num, 5, '0', STR_PAD_LEFT);
             if($project) {
                 $code = $project->code . '-' . $num;
             }

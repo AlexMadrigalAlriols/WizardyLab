@@ -9,9 +9,12 @@ use App\Models\User;
 use Carbon\Carbon;
 
 class TaskAttendanceHelper {
-    public static function getTodayTaskAttendanceOrCreate(Task $task): TaskAttendance
+    public static function getTodayTaskAttendanceOrCreate(Task $task, ?User $user = null): TaskAttendance
     {
-        $user = auth()->user();
+        if(!$user) {
+            $user = auth()->user();
+        }
+
         $today = now()->format('Y-m-d');
 
         $attendance = $user->taskAttendance()->where('date', $today)->where('task_id', $task->id)->orderBy('updated_at', 'desc')->first();
@@ -31,9 +34,13 @@ class TaskAttendanceHelper {
         ]);
     }
 
-    public static function clockAllTaskTimers(): void
+    public static function clockAllTaskTimers(?User $user = null): void
     {
-        $tasks = auth()->user()->activeTaskTimers;
+        if(!$user) {
+            $user = auth()->user();
+        }
+
+        $tasks = $user->activeTaskTimers;
 
         foreach ($tasks as $attendance) {
             $attendance->update([

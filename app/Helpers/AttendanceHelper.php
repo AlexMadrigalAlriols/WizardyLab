@@ -9,9 +9,12 @@ use App\Models\User;
 use Carbon\Carbon;
 
 class AttendanceHelper {
-    public static function getTodayAttendanceOrCreate(?array $ubication = []): Attendance
+    public static function getTodayAttendanceOrCreate(?array $ubication = [], ?User $user = null): Attendance
     {
-        $user = auth()->user();
+        if(!$user) {
+            $user = auth()->user();
+        }
+
         $today = now()->format('Y-m-d');
 
         $attendance = $user->attendances()->where('date', $today)->orderBy('updated_at', 'desc')->first();
