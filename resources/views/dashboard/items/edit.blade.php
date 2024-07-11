@@ -15,8 +15,8 @@
             @include('partials.items.form')
             <div class="row mt-4">
                 <div class="col-md-10 text-end">
-                    <a class="btn btn-outline-primary" href="{{route('dashboard.items.index')}}"><span class="px-2">Cancel</span></a>
-                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">Edit item</span></button>
+                    <a class="btn btn-outline-primary" href="{{route('dashboard.items.index')}}"><span class="px-2">{{__("global.cancel")}}</span></a>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">{{__("crud.items.fields.edit_item")}}</span></button>
                 </div>
             </div>
         </form>

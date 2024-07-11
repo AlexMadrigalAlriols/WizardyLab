@@ -68,6 +68,13 @@ class AttendanceTemplate extends Model
         return sprintf('%02dh %02dm', $hours, $minutes);
     }
 
+    public function getBreakPerDay(string $weekday)
+    {
+        $day = $this->days()->where('weekday', $weekday)->first();
+
+        return $day->start_break->format('H:i') . ' - ' . $day->end_break->format('H:i');
+    }
+
     public function getDaySchedule(string $weekday) {
         $day = $this->days()->where('weekday', $weekday)->first();
 

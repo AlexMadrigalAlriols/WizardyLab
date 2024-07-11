@@ -40,19 +40,30 @@
         countChars(limitedCharFields);
         checkObligatoryFields(obligatoryFields);
 
+
         $('#check_all').change(function() {
-            $('input[type="checkbox"]').each(function() {
-                this.checked = $('#check_all').prop('checked');
+                if (this.checked) {
+                    // Select all options in all select elements
+                    $('.select2').each(function() {
+                        var allValues = [];
+                        $(this).find('option').each(function() {
+                            allValues.push($(this).val());
+                        });
+                        $(this).val(allValues).trigger('change');
+                    });
+                } else {
+                    // Deselect all options in all select elements
+                    $('.select2').val(null).trigger('change');
+                }
             });
-        });
 
-        $('.permissions-check').each(function() {
-            console.log($(this).prop('checked'));
-            if(!$(this).prop('checked')) {
-                allChecked = false;
-            }
-        });
+        // $('.permissions-check').each(function() {
+        //     console.log($(this).prop('checked'));
+        //     if(!$(this).prop('checked')) {
+        //         allChecked = false;
+        //     }
+        // });
 
-        $('#check_all').prop('checked', allChecked);
+        // $('#check_all').prop('checked', allChecked);
     </script>
 @endsection

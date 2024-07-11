@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
@@ -426,12 +426,12 @@
                                         <label for="name" class="form-label">{{ __("crud.landing.contact.full_name") }} <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" name="name"
-                                            value="" required>
+                                            placeholder="{{ __("crud.landing.contact.full_name") }}" required>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label for="email" class="form-label">{{ __("crud.landing.contact.email") }} <span
                                                 class="text-danger">*</span></label>
-                                        <div class="input-group">
+                                        <div class="input-group pe-lg-5">
                                             <span class="input-group-text">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
@@ -439,8 +439,7 @@
                                                         d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                                 </svg>
                                             </span>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                value="" required>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="{{ __('crud.landing.contact.email') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -454,18 +453,18 @@
                                                 </svg>
                                             </span>
                                             <input type="tel" class="form-control" id="phone_number"
-                                                name="phone_number" value="">
+                                                name="phone_number" placeholder="{{ __("crud.landing.contact.phone_number") }}">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label for="message" class="form-label">{{ __("crud.landing.contact.message") }} <span
                                                 class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                                        <textarea class="form-control" id="message" name="message" rows="3" placeholder="{{ __("crud.landing.contact.message") }}" required></textarea>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
                                             <button class="btn btn-lg" type="submit"
-                                                style="background-color:#374df1; color:white">{{ __("crud.landing.contact.submit_button") }}</button>
+                                                style="background-color:#374df1; color:white"><i class='bx bx-mail-send me-1 mt-1' ></i> {{ __("crud.landing.contact.submit_button") }}</button>
                                         </div>
                                     </div>
                                 </div>

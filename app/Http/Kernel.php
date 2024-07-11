@@ -4,6 +4,8 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\ThrottleRequests;
+use Tymon\JWTAuth\Http\Middleware\Authenticate;
+use Tymon\JWTAuth\Http\Middleware\RefreshToken;
 
 class Kernel extends HttpKernel
 {
@@ -27,7 +29,9 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         'checkPortal' => \App\Http\Middleware\CheckPortal::class,
-        'checkPortalExists' => \App\Http\Middleware\CheckPortalExists::class
+        'checkPortalExists' => \App\Http\Middleware\CheckPortalExists::class,
+        'jwt.auth' => Authenticate::class,
+        'jwt.refresh' => RefreshToken::class
     ];
 
     /**

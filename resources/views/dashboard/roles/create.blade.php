@@ -38,9 +38,19 @@
         checkObligatoryFields(obligatoryFields);
 
         $('#check_all').change(function() {
-            $('input[type="checkbox"]').each(function() {
-                this.checked = $('#check_all').prop('checked');
+                if (this.checked) {
+                    // Select all options in all select elements
+                    $('.select2').each(function() {
+                        var allValues = [];
+                        $(this).find('option').each(function() {
+                            allValues.push($(this).val());
+                        });
+                        $(this).val(allValues).trigger('change');
+                    });
+                } else {
+                    // Deselect all options in all select elements
+                    $('.select2').val(null).trigger('change');
+                }
             });
-        });
     </script>
 @endsection

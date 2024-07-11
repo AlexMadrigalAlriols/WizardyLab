@@ -109,7 +109,7 @@ class LandingController extends Controller
     }
 
     public function store(StoreRequest $request){
-        Mail::to("pablo.gimenez.ricart@gmail.com")->send(new ContactMailable($request->all()));
+        Mail::to(config("app.reception_email"))->send(new ContactMailable($request->all()));
         toast("Message send", "success");
         return Redirect::to(URL::previous() . "#contact");
     }

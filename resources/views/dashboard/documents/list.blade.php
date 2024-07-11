@@ -57,7 +57,7 @@
         </span>
 
         <button class="btn btn-primary d-inline-block ms-3 align-top" id="addFile">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>Add file</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__("crud.documents.add_file")}}</span>
         </button>
     </div>
 
@@ -66,7 +66,7 @@
             <div class="search-container w-100">
                 <i class="bx bx-search search-icon"></i>
                 <input type="text" class="search-input" id="search-input" name="search_input"
-                    placeholder="Search Document">
+                    placeholder="{{__("crud.documents.search_file")}}">
             </div>
         </div>
     </div>

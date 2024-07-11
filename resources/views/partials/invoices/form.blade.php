@@ -84,7 +84,7 @@
         <div class="form-floating mt-3">
             <select class="form-select @if($errors->has('status_id')) is-invalid @endif" id="status_id" name="status_id" aria-label="Status">
                 @foreach ($statuses as $status)
-                    <option value="{{ $status->id }}" {{$invoice->status_id == $status->id || old('status_id') == $status->id ? 'selected' : ''}}>{{ $status->title }}</option>
+                    <option value="{{ $status->id }}" {{$invoice->status_id == $status->id || old('status_id') == $status->id ? 'selected' : ''}}>{{$status->title=="Paid"?__("crud.invoices.paid"):__("crud.invoices.no_paid")}}</option>
                 @endforeach
             </select>
             <label for="floatingSelect">{{__('crud.invoices.fields.status')}} <span class="text-danger">*</span></label>
