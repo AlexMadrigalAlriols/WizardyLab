@@ -29,7 +29,7 @@ class ContactMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address("WizardyLab@gmail.com"),
+            from: new Address(config("app.sender_email")),
             subject: 'New lead in landing page',
         );
     }

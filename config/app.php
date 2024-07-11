@@ -192,4 +192,27 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class
     ])->toArray(),
 
+
+        /*
+    |--------------------------------------------------------------------------
+    | Application notifications receiver
+    |--------------------------------------------------------------------------
+    |
+    | Email for recept the entranting emails from landing.
+    |
+    */
+
+    'reception_email' => env("RECEPTION_EMAIL"),
+
+            /*
+    |--------------------------------------------------------------------------
+    | Application notifications receiver
+    |--------------------------------------------------------------------------
+    |
+    | Email for recept the entranting emails from landing.
+    |
+    */
+
+    'sender_email' => env("MAIL_FROM_ADDRESS"),
+
 ];
