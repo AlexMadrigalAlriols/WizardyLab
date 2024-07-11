@@ -26,6 +26,8 @@ return [
             'status' => 'Estado',
             'reason' => 'Razón',
             'approved' => 'Aprobada',
+            'max_days' => 'Dias maximos',
+            'name' => 'Nombre',
             'non_approved' => 'No aprobada',
             'duration' => 'Duración',
             'user' => 'Usuario',
@@ -40,6 +42,19 @@ return [
             'id' => 'ID',
             'name' => 'Nombre',
             'type' => 'Tipo',
+            'created_at' => 'Creado',
+            'updated_at' => 'Actualizado',
+        ],
+    ],
+    'attendanceTemplates' => [
+        'title' => 'Horarios',
+        'title_singular' => 'Horario',
+        'fields' => [
+            'name' => 'Nombre',
+            'weekday' => 'Dia de la semana',
+            'start_time' => 'Entrada',
+            'end_time' => 'Salida',
+            'break_time' => 'Descanso',
             'created_at' => 'Creado',
             'updated_at' => 'Actualizado',
         ],
@@ -363,6 +378,7 @@ return [
         'add_new' => 'Añadir nuevo departamento',
         'fields' => [
             'id' => 'ID',
+            'name' => 'Nombre',
             'title' => 'Título',
             'description' => 'Descripción',
             'created_at' => 'Creado',
@@ -493,7 +509,31 @@ return [
             "title" => "Planes de precios",
             "description" => "Elija el plan perfecto para las necesidades de su negocio. Desde startups hasta grandes empresas, ofrecemos opciones flexibles para apoyar su crecimiento y éxito.",
         ]
-    ],'roles' => [
+    ],
+    'expenses' => [
+        'title' => 'Gastos',
+        'title_singular' => 'Gasto',
+        'add_new' => 'Agregar Nuevo Gasto',
+        'fields' => [
+            'project' => 'Proyecto',
+            'item' => 'Artículo',
+            'quantity' => 'Cantidad',
+            'amount' => 'Monto',
+            'facturable' => 'Facturable',
+            'created_at' => 'Creado el',
+            'updated_at' => 'Actualizado el',
+        ],
+    ],
+
+    'roles' => [
+        'title' => 'Roles',
+        'title_singular' => 'Rol',
+        'permission' => 'Permisos',
+        'fields' => [
+            'name' => 'Nombre',
+            'created_at' => 'Creado el',
+            'updated_at' => 'Actualizado el',
+        ],
         'view_clients' => 'Ver clientes',
         'user_view' => 'Ver usuario',
         'user_edit' => 'Editar usuario',
