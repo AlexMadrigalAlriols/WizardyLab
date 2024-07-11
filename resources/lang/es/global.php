@@ -60,6 +60,8 @@ return [
     'expenses' => 'Gastos',
     'statuses' => 'Estados',
     'tasks' => 'Tareas',
+    'background_color' => 'Color de fondo',
+    'text_color' => 'Color de texto',
     'projects' => 'Proyectos',
     'project' => 'Proyecto',
     'globalconfigurations' => 'Configuraciones Globales',

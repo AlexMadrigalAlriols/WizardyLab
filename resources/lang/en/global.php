@@ -54,6 +54,8 @@ return [
     'assignments' => 'Assignments',
     'configuration' => 'Configuration',
     'roles' => 'Roles',
+    'background_color' => 'Background color',
+    'text_color' => 'Text color',
     'departments' => 'Departments',
     'templates' => 'Templates',
     'expenses' => 'Expenses',

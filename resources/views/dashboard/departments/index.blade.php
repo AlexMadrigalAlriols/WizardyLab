@@ -3,10 +3,10 @@
 @section('content')
     <div class="mt-2">
         <span class="h2 d-inline-block mt-1">
-            <b>Departments</b><span class="text-muted">({{ $total }})</span>
+            <b>{{__("crud.departments.title")}}</b><span class="text-muted">({{ $total }})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.departments.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.companies.title_singular')}}</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.departments.title_singular')}}</span>
         </a>
     </div>
 
@@ -15,8 +15,8 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">NAME</th>
-                    <th scope="col" class="border-bottom">CREATED_AT</th>
+                    <th scope="col" class="border-bottom">{{__("crud.departments.fields.name")}}</th>
+                    <th scope="col" class="border-bottom">{{__("crud.departments.fields.created_at")}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

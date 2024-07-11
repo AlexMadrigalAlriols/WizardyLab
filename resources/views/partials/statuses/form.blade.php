@@ -17,9 +17,9 @@
     <div class="col-md-6">
         <div class="form-floating mt-3">
             <select name="type" id="type" class="form-control form-select @if($errors->has('type')) is-invalid @endif">
-                <option value="task">Task</option>
-                <option value="project">Project</option>
-                <option value="invoice">Invoice</option>
+                <option value="task">{{__("crud.tasks.title_singular")}}</option>
+                <option value="project">{{__("crud.projects.title_singular")}}</option>
+                <option value="invoice">{{__("crud.invoices.title_singular")}}</option>
             </select>
             <label for="">{{__('crud.status.fields.type')}} <span class="text-danger">*</span></label>
         </div>
@@ -32,11 +32,11 @@
 
 <div class="row mt-3">
     <div class="col-md-6">
-        <label for="background" class="form-label">Background Color</label>
+        <label for="background" class="form-label">{{__("global.background_color")}}</label>
         <input type="text" name="background" class="form-control colorpicker" id="background" value="{{ old('background') ?? ($status->data['background'] ?? '#000000') }}" title="Choose your color">
     </div>
     <div class="col-md-6">
-        <label for="color" class="form-label">Text Color</label>
+        <label for="color" class="form-label">{{__("global.text_color")}}</label>
         <input type="text" name="color" class="form-control colorpicker" id="color" value="{{ old('color') ?? ($status->data['color'] ?? '#FFFFFF') }}" title="Choose your color">
     </div>
 </div>

@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <div class="form-floating mt-3">
             <input type="text" class="form-control @if($errors->has('name')) is-invalid @endif" maxlength="25" id="name" name="name" placeholder="Name" value="{{ old('name') ?? $role->name }}">
-            <label for="title">Name <span class="text-danger">*</span></label>
+            <label for="title">{{__("crud.roles.fields.name")}} <span class="text-danger">*</span></label>
         </div>
 
         <div class="mt-0 text-end">
@@ -18,10 +18,10 @@
 
 <div class="row">
     <div>
-        <span class="h6">Permissions</span>
+        <span class="h6">{{__("crud.roles.permission")}}</span>
         <div class="form-check form-switch d-inline-block ms-2">
             <input type="checkbox" class="form-check-input" id="check_all" role="switch">
-            <label for="check_all" class="form-check-label mt-1 ms-1">Select All</label>
+            <label for="check_all" class="form-check-label mt-1 ms-1">{{__("global.select_all")}}</label>
         </div>
     </div>
     <div class="col-md-6">
