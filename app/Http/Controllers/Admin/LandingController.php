@@ -15,6 +15,11 @@ class LandingController extends Controller
 {
     public function index(Request $request)
     {
+		$subdomain = explode('.', $request->getHost());
+		if(count($subdomain) == 3 && $subdomain[0] != "www") {
+            return Redirect::to(route('login'));
+        }
+
         App::setLocale($request->input("lang", "en"));
             $faqs = [
                 "en" => [
@@ -109,8 +114,13 @@ class LandingController extends Controller
     }
 
     public function store(StoreRequest $request){
-        Mail::to(config("app.reception_email"))->send(new ContactMailable($request->all()));
+        try {
+            Mail::to(env("MAIL_FROM_ADDRESS"))->send(new ContactMailable($request->all()));
+        } catch (\Exception $e) {
+            return toast("Message not send", "error");
+        }
+
         toast("Message send", "success");
-        return Redirect::to(URL::previous() . "#contact");
+        return route("landing.index") . '#contact';
     }
 }

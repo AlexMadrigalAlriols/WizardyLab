@@ -52,7 +52,7 @@ class AuthController extends Controller
             'secondary_light_color' => $portal->secondary_light
         ];
         $portal->data = array_merge($portal->data, $data);
-        $portal->language = ConfigurationHelper::get('language') ?? 'es';
+        $portal->language = ConfigurationHelper::get('language') ?? 'en';
 
         if(!$portal->active) {
             return ApiResponse::fail('Portal not active!');
