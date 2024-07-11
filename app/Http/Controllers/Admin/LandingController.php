@@ -15,6 +15,11 @@ class LandingController extends Controller
 {
     public function index(Request $request)
     {
+		$subdomain = explode('.', $request->getHost());
+		if(count($subdomain) == 3 && $subdomain[0] != "www") {
+            return Redirect::to(route('login'));
+        }
+
         App::setLocale($request->input("lang", "en"));
             $faqs = [
                 "en" => [
