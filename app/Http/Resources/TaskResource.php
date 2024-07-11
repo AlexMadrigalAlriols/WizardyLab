@@ -27,10 +27,11 @@ class TaskResource extends JsonResource
             ],
             'users' => UserResource::collection($this->users) ?? [],
             'subtasks' => TaskResource::collection($this->subtasks) ?? [],
-            'duedate' => $this->duedate,
-            'start_date' => $this->start_date,
+            'duedate' => $this->duedate?->format('Y-m-d'),
+            'start_date' => $this->start_date?->format('Y-m-d'),
             'limit_date' => $this->limit_date,
             'total_hours' => $this->total_hours,
+            'limit_hours' => $this->limit_hours,
             'timer' => $this->timer,
             'priority' => $this->priority,
             'status' => [

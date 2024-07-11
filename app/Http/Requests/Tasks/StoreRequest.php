@@ -47,7 +47,8 @@ class StoreRequest extends FormRequest
             'departments' => 'nullable|array',
             'departments.*' => 'nullable|exists:departments,id',
             'project' => 'nullable|exists:projects,id',
-            'parent_task' => 'nullable|exists:tasks,id'
+            'parent_task' => 'nullable|exists:tasks,id',
+            'images' => 'nullable|array',
         ];
     }
 }

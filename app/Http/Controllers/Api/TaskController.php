@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Helpers\AttendanceHelper;
+use App\Helpers\BoardHelper;
 use App\Helpers\ConfigurationHelper;
 use App\Helpers\LogHelper;
 use App\Helpers\PaginationHelper;
 use App\Helpers\TaskAttendanceHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tasks\StoreRequest;
+use App\Http\Requests\Tasks\UpdateRequest;
 use App\Http\Resources\StatusResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Department;
@@ -17,9 +19,11 @@ use App\Models\Label;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
+use App\Models\TaskFile;
 use App\Models\User;
 use App\UseCases\Tasks\StoreUseCase;
 use App\UseCases\Tasks\UpdateStatusUseCase;
+use App\UseCases\Tasks\UpdateUseCase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -51,7 +55,7 @@ class TaskController extends Controller
         return ApiResponse::ok(new TaskResource($task));
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -75,6 +79,40 @@ class TaskController extends Controller
         LogHelper::saveLogAction($task, 'created', 'Created Task On: <b>' . $task->status->title . '</b>');
 
         return ApiResponse::done('Task created successfully');
+    }
+
+    public function storeImages(Request $request, Task $task) {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        return ApiResponse::error(['img_count' => $request->hasFile('images'), 'request' => $request->all()]);
+
+        return ApiResponse::done('Images uploaded successfully');
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $parent_task = $request->input('parent_task') ? Task::find($request->input('parent_task')) : null;
+
+        (new UpdateUseCase(
+            $task,
+            $user,
+            $request->input('title'),
+            $request->input('description') ?? '',
+            $request->input('priority'),
+            Status::find($request->input('status')),
+            $request->input('limit_hours'),
+            $request->input('due_date') != '' ? Carbon::parse($request->input('due_date')) : null,
+            $request->input('start_date') != '' ? Carbon::parse($request->input('start_date')) : null,
+            $request->input('tags', []),
+            $request->input('assigned_users', []),
+            $request->input('departments', []),
+            $parent_task ? $parent_task->project : Project::find($request->input('project')),
+            Task::find($request->input('parent_task'))
+        ))->action();
+        LogHelper::saveLogAction($task, 'updated', 'Modified Task');
+
+        return ApiResponse::done('Task updated successfully');
     }
 
     public function taskClockIn(Task $task)
@@ -159,5 +197,21 @@ class TaskController extends Controller
             'priorities' => $priorities,
             'tags' => $tags
         ]);
+    }
+
+    public function destroy(Task $task)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $task->delete();
+
+        return ApiResponse::done('Task deleted successfully');
+    }
+
+    public function archive(Task $task)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        BoardHelper::archiveTask($task);
+
+        return ApiResponse::done('Task archived successfully');
     }
 }
