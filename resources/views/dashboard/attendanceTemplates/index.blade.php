@@ -6,7 +6,7 @@
             <b>{{__('crud.attendanceTemplates.title')}}</b><span class="text-muted">({{ $total }})</span>
         </span>
         <a class="btn btn-primary d-inline-block ms-3 align-top" href="{{route('dashboard.attendanceTemplates.create')}}">
-            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.companies.title_singular')}}</span>
+            <span class="px-4"><i class="bx bx-plus mt-1"></i>{{__('global.create')}} {{ __('crud.attendanceTemplates.title_singular')}}</span>
         </a>
     </div>
 
@@ -15,8 +15,8 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">NAME</th>
-                    <th scope="col" class="border-bottom">CREATED AT</th>
+                    <th scope="col" class="border-bottom">{{__("crud.attendanceTemplates.fields.name")}}</th>
+                    <th scope="col" class="border-bottom">{{__("crud.attendanceTemplates.fields.created_at")}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

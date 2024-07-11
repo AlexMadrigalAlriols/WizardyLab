@@ -15,12 +15,12 @@
         @endif
     </div>
     <div class="col-md-3">
-        <label for="background" class="form-label">Background Color</label>
+        <label for="background" class="form-label">{{__("global.background_color")}}</label>
         <input type="text" name="background" class="form-control colorpicker" id="background"
             value="{{ old('background') ?? ($attendanceTemplate->data['background'] ?? '#000000') }}" title="Choose your color">
     </div>
     <div class="col-md-3">
-        <label for="color" class="form-label">Text Color</label>
+        <label for="color" class="form-label">{{__("global.text_color")}}</label>
         <input type="text" name="color" class="form-control colorpicker" id="color"
             value="{{ old('color') ?? ($attendanceTemplate->data['color'] ?? '#FFFFFF') }}" title="Choose your color">
     </div>
@@ -29,10 +29,10 @@
 <div class="row table-responsive mt-4">
     <table class="table table-hover">
         <tr>
-            <th>Weekday</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Break Time</th>
+            <th>{{__("crud.attendanceTemplates.fields.weekday")}}</th>
+            <th>{{__("crud.attendanceTemplates.fields.start_time")}}</th>
+            <th>{{__("crud.attendanceTemplates.fields.end_time")}}</th>
+            <th>{{__("crud.attendanceTemplates.fields.break_time")}}</th>
         </tr>
         @foreach ($attendanceTemplate->weekDays as $weekDay)
             <tr>

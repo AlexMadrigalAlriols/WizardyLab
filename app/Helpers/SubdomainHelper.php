@@ -32,6 +32,10 @@ class SubdomainHelper
             $portal = Portal::where('subdomain', $subdomain)->where('active', 1)->first();
         }
 
+        if(!$portal) {
+            return null;
+        }
+
         session(['portal_id' => $portal->id]);
         App::setLocale(ConfigurationHelper::get('language') ?? 'en');
         return $portal;

@@ -15,8 +15,8 @@
             <thead class="border-top border-bottom">
                 <tr>
                     <th scope="col" class="border-bottom"></th>
-                    <th scope="col" class="border-bottom">NAME</th>
-                    <th scope="col" class="border-bottom">CREATED_AT</th>
+                    <th scope="col" class="border-bottom">{{__("crud.labels.fields.name")}}</th>
+                    <th scope="col" class="border-bottom">{{__("crud.labels.fields.created_at")}}</th>
                     <th scope="col" class="border-bottom"></th>
                 </tr>
             </thead>

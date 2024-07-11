@@ -16,7 +16,7 @@
             <div class="row mt-4">
                 <div class="col-md-12 text-end">
                     <a class="btn btn-outline-primary" href="{{route('dashboard.roles.index')}}"><span class="px-2">{{__('global.cancel')}}</span></a>
-                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">{{__('global.save')}} Role</span></button>
+                    <button class="btn btn-primary ms-2" id="submitBtn"><span class="px-5">{{__("global.edit")}} {{__("crud.roles.title_singular")}}</span></button>
                 </div>
             </div>
         </form>

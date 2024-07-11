@@ -25,6 +25,8 @@ return [
             'date' => 'Date',
             'status' => 'Status',
             'reason' => 'Reason',
+            'max_days' => 'Max days',
+            'name' => 'Name',
             'approved' => 'Approved',
             'non_approved' => 'Not Approved',
             'duration' => 'Duration',
@@ -40,6 +42,19 @@ return [
             'id' => 'ID',
             'name' => 'Name',
             'type' => 'Type',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at',
+        ],
+    ],
+    'attendanceTemplates' => [
+        'title' => 'Attendance Templates',
+        'title_singular' => 'Attendance Template',
+        'fields' => [
+            'name' => 'Name',
+            'weekday' => 'Weekday',
+            'start_time' => 'Start time',
+            'end_time' => 'End time',
+            'break_time' => 'Break Time',
             'created_at' => 'Created at',
             'updated_at' => 'Updated at',
         ],
@@ -389,6 +404,19 @@ return [
             "description" => "Choose the perfect plan for your business needs. From startups to large enterprises, we offer flexible options to support your growth and success.",
         ]
     ],
+    'departments' => [
+        'title' => 'Departments',
+        'title_singular' => 'Departments',
+        'add_new' => 'Add new department',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'title' => 'Title',
+            'description' => 'Description',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at',
+        ],
+    ],
     'deliveryNotes' => [
         'title' => 'Delivery Notes',
         'title_singular' => 'Delivery Note',
@@ -410,6 +438,14 @@ return [
         ],
     ],
     'roles' => [
+        'title' => 'Roles',
+        'title_singular' => 'Role',
+        'permission' => 'Permissions',
+        'fields' => [
+            'name' => 'Name',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at',
+        ],
         'view_clients' => 'View clients',
         'user_view' => 'User view',
         'user_edit' => 'User edit',
