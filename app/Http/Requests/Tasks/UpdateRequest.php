@@ -39,6 +39,7 @@ class UpdateRequest extends FormRequest
             'project' => 'nullable|exists:projects,id',
             'parent_task' => 'nullable|exists:tasks,id',
             'board' => 'nullable|exists:projects,id',
+            'images' => 'nullable|array',
         ];
     }
 }
