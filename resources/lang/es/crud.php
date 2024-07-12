@@ -640,6 +640,18 @@ return [
         'assignment_edit' => 'Editar asignación',
         'assignment_delete' => 'Eliminar asignación',
         'assignment_create' => 'Crear asignación',
-    ]
+    ],
+    'holidays' => [
+    'title' => 'Vacaciones',
+    'title_singular' => 'Vacación',
+    'total' => 'Total',
+    'used' => 'Usadas',
+    'available' => 'Disponibles',
+    'authorization' => 'Autorización de ausencias',
+    'other_leaves' => 'Otras ausencias',
+    'other_leaves_desc' => 'Este es tu historial de ausencias. Las ausencias anteriores no se pueden editar.',
+    'no_prev' => "No tienes vacaciones anteriores."
+],
+
 
 ];

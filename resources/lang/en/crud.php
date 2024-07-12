@@ -549,6 +549,16 @@ return [
         'assignment_edit' => 'Assignment edit',
         'assignment_delete' => 'Assignment delete',
         'assignment_create' => 'Assignment create',
-    ]
-
+    ],
+    'holidays' => [
+        'title' => 'Holidays',
+        'title_singular' => 'Holiday',
+        'total' => 'Total',
+        'used' => 'Used',
+        'available' => 'Available',
+        'authorization' => 'Authorization of absences',
+        'other_leaves' => 'Other leaves',
+        'other_leaves_desc' => 'This is your absence history. Previous absences cannot be edited.',
+        'no_prev' => "You don't have previous leaves.",
+        ],
 ];
