@@ -71,9 +71,9 @@ class StoreUseCase extends UseCase
             $code = (int) $code + 1;
             $code = str_pad($code, 5, '0', STR_PAD_LEFT);
 
-            return 'U-' . $user->portal_id . $code;
+            return 'U-' . $code;
         }
 
-        return 'U-00001';
+        return 'U-'.auth()->user()->portal_id.'0001';
     }
 }
