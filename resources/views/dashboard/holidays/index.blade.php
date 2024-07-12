@@ -128,8 +128,12 @@
                                     border-bottom-right-radius: 50px; @endif
 
                             @endif
+                            @if ($date["day"]->eq($today)){
+                                background-color: red;
+                            }
+                            @endif
                             ">
-                                    <b>{{ $date['day']->format('j') }}</b>
+                                    <b>{{ $date['day']->format('j')}}</b>
                                 </div>
                             @endforeach
 

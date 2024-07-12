@@ -59,7 +59,7 @@ class HolidayController extends Controller
             }
 
             $oldLeaves = $leaves;
-
+            $today = Carbon::now();
             $calendars[] = [
                 'dates' => $dates,
                 'currentDate' => $currentDate,
@@ -68,7 +68,7 @@ class HolidayController extends Controller
             ];
         }
 
-        return view('dashboard.holidays.index', compact('calendars', 'oldLeaves', 'leaves'));
+        return view('dashboard.holidays.index', compact('calendars', 'oldLeaves', 'leaves', 'today'));
     }
 
 }
