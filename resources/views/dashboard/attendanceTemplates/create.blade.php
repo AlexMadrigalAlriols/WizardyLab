@@ -6,7 +6,7 @@
     <div class="col-md-8 col-sm-12">
         <div class="mt-1">
             <span class="h2 d-inline-block mt-1">
-                <b>{{__('global.create')}} {{__("crud.attendanceTemplates.fields.title_singular")}}</b>
+                <b>{{__('global.create')}} {{__("crud.attendanceTemplates.title_singular")}}</b>
             </span>
         </div>
         <form action="{{route('dashboard.attendanceTemplates.store')}}" method="POST" class="mt-2 pb-3">

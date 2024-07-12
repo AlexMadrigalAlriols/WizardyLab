@@ -453,6 +453,11 @@ return [
             "selector_3_ul_1" => "Facturas personalizadas",
             "selector_3_ul_2" => "Factura tareas por horas",
             "selector_3_ul_3" => "Factura proyecto completo",
+            "selector_4" => "NOTAS DE ENTREGA",
+            "selector_4_desc" => "Cree notas de entrega para sus clientes.",
+            "selector_4_ul_1" => "Notas de entrega personalizadas",
+            "selector_4_ul_2" => "Materiales de entrega"
+
         ],
         'hr' => [
             "title" => "RECURSOS HUMANOS",
@@ -461,12 +466,30 @@ return [
             "selector_1_desc" => "¡Centraliza y gestiona las vacaciones de tus empleados!",
             "selector_2" => "GESTIONAR ASISTENCIAS",
             "selector_2_desc" => "Centraliza las asistencias de tus empleados y genera tus propios registros...",
-            "selector_3" => "FACTURAS PARA TUS CLIENTES",
-            "selector_3_desc" => "Gestiona a tus empleados y quién tiene acceso a tu sistema.",
-            "selector_3_ul_1" => "Asignar gerentes",
-            "selector_3_ul_2" => "Crear departamentos",
-            "selector_3_ul_3" => "Crear tus propios días laborales",
+            "selector_3" => "GESTIONAR USUARIOS Y PERMISOS",
+            "selector_3_desc" => "Agregar, eliminar y editar empleados.",
+            "selector_3_ul_1" => "Crear roles personalizados con permisos.",
+            "selector_3_ul_2" => "Seleccionar un gerente, departamento y horarios para tus empleados.",
+            "selector_3_ul_3" => "Gestionar el cambio de contraseñas.",
+            "selector_4" => "REVISA TUS VACACIONES",
+            "selector_4_desc" => "Revisa tus vacaciones en una interfaz agradable e intuitiva.",
+
         ],
+        'configuration' => [
+            "title" => "CONFIGURACIÓN",
+            "funcionality" => "DEPARTAMENTOS PERSONALIZADOS, ESTADOS, HORARIOS, TIPOS DE PERMISOS...",
+            "selector_1" => "ESTADOS PERSONALIZADOS",
+            "selector_1_desc" => "¡Cree estados personalizados para tareas y proyectos!",
+            "selector_2" => "ROLES",
+            "selector_2_desc" => "Configure roles personalizados con muchos permisos.",
+            "selector_3" => "PLANTILLAS DE ASISTENCIA",
+            "selector_3_desc" => "Cree plantillas de asistencia personalizadas para definir el horario de los empleados",
+            "selector_3_ul_1" => "Definir descansos.",
+            "selector_4" => "TIPOS DE PERMISOS",
+            "selector_4_desc" => "Cree tipos de permisos personalizados para sus empleados.",
+            "selector_4_ul_1" => "Define los días máximos que pueden elegir.",
+        ],
+
         'working' => [
             "title" => "SISTEMA DE TRABAJO",
             "funcionality" => "PROYECTOS Y TAREAS",
@@ -617,6 +640,18 @@ return [
         'assignment_edit' => 'Editar asignación',
         'assignment_delete' => 'Eliminar asignación',
         'assignment_create' => 'Crear asignación',
-    ]
+    ],
+    'holidays' => [
+    'title' => 'Vacaciones',
+    'title_singular' => 'Vacación',
+    'total' => 'Total',
+    'used' => 'Usadas',
+    'available' => 'Disponibles',
+    'authorization' => 'Autorización de ausencias',
+    'other_leaves' => 'Otras ausencias',
+    'other_leaves_desc' => 'Este es tu historial de ausencias. Las ausencias anteriores no se pueden editar.',
+    'no_prev' => "No tienes vacaciones anteriores."
+],
+
 
 ];
