@@ -110,7 +110,45 @@
             </div>
         </div>
     </div>
+
+
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
+
+            <div class="row w-75 d-flex justify-content-center align-items-center product">
+                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
+                    <div class="title fs-2  ">Mobile Time tracking</div>
+                    <div class="funcionality fs-4">Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.</div>
+                    <class class="row w-100 d-flex justify-content-left align-items-start mt-5" style="transform: translateX(25px);">
+                        <div class="col-md-6 d-flex align-items-start flex-column h-100">
+                            <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
+                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Start - Stop</div>
+                                    <p class="text-muted">Starting and ending the work activity measurement.</p>
+                            </div>
+                            <div class="row d-flex gap-1 w-75">
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Quick overview</div>
+                                <p class="text-muted">Employees track their working time.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-start flex-column">
+                            <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks</div>
+                                <p class="text-muted">Check your current tasks and add hours to it.</p>
+                            </div>
+                            <div class="row d-flex gap-1 w-75 d-flex justify-content-end">
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks Configuration</div>
+                                <p class="text-muted">Add, edit and comment on tasks just like in the web format.</p>
+                            </div>
+                        </div>
+                    </class>
+                </div>
+                <div class="col-12 col-xl-6 d-flex justify-content-center">
+                    <img class=" h-50 d-flex justify-content-start align-items-center"
+                        id="" src="{{ asset('img/movile.png') }}" alt="" width="250px">
+                </div>
+            </div>
+
+                <div class="separator"></div>
+
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
                     <div class="title fs-5">{{ __('crud.landing.clients.title') }}</div>
