@@ -453,6 +453,11 @@ return [
             "selector_3_ul_1" => "Facturas personalizadas",
             "selector_3_ul_2" => "Factura tareas por horas",
             "selector_3_ul_3" => "Factura proyecto completo",
+            "selector_4" => "NOTAS DE ENTREGA",
+            "selector_4_desc" => "Cree notas de entrega para sus clientes.",
+            "selector_4_ul_1" => "Notas de entrega personalizadas",
+            "selector_4_ul_2" => "Materiales de entrega"
+
         ],
         'hr' => [
             "title" => "RECURSOS HUMANOS",
@@ -461,11 +466,14 @@ return [
             "selector_1_desc" => "¡Centraliza y gestiona las vacaciones de tus empleados!",
             "selector_2" => "GESTIONAR ASISTENCIAS",
             "selector_2_desc" => "Centraliza las asistencias de tus empleados y genera tus propios registros...",
-            "selector_3" => "FACTURAS PARA TUS CLIENTES",
-            "selector_3_desc" => "Gestiona a tus empleados y quién tiene acceso a tu sistema.",
-            "selector_3_ul_1" => "Asignar gerentes",
-            "selector_3_ul_2" => "Crear departamentos",
-            "selector_3_ul_3" => "Crear tus propios días laborales",
+            "selector_3" => "GESTIONAR USUARIOS Y PERMISOS",
+            "selector_3_desc" => "Agregar, eliminar y editar empleados.",
+            "selector_3_ul_1" => "Crear roles personalizados con permisos.",
+            "selector_3_ul_2" => "Seleccionar un gerente, departamento y horarios para tus empleados.",
+            "selector_3_ul_3" => "Gestionar el cambio de contraseñas.",
+            "selector_4" => "REVISA TUS VACACIONES",
+            "selector_4_desc" => "Revisa tus vacaciones en una interfaz agradable e intuitiva.",
+
         ],
         'working' => [
             "title" => "SISTEMA DE TRABAJO",
