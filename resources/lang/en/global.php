@@ -104,5 +104,6 @@ return [
     'not_started' => 'Not started',
     'list_view' => 'List view',
     'archive' => 'Archived',
+    'users' => 'Users',
 ];
 
