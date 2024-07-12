@@ -140,8 +140,22 @@
                             </div>
                         </div>
                     </class>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 col-sm-12">
+                            <a href="" class="ms-3 mt-2">
+                                <img src="{{asset('img/download_google_store.svg')}}" alt="Get Google Play" style="width: 200px;">
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <a href="" class="ms-3 mt-2">
+                                <img src="{{asset('img/download_app_store.svg')}}" alt="Get Google Play" height="58,72">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
+                <div class="col-12 col-xl-6 d-flex justify-content-center mb-4">
                     <img class=" h-50 d-flex justify-content-start align-items-center"
                         id="" src="{{ asset('img/movile.png') }}" alt="" width="250px">
                 </div>
