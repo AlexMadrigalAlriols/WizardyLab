@@ -56,7 +56,7 @@ class LeaveController extends Controller
         $dates = explode(',', $request->input('date'));
 
         foreach ($dates as $date) {
-            $leave = (new StoreUseCase(
+            $leaf= (new StoreUseCase(
                 LeaveType::find($request->input('type')),
                 $request->input('duration'),
                 $date,
@@ -69,7 +69,7 @@ class LeaveController extends Controller
                     $user,
                     Notification::TYPES['leave'],
                     'Leave created',
-                    $leave->id
+                    $leaf->id
                 );
             }
         }
@@ -78,8 +78,9 @@ class LeaveController extends Controller
         return redirect()->route('dashboard.leaves.index');
     }
 
-    public function edit(Leave $leave)
+    public function edit(Leave $leaf)
     {
+        $leave = $leaf;
         return view('dashboard.leaves.edit', compact('leave'));
     }
 
@@ -106,9 +107,14 @@ class LeaveController extends Controller
         return back();
     }
 
-    public function destroy(Leave $leave)
+    public function destroy(Leave $leaf)
     {
-        $leave->delete();
+        try{
+            $leaf->delete();
+        } catch(\Exception $e) {
+            toast('Error deleting leave', 'error');
+            return back();
+        }
 
         toast('Leave deleted', 'success');
         return back();

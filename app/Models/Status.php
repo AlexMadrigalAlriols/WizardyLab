@@ -45,6 +45,11 @@ class Status extends Model
         return $this->hasMany(Task::class);
     }
 
+    public function projects(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Project::class);
+    }
+
     public function getBadgeAttribute(): string
     {
         return match ($this->data['background'] ?? 'default') {
