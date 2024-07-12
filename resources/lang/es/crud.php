@@ -475,6 +475,21 @@ return [
             "selector_4_desc" => "Revisa tus vacaciones en una interfaz agradable e intuitiva.",
 
         ],
+        'configuration' => [
+            "title" => "CONFIGURACIÓN",
+            "funcionality" => "DEPARTAMENTOS PERSONALIZADOS, ESTADOS, HORARIOS, TIPOS DE PERMISOS...",
+            "selector_1" => "ESTADOS PERSONALIZADOS",
+            "selector_1_desc" => "¡Cree estados personalizados para tareas y proyectos!",
+            "selector_2" => "ROLES",
+            "selector_2_desc" => "Configure roles personalizados con muchos permisos.",
+            "selector_3" => "PLANTILLAS DE ASISTENCIA",
+            "selector_3_desc" => "Cree plantillas de asistencia personalizadas para definir el horario de los empleados",
+            "selector_3_ul_1" => "Definir descansos.",
+            "selector_4" => "TIPOS DE PERMISOS",
+            "selector_4_desc" => "Cree tipos de permisos personalizados para sus empleados.",
+            "selector_4_ul_1" => "Define los días máximos que pueden elegir.",
+        ],
+
         'working' => [
             "title" => "SISTEMA DE TRABAJO",
             "funcionality" => "PROYECTOS Y TAREAS",
