@@ -324,8 +324,9 @@ return [
     'landing' => [
         'seamless' => 'Seamless',
         'integration' => 'Integration',
-        'elevate_enterprise' => 'Elevate your enterprise with our ERP',
+        'elevate_enterprise' => 'Elevate your enterprise with our Customizable ERP',
         'digital_reports' => 'Digital reports of real-time worked hours, easy to use.',
+        'easy_customizable' => 'Easy customizable with your branding.',
         'home' => 'HOME',
         'product' => 'PRODUCT',
         'pricing' => 'PRICING',
@@ -335,6 +336,28 @@ return [
         'request_demo' => 'REQUEST DEMO',
         'get_started' => 'GET STARTED',
         "faq_title" => "FREQUENTLY ASKED QUESTIONS",
+        'app' => [
+            'title' => 'Mobile Time tracking',
+            'description' => "Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.",
+            'features' => [
+                'start_stop' => [
+                    'title' => 'Start - Stop',
+                    'description' => 'Start and stop the timer with a single click.',
+                ],
+                'quick_overview' => [
+                    'title' => 'Quick Overview',
+                    'description' => 'Employees track their working time.',
+                ],
+                'tasks' => [
+                    'title' => 'Tasks',
+                    'description' => 'Check your tasks and add hours to it.',
+                ],
+                'customization' => [
+                    'title' => 'Customization',
+                    'description' => 'Linked with web version to use company colors.',
+                ],
+            ]
+        ],
         'clients' => [
             "title" => "CLIENTS",
             "funcionality" => "CLIENTS, COMPANIES, INVOICES",

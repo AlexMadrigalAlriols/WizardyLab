@@ -97,7 +97,8 @@
                     <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
                     <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
                     <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                    <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
+                    <p class="rubik-font mt-2 text-wrap mb-0">{{ __('crud.landing.digital_reports') }}</p>
+                    <p class="rubik-font text-wrap text-muted">{{ __('crud.landing.easy_customizable') }}</p>
                 </div>
                 <div class="buttons d-flex gap-3 me-3">
                     <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
@@ -116,27 +117,27 @@
 
             <div class="row w-75 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-2  ">Mobile Time tracking</div>
-                    <div class="funcionality fs-4">Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.</div>
+                    <div class="title fs-2  ">{{ __('crud.landing.app.title') }}</div>
+                    <div class="funcionality fs-4">{{ __('crud.landing.app.description') }}</div>
                     <class class="row w-100 d-flex justify-content-left align-items-start mt-5" style="transform: translateX(25px);">
                         <div class="col-md-6 d-flex align-items-start flex-column h-100">
                             <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
-                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Start - Stop</div>
-                                    <p class="text-muted">Starting and ending the work activity measurement.</p>
+                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.start_stop.title') }}</div>
+                                    <p class="text-muted">{{ __('crud.landing.app.features.start_stop.description') }}</p>
                             </div>
                             <div class="row d-flex gap-1 w-75">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Quick overview</div>
-                                <p class="text-muted">Employees track their working time.</p>
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.quick_overview.title') }}</div>
+                                <p class="text-muted">{{ __('crud.landing.app.features.quick_overview.description') }}</p>
                             </div>
                         </div>
                         <div class="col-md-6 d-flex align-items-start flex-column">
                             <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks</div>
-                                <p class="text-muted">Check your current tasks and add hours to it.</p>
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.tasks.title') }}</div>
+                                <p class="text-muted">{{ __('crud.landing.app.features.tasks.description') }}</p>
                             </div>
                             <div class="row d-flex gap-1 w-75 d-flex justify-content-end">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Fully Customizable</div>
-                                <p class="text-muted">Linked with web version to use company colors.</p>
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.customization.title') }}</div>
+                                <p class="text-muted">{{ __('crud.landing.app.features.customization.description') }}</p>
                             </div>
                         </div>
                     </class>
