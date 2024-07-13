@@ -90,7 +90,12 @@ class StatusController extends Controller
     public function massDestroy(MassDestroyRequest $request)
     {
         $ids = $request->input('ids');
-        Status::whereIn('id', $ids)->delete();
+        try {
+            Status::whereIn('id', $ids)->delete();
+        } catch (\Exception $e) {
+            toast('Status cannot be deleted. Projects or Tasks found with this status.', 'error');
+            return back();
+        }
 
         toast('Status deleted', 'success');
         return response(null, Response::HTTP_NO_CONTENT);
