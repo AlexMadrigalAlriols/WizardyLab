@@ -113,7 +113,7 @@
         });
     }
 
-    async function renderPage(pageNum) {
+    async function  renderPage(pageNum) {
         await pdfDoc.getPage(pageNum).then(page => {
             const viewport = page.getViewport({ scale: 1 });
             $('#pdf-container').html('');
@@ -202,7 +202,6 @@
                 // Usa html2canvas para capturar la imagen del contenedor completo
                 const container = document.querySelector('.pdf-page');
                 const canvas = await html2canvas(container, { scale: 1 });
-                console.log(canvas)
                 const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
                 // Crear una nueva página en el documento jsPDF
@@ -210,6 +209,11 @@
                     doc.addPage();
                 }
                 doc.addImage(imgData, 'JPEG', 0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height);
+
+                // Agregar la firma del canvas
+                const signatureCanvas = document.getElementById('fabric-canvas'); // Asegúrate de tener el ID correcto
+                const signatureDataUrl = signatureCanvas.toDataURL('image/png');
+                doc.addImage(signatureDataUrl, 'PNG', 10, 10, 30, 30);
 
                 // Guardar el documento PDF al finalizar todas las páginas
                 if (pageNum === pdfDoc.numPages) {
@@ -223,6 +227,7 @@
 
         await Promise.all(pagePromises);
     }
+
 
     // Función para enviar el archivo al backend
     function savePdfToBackend(formData) {

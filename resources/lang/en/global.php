@@ -67,6 +67,7 @@ return [
     'invoices' => 'Invoices',
     'select_all' => 'Select All',
     'deselect_all' => 'Deselect All',
+    'no_notifications' => 'No notifications',
     'datatables' => [
         'copy' => 'Copy',
         'csv' => 'CSV',

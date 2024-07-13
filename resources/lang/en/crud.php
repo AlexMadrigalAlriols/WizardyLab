@@ -369,9 +369,9 @@ return [
         ],
         'configuration' => [
             "title" => "CONFIGURATION",
-            "funcionality" => "CUSTOM DEPARTMENTS, STATUSES, TIME TABLES, LEAVE TYPES...",
-            "selector_1" => "CUSTOM STATUSES",
-            "selector_1_desc" => "Create custom statuses for tasks and projects!",
+            "funcionality" => "FULL CUSTOMIZABLE",
+            "selector_1" => "CUSTOM BRANDING",
+            "selector_1_desc" => "Configure your company colors, logo & more!",
             "selector_2" => "ROLES",
             "selector_2_desc" => "Configure custom roles with many permissions.",
             "selector_3" => "ATTENDANCE TEMPLATES",

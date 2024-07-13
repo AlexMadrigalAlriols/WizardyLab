@@ -68,6 +68,7 @@ return [
     'invoices' => 'Facturas',
     'select_all' => 'Seleccionar todo',
     'deselect_all' => 'Deseleccionar todo',
+    'no_notifications' => 'No hay notificaciones',
     'datatables' => [
         'copy' => 'Copiar',
         'csv' => 'CSV',
