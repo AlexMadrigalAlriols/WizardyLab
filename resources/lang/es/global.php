@@ -105,4 +105,5 @@ return [
     'not_started' => 'No comenzado',
     'list_view' => 'Vista de lista',
     'archive' => 'Archivados',
+    'users' => 'Usuarios',
 ];

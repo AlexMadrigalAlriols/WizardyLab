@@ -110,7 +110,59 @@
             </div>
         </div>
     </div>
+
+
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
+
+            <div class="row w-75 d-flex justify-content-center align-items-center product">
+                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
+                    <div class="title fs-2  ">Mobile Time tracking</div>
+                    <div class="funcionality fs-4">Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.</div>
+                    <class class="row w-100 d-flex justify-content-left align-items-start mt-5" style="transform: translateX(25px);">
+                        <div class="col-md-6 d-flex align-items-start flex-column h-100">
+                            <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
+                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Start - Stop</div>
+                                    <p class="text-muted">Starting and ending the work activity measurement.</p>
+                            </div>
+                            <div class="row d-flex gap-1 w-75">
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Quick overview</div>
+                                <p class="text-muted">Employees track their working time.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-start flex-column">
+                            <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks</div>
+                                <p class="text-muted">Check your current tasks and add hours to it.</p>
+                            </div>
+                            <div class="row d-flex gap-1 w-75 d-flex justify-content-end">
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks Configuration</div>
+                                <p class="text-muted">Add, edit and comment on tasks just like in the web format.</p>
+                            </div>
+                        </div>
+                    </class>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 col-sm-12">
+                            <a href="" class="ms-3 mt-2">
+                                <img src="{{asset('img/download_google_store.svg')}}" alt="Get Google Play" style="width: 200px;">
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <a href="" class="ms-3 mt-2">
+                                <img src="{{asset('img/download_app_store.svg')}}" alt="Get Google Play" height="58,72">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-6 d-flex justify-content-center mb-4">
+                    <img class=" h-50 d-flex justify-content-start align-items-center"
+                        id="" src="{{ asset('img/movile.png') }}" alt="" width="250px">
+                </div>
+            </div>
+
+                <div class="separator"></div>
+
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
                     <div class="title fs-5">{{ __('crud.landing.clients.title') }}</div>
@@ -140,6 +192,17 @@
                                 <li>{{ __('crud.landing.clients.selector_3_ul_1') }}</li>
                                 <li>{{ __('crud.landing.clients.selector_3_ul_2') }}</li>
                                 <li>{{ __('crud.landing.clients.selector_3_ul_3') }}</li>
+                            </ul>
+                        </div>
+                        <div class="selector" image="{{ asset('img/delivery-img.png') }}">
+                            <div>{{ __('crud.landing.clients.selector_4') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.clients.selector_4') }}</b></div>
+                            {{ __('crud.landing.clients.selector_4_desc') }}
+                            <ul>
+                                <li>{{ __('crud.landing.clients.selector_4_ul_1') }}</li>
+                                <li>{{ __('crud.landing.clients.selector_4_ul_2') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -186,6 +249,13 @@
                                 <li>{{ __("crud.landing.hr.selector_3_ul_2") }}</li>
                                 <li>{{ __("crud.landing.hr.selector_3_ul_3") }}</li>
                             </ul>
+                        </div>
+                        <div class="selector" image="{{ asset('img/holidays-img.png') }}">
+                            <div>{{ __("crud.landing.hr.selector_4") }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __("crud.landing.hr.selector_4") }}</b></div>
+                            {{ __("crud.landing.hr.selector_4_desc") }}
                         </div>
                     </div>
                 </div>
@@ -284,6 +354,57 @@
                     </div>
                 </div>
 
+            </div>
+
+
+            <div class="separator"></div>
+
+
+            <div class="row w-100 d-flex justify-content-center align-items-center product">
+                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
+                    <div class="title fs-5">{{ __('crud.landing.configuration.title') }}</div>
+                    <div class="funcionality fs-2">{{ __('crud.landing.configuration.funcionality') }}</div>
+                    <div class="selectors" id="selector-6">
+                        <div class="selector" image="{{ asset('img/statuses-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_1') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_1') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_1_desc') }}
+                        </div>
+                        <div class="selector" image="{{ asset('img/roles-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_2') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_2') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_2_desc') }}
+                        </div>
+                        <div class="selector" image="{{ asset('img/template-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_3') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_3') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_3_desc') }}
+                            <ul>
+                                <li>{{ __('crud.landing.configuration.selector_3_ul_1') }}</li>
+                            </ul>
+                        </div>
+                        <div class="selector" image="{{ asset('img/leavetype-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_4') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_4') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_4_desc') }}
+                            <ul>
+                                <li>{{ __('crud.landing.configuration.selector_4_ul_1') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-6 d-flex justify-content-center">
+                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
+                        id="selector-6-img" src="{{ asset('img/statuses-img.png') }}" alt="" width="900px">
+                </div>
             </div>
 
 

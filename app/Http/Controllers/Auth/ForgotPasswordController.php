@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
                 $request->only('email')
             );
         } catch(\Exception $e) {
-            return back()->withErrors(['email' => __($e->getMessage())]);
+            return back()->withErrors(['email' => 'Email not exists!']);
         }
 
         return $status === Password::RESET_LINK_SENT

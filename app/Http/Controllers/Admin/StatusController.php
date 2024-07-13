@@ -76,7 +76,12 @@ class StatusController extends Controller
 
     public function destroy(Status $status)
     {
-        $status->delete();
+        try{
+            $status->delete();
+        } catch (\Exception $e) {
+            toast('Status cannot be deleted. Projects or Tasks found with this status.', 'error');
+            return back();
+        }
 
         toast('Status deleted', 'success');
         return back();

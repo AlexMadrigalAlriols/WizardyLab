@@ -5,28 +5,28 @@
         <div class="col-md-4">
             <div class="card mt-5 me-4">
                 <div class="card-header text-center fs-6 py-3 justify-content-center d-flex">
-                    Autorizacion de Ausencias
+                    {{__("crud.holidays.authorization")}}
                 </div>
                 <div class="card-body pt-4">
                     <blockquote class="blockquote mb-0 d-flex justify-content-around">
                         <div class="generado d-flex flex-column align-items-end">
                             <div class="fs-2">30</div>
-                            <div class="fs-6 text-muted">Total</div>
+                            <div class="fs-6 text-muted">{{__("crud.holidays.total")}}</div>
                         </div>
                         <div class="generado d-flex flex-column align-items-center">
                             <div class="fs-2">{{ 30 - $leaves->count() }}</div>
-                            <div class="fs-6 text-muted">Disponibles</div>
+                            <div class="fs-6 text-muted">{{__("crud.holidays.available")}}</div>
                         </div>
                         <div class="generado d-flex flex-column align-items-center">
                             <div class="fs-2">{{ $leaves->count() }}</div>
-                            <div class="fs-6 text-muted">Usados</div>
+                            <div class="fs-6 text-muted">{{__("crud.holidays.used")}}</div>
                         </div>
                     </blockquote>
                 </div>
             </div>
             <div class="fs-1 mt-3" style="color:var(--primary-color)"><i class='bx bx-calendar-alt'></i></div>
-            <h5><b>Ausencias pasadas</b></h5>
-            <p class="w-75">Este es tu historial de ausencias. Las ausencias anteriores no se pueden editar.</p>
+            <h5><b>{{__("crud.holidays.other_leaves")}}</b></h5>
+            <p class="w-75">{{__("crud.holidays.other_leaves_desc")}}</p>
 
             @if (count($oldLeaves))
                 <div class="d-flex flex-column gap-2">
@@ -84,7 +84,7 @@
                 </div>
             @else
                 <div class="text-muted text-center mt-5">
-                    < You don't have previous leaves>
+                    < {{__("crud.holidays.no_prev")}} >
                 </div>
             @endif
         </div>
