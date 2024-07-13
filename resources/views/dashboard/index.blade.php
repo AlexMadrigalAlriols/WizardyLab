@@ -77,18 +77,20 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="card">
-                        <div class="card-header p-4 bg-white">
+                    <div class="card px-0">
+                        <div class="card-header p-4 border-0">
                             <div class="row">
-                                <div class="ps-0">
-                                    <h4 class="mb-0"><b><i class='bx bx-time-five' ></i> Week Schedule</b></h4>
-                                    <p class="text-muted mb-0">Weekdays schedule times</p>
+                                <div class="col-12">
+                                    <div>
+                                        <h4 class="mb-0"><b><i class='bx bx-time-five' ></i> Week Schedule</b></h4>
+                                        <p class="text-muted mb-0">Weekdays schedule times</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pt-0">
                             @foreach ($weekdays as $weekday)
-                                <div class="row py-2 border-bottom">
+                                <div class="row py-2 border-bottom px-4">
                                     <div class="col-4 mt-2">
                                         <span>{{ $weekday }}</span>
                                     </div>
@@ -110,16 +112,18 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="card">
-                        <div class="card-header p-4 bg-white">
+                    <div class="card px-0">
+                        <div class="card-header p-4 border-0">
                             <div class="row">
-                                <div class="ps-0">
-                                    <h4 class="mb-0"><b><i class='bx bxs-plane-take-off'></i> On Leave Today</b></h4>
-                                    <p class="text-muted mb-0">All employee today leaves</p>
+                                <div class="col-12">
+                                    <div>
+                                        <h4 class="mb-0"><b><i class='bx bxs-plane-take-off'></i> On Leave Today</b></h4>
+                                        <p class="text-muted mb-0">All employee today leaves</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pt-0">
                             @foreach ($leaves as $leave)
                             <div class="row border-bottom">
                                 <div class="col-6">
@@ -142,12 +146,14 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="card">
-                        <div class="card-header p-4 bg-white">
+                    <div class="card px-0">
+                        <div class="card-header p-4 border-0">
                             <div class="row">
-                                <div class="ps-0">
-                                    <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
-                                    <p class="text-muted mb-0">All employee birthdays</p>
+                                <div class="col-12">
+                                    <div>
+                                        <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
+                                        <p class="text-muted mb-0">All employee birthdays</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -222,22 +228,12 @@
                 <div class="row">
                     <div class="col-12 mt-3">
                         <div class="card">
-                            <div class="card-header p-4 bg-white">
+                            <div class="card-header p-4 border-0">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-12">
                                         <div>
                                             <h4 class="mb-0"><b><i class='bx bx-clipboard'></i> {{__('global.to_do')}}</b></h4>
                                             <p class="text-muted mb-0">{{__('global.tasks')}} {{__('global.assigned_me')}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="text-end">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search tasks...">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="bx bx-search"></i>
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -352,23 +348,20 @@
                 </div>
                 <div class="row">
                     <div class="col-12 mt-3">
-                        <div class="card pb-3">
-                            <div class="card-header p-4 bg-white">
+                        <div class="card pb-3 px-0">
+                            <div class="card-header p-4 border-0">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-12">
                                         <div>
                                             <h4 class="mb-0"><b><i class='bx bx-calendar'></i>{{__('crud.dashboard.fields.my_calendar')}}</b></h4>
                                             <p class="text-muted mb-0">{{__('crud.dashboard.fields.all_events')}}</p>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-
-                                    </div>
                                 </div>
                             </div>
                             <div class="card-body scrollbar" style="max-height: 24rem">
                                 @foreach ($weekdays as $idx => $wday)
-                                    <div class="card rounded-0">
+                                    <div class="card rounded-0 border-0 card-header">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">
