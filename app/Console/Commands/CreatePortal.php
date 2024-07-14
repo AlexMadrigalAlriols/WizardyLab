@@ -27,14 +27,14 @@ class CreatePortal extends Command
      *
      * @var string
      */
-    protected $signature = 'portal:make {subdomain}';
+    protected $signature = 'portal:make {subdomain} {type?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make a new portal {subdomain}';
+    protected $description = 'Make a new portal {subdomain} {type?}';
 
     /**
      * Execute the consoles command.
@@ -43,6 +43,7 @@ class CreatePortal extends Command
     {
         try {
             $subdomain = strtolower($this->argument('subdomain'));
+            $sub_type = strtolower($this->argument('type') ?? 'basic');
 
             $name = ucfirst($subdomain) . ' Portal';
 
@@ -54,6 +55,7 @@ class CreatePortal extends Command
             $portal = Portal::create([
                 'subdomain' => $subdomain,
                 'name' => $name,
+                'subscription_type' => $sub_type,
                 'active' => 1,
                 'data' => [
                     'primary_color' => '#374df1',
