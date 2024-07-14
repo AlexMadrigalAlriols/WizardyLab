@@ -405,8 +405,8 @@
                                         @foreach ($events[$wday] as $event)
                                             @if (get_class($event) == 'App\Models\Leave')
                                                 <div class="card border-0 rounded-0 card-event"
-                                                    style="{{ $event->leaveType->styles }}" data-bs-toggle="tooltip"
-                                                    data-bs-title="{{ $event->leaveType->name }}" data-bs-placement="top">
+                                                    style="{{ $event->leaveType?->styles }}" data-bs-toggle="tooltip"
+                                                    data-bs-title="{{ $event->leaveType?->name ?? 'Leave' }}" data-bs-placement="top">
                                                     <div class="card-body p-2">
                                                         <div class="row p-0">
                                                             <div class="col-md-3">
@@ -415,7 +415,7 @@
                                                             <div class="col-md-9">
                                                                 <i class='bx bxs-plane-take-off me-2 align-middle'
                                                                     style="font-size: 25px;"></i>
-                                                                <span>{{ $event->user->name }}</span>
+                                                                <span>{{ $event->user?->name }}</span>
                                                             </div>
                                                         </div>
 

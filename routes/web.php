@@ -206,4 +206,4 @@ Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static f
 Route::get('/{lang?}', [LandingController::class, 'index'])->name('landing');
 Route::post('/', [LandingController::class, 'store'])->name('landing.store');
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/user/logout', [LoginController::class, 'logout'])->name('logout');

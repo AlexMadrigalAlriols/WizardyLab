@@ -44,6 +44,11 @@ class Leave extends Model
         'date' => 'datetime'
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new PortalScope(session('portal_id'), true));
+    }
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
