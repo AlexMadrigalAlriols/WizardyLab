@@ -27,7 +27,8 @@ class Portal extends Model
         'subdomain',
         'name',
         'active',
-        'data'
+        'data',
+        'subscription_type'
     ];
 
     /**
