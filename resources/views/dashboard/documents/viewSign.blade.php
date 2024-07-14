@@ -184,52 +184,64 @@
     }
 
     async function getPdfSigned() {
-        if (!pdfDoc) {
-            console.error('No se ha cargado ningún PDF.');
-            return;
+        const pdf = new jsPDF();
+        const formData = new FormData();
+
+        for (let i = 1; i <= pdfDoc.numPages; i++) {
+            saveCanvasState(i);
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const page = await pdfDoc.getPage(i);
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Renderizar la página del PDF en el canvas
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+
+            const imgData = canvas.toDataURL('image/png'); // Obtener la imagen de la página del PDF
+            const fabricCanvas = new fabric.Canvas(canvas, {
+                width: canvas.width,
+                height: canvas.height
+            });
+
+            // Cargar la firma de Fabric.js
+            fabricCanvas.loadFromJSON(pageCanvases[i], () => {
+                fabricCanvas.renderAll();
+
+                // Dibuja la imagen de la página del PDF en el canvas de Fabric
+                fabric.Image.fromURL(imgData, (img) => {
+                    fabricCanvas.setBackgroundImage(img, fabricCanvas.renderAll.bind(fabricCanvas));
+
+                    // Dibuja la firma en el canvas de Fabric
+                    const signatureDataUrl = fabricCanvas.toDataURL('image/png');
+                    const signatureImg = new Image();
+                    signatureImg.src = signatureDataUrl;
+                    signatureImg.onload = () => {
+                        context.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+                        context.drawImage(signatureImg, 0, 0); // Dibujar la firma sobre el fondo del PDF
+
+                        // Añadir la imagen combinada al PDF
+                        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, 297);
+
+                        if (i === pdfDoc.numPages) {
+                            const pdfBlob = pdf.output('blob');
+
+                            formData.append('pdf', pdfBlob, 'signed.pdf')
+                            savePdfToBackend(formData);
+                        }
+                    };
+                });
+            });
         }
-
-        const doc = new jsPDF();
-        const pagePromises = [];
-
-        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-            pagePromises.push(pdfDoc.getPage(pageNum).then(async (page) => {
-                const viewport = page.getViewport({ scale: 1 });
-
-                // Renderiza la página del PDF
-                await renderPage(pageNum);
-
-                // Usa html2canvas para capturar la imagen del contenedor completo
-                const container = document.querySelector('.pdf-page');
-                const canvas = await html2canvas(container, { scale: 1 });
-                const imgData = canvas.toDataURL('image/jpeg', 1.0);
-
-                // Crear una nueva página en el documento jsPDF
-                if (pageNum > 1) {
-                    doc.addPage();
-                }
-                doc.addImage(imgData, 'JPEG', 0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height);
-
-                // Agregar la firma del canvas
-                const signatureCanvas = document.getElementById('fabric-canvas'); // Asegúrate de tener el ID correcto
-                const signatureDataUrl = signatureCanvas.toDataURL('image/png');
-                doc.addImage(signatureDataUrl, 'PNG', 10, 10, 30, 30);
-
-                // Guardar el documento PDF al finalizar todas las páginas
-                if (pageNum === pdfDoc.numPages) {
-                    const pdfBlob = doc.output('blob');
-                    const formData = new FormData();
-                    formData.append('pdf', pdfBlob, 'signed_document.pdf');
-                    savePdfToBackend(formData);
-                }
-            }));
-        }
-
-        await Promise.all(pagePromises);
     }
 
 
-    // Función para enviar el archivo al backend
     function savePdfToBackend(formData) {
         formData.append('_token', '{{ csrf_token() }}');
 
