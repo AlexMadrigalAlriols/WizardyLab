@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-    <title>{{ trans('global.site_title') }}</title>
+    <title>Wizardylab - Soluciones ERP y Gestor de Empresas</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicons/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicons/favicon-32x32.png')}}">
@@ -22,8 +22,11 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="alternate" hreflang="es" href="https://wizardylab.com/es">
+    <link rel="alternate" hreflang="en" href="https://wizardylab.com/en">
+
     <meta name="description" content="Wizardylab ofrece soluciones innovadoras de ERP, gestor de empresas y PIM para optimizar la gestión y productividad de su negocio.">
-    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab">
+    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab, ERP Customizable, ERP Personalizable, WizardyLab ERP">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Wizardylab">
     <meta property="og:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
@@ -76,7 +79,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($langList as $langl)
-                            <li><a class="dropdown-item text-capitalize" href="?lang={{$langl}}"><span class="fi fi-{{$langl == "en"?"us":$langl}}"></span> {{$langl}}</a></li>
+                            <li><a class="dropdown-item text-capitalize" href="{{route('landing', $langl)}}"><span class="fi fi-{{$langl == "en"?"us":$langl}}"></span> {{$langl}}</a></li>
                         @endforeach
 
                     </ul>
@@ -97,7 +100,8 @@
                     <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
                     <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
                     <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                    <p class="rubik-font mt-2 text-wrap">{{ __('crud.landing.digital_reports') }}</p>
+                    <p class="rubik-font mt-2 text-wrap mb-0">{{ __('crud.landing.digital_reports') }}</p>
+                    <p class="rubik-font text-wrap text-muted">{{ __('crud.landing.easy_customizable') }}</p>
                 </div>
                 <div class="buttons d-flex gap-3 me-3">
                     <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
@@ -113,30 +117,29 @@
 
 
         <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
-
             <div class="row w-75 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-2  ">Mobile Time tracking</div>
-                    <div class="funcionality fs-4">Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.</div>
+                    <div class="title fs-2  ">{{ __('crud.landing.app.title') }}</div>
+                    <div class="funcionality fs-4">{{ __('crud.landing.app.description') }}</div>
                     <class class="row w-100 d-flex justify-content-left align-items-start mt-5" style="transform: translateX(25px);">
                         <div class="col-md-6 d-flex align-items-start flex-column h-100">
                             <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
-                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Start - Stop</div>
-                                    <p class="text-muted">Starting and ending the work activity measurement.</p>
+                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.start_stop.title') }}</div>
+                                    <p class="text-muted">{{ __('crud.landing.app.features.start_stop.description') }}</p>
                             </div>
                             <div class="row d-flex gap-1 w-75">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Quick overview</div>
-                                <p class="text-muted">Employees track their working time.</p>
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.quick_overview.title') }}</div>
+                                <p class="text-muted">{{ __('crud.landing.app.features.quick_overview.description') }}</p>
                             </div>
                         </div>
                         <div class="col-md-6 d-flex align-items-start flex-column">
                             <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks</div>
-                                <p class="text-muted">Check your current tasks and add hours to it.</p>
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.tasks.title') }}</div>
+                                <p class="text-muted">{{ __('crud.landing.app.features.tasks.description') }}</p>
                             </div>
                             <div class="row d-flex gap-1 w-75 d-flex justify-content-end">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> Tasks Configuration</div>
-                                <p class="text-muted">Add, edit and comment on tasks just like in the web format.</p>
+                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.customization.title') }}</div>
+                                <p class="text-muted">{{ __('crud.landing.app.features.customization.description') }}</p>
                             </div>
                         </div>
                     </class>
@@ -161,21 +164,70 @@
                 </div>
             </div>
 
-                <div class="separator"></div>
+            <div class="separator"></div>
+
+            <div class="row w-100 d-flex justify-content-center align-items-center product">
+                <div class="col-12 col-xl-6 d-flex justify-content-center">
+                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
+                        id="selector-0-img" src="{{ asset('img/branding-img.png') }}" alt="" width="900px">
+                </div>
+                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
+                    <div class="title fs-5">{{ __('crud.landing.configuration.title') }}</div>
+                    <div class="funcionality fs-2">{{ __('crud.landing.configuration.funcionality') }}</div>
+                    <div class="selectors" id="selector-0">
+                        <div class="selector" image="{{ asset('img/branding-img.png') }}" style="display: none">
+                            <div>{{ __('crud.landing.configuration.selector_1') }}</div>
+                        </div>
+                        <div class="ctm-card" style="display: flex">
+                            <div><b>{{ __('crud.landing.configuration.selector_1') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_1_desc') }}
+                        </div>
+                        <div class="selector" image="{{ asset('img/roles-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_2') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_2') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_2_desc') }}
+                        </div>
+                        <div class="selector" image="{{ asset('img/template-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_3') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_3') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_3_desc') }}
+                            <ul>
+                                <li>{{ __('crud.landing.configuration.selector_3_ul_1') }}</li>
+                            </ul>
+                        </div>
+                        <div class="selector" image="{{ asset('img/leavetype-img.png') }}">
+                            <div>{{ __('crud.landing.configuration.selector_4') }}</div>
+                        </div>
+                        <div class="ctm-card">
+                            <div><b>{{ __('crud.landing.configuration.selector_4') }}</b></div>
+                            {{ __('crud.landing.configuration.selector_4_desc') }}
+                            <ul>
+                                <li>{{ __('crud.landing.configuration.selector_4_ul_1') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="separator"></div>
 
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
                     <div class="title fs-5">{{ __('crud.landing.clients.title') }}</div>
                     <div class="funcionality fs-2">{{ __('crud.landing.clients.funcionality') }}</div>
                     <div class="selectors" id="selector-1">
-                        <div class="selector" image="{{ asset('img/clients-img.png') }}">
+                        <div class="selector" image="{{ asset('img/clients-img.png') }}"  style="display: none">
                             <div>{{ __('crud.landing.clients.selector_1') }}</div>
                         </div>
-                        <div class="ctm-card">
+                        <div class="ctm-card" style="display: flex">
                             <div><b>{{ __('crud.landing.clients.selector_1') }}</b></div>
                             {{ __('crud.landing.clients.selector_1_desc') }}
                         </div>
-                        <div class="selector" image="{{ asset('img/companies-img.png') }}">
+                        <div class="selector" image="{{ asset('img/companies2-img.png') }}">
                             <div>{{ __('crud.landing.clients.selector_2') }}</div>
                         </div>
                         <div class="ctm-card">
@@ -224,10 +276,10 @@
                     <div class="title fs-5">{{ __("crud.landing.hr.title") }}</div>
                     <div class="funcionality fs-2">{{ __("crud.landing.hr.funcionality") }}</div>
                     <div class="selectors" id="selector-2">
-                        <div class="selector" image="{{ asset('img/leaves-img.png') }}">
+                        <div class="selector" image="{{ asset('img/leaves-img.png') }}" style="display: none">
                             <div>{{ __("crud.landing.hr.selector_1") }}</div>
                         </div>
-                        <div class="ctm-card">
+                        <div class="ctm-card" style="display: flex">
                             <div><b>{{ __("crud.landing.hr.selector_1") }}</b></div>
                             {{ __("crud.landing.hr.selector_1_desc") }}
                         </div>
@@ -268,10 +320,10 @@
                     <div class="title fs-5">{{ __("crud.landing.working.title") }}</div>
                     <div class="funcionality fs-2">{{ __("crud.landing.working.funcionality") }}</div>
                     <div class="selectors" id="selector-3">
-                        <div class="selector" image="{{ asset('img/proyects-img.png') }}">
+                        <div class="selector" image="{{ asset('img/proyects-img.png') }}" style="display: none">
                             <div>{{ __("crud.landing.working.selector_3_1") }}</div>
                         </div>
-                        <div class="ctm-card">
+                        <div class="ctm-card" style="display: flex">
                             <div><b>{{ __("crud.landing.working.selector_3_1") }}</b></div>
                             {{ __("crud.landing.working.selector_3_1_desc") }}
                             <ul>
@@ -327,10 +379,10 @@
                     <div class="title fs-5">{{ __("crud.landing.inventory.title") }}</div>
                     <div class="funcionality fs-2">{{ __("crud.landing.inventory.funcionality") }}</div>
                     <div class="selectors" id="selector-5">
-                        <div class="selector" image="{{ asset('img/items-img.png') }}">
+                        <div class="selector" image="{{ asset('img/items-img.png') }}" style="display: none">
                             <div>{{ __("crud.landing.inventory.selector_5_1") }}</div>
                         </div>
-                        <div class="ctm-card">
+                        <div class="ctm-card" style="display: flex">
                             <div><b>{{ __("crud.landing.inventory.selector_5_1") }}</b></div>
                             <ul>
                                 <li>{{ __("crud.landing.inventory.selector_5_1_ul_1") }}</li>
@@ -353,62 +405,48 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
 
             <div class="separator"></div>
 
-
             <div class="row w-100 d-flex justify-content-center align-items-center product">
                 <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __('crud.landing.configuration.title') }}</div>
-                    <div class="funcionality fs-2">{{ __('crud.landing.configuration.funcionality') }}</div>
+                    <div class="title fs-5">{{ __('crud.landing.documents.title') }}</div>
+                    <div class="funcionality fs-2">{{ __('crud.landing.documents.funcionality') }}</div>
                     <div class="selectors" id="selector-6">
-                        <div class="selector" image="{{ asset('img/statuses-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_1') }}</div>
+                        <div class="selector" image="{{ asset('img/documents-img.png') }}"  style="display: none">
+                            <div>{{ __('crud.landing.documents.selector_6_1') }}</div>
                         </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_1') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_1_desc') }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/roles-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_2') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_2') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_2_desc') }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/template-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_3') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_3') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_3_desc') }}
+                        <div class="ctm-card" style="display: flex">
+                            <div><b>{{ __('crud.landing.documents.selector_6_1') }}</b></div>
+                            {{ __('crud.landing.documents.selector_6_1_desc') }}
                             <ul>
-                                <li>{{ __('crud.landing.configuration.selector_3_ul_1') }}</li>
+                                <li>{{ __('crud.landing.documents.selector_6_1_ul_1') }}</li>
+                                <li>{{ __('crud.landing.documents.selector_6_1_ul_2') }}</li>
+                                <li>{{ __('crud.landing.documents.selector_6_1_ul_3') }}</li>
                             </ul>
                         </div>
-                        <div class="selector" image="{{ asset('img/leavetype-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_4') }}</div>
+                        <div class="selector" image="{{ asset('img/esign-img.png') }}">
+                            <div>{{ __('crud.landing.documents.selector_6_2') }}</div>
                         </div>
                         <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_4') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_4_desc') }}
+                            <div><b>{{ __('crud.landing.documents.selector_6_2') }}</b></div>
+                            {{ __('crud.landing.documents.selector_6_2_desc') }}
                             <ul>
-                                <li>{{ __('crud.landing.configuration.selector_4_ul_1') }}</li>
+                                <li>{{ __('crud.landing.documents.selector_6_2_ul_1') }}</li>
+                                <li>{{ __('crud.landing.documents.selector_6_2_ul_2') }}</li>
+                                <li>{{ __('crud.landing.documents.selector_6_2_ul_3') }}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-xl-6 d-flex justify-content-center">
                     <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-6-img" src="{{ asset('img/statuses-img.png') }}" alt="" width="900px">
+                        id="selector-6-img" src="{{ asset('img/documents-img.png') }}" alt="" width="900px">
                 </div>
             </div>
-
-
         </div>
+
         <div class="row section d-flex flex-column align-items-center" id="pricing" bar-width="950px">
             <section id="pricing" class="pricing-content section-padding">
                 <div class="container">
@@ -546,7 +584,7 @@
                                     <div class="col-12">
                                         <label for="name" class="form-label">{{ __("crud.landing.contact.full_name") }} <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="name" name="name"
+                                        <input type="text" autocomplete="cc-name" class="form-control" id="name" name="name"
                                             placeholder="{{ __("crud.landing.contact.full_name") }}" required>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -560,7 +598,7 @@
                                                         d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                                 </svg>
                                             </span>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="{{ __('crud.landing.contact.email') }}" required>
+                                            <input type="email" autocomplete="email" class="form-control" id="email" name="email" placeholder="{{ __('crud.landing.contact.email') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -574,7 +612,7 @@
                                                 </svg>
                                             </span>
                                             <input type="tel" class="form-control" id="phone_number"
-                                                name="phone_number" placeholder="{{ __("crud.landing.contact.phone_number") }}">
+                                                name="phone_number" autocomplete="tel" placeholder="{{ __("crud.landing.contact.phone_number") }}">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -595,8 +633,46 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    <div class="container">
+        <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+          <div class="col mb-3">
+            <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+                <img src="{{ asset('img/LogoLetters.png') }}" alt="logo" width="220">
+            </a>
+            <p class="text-muted">© {{ now()->format('Y') }} WizardyLab</p>
+          </div>
+
+          <div class="col mb-3">
+
+          </div>
+
+          <div class="col mb-3">
+            <h5>Contact</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><span class="nav-link p-0 text-muted">info@wizardylab.com</span></li>
+              <li class="nav-item mb-2"><span class="nav-link p-0 text-muted"><b>+34 675 612 529</b></span></li>
+              <li class="nav-item mb-2"><span class="nav-link p-0 text-muted">M-F 09:00-14:00 and 15:00-18:00 CET</span></li>
+            </ul>
+          </div>
+
+          <div class="col mb-3">
+
+          </div>
+
+          <div class="col mb-3">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><a href="#home" class="nav-link p-0 text-muted">Home</a></li>
+              <li class="nav-item mb-2"><a href="#product" class="nav-link p-0 text-muted">Product</a></li>
+              <li class="nav-item mb-2"><a href="#pricing" class="nav-link p-0 text-muted">Pricing</a></li>
+              <li class="nav-item mb-2"><a href="#faq" class="nav-link p-0 text-muted">FAQs</a></li>
+              <li class="nav-item mb-2"><a href="#contact" class="nav-link p-0 text-muted">Contact</a></li>
+            </ul>
+          </div>
+        </footer>
+      </div>
 </body>
 <script>
     $(document).ready(function() {
@@ -642,12 +718,14 @@
         }
 
         $('.selector').on('click', function() {
-            $(".ctm-card").each(function() {
-                $(this).css('display', "none")
+            var $parent = $(this).parent();
+            $parent.find('.ctm-card').each(function() {
+                $(this).css('display', 'none');
             });
-            $(".selector").each(function() {
-                $(this).css('display', "flex")
+            $parent.find('.selector').each(function() {
+                $(this).css('display', 'flex');
             });
+
             $(this).next('.ctm-card').css('display', 'flex').hide().slideDown();
             $(this).css("display", "none");
             $('#' + $(this).parent().attr('id') + '-img').fadeOut("fast")

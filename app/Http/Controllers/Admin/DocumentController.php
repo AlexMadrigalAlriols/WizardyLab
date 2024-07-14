@@ -148,7 +148,7 @@ class DocumentController extends Controller
         }
 
         $document->update([
-            'data' => array_merge($document->data, ['signed' => true, 'signed_user_id' => auth()->user()->id])
+            'data' => array_merge($document->data, ['signed' => false, 'signed_user_id' => auth()->user()->id])
         ]);
 
         toast('Document signed successfully', 'success');

@@ -203,7 +203,7 @@ Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static f
     Auth::routes(['register' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
 
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/{lang?}', [LandingController::class, 'index'])->name('landing');
 Route::post('/', [LandingController::class, 'store'])->name('landing.store');
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/user/logout', [LoginController::class, 'logout'])->name('logout');

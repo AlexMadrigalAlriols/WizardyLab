@@ -13,14 +13,18 @@ use Illuminate\Support\Facades\URL;
 
 class LandingController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, string $lang = "en")
     {
+        if(!in_array($lang, ["en", "es"])){
+            $lang = "en";
+        }
+
 		$subdomain = explode('.', $request->getHost());
 		if(count($subdomain) == 3 && $subdomain[0] != "www") {
             return Redirect::to(route('login'));
         }
 
-        App::setLocale($request->input("lang", "en"));
+        App::setLocale($lang);
             $faqs = [
                 "en" => [
                     [
@@ -107,7 +111,7 @@ class LandingController extends Controller
                     ]
                 ],
             ];
-            $lang = $request->input("lang", "en");
+
             $langList = ["en"=>"en", "es"=>"es"];
             unset($langList[$lang]);
         return view('landing', compact("faqs", "lang", "langList"));
