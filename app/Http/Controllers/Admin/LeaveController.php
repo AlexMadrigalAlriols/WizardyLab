@@ -55,9 +55,18 @@ class LeaveController extends Controller
         $user =  User::find($request->input('user_id'));
         $dates = explode(',', $request->input('date'));
 
+        if($leaveType = LeaveType::findOrFail($request->input('type'))) {
+            $total = $user->leaves()->where('leave_type_id', $leaveType->id)->where('approved', true)->count();
+
+            if($total >= $leaveType->max_days) {
+                toast('User has reached the maximum days for this leave type', 'error');
+                return back();
+            }
+        }
+
         foreach ($dates as $date) {
             $leaf= (new StoreUseCase(
-                LeaveType::find($request->input('type')),
+                $leaveType,
                 $request->input('duration'),
                 $date,
                 $user,
@@ -87,6 +96,15 @@ class LeaveController extends Controller
     public function update(Request $request, Leave $leave)
     {
         if(auth()->user()->can('leave_approve')) {
+            if($leaveType = LeaveType::findOrFail($leave->leave_type_id)) {
+                $total = $leave->user->leaves()->where('leave_type_id', $leaveType->id)->where('approved', true)->count();
+
+                if($total >= $leaveType->max_days) {
+                    toast('User has reached the maximum days for this leave type', 'error');
+                    return back();
+                }
+            }
+
             $leave->approved = true;
             $leave->save();
 
