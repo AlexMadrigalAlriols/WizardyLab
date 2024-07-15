@@ -145,16 +145,8 @@
                     </class>
 
                     <div class="row mb-4">
-                        <div class="col-md-6 col-sm-12">
-                            <a href="" class="ms-3 mt-2">
-                                <img src="{{asset('img/download_google_store.svg')}}" alt="Get Google Play" style="width: 200px;">
-                            </a>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <a href="" class="ms-3 mt-2">
-                                <img src="{{asset('img/download_app_store.svg')}}" alt="Get Google Play" height="58,72">
-                            </a>
+                        <div class="col-md-12">
+                            <h4>Coming Soon...</h4>
                         </div>
                     </div>
                 </div>
