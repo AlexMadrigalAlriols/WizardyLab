@@ -294,7 +294,26 @@ return [
         ],
 
     ],
-
+    'deliveryNotes' => [
+        'title' => 'Albaranes',
+        'title_singular' => 'Albarán',
+        'fields' => [
+            'id' => 'ID',
+            'number' => 'Número',
+            'generate_invoice' => 'Generar Factura',
+            'substract_stock' => 'Restar Stock',
+            'issue_date' => 'Fecha de Emisión',
+            'amount' => 'Cantidad',
+            'tax' => 'Impuesto',
+            'total' => 'Total',
+            'type' => 'Tipo',
+            'type_helper' => 'Con "Valued" se mostrarán los precios en el albarán.',
+            'observations' => 'Observaciones',
+            'client' => 'Cliente',
+            'created_at' => 'Creado el',
+            'updated_at' => 'Actualizado el',
+        ],
+    ],
     'assignments' => [
     'title' => 'Asignaciones',
     'title_singular' => 'Asignación',

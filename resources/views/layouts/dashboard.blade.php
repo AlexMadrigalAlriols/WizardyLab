@@ -246,7 +246,7 @@
                                 </div>
                                 <i class='bx bx-chevron-right toggler'></i>
                             </a>
-                            <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' ? 'active' : ''}}">
+                            <div class="treeview {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Documents' || $section == 'Holiday' ? 'active' : ''}}">
                                 @can('leave_view')
                                     <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Leaves' ? 'active' : ''}}">
                                         <i class='bx bxs-plane-take-off nav_icon'></i>

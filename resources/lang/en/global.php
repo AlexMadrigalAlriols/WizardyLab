@@ -106,5 +106,8 @@ return [
     'list_view' => 'List view',
     'archive' => 'Archived',
     'users' => 'Users',
+    'deliverynotes' => 'Delivery Notes',
+    'attendance' => 'Attendance',
+    'attendancetemplates' => 'Attendance Templates',
 ];
 
