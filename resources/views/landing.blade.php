@@ -145,8 +145,16 @@
                     </class>
 
                     <div class="row mb-4">
-                        <div class="col-md-12">
-                            <h4>Coming Soon...</h4>
+                        <div class="col-md-6 col-sm-12">
+                            <a href="" class="ms-3 mt-2" style="opacity: 0.6; pointer-events: none;">
+                                <img src="{{asset('img/download_google_store.svg')}}" alt="Get Google Play" style="width: 200px;">
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <a href="https://apps.apple.com/us/app/wizardylab/id6532622071" target="__blank" class="ms-3 mt-2">
+                                <img src="{{asset('img/download_app_store.svg')}}" alt="Get Google Play" height="58,72">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -454,7 +462,8 @@
                                 <div class="single-pricing">
                                     <div class="price-head">
                                         <h2>BASIC</h2>
-                                        <span class="h1">80€</span><br>
+                                        <span class="original-price">80€</span>
+                                        <span class="h1">60€</span><br>
                                         <span>/{{trans('plans.monthly')}}</span>
                                     </div>
                                     <ul class="ps-0">
