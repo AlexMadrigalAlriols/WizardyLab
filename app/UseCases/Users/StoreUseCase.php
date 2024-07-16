@@ -23,13 +23,19 @@ class StoreUseCase extends UseCase
         protected int $role_id,
         protected string $password,
         protected ?Portal $portal = null,
-        protected int $attendance_template_id
+        protected int $attendance_template_id,
+        protected ?string $code = null
     ) {
     }
 
     public function action(): User
     {
-        $code = $this->generateCode();
+        if(!$this->code) {
+            $code = $this->generateCode();
+        } else {
+            $code = $this->code;
+        }
+
         $data = [
             'name' => $this->name,
             'birthday_date' => $this->birthday_date,
@@ -74,6 +80,8 @@ class StoreUseCase extends UseCase
             return 'U-' . $code;
         }
 
-        return 'U-'.auth()->user()->portal_id.'0001';
+        $portal_id = auth()->user()->portal_id;
+
+        return 'U-'.$portal_id.'0001';
     }
 }

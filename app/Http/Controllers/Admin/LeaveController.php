@@ -55,9 +55,18 @@ class LeaveController extends Controller
         $user =  User::find($request->input('user_id'));
         $dates = explode(',', $request->input('date'));
 
+        if($leaveType = LeaveType::findOrFail($request->input('type'))) {
+            $total = $user->leaves()->where('leave_type_id', $leaveType->id)->where('approved', true)->count();
+
+            if($total >= $leaveType->max_days) {
+                toast('User has reached the maximum days for this leave type', 'error');
+                return back();
+            }
+        }
+
         foreach ($dates as $date) {
-            $leave = (new StoreUseCase(
-                LeaveType::find($request->input('type')),
+            $leaf= (new StoreUseCase(
+                $leaveType,
                 $request->input('duration'),
                 $date,
                 $user,
@@ -69,7 +78,7 @@ class LeaveController extends Controller
                     $user,
                     Notification::TYPES['leave'],
                     'Leave created',
-                    $leave->id
+                    $leaf->id
                 );
             }
         }
@@ -78,14 +87,24 @@ class LeaveController extends Controller
         return redirect()->route('dashboard.leaves.index');
     }
 
-    public function edit(Leave $leave)
+    public function edit(Leave $leaf)
     {
+        $leave = $leaf;
         return view('dashboard.leaves.edit', compact('leave'));
     }
 
     public function update(Request $request, Leave $leave)
     {
         if(auth()->user()->can('leave_approve')) {
+            if($leaveType = LeaveType::findOrFail($leave->leave_type_id)) {
+                $total = $leave->user->leaves()->where('leave_type_id', $leaveType->id)->where('approved', true)->count();
+
+                if($total >= $leaveType->max_days) {
+                    toast('User has reached the maximum days for this leave type', 'error');
+                    return back();
+                }
+            }
+
             $leave->approved = true;
             $leave->save();
 
@@ -106,9 +125,14 @@ class LeaveController extends Controller
         return back();
     }
 
-    public function destroy(Leave $leave)
+    public function destroy(Leave $leaf)
     {
-        $leave->delete();
+        try{
+            $leaf->delete();
+        } catch(\Exception $e) {
+            toast('Error deleting leave', 'error');
+            return back();
+        }
 
         toast('Leave deleted', 'success');
         return back();

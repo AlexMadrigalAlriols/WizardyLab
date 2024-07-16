@@ -67,6 +67,7 @@ return [
     'invoices' => 'Invoices',
     'select_all' => 'Select All',
     'deselect_all' => 'Deselect All',
+    'no_notifications' => 'No notifications',
     'datatables' => [
         'copy' => 'Copy',
         'csv' => 'CSV',
@@ -104,5 +105,9 @@ return [
     'not_started' => 'Not started',
     'list_view' => 'List view',
     'archive' => 'Archived',
+    'users' => 'Users',
+    'deliverynotes' => 'Delivery Notes',
+    'attendance' => 'Attendance',
+    'attendancetemplates' => 'Attendance Templates',
 ];
 

@@ -324,8 +324,9 @@ return [
     'landing' => [
         'seamless' => 'Seamless',
         'integration' => 'Integration',
-        'elevate_enterprise' => 'Elevate your enterprise with our ERP',
+        'elevate_enterprise' => 'Elevate your enterprise with our Customizable ERP',
         'digital_reports' => 'Digital reports of real-time worked hours, easy to use.',
+        'easy_customizable' => 'Easy customizable with your branding.',
         'home' => 'HOME',
         'product' => 'PRODUCT',
         'pricing' => 'PRICING',
@@ -335,6 +336,28 @@ return [
         'request_demo' => 'REQUEST DEMO',
         'get_started' => 'GET STARTED',
         "faq_title" => "FREQUENTLY ASKED QUESTIONS",
+        'app' => [
+            'title' => 'Mobile Time tracking',
+            'description' => "Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.",
+            'features' => [
+                'start_stop' => [
+                    'title' => 'Start - Stop',
+                    'description' => 'Start and stop the timer with a single click.',
+                ],
+                'quick_overview' => [
+                    'title' => 'Quick Overview',
+                    'description' => 'Employees track their working time.',
+                ],
+                'tasks' => [
+                    'title' => 'Tasks',
+                    'description' => 'Check your tasks and add hours to it.',
+                ],
+                'customization' => [
+                    'title' => 'Customization',
+                    'description' => 'Linked with web version to use company colors.',
+                ],
+            ]
+        ],
         'clients' => [
             "title" => "CLIENTS",
             "funcionality" => "CLIENTS, COMPANIES, INVOICES",
@@ -369,9 +392,9 @@ return [
         ],
         'configuration' => [
             "title" => "CONFIGURATION",
-            "funcionality" => "CUSTOM DEPARTMENTS, STATUSES, TIME TABLES, LEAVE TYPES...",
-            "selector_1" => "CUSTOM STATUSES",
-            "selector_1_desc" => "Create custom statuses for tasks and projects!",
+            "funcionality" => "FULL CUSTOMIZABLE",
+            "selector_1" => "CUSTOM BRANDING",
+            "selector_1_desc" => "Configure your company colors, logo & more!",
             "selector_2" => "ROLES",
             "selector_2_desc" => "Configure custom roles with many permissions.",
             "selector_3" => "ATTENDANCE TEMPLATES",
@@ -409,6 +432,20 @@ return [
             "selector_5_2_desc" => "Assign multiple items to different users.",
             "selector_5_3" => "EXPENSES",
             "selector_5_3_desc" => "Allows you to create expenses for later invoicing or simply to record them.",
+        ],
+        'documents' => [
+            "title" => "DOCUMENTS",
+            "funcionality" => "DOCUMENTS AND E-SIGN",
+            "selector_6_1" => "DOCUMENTS",
+            "selector_6_1_desc" => "Upload documents and share them with your team.",
+            "selector_6_1_ul_1" => "Create folders",
+            "selector_6_1_ul_2" => "Share documents with your team",
+            "selector_6_1_ul_3" => "Download documents",
+            "selector_6_2" => "E-SIGN",
+            "selector_6_2_desc" => "Sign documents electronically.",
+            "selector_6_2_ul_1" => "Sign documents",
+            "selector_6_2_ul_2" => "Send documents to be signed",
+            "selector_6_2_ul_3" => "Download signed documents",
         ],
         'contact' => [
             "title" => "Contact",

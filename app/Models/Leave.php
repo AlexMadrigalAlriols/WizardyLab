@@ -35,8 +35,7 @@ class Leave extends Model
         'date',
         'leave_type_id',
         'approved',
-        'reason',
-        'portal_id'
+        'reason'
     ];
 
     protected $casts = [

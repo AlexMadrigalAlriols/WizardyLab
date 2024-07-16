@@ -6,7 +6,7 @@ trait MiddlewareTrait
 {
     private function setMiddleware(string $scope): void
     {
-        $method = request()?->route()->getActionMethod() ?? "";
+        $method = request()?->route()?->getActionMethod() ?? "";
         $permission = $this->getPermission($method);
 
         $this->middleware("has-permission:{$scope}_{$permission}");

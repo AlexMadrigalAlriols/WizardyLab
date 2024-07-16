@@ -37,12 +37,13 @@ class CustomResetPassword extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $user = $notifiable;
+        $url = url('https://' . $user->portal->subdomain . '.' .'wizardylab.com'.route('password.reset', $this->token, false));
 
         return (new MailMessage)
             ->subject('Password reset '.config('app.name'))
             ->view('vendor.notifications.email', [
                 'user' => $user,
-                'actionUrl' => url(config('app.url').route('password.reset', $this->token, false)),
+                'actionUrl' => $url,
                 'actionText' => 'Password reset',
             ]);
     }

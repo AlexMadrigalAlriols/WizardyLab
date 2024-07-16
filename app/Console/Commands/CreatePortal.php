@@ -17,6 +17,8 @@ use App\Models\Task;
 use App\Models\User;
 use App\UseCases\Users\StoreUseCase;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 class CreatePortal extends Command
 {
@@ -25,14 +27,14 @@ class CreatePortal extends Command
      *
      * @var string
      */
-    protected $signature = 'portal:make {subdomain}';
+    protected $signature = 'portal:make {subdomain} {type?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make a new portal {subdomain}';
+    protected $description = 'Make a new portal {subdomain} {type?}';
 
     /**
      * Execute the consoles command.
@@ -41,6 +43,7 @@ class CreatePortal extends Command
     {
         try {
             $subdomain = strtolower($this->argument('subdomain'));
+            $sub_type = strtolower($this->argument('type') ?? 'basic');
 
             $name = ucfirst($subdomain) . ' Portal';
 
@@ -52,13 +55,14 @@ class CreatePortal extends Command
             $portal = Portal::create([
                 'subdomain' => $subdomain,
                 'name' => $name,
+                'subscription_type' => $sub_type,
                 'active' => 1,
                 'data' => [
                     'primary_color' => '#374df1',
                     'secondary_color' => '#242424',
                     'btn_text_color' => '#fff',
                     'menu_text_color' => '#fff',
-                    'logo' => asset('img/LogoLetters.png'),
+                    'logo' => env('APP_URL') . '/img/LogoLetters.png',
                 ]
             ]);
 
@@ -164,8 +168,14 @@ class CreatePortal extends Command
         $department->save();
 
         $role = new Role();
+        $role->portal_id = $portal->id;
         $role->name = 'Admin';
+        $role->guard_name = 'web';
         $role->save();
+
+        foreach (Permission::all() as $permission) {
+            $role->permissions()->attach($permission->id);
+        }
 
         $user = (new StoreUseCase(
             'Admin',
@@ -178,7 +188,15 @@ class CreatePortal extends Command
             1,
             'password',
             $portal,
-            1
+            1,
+            'U-'.$portal->id.'0001'
         ))->action();
+        $user->portal_id = $portal->id;
+        $user->save();
+        DB::table('model_has_roles')->insert([
+            'role_id' => $role->id,
+            'model_type' => User::class,
+            'model_id' => $user->id
+        ]);
     }
 }

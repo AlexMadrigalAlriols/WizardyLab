@@ -35,60 +35,129 @@
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-md-5 col-sm-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="card mt-3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-5 col-md-4 col-lg-3 text-center">
-                                    <img src="{{ $user->profile_url }}" style="object-fit:cover" alt="" class="rounded border" width="100px"
-                                        height="100px">
-                                </div>
-                                <div class="col-7 col-md-8 col-lg-9">
-                                    <h5 class="mb-0"><b>{{ $user->name }}</b></h5>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4 col-lg-3 text-center">
+                                            <img src="{{ $user->profile_url }}" style="object-fit:cover" alt="" class="rounded border" width="100px"
+                                                height="100px">
+                                        </div>
+                                        <div class="col-7 col-md-8 col-lg-9">
+                                            <h5 class="mb-0"><b>{{ $user->name }}</b> <span class="text-muted">ID:  {{ $user->code }}</span></h5>
 
-                                    @if ($user->attendanceTemplate)
-                                        <span class="badge" style="{{$user->attendanceTemplate->styles}}">{{$user->attendanceTemplate->name}}</span>
-                                    @endif
+                                            @if ($user->attendanceTemplate)
+                                                <span class="badge" style="{{$user->attendanceTemplate->styles}}">{{$user->attendanceTemplate->name}}</span>
+                                            @endif
 
-                                    <p class="mt-1">{{ $user->role?->name }} - {{ $user->department?->name }}</p>
-                                    <p class="text-muted">ID: {{ $user->code }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div>
-                                        <h6 class="mb-3 text-muted">{{__('crud.dashboard.fields.completed_tasks')}}</h6>
-                                        <h3>{{ $counters['tasks']['total'] }}</h3>
+                                            <p class="mt-1">{{ $user->role?->name }} - {{ $user->department?->name }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <div>
-                                        <h6 class="mb-3 text-muted">{{__('global.project')}}</h6>
-                                        <h3>{{ $counters['projects']['total'] }}</h3>
+                                <div class="col-md-6 mt-3">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="d-flex">
+                                                <i class='bx bx-clipboard text-primary' style="font-size: 35px"></i>
+                                                <div class="ms-2">
+                                                    <div class="d-flex align-items-end">
+                                                        <h2 class="mb-0 me-2">{{ $counters['tasks']['pending'] }}</h2>
+                                                        <span class="fs-7 fw-semibold text-body">{{__('global.pending')}}</span>
+                                                    </div>
+                                                    <p class="text-body-secondary fs-9 mb-0">{{__('global.tasks')}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex">
+                                                <i class='bx bxs-calendar-x text-danger' style="font-size: 35px"></i>
+                                                <div class="ms-2">
+                                                    <div class="d-flex align-items-end text-center">
+                                                        <h2 class="mb-0 me-2">{{ $counters['tasks']['overdue'] }}</h2>
+                                                        <span class="fs-7 fw-semibold text-body">{{__('global.overdue')}}</span>
+                                                    </div>
+                                                    <p class="text-body-secondary fs-9 mb-0">{{__('global.tasks')}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex">
+                                                <i class='bx bxs-dashboard text-warning' style="font-size: 35px"></i>
+                                                <div class="ms-2">
+                                                    <div class="d-flex align-items-end text-center">
+                                                        <h2 class="mb-0 me-2">{{ $counters['projects']['active'] }}</h2>
+                                                        <span class="fs-7 fw-semibold text-body">{{__('global.pending')}}</span>
+                                                    </div>
+                                                    <p class="text-body-secondary fs-9 mb-0">{{__('global.projects')}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    {{-- <div class="col-md-6">
+                                        <div class="card dashboard-card mt-3">
+                                            <div class="card-body" style="position: relative;">
+                                                <p class="mb-0">{{__('global.tasks')}}</p>
+                                                <div class="mt-3">
+                                                    <div class="d-inline-block me-4">
+                                                        <h3 class="mb-0 text-primary"><b>{{ $counters['tasks']['pending'] }}</b></h3>
+                                                        <span class="text-muted">{{__('global.pending')}}</span>
+                                                    </div>
+                                                    <div class="d-inline-block ms-5">
+                                                        <h3 class="mb-0 text-danger"><b>{{ $counters['tasks']['overdue'] }}</b></h3>
+                                                        <span class="text-muted">{{__('global.overdue')}}</span>
+                                                    </div>
+                                                </div>
+                                                <span class="icon"><i class='bx bx-clipboard'></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card dashboard-card mt-3">
+                                            <div class="card-body" style="position: relative;">
+                                                <p class="mb-0">{{__('global.projects')}}</p>
+                                                <div class="mt-3">
+                                                    <div class="d-inline-block me-4">
+                                                        <h3 class="mb-0 text-primary"><b>{{ $counters['projects']['active'] }}</b></h3>
+                                                        <span class="text-muted">{{__('global.pending')}}</span>
+                                                    </div>
+                                                    <div class="d-inline-block ms-5">
+                                                        <h3 class="mb-0 text-danger"><b>{{ $counters['projects']['overdue'] }}</b></h3>
+                                                        <span class="text-muted">{{__('global.overdue')}}</span>
+                                                    </div>
+                                                </div>
+                                                <span class="icon"><i class='bx bxs-dashboard'></i></span>
+                                            </div>
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <div class="row mt-3">
+            <div class="col-md-5 col-sm-12">
                 <div class="row mt-3">
-                    <div class="card">
-                        <div class="card-header p-4 bg-white">
+                    <div class="card px-0">
+                        <div class="card-header p-4 border-0">
                             <div class="row">
-                                <div class="ps-0">
-                                    <h4 class="mb-0"><b><i class='bx bx-time-five' ></i> Week Schedule</b></h4>
-                                    <p class="text-muted mb-0">Weekdays schedule times</p>
+                                <div class="col-12">
+                                    <div>
+                                        <h4 class="mb-0"><b><i class='bx bx-time-five' ></i> Week Schedule</b></h4>
+                                        <p class="text-muted mb-0">Weekdays schedule times</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pt-0">
                             @foreach ($weekdays as $weekday)
-                                <div class="row py-2 border-bottom">
+                                <div class="row py-2 border-bottom px-4">
                                     <div class="col-4 mt-2">
                                         <span>{{ $weekday }}</span>
                                     </div>
@@ -110,16 +179,18 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="card">
-                        <div class="card-header p-4 bg-white">
+                    <div class="card px-0">
+                        <div class="card-header p-4 border-0">
                             <div class="row">
-                                <div class="ps-0">
-                                    <h4 class="mb-0"><b><i class='bx bxs-plane-take-off'></i> On Leave Today</b></h4>
-                                    <p class="text-muted mb-0">All employee today leaves</p>
+                                <div class="col-12">
+                                    <div>
+                                        <h4 class="mb-0"><b><i class='bx bxs-plane-take-off'></i> On Leave Today</b></h4>
+                                        <p class="text-muted mb-0">All employee today leaves</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body pt-0">
                             @foreach ($leaves as $leave)
                             <div class="row border-bottom">
                                 <div class="col-6">
@@ -142,12 +213,14 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="card">
-                        <div class="card-header p-4 bg-white">
+                    <div class="card px-0">
+                        <div class="card-header p-4 border-0">
                             <div class="row">
-                                <div class="ps-0">
-                                    <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
-                                    <p class="text-muted mb-0">All employee birthdays</p>
+                                <div class="col-12">
+                                    <div>
+                                        <h4 class="mb-0"><b><i class='bx bx-cake'></i> Birthdays</b></h4>
+                                        <p class="text-muted mb-0">All employee birthdays</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -182,62 +255,14 @@
             </div>
             <div class="col-md-7">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="card dashboard-card mt-3">
-                            <div class="card-body" style="position: relative;">
-                                <p class="mb-0">{{__('global.tasks')}}</p>
-                                <div class="mt-3">
-                                    <div class="d-inline-block me-4">
-                                        <h3 class="mb-0 text-primary"><b>{{ $counters['tasks']['pending'] }}</b></h3>
-                                        <span class="text-muted">{{__('global.pending')}}</span>
-                                    </div>
-                                    <div class="d-inline-block ms-5">
-                                        <h3 class="mb-0 text-danger"><b>{{ $counters['tasks']['overdue'] }}</b></h3>
-                                        <span class="text-muted">{{__('global.overdue')}}</span>
-                                    </div>
-                                </div>
-                                <span class="icon"><i class='bx bx-clipboard'></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card dashboard-card mt-3">
-                            <div class="card-body" style="position: relative;">
-                                <p class="mb-0">{{__('global.projects')}}</p>
-                                <div class="mt-3">
-                                    <div class="d-inline-block me-4">
-                                        <h3 class="mb-0 text-primary"><b>{{ $counters['projects']['active'] }}</b></h3>
-                                        <span class="text-muted">{{__('global.pending')}}</span>
-                                    </div>
-                                    <div class="d-inline-block ms-5">
-                                        <h3 class="mb-0 text-danger"><b>{{ $counters['projects']['overdue'] }}</b></h3>
-                                        <span class="text-muted">{{__('global.overdue')}}</span>
-                                    </div>
-                                </div>
-                                <span class="icon"><i class='bx bxs-dashboard'></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-12 mt-3">
                         <div class="card">
-                            <div class="card-header p-4 bg-white">
+                            <div class="card-header p-4 border-0">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-12">
                                         <div>
                                             <h4 class="mb-0"><b><i class='bx bx-clipboard'></i> {{__('global.to_do')}}</b></h4>
                                             <p class="text-muted mb-0">{{__('global.tasks')}} {{__('global.assigned_me')}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="text-end">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search tasks...">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="bx bx-search"></i>
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -352,23 +377,20 @@
                 </div>
                 <div class="row">
                     <div class="col-12 mt-3">
-                        <div class="card pb-3">
-                            <div class="card-header p-4 bg-white">
+                        <div class="card pb-3 px-0">
+                            <div class="card-header p-4 border-0">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-12">
                                         <div>
                                             <h4 class="mb-0"><b><i class='bx bx-calendar'></i>{{__('crud.dashboard.fields.my_calendar')}}</b></h4>
                                             <p class="text-muted mb-0">{{__('crud.dashboard.fields.all_events')}}</p>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-
-                                    </div>
                                 </div>
                             </div>
                             <div class="card-body scrollbar" style="max-height: 24rem">
                                 @foreach ($weekdays as $idx => $wday)
-                                    <div class="card rounded-0">
+                                    <div class="card rounded-0 p-0 border-0 card-header">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -383,8 +405,8 @@
                                         @foreach ($events[$wday] as $event)
                                             @if (get_class($event) == 'App\Models\Leave')
                                                 <div class="card border-0 rounded-0 card-event"
-                                                    style="{{ $event->leaveType->styles }}" data-bs-toggle="tooltip"
-                                                    data-bs-title="{{ $event->leaveType->name }}" data-bs-placement="top">
+                                                    style="{{ $event->leaveType?->styles }}" data-bs-toggle="tooltip"
+                                                    data-bs-title="{{ $event->leaveType?->name ?? 'Leave' }}" data-bs-placement="top">
                                                     <div class="card-body p-2">
                                                         <div class="row p-0">
                                                             <div class="col-md-3">
@@ -393,7 +415,7 @@
                                                             <div class="col-md-9">
                                                                 <i class='bx bxs-plane-take-off me-2 align-middle'
                                                                     style="font-size: 25px;"></i>
-                                                                <span>{{ $event->user->name }}</span>
+                                                                <span>{{ $event->user?->name }}</span>
                                                             </div>
                                                         </div>
 

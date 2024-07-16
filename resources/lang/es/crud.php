@@ -26,7 +26,7 @@ return [
             'status' => 'Estado',
             'reason' => 'Razón',
             'approved' => 'Aprobada',
-            'max_days' => 'Dias maximos',
+            'max_days' => 'Días máximos',
             'name' => 'Nombre',
             'non_approved' => 'No aprobada',
             'duration' => 'Duración',
@@ -51,7 +51,7 @@ return [
         'title_singular' => 'Horario',
         'fields' => [
             'name' => 'Nombre',
-            'weekday' => 'Dia de la semana',
+            'weekday' => 'Día de la semana',
             'start_time' => 'Entrada',
             'end_time' => 'Salida',
             'break_time' => 'Descanso',
@@ -90,7 +90,7 @@ return [
         'team_members' => 'Miembros del equipo',
         'comments' => 'Comentarios',
         'add_comment' => 'Añadir comentarios',
-        'not_comments' => 'No hay comentarios aun',
+        'not_comments' => 'No hay comentarios aún',
         'comment' => 'Comentar',
         'fields' => [
             'id' => 'ID',
@@ -116,24 +116,23 @@ return [
         ],
     ],
     'items' => [
-    'title' => 'Artículos',
-    'title_singular' => 'Artículo',
-    'add_new' => 'Añadir Nuevo Artículo',
-    'fields' => [
-        'cover' => 'Foto',
-        'name' => 'Nombre',
-        'edit_item' => 'Editar item',
-        'reference' => 'Referencia',
-        'upload_files' => 'Archivos',
-        'price' => 'Precio',
-        'shop_place' => 'Lugar de Compra',
-        'stock' => 'Cantidad',
-        'files' => 'Archivos',
-        'created_at' => 'Creado el',
-        'updated_at' => 'Actualizado el',
+        'title' => 'Artículos',
+        'title_singular' => 'Artículo',
+        'add_new' => 'Añadir Nuevo Artículo',
+        'fields' => [
+            'cover' => 'Foto',
+            'name' => 'Nombre',
+            'edit_item' => 'Editar item',
+            'reference' => 'Referencia',
+            'upload_files' => 'Archivos',
+            'price' => 'Precio',
+            'shop_place' => 'Lugar de Compra',
+            'stock' => 'Cantidad',
+            'files' => 'Archivos',
+            'created_at' => 'Creado el',
+            'updated_at' => 'Actualizado el',
+        ],
     ],
-],
-
     'notes' => [
         'title' => 'Notas',
         'title_singular' => 'Nota',
@@ -204,8 +203,8 @@ return [
         ],
     ],
     'dashboard' => [
-        'title' => 'Dashboard',
-        'title_singular' => 'Dashboard',
+        'title' => 'Panel de control',
+        'title_singular' => 'Panel de control',
         'fields' => [
             'clock_in' => 'Hora de entrada',
             'clock_out' => 'Hora de salida',
@@ -272,10 +271,9 @@ return [
         'personal_folders' => 'Carpetas personales',
         'add_folder' => 'Añadir carpeta',
         'new_folder' => 'Nueva Carpeta',
-        'add_file' => 'Añádir Archivo',
+        'add_file' => 'Añadir Archivo',
         'search_file' => 'Buscar Archivo',
         'fields' => [],
-
     ],
     'projects' => [
         'title' => 'Proyectos',
@@ -296,7 +294,26 @@ return [
         ],
 
     ],
-
+    'deliveryNotes' => [
+        'title' => 'Albaranes',
+        'title_singular' => 'Albarán',
+        'fields' => [
+            'id' => 'ID',
+            'number' => 'Número',
+            'generate_invoice' => 'Generar Factura',
+            'substract_stock' => 'Restar Stock',
+            'issue_date' => 'Fecha de Emisión',
+            'amount' => 'Cantidad',
+            'tax' => 'Impuesto',
+            'total' => 'Total',
+            'type' => 'Tipo',
+            'type_helper' => 'Con "Valued" se mostrarán los precios en el albarán.',
+            'observations' => 'Observaciones',
+            'client' => 'Cliente',
+            'created_at' => 'Creado el',
+            'updated_at' => 'Actualizado el',
+        ],
+    ],
     'assignments' => [
     'title' => 'Asignaciones',
     'title_singular' => 'Asignación',
@@ -430,8 +447,9 @@ return [
     'landing' => [
         'seamless' => 'Integración',
         'integration' => 'simple',
-        'elevate_enterprise' => 'Eleve su empresa con nuestro ERP',
+        'elevate_enterprise' => 'Eleve su empresa con nuestro ERP Personalizable',
         'digital_reports' => 'Reportes digitales del tiempo trabajado a tiempo real y facil de usar.',
+        'easy_customizable' => 'Personalización fácil con tu branding.',
         'home' => 'INICIO',
         'product' => 'PRODUCTO',
         'pricing' => 'PRECIO',
@@ -441,6 +459,28 @@ return [
         'request_demo' => 'SOLICITAR DEMO',
         'get_started' => 'EMPEZAR',
         "faq_title" => "PREGUNTAS FRECUENTES",
+        'app' => [
+            'title' => 'Seguimiento de tiempo móvil',
+            'description' => "El seguimiento de tiempo se puede registrar fácilmente utilizando una aplicación móvil. Obtienes una visión actualizada y los gerentes pueden aprobar el tiempo de las personas.",
+            'features' => [
+                'start_stop' => [
+                    'title' => 'Iniciar - Detener',
+                    'description' => 'Inicia y detiene el temporizador con un solo clic.',
+                ],
+                'quick_overview' => [
+                    'title' => 'Visión general rápida',
+                    'description' => 'Los empleados registran su tiempo de trabajo.',
+                ],
+                'tasks' => [
+                    'title' => 'Tareas',
+                    'description' => 'Verifica tus tareas y agrega horas a ellas.',
+                ],
+                'customization' => [
+                    'title' => 'Personalización',
+                    'description' => 'Vinculado con la versión web para usar los colores de la empresa.',
+                ]
+            ]
+        ],
         'clients' => [
             "title" => "CLIENTES",
             "funcionality" => "CLIENTES, EMPRESAS, FACTURAS",
@@ -477,9 +517,9 @@ return [
         ],
         'configuration' => [
             "title" => "CONFIGURACIÓN",
-            "funcionality" => "DEPARTAMENTOS PERSONALIZADOS, ESTADOS, HORARIOS, TIPOS DE PERMISOS...",
-            "selector_1" => "ESTADOS PERSONALIZADOS",
-            "selector_1_desc" => "¡Cree estados personalizados para tareas y proyectos!",
+            "funcionality" => "TOTALMENTE PERSONALIZABLE",
+            "selector_1" => "BRANDING PERSONALIZADO",
+            "selector_1_desc" => "Configura los colores de tu empresa, logo y más!",
             "selector_2" => "ROLES",
             "selector_2_desc" => "Configure roles personalizados con muchos permisos.",
             "selector_3" => "PLANTILLAS DE ASISTENCIA",
@@ -518,6 +558,20 @@ return [
             "selector_5_2_desc" => "Asigna múltiples ítems a diferentes usuarios.",
             "selector_5_3" => "GASTOS",
             "selector_5_3_desc" => "Te permite crear gastos para facturarlos más tarde o simplemente registrarlos.",
+        ],
+        'documents' => [
+            "title" => "DOCUMENTOS",
+            "funcionality" => "DOCUMENTOS Y FIRMA ELECTRÓNICA",
+            "selector_6_1" => "DOCUMENTOS",
+            "selector_6_1_desc" => "Sube documentos y compártelos con tu equipo.",
+            "selector_6_1_ul_1" => "Crear carpetas",
+            "selector_6_1_ul_2" => "Compartir documentos con tu equipo",
+            "selector_6_1_ul_3" => "Descargar documentos",
+            "selector_6_2" => "FIRMA ELECTRÓNICA",
+            "selector_6_2_desc" => "Firma documentos de forma electrónica.",
+            "selector_6_2_ul_1" => "Firmar documentos",
+            "selector_6_2_ul_2" => "Enviar documentos para ser firmados",
+            "selector_6_2_ul_3" => "Descargar documentos firmados",
         ],
         'contact' => [
             "title" => "Contacto",

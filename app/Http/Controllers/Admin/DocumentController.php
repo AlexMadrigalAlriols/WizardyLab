@@ -138,13 +138,12 @@ class DocumentController extends Controller
 
     public function signDocument(Request $request, Document $document)
     {
-        if($request->pdf) {
+        if($request->hasFile('pdf')) {
             $filePath = $document->path;
             $fileName = basename($filePath);
             $directoryPath = dirname($filePath);
-
             Storage::disk('public')->delete($document->path);
-            Storage::disk('public')->put($directoryPath . '/' . $fileName, $request->file('pdf')->get());
+            Storage::disk('public')->put($directoryPath . '/' . $fileName, file_get_contents($request->file('pdf')));
         }
 
         $document->update([

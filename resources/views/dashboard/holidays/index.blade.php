@@ -128,10 +128,15 @@
                                     border-bottom-right-radius: 50px; @endif
 
                             @endif
+<<<<<<< HEAD
                             @if ($date["day"]->eq($today)){
                                 background-color: red;
                             }
                             @endif
+=======
+
+                            @if ($date['day']->format('d') == now()->format('d') && $date['day']->format('m') == now()->format('m')) border: 2px solid red; border-radius: 50px; @endif
+>>>>>>> b942d95bfa86bdf8180e76eae6b107a179dca66d
                             ">
                                     <b>{{ $date['day']->format('j')}}</b>
                                 </div>
