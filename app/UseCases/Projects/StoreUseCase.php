@@ -48,9 +48,9 @@ class StoreUseCase extends UseCase
             }
         }
 
-        foreach(Project::DEFAULT_STATUSES as $idx => $status) {
+        foreach(Project::where('morphable', Project::class)->get() as $idx => $status) {
             $project->avaiableStatuses()->create([
-                'status_id' => $status,
+                'status_id' => $status->id,
                 'order' => $idx,
                 'collapsed' => false
             ]);
