@@ -73,6 +73,10 @@ class DashboardController extends Controller
         ));
     }
 
+    public function crmIndex() {
+        return view('crm.index');
+    }
+
     public function readNotifications()
     {
         auth()->user()->notifications()->unread()->update([

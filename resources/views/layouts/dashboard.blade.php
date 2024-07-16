@@ -191,6 +191,14 @@
                 <a href="{{route('dashboard.index')}}" class="nav_logo"><img src="{{ $portal->logo }}" width="175px"></a>
                 <div class="nav_list">
                     <hr>
+                    <a href="{{route('crm.index')}}" class="nav_link has_submenu">
+                        <div>
+                            <i class='bx bx-objects-vertical-bottom nav_icon'></i>
+                            <span class="nav_name">CRM</span>
+                        </div>
+                        <i class='bx bx-link-external'></i>
+                    </a>
+                    <hr>
                     <a href="{{route('dashboard.index')}}" class="nav_link {{ $section == 'Dashboard' ? 'active' : ''}}">
                         <i class='bx bx-home-alt nav_icon'></i>
                         <span class="nav_name">{{__('global.dashboard')}}</span>

@@ -193,6 +193,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::get('holidays', [HolidayController::class, 'index'])->name('holiday.index');
 });
 
+Route::group(['prefix' => 'crm', 'as' => 'crm.', 'middleware' => ['checkPortal', 'throttle']], static function () {
+    Route::get('/', [DashboardController::class, 'crmIndex'])->name('index');
+});
+
 // Password reset link request routes...
  Route::get('password/emailsend', [ForgotPasswordController::class, "sendResetLinkEmail"])->name('sendResetLink');
 
