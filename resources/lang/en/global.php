@@ -109,5 +109,7 @@ return [
     'deliverynotes' => 'Delivery Notes',
     'attendance' => 'Attendance',
     'attendancetemplates' => 'Attendance Templates',
+    // CRM
+    'sales' => 'Sales',
 ];
 

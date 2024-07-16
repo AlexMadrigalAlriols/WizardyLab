@@ -1,6 +1,5 @@
 <?php
 
-use App\Helpers\ConfigurationHelper;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\AttendanceTemplateController;
 use App\Http\Controllers\Admin\BoardController;
@@ -34,8 +33,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\Admin\LandingController;
-use App\Models\Invoice;
-use App\Models\Task;
+use App\Http\Controllers\CRM\LeadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -195,6 +193,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
 
 Route::group(['prefix' => 'crm', 'as' => 'crm.', 'middleware' => ['checkPortal', 'throttle']], static function () {
     Route::get('/', [DashboardController::class, 'crmIndex'])->name('index');
+
+    // Leads
+    Route::resource('leads', LeadController::class);
+    Route::delete('massDestroy/leads', [LeadController::class, 'massDestroy'])->name('leads.massDestroy');
 });
 
 // Password reset link request routes...

@@ -110,4 +110,6 @@ return [
     'deliverynotes' => 'Albaranes',
     'attendance' => 'Asistencia',
     'attendancetemplates' => 'Plantillas de asistencia',
+    // CRM
+    'sales' => 'Ventas',
 ];

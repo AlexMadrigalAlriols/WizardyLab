@@ -115,7 +115,7 @@
                             <i class='bx bx-chevron-right toggler'></i>
                         </a>
                         <div class="treeview {{ $section == 'Leads' ? 'active' : ''}}">
-                            <a href="{{route('dashboard.clients.index')}}" class="nav_link {{ $section == 'Leads' ? 'active' : ''}}">
+                            <a href="{{route('crm.leads.index')}}" class="nav_link {{ $section == 'Leads' ? 'active' : ''}}">
                                 <i class='bx bx-user-circle nav_icon' ></i>
                                 <span class="nav_name">{{__('crud.leads.title')}}</span>
                             </a>

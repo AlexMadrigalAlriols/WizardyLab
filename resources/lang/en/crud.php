@@ -597,5 +597,20 @@ return [
         'other_leaves' => 'Other leaves',
         'other_leaves_desc' => 'This is your absence history. Previous absences cannot be edited.',
         'no_prev' => "You don't have previous leaves.",
+    ],
+
+    // CRM
+    'leads' => [
+        'title' => 'Leads',
+        'title_singular' => 'Lead',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'status' => 'Status',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at',
         ],
+    ]
 ];

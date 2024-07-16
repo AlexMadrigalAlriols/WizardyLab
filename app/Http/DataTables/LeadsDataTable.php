@@ -1,0 +1,92 @@
+<?php
+
+namespace App\Http\DataTables;
+
+use App\Models\Client;
+use App\Models\Lead;
+use App\Services\QueryBuilderService;
+
+class LeadsDataTable extends DataTable
+{
+
+    public function __construct(protected ?string $name = 'leads') {}
+
+    public function dataTable($table): mixed
+    {
+        $table->addColumn('placeholder', '&nbsp;');
+        $table->addColumn('actions', '&nbsp;');
+
+        $table->editColumn('actions', function($row) {
+            $crudRoutePart = 'leads';
+            $model = 'lead';
+            $viewGate = 'lead_view';
+            $editGate = 'lead_edit';
+            $deleteGate = 'lead_delete';
+
+            return view('partials.datatables.actions', compact(
+                'row',
+                'crudRoutePart',
+                'model',
+                'viewGate',
+                'editGate',
+                'deleteGate'
+            ));
+        });
+
+        $table->editColumn('name', function($row) {
+            return $row->name ?: '';
+        });
+
+        $table->editColumn('email', function($row) {
+            return $row->email ?: '';
+        });
+
+        $table->editColumn('phone', function($row) {
+            return $row->phone ?: '-';
+        });
+
+        $table->editColumn('created_at', function($row) {
+            return $row->created_at ?: '';
+        });
+
+        $table->rawColumns(['placeholder', 'active', 'actions']);
+
+        return $table;
+    }
+
+    public function query()
+    {
+        $query = Lead::query();
+
+        $email = request()?->get('email');
+        $created_at_range = request()?->get('created_at_range');
+
+        $query = (new QueryBuilderService())->advancedQuery(
+            Lead::class,
+            [
+                'conditions' => request()?->get('conditions') ?? '',
+                'fields' => request()?->get('fields') ?? '',
+                'operators' => request()?->get('operators') ?? '',
+                'values' => request()?->get('values') ?? '',
+            ],
+            ['company', 'currency']
+        );
+
+        if($email) {
+            $query->where('email', 'like', "%{$email}%");
+        }
+
+        if(!empty($created_at_range)) {
+            $range = str_replace(' a ', ' - ', $created_at_range);
+            $range = explode(' - ', $range);
+
+            $query->whereDate('created_at', '>=', $range[0]);
+
+            if(isset($range[1])) {
+                $query->whereDate('created_at', '<=', $range[1]);
+            }
+        }
+
+        return $query;
+    }
+}

@@ -1,3 +1,4 @@
+
 function drawDataTable(selector, options, withFilters = false) {
     if (withFilters) {
         $(`${selector} thead tr`)
@@ -290,62 +291,105 @@ function drawDataTable(selector, options, withFilters = false) {
     const table = $(selector).DataTable({ ...options });
 
     // Filter event handler
-    if (withFilters) {
-        $(table.table().header()).on('keyup', 'input', function () {
-            table.column($(this).data('index')).search(this.value).draw();
-        });
+    $(table.table().header()).on('keyup', 'input', function () {
+        table.column($(this).data('index')).search(this.value).draw();
+    });
 
-        $(table.table().header()).on('change', 'select', function () {
-            table.column($(this).data('index')).search(this.value).draw();
-        });
+    $(table.table().header()).on('change', 'select', function () {
+        table.column($(this).data('index')).search(this.value).draw();
+    });
 
-        $(table.table().header()).on('change', '.flatpicker', function () {
-            if ($(this).data('status') === 'closed') {
-                table.column($(this).data('index')).search(this.value).draw()
+    $(table.table().header()).on('change', '.flatpicker', function () {
+        if ($(this).data('status') === 'closed') {
+            table.column($(this).data('index')).search(this.value).draw()
+        }
+    });
+
+    if(!withFilters) {
+        const flatpicker = $(`#created_at_range`).flatpickr({
+            mode: 'range',
+            defaultDate: [],
+            parent: '#created_at_range',
+            onOpen: () => {
+                $(`#created_at_range`).data('status', 'opened')
+            },
+            onClose: (selectedDates, dateStr, instance) => {
+                $(`#created_at_range`).data('status', 'closed')
+                instance.element.value = dateStr.replace(/to|a/gi, '-');
             }
         });
 
-        $(document)
-            .on(
-                'click',
-                `.tableFilterModal .submitFilterModal`,
-                function (e) {
-                    e.preventDefault();
+        const debouncedSearch = debounceTimer(function() {
+            table.column(1).search(this.value).draw();
+        }, 300);
 
-                    const $modal = $($(this).data('modal'))
-                    const $form = $modal.find('form')
-                    const data = $form.serialize()
-                    const $btn = $(`#${$modal.attr('id')}Btn`)
+        // Asociamos el evento keyup con la función debounced
+        $('#datatable_search_input').on('keyup', function() {
+            debouncedSearch.call(this); // Importante para pasar el contexto correcto
+        });
 
-                    $modal.modal('hide');
+        $('#created_at_range').on('change', function () {
+            if ($(this).data('status') === 'closed') {
+                table.column(4).search(this.value).draw()
+            }
+        });
 
-                    if (!$form.find('select[name="currency"]').length || !!$form.find('select[name="currency"]').val()) {
-                        table.column($form.data('index')).search(data).draw();
-                        $btn.removeClass('btn-secondary').addClass('btn-primary');
-                    }
-                }
-            )
-            .on(
-                'click',
-                `.tableFilterModal .resetFilterModal`,
-                function (e) {
-                    e.preventDefault();
+        $('.flatpickr-calendar').append(`
+            <div class='row'>
+                <div class='col'>
+                    <button type="button" class="btn btn-sm text-danger mb-2"><i class="fa fa-history"></i></a>
+                </div>
+            </div>
+        `);
 
-                    const $modal = $($(this).data('modal'))
-                    const $form = $modal.find('form')
-                    const data = $form.serialize()
-                    const $btn = $(`#${$modal.attr('id')}Btn`)
-
-                    $modal.find('form')[0].reset();
-                    $modal.find('.currency')?.val('').trigger('change');
-                    $modal.find('#origin_marketplace_id')?.val('').trigger('change');
-                    $modal.find('#filter_origin_id')?.val('');
-                    $modal.modal('hide');
-                    table.column($form.data('index')).search(data).draw();
-                    $btn.removeClass('btn-primary').addClass('btn-secondary');
-                }
-            );
+        $('.flatpickr-calendar .btn').click(function () {
+            $(`#created_at_range`).data('status', 'closed')
+            flatpicker.clear();
+            flatpicker.value = '';
+            flatpicker.close();
+        });
     }
+
+    $(document)
+        .on(
+            'click',
+            `.tableFilterModal .submitFilterModal`,
+            function (e) {
+                e.preventDefault();
+
+                const $modal = $($(this).data('modal'))
+                const $form = $modal.find('form')
+                const data = $form.serialize()
+                const $btn = $(`#${$modal.attr('id')}Btn`)
+
+                $modal.modal('hide');
+
+                if (!$form.find('select[name="currency"]').length || !!$form.find('select[name="currency"]').val()) {
+                    table.column($form.data('index')).search(data).draw();
+                    $btn.removeClass('btn-secondary').addClass('btn-primary');
+                }
+            }
+        )
+        .on(
+            'click',
+            `.tableFilterModal .resetFilterModal`,
+            function (e) {
+                e.preventDefault();
+
+                const $modal = $($(this).data('modal'))
+                const $form = $modal.find('form')
+                const data = $form.serialize()
+                const $btn = $(`#${$modal.attr('id')}Btn`)
+
+                $modal.find('form')[0].reset();
+                $modal.find('.currency')?.val('').trigger('change');
+                $modal.find('#origin_marketplace_id')?.val('').trigger('change');
+                $modal.find('#filter_origin_id')?.val('');
+                $modal.modal('hide');
+                table.column($form.data('index')).search(data).draw();
+                $btn.removeClass('btn-primary').addClass('btn-secondary');
+            }
+        );
 
     $('.dataTables_scrollBody').on('show.bs.dropdown', function() {
         $('.dataTables_scrollBody').css("overflow", "inherit");
@@ -354,4 +398,19 @@ function drawDataTable(selector, options, withFilters = false) {
     $('.dataTables_scrollBody').on('hide.bs.dropdown', function() {
         $('.dataTables_scrollBody').css("overflow", "auto");
     })
+}
+
+function debounceTimer(func, wait) {
+    let timeout;
+
+    return function(...args) {
+        const context = this;
+        const later = () => {
+            clearTimeout(timeout);
+            func.apply(context, args);
+        };
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
