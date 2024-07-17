@@ -153,4 +153,9 @@ class Portal extends Model
             default => 15
         };
     }
+
+    public function hasModuleAccess(string $module): bool
+    {
+        return isset($this->data['modules']) && in_array($module, $this->data['modules']);
+    }
 }

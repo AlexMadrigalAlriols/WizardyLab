@@ -195,6 +195,13 @@
                         <i class='bx bx-home-alt nav_icon'></i>
                         <span class="nav_name">{{__('global.dashboard')}}</span>
                     </a>
+                    @if(auth()->user()->portal->hasModuleAccess('routes'))
+                        <hr>
+                        <a href="{{route('dashboard.routes.index')}}" class="nav_link {{ $section == 'Routes' ? 'active' : ''}}">
+                            <i class='bx bx-map-alt nav_icon'></i>
+                            <span class="nav_name">{{__('global.routes')}}</span>
+                        </a>
+                    @endif
                     @canany(['client_view', 'company_view', 'invoice_view', 'deliveryNote_view'])
                         <hr>
                         <div class="nav_item has-treeview">

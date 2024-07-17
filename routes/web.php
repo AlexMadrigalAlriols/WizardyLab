@@ -34,6 +34,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\Admin\LandingController;
+use App\Http\Controllers\Admin\RouteController;
 use App\Models\Invoice;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -191,6 +192,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
 
     //holidayscalendar
     Route::get('holidays', [HolidayController::class, 'index'])->name('holiday.index');
+
+
+    // Custom Modules
+    /* Route Module */
+    Route::resource('routes', RouteController::class);
 });
 
 // Password reset link request routes...

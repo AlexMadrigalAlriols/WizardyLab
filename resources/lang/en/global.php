@@ -109,5 +109,6 @@ return [
     'deliverynotes' => 'Delivery Notes',
     'attendance' => 'Attendance',
     'attendancetemplates' => 'Attendance Templates',
+    'routes' => 'Routes',
 ];
 

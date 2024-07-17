@@ -597,5 +597,15 @@ return [
         'other_leaves' => 'Other leaves',
         'other_leaves_desc' => 'This is your absence history. Previous absences cannot be edited.',
         'no_prev' => "You don't have previous leaves.",
+    ],
+    'routes' => [
+        'title' => 'Routes',
+        'title_singular' => 'Route',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at',
         ],
+    ],
 ];

@@ -696,16 +696,24 @@ return [
         'assignment_create' => 'Crear asignación',
     ],
     'holidays' => [
-    'title' => 'Vacaciones',
-    'title_singular' => 'Vacación',
-    'total' => 'Total',
-    'used' => 'Usadas',
-    'available' => 'Disponibles',
-    'authorization' => 'Autorización de ausencias',
-    'other_leaves' => 'Otras ausencias',
-    'other_leaves_desc' => 'Este es tu historial de ausencias. Las ausencias anteriores no se pueden editar.',
-    'no_prev' => "No tienes vacaciones anteriores."
-],
-
-
+        'title' => 'Vacaciones',
+        'title_singular' => 'Vacación',
+        'total' => 'Total',
+        'used' => 'Usadas',
+        'available' => 'Disponibles',
+        'authorization' => 'Autorización de ausencias',
+        'other_leaves' => 'Otras ausencias',
+        'other_leaves_desc' => 'Este es tu historial de ausencias. Las ausencias anteriores no se pueden editar.',
+        'no_prev' => "No tienes vacaciones anteriores."
+    ],
+    'routes' => [
+        'title' => 'Rutas',
+        'title_singular' => 'Ruta',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Nombre',
+            'created_at' => 'Creado',
+            'updated_at' => 'Actualizado',
+        ],
+    ],
 ];
