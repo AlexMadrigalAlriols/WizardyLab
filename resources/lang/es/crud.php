@@ -459,6 +459,19 @@ return [
         'request_demo' => 'SOLICITAR DEMO',
         'get_started' => 'EMPEZAR',
         "faq_title" => "PREGUNTAS FRECUENTES",
+        'services' => 'SERVICIOS',
+        'about' => 'SOBRE NOSOTROS',
+        'slider' => [
+            'custom_software' => 'Software a medida',
+            'custom_software_desc' => 'Desarrollamos el software de tu empresa a medida.',
+            'personalizable_software' => 'Software personalizable',
+            'personalizable_software_desc' => 'Nuestro software es personalizable y se adapta a las necesidades de tu empresa. Podrás personalizarlo con tu branding y colores corporativos.',
+            'upgrade_your_business' => 'Hacemos crecer tu negocio',
+            'upgrade_your_business_desc' => 'Connectamos tu E-commerce con nuestro Software para tener mayor escalabilidad.',
+            'discover' => 'Descubre cómo',
+            'discover_our_erp' => 'Descubre nuestro ERP',
+            'contactus' => 'Contáctanos',
+        ],
         'app' => [
             'title' => 'Seguimiento de tiempo móvil',
             'description' => "El seguimiento de tiempo se puede registrar fácilmente utilizando una aplicación móvil. Obtienes una visión actualizada y los gerentes pueden aprobar el tiempo de las personas.",
@@ -529,7 +542,6 @@ return [
             "selector_4_desc" => "Cree tipos de permisos personalizados para sus empleados.",
             "selector_4_ul_1" => "Define los días máximos que pueden elegir.",
         ],
-
         'working' => [
             "title" => "SISTEMA DE TRABAJO",
             "funcionality" => "PROYECTOS Y TAREAS",
@@ -585,6 +597,24 @@ return [
         'pricing-f' => [
             "title" => "Planes de precios",
             "description" => "Elija el plan perfecto para las necesidades de su negocio. Desde startups hasta grandes empresas, ofrecemos opciones flexibles para apoyar su crecimiento y éxito.",
+        ],
+        'about-us' => [
+            'title' => 'Sobre',
+            'p-1' => "En WizardyLab nos especializamos en el desarrollo integral de software personalizado para su empresa. Nuestro enfoque a medida asegura que nuestras soluciones se adapten perfectamente a sus necesidades y especificaciones únicas, maximizando las capacidades de un sistema informático robusto y eficiente.",
+            'p-2' => "Podemos automatizar sus procesos, aumentar la rentabilidad y la productividad de su empresa, potenciar sus departamentos clave y optimizar el resto. Simplificamos sus gestiones para que obtenga la información que necesita con un solo clic. Con WizardyLab, llevará su empresa a la vanguardia de la informatización y la automatización.",
+            'p-3' => "Proporcionamos soluciones completas para la gestión empresarial. Nuestro ERP centraliza y automatiza sus procesos, nuestro CRM mejora la relación con sus clientes y maximiza las oportunidades de ventas, y nuestro PIM facilita la administración de productos en múltiples canales. Además, desarrollamos software a medida para satisfacer las necesidades específicas de su negocio, asegurando eficiencia y crecimiento sostenible. Con WizardyLab, su empresa contará con las herramientas tecnológicas más avanzadas para alcanzar el éxito.",
+        ],
+        'services-info' => [
+            'rrhh' => 'Software RRHH',
+            'rrhh_desc' => 'Controle todos los aspectos de RRHH: empleados, proyectos, tareas, material, facturas, vacaciones, documentos, firmas digitales, rendimiento y mucho más!.',
+            'erp' => 'Software ERP',
+            'erp_desc' => 'Módulos de facturación, financiero, contabilidad, control de stocks, compras, producción, gestión de almacente inteligente... ¡No hay límites!',
+            'crm' => 'Software CRM',
+            'crm_desc' => 'Controle su empresa de forma online y ofrezca herramientas para crecer más rápido. Realice pedidos desde un tablet o teléfono y conéctelos con su ERP.',
+            'e-commerce' => 'E-commerce',
+            'e-commerce_desc' => 'La venta online nunca fue más sencilla, tenga sus productos, precios y stocks actualizados al momento y sin hacer nada.',
+            'custom_software' => 'Software a medida',
+            'custom_software_desc' => 'Desarrollo de software personalizado adaptado a las necesidades únicas de tu empresa, mejorando procesos y aumentando la productividad.',
         ]
     ],
     'expenses' => [
@@ -601,7 +631,6 @@ return [
             'updated_at' => 'Actualizado el',
         ],
     ],
-
     'roles' => [
         'title' => 'Roles',
         'title_singular' => 'Rol',

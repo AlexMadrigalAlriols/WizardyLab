@@ -209,7 +209,13 @@ Route::group(['middleware' => ['checkPortalExists', 'throttle.login']], static f
     Auth::routes(['register' => false, 'verify' => false, 'confirm' => false, 'logout' => false]);
 });
 
-Route::get('/{lang?}', [LandingController::class, 'index'])->name('landing');
+Route::redirect('/', '/en');
+Route::redirect('/erp', '/erp/en');
+
+// Rutas específicas
+Route::get('/{lang}', [LandingController::class, 'index'])->name('landing');
+Route::get('/erp/{lang}', [LandingController::class, 'erp'])->name('landing.erp');
+
 Route::post('/', [LandingController::class, 'store'])->name('landing.store');
 
 Route::get('/user/logout', [LoginController::class, 'logout'])->name('logout');

@@ -12,6 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <title>Wizardylab - Soluciones ERP y Gestor de Empresas</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicons/apple-touch-icon.png')}}">
@@ -26,7 +28,7 @@
     <link rel="alternate" hreflang="en" href="https://wizardylab.com/en">
 
     <meta name="description" content="Wizardylab ofrece soluciones innovadoras de ERP, gestor de empresas y PIM para optimizar la gestión y productividad de su negocio.">
-    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab, ERP Customizable, ERP Personalizable, WizardyLab ERP">
+    <meta name="keywords" content="ERP, CRM, Gestor de Empresas, PIM, Software a medida, Desarrollo web, Desarrollo interfaz, Programador a medida, Software de Gestión, Productividad Empresarial, Soluciones Empresariales, Wizardylab, ERP Customizable, ERP Personalizable, WizardyLab ERP">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Wizardylab">
     <meta property="og:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
@@ -37,13 +39,15 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Wizardylab - Soluciones ERP, Gestor de Empresas y PIM">
     <meta name="twitter:description" content="Optimice la gestión de su negocio con las soluciones de ERP, gestor de empresas y PIM de Wizardylab.">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </head>
 
 <body class="body-class" style=" background-repeat: no-repeat; height: 100vh">
     @include('sweetalert::alert')
     <nav class="navbar bg-transparent fixed-top">
         <div class="container-fluid p-0" id="navbar">
-            <a class="navbar-brand d-flex justify-content-center align-items-center ms-3 fs-3" href="#">
+            <a class="navbar-brand d-flex justify-content-center align-items-center ms-3 fs-3" href="{{route('landing', $lang)}}">
                 <img src="{{ asset('img/LogoLetters.png') }}" id="LogoNav" alt="Logo" width="225" height="70"
                     class="d-inline-block align-text-top">
             </a>
@@ -51,23 +55,19 @@
             <div class="d-flex flex-column justify-content-center gap-4">
                 <div class="links gap-5 nav-system rubik-font d-xl-flex d-none">
                     <div class="link">
-                        <a class="" href="#home">{{__("crud.landing.home")}}</a>
+                        <a href="#sliderHome">{{__("crud.landing.home")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#product">{{__("crud.landing.product")}}</a>
+                        <a href="#services">{{__("crud.landing.services")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#pricing">{{__("crud.landing.pricing")}}</a>
+                        <a href="#about">{{__("crud.landing.about")}}</a>
                         <div class="circle"></div>
                     </div>
                     <div>
-                        <a href="#faq">{{__("crud.landing.faq")}}</a>
-                        <div class="circle"></div>
-                    </div>
-                    <div>
-                        <a href="#contact">{{__("crud.landing.contact_menu")}}</a>
+                        <a href="#contactus">{{__("crud.landing.contact_menu")}}</a>
                         <div class="circle"></div>
                     </div>
                 </div>
@@ -79,9 +79,8 @@
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($langList as $langl)
-                            <li><a class="dropdown-item text-capitalize" href="{{route('landing', $langl)}}"><span class="fi fi-{{$langl == "en"?"us":$langl}}"></span> {{$langl}}</a></li>
+                            <li><a class="dropdown-item text-capitalize" href="{{route('landing', $langl)}}"><span class="fi fi-{{$langl == "en" ? "us" : $langl}}"></span> {{$langl}}</a></li>
                         @endforeach
-
                     </ul>
                 </div>
             </div>
@@ -92,480 +91,97 @@
             </div>
     </nav>
 
-    <div class="body d-flex flex-column align-items-center justify-content-start rubik-font">
-        <div class="row div-1 mb-5 section" id="home" bar-width="620px">
-            <div class="col-12 col-xl-6 d-flex justify-content-center align-items-center flex-column align-items-xl-start mt-20">
-                <div class="p-4">
-                    <h1 class="fs-2 d-none d-xl-block rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                    <h1 class="fs-4 d-xl-none rubik-font"><span class="title-color">{{ __('crud.landing.seamless') }} </span>{{ __('crud.landing.integration') }}</h1>
-                    <div class="fs-1 d-none d-xl-block" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                    <div class="fs-3 d-xl-none text-center" style="text-wrap:wrap">{{ __('crud.landing.elevate_enterprise') }}</div>
-                    <p class="rubik-font mt-2 text-wrap mb-0">{{ __('crud.landing.digital_reports') }}</p>
-                    <p class="rubik-font text-wrap text-muted">{{ __('crud.landing.easy_customizable') }}</p>
-                </div>
-                <div class="buttons d-flex gap-3 me-3">
-                    <a href="#contact" class="ctm-button-secondary rubik-font">{{ __('crud.landing.request_demo') }}</a>
-                    <a href="#contact" class="ctm-button rubik-font">{{ __('crud.landing.try_14_days') }}</a>
-                </div>
-            </div>
-            <div class="col-12 col-xl-6 col-img">
-                <img class="shadow-lg mt-5 img" src="{{ asset('img/dashboard-1.png') }}" alt="dashboard photo" width="1000px"
-                    class="mt-5">
-            </div>
-        </div>
-    </div>
-
-
-        <div class="row product-div section d-flex flex-column align-items-center" id="product" bar-width="780px">
-            <div class="row w-75 d-flex justify-content-center align-items-center product">
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-2  ">{{ __('crud.landing.app.title') }}</div>
-                    <div class="funcionality fs-4">{{ __('crud.landing.app.description') }}</div>
-                    <class class="row w-100 d-flex justify-content-left align-items-start mt-5" style="transform: translateX(25px);">
-                        <div class="col-md-6 d-flex align-items-start flex-column h-100">
-                            <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
-                                    <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.start_stop.title') }}</div>
-                                    <p class="text-muted">{{ __('crud.landing.app.features.start_stop.description') }}</p>
-                            </div>
-                            <div class="row d-flex gap-1 w-75">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.quick_overview.title') }}</div>
-                                <p class="text-muted">{{ __('crud.landing.app.features.quick_overview.description') }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex align-items-start flex-column">
-                            <div class="row d-flex gap-1 w-75 d-flex justify-content-start">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.tasks.title') }}</div>
-                                <p class="text-muted">{{ __('crud.landing.app.features.tasks.description') }}</p>
-                            </div>
-                            <div class="row d-flex gap-1 w-75 d-flex justify-content-end">
-                                <div class="fs-5" style="font-weight: 600; position: relative;"> <i class='bx bx-time-five fs-5' style="position:absolute; top:5px; left:-25px"></i> {{ __('crud.landing.app.features.customization.title') }}</div>
-                                <p class="text-muted">{{ __('crud.landing.app.features.customization.description') }}</p>
-                            </div>
-                        </div>
-                    </class>
-
-                    <div class="row mb-4">
-                        <div class="col-md-6 col-sm-12">
-                            <a href="" class="ms-3 mt-2" style="opacity: 0.6; pointer-events: none;">
-                                <img src="{{asset('img/download_google_store.svg')}}" alt="Get Google Play" style="width: 200px;">
-                            </a>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <a href="https://apps.apple.com/us/app/wizardylab/id6532622071" target="__blank" class="ms-3 mt-2">
-                                <img src="{{asset('img/download_app_store.svg')}}" alt="Get Google Play" height="58,72">
-                            </a>
-                        </div>
+    <main>
+        <div class="owl-carousel owl-theme owl-drag" id="sliderHome">
+            <div class="item" style="background-image: url('{{asset('img/landing/img-1.jpg')}}')">
+                <a href="/erp" class="text-white">
+                    <div class="container" class="text-white">
+                        <div class="f3 bolder">{{__('crud.landing.slider.custom_software')}}</div>
+                        <div class="f15 lighter">{{__('crud.landing.slider.custom_software_desc')}}</div>
+                        <a class="boton mt-5" href="/erp">{{__('crud.landing.slider.discover_our_erp')}}</a>
                     </div>
-                </div>
-                <div class="col-12 col-xl-6 d-flex justify-content-center mb-4">
-                    <img class=" h-50 d-flex justify-content-start align-items-center"
-                        id="" src="{{ asset('img/movile.png') }}" alt="" width="250px">
+                </a>
+            </div>
+            <div class="item" style="background-image: url('{{asset('img/landing/img-3.jpg')}}')">
+                <div class="container text-white">
+                    <div class="f3 bolder">{{__('crud.landing.slider.personalizable_software')}}</div>
+                    <div class="f15 lighter">{{__('crud.landing.slider.personalizable_software_desc')}}</div>
+                    <a class="boton mt-5" href="#contactus">{{__('crud.landing.slider.discover')}}</a>
                 </div>
             </div>
-
-            <div class="separator"></div>
-
-            <div class="row w-100 d-flex justify-content-center align-items-center product">
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
-                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-0-img" src="{{ asset('img/branding-img.png') }}" alt="" width="900px">
-                </div>
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __('crud.landing.configuration.title') }}</div>
-                    <div class="funcionality fs-2">{{ __('crud.landing.configuration.funcionality') }}</div>
-                    <div class="selectors" id="selector-0">
-                        <div class="selector" image="{{ asset('img/branding-img.png') }}" style="display: none">
-                            <div>{{ __('crud.landing.configuration.selector_1') }}</div>
-                        </div>
-                        <div class="ctm-card" style="display: flex">
-                            <div><b>{{ __('crud.landing.configuration.selector_1') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_1_desc') }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/roles-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_2') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_2') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_2_desc') }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/template-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_3') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_3') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_3_desc') }}
-                            <ul>
-                                <li>{{ __('crud.landing.configuration.selector_3_ul_1') }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/leavetype-img.png') }}">
-                            <div>{{ __('crud.landing.configuration.selector_4') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.configuration.selector_4') }}</b></div>
-                            {{ __('crud.landing.configuration.selector_4_desc') }}
-                            <ul>
-                                <li>{{ __('crud.landing.configuration.selector_4_ul_1') }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="row w-100 d-flex justify-content-center align-items-center product">
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __('crud.landing.clients.title') }}</div>
-                    <div class="funcionality fs-2">{{ __('crud.landing.clients.funcionality') }}</div>
-                    <div class="selectors" id="selector-1">
-                        <div class="selector" image="{{ asset('img/clients-img.png') }}"  style="display: none">
-                            <div>{{ __('crud.landing.clients.selector_1') }}</div>
-                        </div>
-                        <div class="ctm-card" style="display: flex">
-                            <div><b>{{ __('crud.landing.clients.selector_1') }}</b></div>
-                            {{ __('crud.landing.clients.selector_1_desc') }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/companies2-img.png') }}">
-                            <div>{{ __('crud.landing.clients.selector_2') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.clients.selector_2') }}</b></div>
-                            {{ __('crud.landing.clients.selector_2_desc') }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/invoices-img.png') }}">
-                            <div>{{ __('crud.landing.clients.selector_3') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.clients.selector_3') }}</b></div>
-                            {{ __('crud.landing.clients.selector_3_desc') }}
-                            <ul>
-                                <li>{{ __('crud.landing.clients.selector_3_ul_1') }}</li>
-                                <li>{{ __('crud.landing.clients.selector_3_ul_2') }}</li>
-                                <li>{{ __('crud.landing.clients.selector_3_ul_3') }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/delivery-img.png') }}">
-                            <div>{{ __('crud.landing.clients.selector_4') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.clients.selector_4') }}</b></div>
-                            {{ __('crud.landing.clients.selector_4_desc') }}
-                            <ul>
-                                <li>{{ __('crud.landing.clients.selector_4_ul_1') }}</li>
-                                <li>{{ __('crud.landing.clients.selector_4_ul_2') }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
-                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-1-img" src="{{ asset('img/clients-img.png') }}" alt="" width="900px">
-                </div>
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="row w-100 d-flex flex-column-reverse gap-5 gap-xl-0 flex-xl-row justify-content-center align-items-center product" id="p2">
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
-                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-2-img" src="{{ asset('img/leaves-img.png') }}" alt="" width="900px">
-                </div>
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __("crud.landing.hr.title") }}</div>
-                    <div class="funcionality fs-2">{{ __("crud.landing.hr.funcionality") }}</div>
-                    <div class="selectors" id="selector-2">
-                        <div class="selector" image="{{ asset('img/leaves-img.png') }}" style="display: none">
-                            <div>{{ __("crud.landing.hr.selector_1") }}</div>
-                        </div>
-                        <div class="ctm-card" style="display: flex">
-                            <div><b>{{ __("crud.landing.hr.selector_1") }}</b></div>
-                            {{ __("crud.landing.hr.selector_1_desc") }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/attendances-img.png') }}">
-                            <div>{{ __("crud.landing.hr.selector_2") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.hr.selector_2") }}</b></div>
-                            {{ __("crud.landing.hr.selector_2_desc") }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/users-img.png') }}">
-                            <div>{{ __("crud.landing.hr.selector_3") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.hr.selector_3") }}</b></div>
-                            {{ __("crud.landing.hr.selector_3_desc") }}
-                            <ul>
-                                <li>{{ __("crud.landing.hr.selector_3_ul_1") }}</li>
-                                <li>{{ __("crud.landing.hr.selector_3_ul_2") }}</li>
-                                <li>{{ __("crud.landing.hr.selector_3_ul_3") }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/holidays-img.png') }}">
-                            <div>{{ __("crud.landing.hr.selector_4") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.hr.selector_4") }}</b></div>
-                            {{ __("crud.landing.hr.selector_4_desc") }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="row w-100 d-flex justify-content-center align-items-center product" id="3">
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __("crud.landing.working.title") }}</div>
-                    <div class="funcionality fs-2">{{ __("crud.landing.working.funcionality") }}</div>
-                    <div class="selectors" id="selector-3">
-                        <div class="selector" image="{{ asset('img/proyects-img.png') }}" style="display: none">
-                            <div>{{ __("crud.landing.working.selector_3_1") }}</div>
-                        </div>
-                        <div class="ctm-card" style="display: flex">
-                            <div><b>{{ __("crud.landing.working.selector_3_1") }}</b></div>
-                            {{ __("crud.landing.working.selector_3_1_desc") }}
-                            <ul>
-                                <li>{{ __("crud.landing.working.selector_3_1_ul_1") }}</li>
-                                <li>{{ __("crud.landing.working.selector_3_1_ul_2") }}</li>
-                                <li>{{ __("crud.landing.working.selector_3_1_ul_3") }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/tasks-img.png') }}">
-                            <div>{{ __("crud.landing.working.selector_3_2") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.working.selector_3_2") }}</b></div>
-                            <ul>
-                                <li>{{ __("crud.landing.working.selector_3_2_ul_1") }}</li>
-                                <li>{{ __("crud.landing.working.selector_3_2_ul_2") }}</li>
-                                <li>{{ __("crud.landing.working.selector_3_2_ul_3") }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/canva-img.png') }}">
-                            <div>{{ __("crud.landing.working.selector_3_3") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.working.selector_3_3") }}</b></div>
-                            {{ __("crud.landing.working.selector_3_3_desc") }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/rules-img.png') }}">
-                            <div>{{ __("crud.landing.working.selector_3_4") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.working.selector_3_4") }}</b></div>
-                            {{ __("crud.landing.working.selector_3_4_desc") }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
-                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-3-img" src="{{ asset('img/proyects-img.png') }}" alt=""
-                        width="900px">
-                </div>
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="row w-100 d-flex justify-content-center align-items-center product flex-column-reverse gap-5 gap-xl-0 flex-xl-row" id="5">
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
-                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-5-img" src="{{ asset('img/items-img.png') }}" alt=""
-                        width="900px">
-                </div>
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __("crud.landing.inventory.title") }}</div>
-                    <div class="funcionality fs-2">{{ __("crud.landing.inventory.funcionality") }}</div>
-                    <div class="selectors" id="selector-5">
-                        <div class="selector" image="{{ asset('img/items-img.png') }}" style="display: none">
-                            <div>{{ __("crud.landing.inventory.selector_5_1") }}</div>
-                        </div>
-                        <div class="ctm-card" style="display: flex">
-                            <div><b>{{ __("crud.landing.inventory.selector_5_1") }}</b></div>
-                            <ul>
-                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_1") }}</li>
-                                <li>{{ __("crud.landing.inventory.selector_5_1_ul_2") }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/assignments-img.png') }}">
-                            <div>{{ __("crud.landing.inventory.selector_5_2") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.inventory.selector_5_2") }}</b></div>
-                            {{ __("crud.landing.inventory.selector_5_2_desc") }}
-                        </div>
-                        <div class="selector" image="{{ asset('img/expenses-img.png') }}">
-                            <div>{{ __("crud.landing.inventory.selector_5_3") }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __("crud.landing.inventory.selector_5_3") }}</b></div>
-                            {{ __("crud.landing.inventory.selector_5_3_desc") }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="separator"></div>
-
-            <div class="row w-100 d-flex justify-content-center align-items-center product">
-                <div class="col-12 col-xl-6 d-flex flex-column justify-content-start align-items-center gap-4 h-50 align-items-xl-start sel-pad">
-                    <div class="title fs-5">{{ __('crud.landing.documents.title') }}</div>
-                    <div class="funcionality fs-2">{{ __('crud.landing.documents.funcionality') }}</div>
-                    <div class="selectors" id="selector-6">
-                        <div class="selector" image="{{ asset('img/documents-img.png') }}"  style="display: none">
-                            <div>{{ __('crud.landing.documents.selector_6_1') }}</div>
-                        </div>
-                        <div class="ctm-card" style="display: flex">
-                            <div><b>{{ __('crud.landing.documents.selector_6_1') }}</b></div>
-                            {{ __('crud.landing.documents.selector_6_1_desc') }}
-                            <ul>
-                                <li>{{ __('crud.landing.documents.selector_6_1_ul_1') }}</li>
-                                <li>{{ __('crud.landing.documents.selector_6_1_ul_2') }}</li>
-                                <li>{{ __('crud.landing.documents.selector_6_1_ul_3') }}</li>
-                            </ul>
-                        </div>
-                        <div class="selector" image="{{ asset('img/esign-img.png') }}">
-                            <div>{{ __('crud.landing.documents.selector_6_2') }}</div>
-                        </div>
-                        <div class="ctm-card">
-                            <div><b>{{ __('crud.landing.documents.selector_6_2') }}</b></div>
-                            {{ __('crud.landing.documents.selector_6_2_desc') }}
-                            <ul>
-                                <li>{{ __('crud.landing.documents.selector_6_2_ul_1') }}</li>
-                                <li>{{ __('crud.landing.documents.selector_6_2_ul_2') }}</li>
-                                <li>{{ __('crud.landing.documents.selector_6_2_ul_3') }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-xl-6 d-flex justify-content-center">
-                    <img class="img-border shadow-lg h-50 d-flex justify-content-start align-items-center"
-                        id="selector-6-img" src="{{ asset('img/documents-img.png') }}" alt="" width="900px">
+            <div class="item" style="background-image: url('{{asset('img/landing/img-2.jpg')}}')">
+                <div class="container text-white">
+                    <div class="f3 bolder">{{__('crud.landing.slider.upgrade_your_business')}}</div>
+                    <div class="f15 lighter">{{__('crud.landing.slider.upgrade_your_business_desc')}}</div>
+                    <a class="boton mt-5" href="#contactus">{{__('crud.landing.slider.contactus')}}</a>
                 </div>
             </div>
         </div>
 
-        <div class="row section d-flex flex-column align-items-center" id="pricing" bar-width="950px">
-            <section id="pricing" class="pricing-content section-padding">
-                <div class="container">
-                    <div class="section-title text-center">
-                        <h2>{{__("crud.landing.pricing-f.title")}}</h2>
-                        <p>{{__("crud.landing.pricing-f.description")}}</p>
-                    </div>
-                    <div class="row text-center d-flex justify-content-center align-items-center gap-3 gap-xl-0">
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
-                            data-wow-delay="0.1s" data-wow-offset="0"
-                            style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;">
-                            <div class="pricing_design">
-                                <div class="single-pricing">
-                                    <div class="price-head">
-                                        <h2>BASIC</h2>
-                                        <span class="original-price">80€</span>
-                                        <span class="h1">60€</span><br>
-                                        <span>/{{trans('plans.monthly')}}</span>
-                                    </div>
-                                    <ul class="ps-0">
-                                        <li>{!! trans('plans.employee_accounts', ['count' => 15]) !!}</li>
-                                        <li>{!! trans('plans.disk_space', ['size' => '10gb']) !!}</li>
-                                        <li>{!! trans('plans.onboarding') !!}</li>
-                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
-                                        <li>{!! trans('plans.unlimited_support') !!}</li>
-                                    </ul>
-                                    <div class="pricing-price mt-auto">
-                                        <a href="#contact" class="price_btn">START TRIAL</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--- END COL -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
-                            data-wow-delay="0.2s" data-wow-offset="0"
-                            style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeInUp;">
-                            <div class="pricing_design">
-                                <div class="pricing-badge">
-                                    <span class="badge">Popular</span>
-                                </div>
-                                <div class="single-pricing">
-                                    <div    >
-                                        <div class="price-head">
-                                            <h2>PROFESSIONAL</h2>
-                                            <span class="original-price">140€</span>
-                                            <span class="h1">120€</span><br>
-                                            <span>/{{trans('plans.monthly')}}</span>
-                                        </div>
-                                        <ul class="ps-0">
-                                            <li>{!! trans('plans.employee_accounts', ['count' => 60]) !!}</li>
-                                            <li>{!! trans('plans.disk_space', ['size' => '30gb']) !!}</li>
-                                            <li>{!! trans('plans.onboarding') !!}</li>
-                                            <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
-                                            <li>{!! trans('plans.custom_migration') !!}</li>
-                                            <li>{!! trans('plans.unlimited_support') !!}</li>
-                                        </ul>
-                                    </div>
-                                    <div class="pricing-price mt-auto">
-                                        <a href="#contact" class="price_btn">CONTACT US</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--- END COL -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp p-0" data-wow-duration="1s"
-                            data-wow-delay="0.3s" data-wow-offset="0"
-                            style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;">
-                            <div class="pricing_design">
+        <div class="container services-container" id="services">
+            <div class="row row-services d-flex mt-5">
+                <div class="col-md-3">
+                    <a href="erp" class="text-dark">
+                        <img src="{{asset('img/landing/services/rrhh.svg')}}" alt="RRHH">
+                        <h4 class="f15 bold nm">{{__('crud.landing.services-info.rrhh')}}</h4>
+                        <p class="text-muted">{{__('crud.landing.services-info.rrhh_desc')}}</p>
+                    </a>
+                </div>
 
-                                <div class="single-pricing">
-                                    <div class="price-head">
-                                        <h2>ENTERPRISE</h2>
-                                        <span class="original-price">200€</span>
-                                        <span class="h1">160€</span><br>
-                                        <span>/{{trans('plans.monthly')}}</span>
-                                    </div>
-                                    <ul class="ps-0">
-                                        <li>{!! trans('plans.employee_accounts', ['count' => 'Unlimited']) !!}</li>
-                                        <li>{!! trans('plans.disk_space', ['size' => '100gb']) !!}</li>
-                                        <li>{!! trans('plans.onboarding') !!}</li>
-                                        <li>{!! trans('plans.access_to_all_basic_modules') !!}</li>
-                                        <li>{!! trans('plans.custom_migration') !!}</li>
-                                        <li>{!! trans('plans.hiring_module') !!}</li>
-                                        <li>{!! trans('plans.route_module') !!}</li>
-                                        <li>{!! trans('plans.custom_modules') !!}</li>
-                                        <li>{!! trans('plans.unlimited_support') !!}</li>
-                                    </ul>
-                                    <div class="pricing-price mt-auto">
-                                        <a href="#contact" class="price_btn">CONTACT US</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--- END COL -->
-                    </div><!--- END ROW -->
-                </div><!--- END CONTAINER -->
-            </section>
-        </div>
-        <div class="row section" id="faq" bar-width="1090px">
-            <h2 class="text-center mb-5">{{__("crud.landing.faq_title")}}</h2>
-            <div class="accordion" id="accordionExample">
-                @foreach ($faqs[ $lang ] as $faq)
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse{{ $loop->iteration }}" aria-expanded="true"
-                                aria-controls="collapse{{ $loop->iteration }}">
-                                {{ $faq['question'] }}
-                            </button>
-                        </h2>
-                        <div id="collapse{{ $loop->iteration }}" class="accordion-collapse collapse"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                {{ $faq['answer'] }}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                <div class="col-md-3">
+                    <a href="erp" class="text-dark">
+                        <img src="{{asset('img/landing/services/crm.svg')}}" alt="ERP">
+                        <h4 class="f15 bold nm">{{__('crud.landing.services-info.erp')}}</h4>
+                        <p class="text-muted">{{__('crud.landing.services-info.erp_desc')}}</p>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#contactus" class="text-dark">
+                        <img src="{{asset('img/landing/services/rrh.svg')}}" alt="CRM">
+                        <h4 class="f15 bold nm">{{__('crud.landing.services-info.crm')}}</h4>
+                        <p class="text-muted">{{__('crud.landing.services-info.crm_desc')}}</p>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#contactus" class="text-dark">
+                        <img src="{{asset('img/landing/services/ecommerce.svg')}}" alt="E-commerce">
+                        <h4 class="f15 bold nm">{{__('crud.landing.services-info.e-commerce')}}</h4>
+                        <p class="text-muted">{{__('crud.landing.services-info.e-commerce_desc')}}</p>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#contactus" class="text-dark">
+                        <img src="{{asset('img/landing/services/personalized.svg')}}" alt="Desarrollo web">
+                        <h4 class="f15 bold nm">{{__('crud.landing.services-info.custom_software')}}</h4>
+                        <p class="text-muted">{{__('crud.landing.services-info.custom_software_desc')}}</p>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="row section w-100 pb-5" id="contact" bar-width="1250px">
-            <div class="container mt-5 pt-5">
+
+        <div class="product-div mt-5" id="about">
+            <div class="container about-row">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 py-5">
+                        <h2 class="mb-3 h1">{{__('crud.landing.about-us.title')}} <b>Wizardy</b></h2>
+                        <p class="text-muted">{{__('crud.landing.about-us.p-1')}}</p>
+
+                        <p class="text-muted">{{__('crud.landing.about-us.p-2')}}</p>
+
+                        <p class="text-muted">{{__('crud.landing.about-us.p-3')}}</p>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-center">
+                        <img src="{{asset('img/Logo.png')}}" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row w-100 pb-5" id="contactus" bar-width="1250px">
+            <div class="container mt-1 pt-1">
                 <div class="row justify-content-md-center">
                     <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
                         <h2 class="mb-4 display-5 text-center">{{ __("crud.landing.contact.title") }}</h2>
@@ -634,7 +250,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <div class="container">
         <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
@@ -666,17 +282,35 @@
             <h5>Section</h5>
             <ul class="nav flex-column">
               <li class="nav-item mb-2"><a href="#home" class="nav-link p-0 text-muted">Home</a></li>
-              <li class="nav-item mb-2"><a href="#product" class="nav-link p-0 text-muted">Product</a></li>
-              <li class="nav-item mb-2"><a href="#pricing" class="nav-link p-0 text-muted">Pricing</a></li>
-              <li class="nav-item mb-2"><a href="#faq" class="nav-link p-0 text-muted">FAQs</a></li>
-              <li class="nav-item mb-2"><a href="#contact" class="nav-link p-0 text-muted">Contact</a></li>
+              <li class="nav-item mb-2"><a href="#services" class="nav-link p-0 text-muted">Services</a></li>
+              <li class="nav-item mb-2"><a href="#about" class="nav-link p-0 text-muted">About</a></li>
+              <li class="nav-item mb-2"><a href="#contactus" class="nav-link p-0 text-muted">Contact</a></li>
             </ul>
           </div>
         </footer>
-      </div>
+    </div>
 </body>
 <script>
     $(document).ready(function() {
+        $('#sliderHome').owlCarousel({
+            loop:true,
+            margin:10,
+            nav:false,
+            dots:true,
+            autoplay:true,
+            autoplayHoverPause:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            }
+        });
 
         $(window).scroll(function() {
             if ($(this).scrollTop() > 50) {
@@ -685,6 +319,7 @@
                 $('#navbar').removeClass('blur');
             }
         });
+
         // Función para comprobar qué sección está visible
         function checkSectionInView() {
             var scrollPos = $(window).scrollTop();
@@ -717,24 +352,6 @@
                 }
             });
         }
-
-        $('.selector').on('click', function() {
-            var $parent = $(this).parent();
-            $parent.find('.ctm-card').each(function() {
-                $(this).css('display', 'none');
-            });
-            $parent.find('.selector').each(function() {
-                $(this).css('display', 'flex');
-            });
-
-            $(this).next('.ctm-card').css('display', 'flex').hide().slideDown();
-            $(this).css("display", "none");
-            $('#' + $(this).parent().attr('id') + '-img').fadeOut("fast")
-            var image = $(this).attr("image")
-            $('#' + $(this).parent().attr('id') + '-img').fadeOut("fast", function() {
-                $(this).attr("src", image).fadeIn("fast")
-            })
-        })
         checkSectionInView();
         $(window).on('scroll', checkSectionInView);
     });
