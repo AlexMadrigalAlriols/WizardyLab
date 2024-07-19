@@ -336,6 +336,19 @@ return [
         'request_demo' => 'REQUEST DEMO',
         'get_started' => 'GET STARTED',
         "faq_title" => "FREQUENTLY ASKED QUESTIONS",
+        'services' => 'SERVICES',
+        'about' => 'ABOUT US',
+        'slider' => [
+            'custom_software' => 'Custom Software',
+            'custom_software_desc' => 'We develop custom software for your company.',
+            'personalizable_software' => 'Customizable Software',
+            'personalizable_software_desc' => 'Our software is customizable and adapts to the needs of your company. You can personalize it with your branding and corporate colors.',
+            'upgrade_your_business' => 'Upgrade Your Business',
+            'upgrade_your_business_desc' => 'We connect your E-commerce with our software for greater scalability.',
+            'discover' => 'Discover How',
+            'discover_our_erp' => 'Discover Our ERP',
+            'contactus' => 'Contact Us',
+        ],
         'app' => [
             'title' => 'Mobile Time tracking',
             'description' => "Time tracking can be easily recorded using a mobile app. You get an up-to-date overview and  the managers are able to approve people's time.",
@@ -459,6 +472,24 @@ return [
         'pricing-f' => [
             "title" => "Pricing Plans",
             "description" => "Choose the perfect plan for your business needs. From startups to large enterprises, we offer flexible options to support your growth and success.",
+        ],
+        'about-us' => [
+            'title' => 'About Us',
+            'p-1' => "At WizardyLab, we specialize in the comprehensive development of custom software for your company. Our tailored approach ensures that our solutions perfectly fit your unique needs and specifications, maximizing the capabilities of a robust and efficient computer system.",
+            'p-2' => "We can automate your processes, increase your company's profitability and productivity, empower your key departments, and optimize the rest. We simplify your management so that you can get the information you need with just one click. With WizardyLab, you will bring your company to the forefront of computerization and automation.",
+            'p-3' => "We provide complete solutions for business management. Our ERP centralizes and automates your processes, our CRM improves your relationship with your customers and maximizes sales opportunities, and our PIM facilitates product management across multiple channels. Additionally, we develop custom software to meet the specific needs of your business, ensuring efficiency and sustainable growth. With WizardyLab, your company will have the most advanced technological tools to achieve success.",
+        ],
+        'services-info' => [
+            'rrhh' => 'HR Software',
+            'rrhh_desc' => 'Control all aspects of HR: employees, projects, tasks, materials, invoices, vacations, documents, digital signatures, performance, and much more!',
+            'erp' => 'ERP Software',
+            'erp_desc' => 'Modules for billing, finance, accounting, stock control, purchasing, production, intelligent warehouse management... There are no limits!',
+            'crm' => 'CRM Software',
+            'crm_desc' => 'Control your company online and provide tools for faster growth. Place orders from a tablet or phone and connect them with your ERP.',
+            'e-commerce' => 'E-commerce',
+            'e-commerce_desc' => 'Selling online has never been easier. Keep your products, prices, and stock updated in real-time without any effort.',
+            'custom_software' => 'Custom Software',
+            'custom_software_desc' => 'Development of custom software tailored to the unique needs of your company, improving processes and increasing productivity.',
         ]
     ],
     'departments' => [
@@ -597,5 +628,15 @@ return [
         'other_leaves' => 'Other leaves',
         'other_leaves_desc' => 'This is your absence history. Previous absences cannot be edited.',
         'no_prev' => "You don't have previous leaves.",
+    ],
+    'routes' => [
+        'title' => 'Routes',
+        'title_singular' => 'Route',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Name',
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at',
         ],
+    ],
 ];
