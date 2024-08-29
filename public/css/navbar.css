@@ -138,6 +138,10 @@ body {
     height: 32px;
     background-color: var(--primary-color);
 }
+.nav_link.selected {
+    color: var(--primary-color);
+    font-weight: 600;
+}
 .height-100 {
     height: calc(100vh - var(--header-height) - 3rem) !important;
 }

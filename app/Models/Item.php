@@ -11,7 +11,6 @@ class Item extends Model
 {
     use HasFactory;
 
-
     public static $filterable = [
         'id',
         'name',

@@ -287,7 +287,32 @@
                                         <i class='bx bx-user-plus nav_icon'></i>
                                         <span class="nav_name">{{__('crud.users.title')}}</span>
                                     </a>
+                                    <hr>
                                 @endcan
+                                <div class="nav_item has-treeview">
+                                    <a href="#" class="nav_link has_submenu {{ $section == 'Leaves' || $section == 'Attendance' || $section == 'Users' || $section == 'Holiday' || $section == 'Documents' ? 'active' : ''}}">
+                                        <div>
+                                            <i class='bx bx-briefcase-alt nav_icon'></i>
+                                            <span class="nav_name ms-4">Jobs</span>
+                                        </div>
+                                        <i class='bx bx-chevron-right toggler'></i>
+                                    </a>
+                                    <div class="treeview {{ $section == 'JobPostings' || $section == 'Candidates' ? 'active' : ''}}">
+                                        @can('leave_view')
+                                            <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'JobPostings' ? 'active' : ''}}">
+                                                <i class='bx bx-briefcase-alt nav_icon'></i>
+                                                <span class="nav_name ms-1">Posts</span>
+                                            </a>
+                                            <hr>
+                                        @endcan
+                                        @can('leave_view')
+                                            <a href="{{route('dashboard.leaves.index')}}" class="nav_link {{ $section == 'Candidates' ? 'active' : ''}}">
+                                                <i class='bx bxs-user-detail nav_icon'></i>
+                                                <span class="nav_name ms-1">Candidates</span>
+                                            </a>
+                                        @endcan
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endcan

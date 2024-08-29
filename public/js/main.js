@@ -33,6 +33,7 @@ $(document).ready(function () {
 
 document.querySelectorAll('.has_submenu ').forEach(toggle => {
     toggle.addEventListener('click', function() {
+        $(this).toggleClass('selected');
         const parent = this.closest('.nav_item');
         parent.classList.toggle('active');
 
