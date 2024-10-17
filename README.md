@@ -1,8 +1,8 @@
 # ERP de Gestión de Empleados
 
-https:://wizardylab.com
+https://wizardylab.com
 
-![ERP Logo](https://wizardylab.com/img/LogoLetters.png) <!-- Agrega el logo de tu aplicación aquí -->
+<img src="public/img/LogoLetters.png" alt="ERP Logo" width="200"/> <!-- Agrega el logo de tu aplicación aquí -->
 
 Un **ERP completo** para la gestión de empleados y operaciones empresariales, diseñado para mejorar la eficiencia en la administración y control de tu negocio.
 
