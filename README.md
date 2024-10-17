@@ -2,7 +2,7 @@
 
 https://wizardylab.com
 
-<img src="public/img/LogoLetters.png" alt="ERP Logo" width="200"/> <!-- Agrega el logo de tu aplicación aquí -->
+<img src="public/img/LogoLetters.png" alt="ERP Logo" width="200"/>
 
 Un **ERP completo** para la gestión de empleados y operaciones empresariales, diseñado para mejorar la eficiencia en la administración y control de tu negocio.
 
