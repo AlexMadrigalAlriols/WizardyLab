@@ -147,7 +147,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAni3pSi1eilgs1l0VuXAS2K2VqTkhHbKA&libraries=geometry"></script>
 
 <script>
     function initMap() {
