@@ -11,6 +11,8 @@ class ProjectObserver
         $project->tasks()->delete();
         $project->users()->detach();
         $project->boardRules()->detach();
+        $project->expenses()->forceDelete();
+        $project->invoices()->forceDelete();
         $project->avaiableStatuses()->delete();
     }
 }

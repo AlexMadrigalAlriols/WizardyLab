@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Client;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\DocumentFolder;
@@ -14,6 +15,7 @@ use App\Models\StockMovement;
 use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\User;
+use App\Observers\ClientObserver;
 use App\Observers\DepartmentObserver;
 use App\Observers\DocumentFolderObserver;
 use App\Observers\DocumentObserver;
@@ -54,5 +56,6 @@ class AppServiceProvider extends ServiceProvider
         DocumentFolder::observe(DocumentFolderObserver::class);
         Document::observe(DocumentObserver::class);
         StockMovement::observe(StockMovementObserver::class);
+        Client::observe(ClientObserver::class);
     }
 }

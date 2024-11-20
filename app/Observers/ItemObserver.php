@@ -8,6 +8,7 @@ class ItemObserver
 {
     public function deleting(Item $item)
     {
+        $item->stock_movements()->delete();
         $item->files()->delete();
         $item->assignments()->delete();
     }

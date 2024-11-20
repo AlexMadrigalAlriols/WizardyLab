@@ -262,6 +262,7 @@ return [
         'fields' => [
             'code' => 'Code',
             'title' => 'Title',
+            'description' => 'Description',
             'start_date' => 'Start Date',
             'assigned_to' => 'Assigned To',
             'department' => 'Department',
