@@ -211,8 +211,6 @@ class InvoiceController extends Controller
             $dompdf->loadHtml($html);
             $dompdf->render();
 
-            dd();
-
             Storage::disk('public')->put($path, $dompdf->output());
         }
 
