@@ -111,4 +111,5 @@ return [
     'attendance' => 'Asistencia',
     'attendancetemplates' => 'Plantillas de asistencia',
     'routes' => 'Rutas',
+    'add' => 'Añadir'
 ];

@@ -32,7 +32,7 @@
         }
         .invoice-info p {
             margin: 5px 0;
-            font-size: 14px;
+            font-size: 15px;
         }
         .addresses {
             margin-bottom: 20px;
@@ -82,34 +82,43 @@
             text-align: center;
             font-size: 12px;
         }
+        .p-4 {
+            padding-left: 1.25rem;
+            padding-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="data:image/png;base64,{{ $logoBase64 }}" alt="Logo">
+            @if ((bool) $invoice->data['show_logo'])
+                <img src="data:image/png;base64,{{ $logoBase64 }}" alt="Logo">
+            @endif
         </div>
         <div class="invoice-info">
             <h1>Factura #{{ $invoice->number }}</h1>
-            <p>Fecha: {{ $invoice->issue_date }}</p>
-            <p>Cliente: {{ $invoice->client?->name }} ({{$invoice->client?->company?->name}})</p>
+            <p>Fecha de emisión: {{ $invoice->issue_date }}</p>
+            <p>Forma de pago: Transferencia bancaria</p>
+            <p>Cuenta bancaria: <b>{{ $billingClient->account_number ?? '' }}</b></p>
         </div>
         <div class="addresses">
             <div>
-                <h3>De:</h3>
+                <h3>Datos del emisor:</h3>
                 <p>{{ $billingClient->name }}</p>
+                <p>{{ $billingClient->vat_number ?? '' }}</p>
                 <p>{{ $billingClient->address }}</p>
-                <p>{{ $billingClient->city }}</p>
-                <p>{{ $billingClient->state }}</p>
+                <p>{{ $billingClient->zip }}, {{ $billingClient->city }}. {{ $billingClient->state }}</p>
                 <p>{{ $billingClient->email }}</p>
+                <p>{{ $billingClient->phone }}</p>
             </div>
             <div>
-                <h3>Para:</h3>
+                <h3>Datos del cliente:</h3>
                 <p>{{ $invoice->client->name }}</p>
+                <p>{{ $invoice->client->vat_number ?? '' }}</p>
                 <p>{{ $invoice->client->address }}</p>
-                <p>{{ $invoice->client->city }}</p>
-                <p>{{ $invoice->client->state }}</p>
+                <p>{{ $invoice->client->city }}, {{ $invoice->client->state }}</p>
                 <p>{{ $invoice->client->email }}</p>
+                <p>{{ $invoice->client->phone }}</p>
             </div>
         </div>
         <table class="tasks">
@@ -135,8 +144,8 @@
                     <tr>
                         <td>{{$item['name']}}</td>
                         <td>{{$item['quantity']}}</td>
-                        <td>{{$item['amount']}} {{$invoice->client->currency->symbol}}</td>
-                        <td>{{$item['total']}} {{$invoice->client->currency->symbol}}</td>
+                        <td>{{ number_format($item['amount'], 2) }} {{$invoice->client->currency->symbol}}</td>
+                        <td>{{ number_format($item['total'], 2) }} {{$invoice->client->currency->symbol}}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -144,17 +153,31 @@
         <table class="totals">
             <tr>
                 <th>Subtotal:</th>
-                <td>{{ $invoice->amount }} {{$invoice->client->currency->symbol}}</td>
+                <td>{{ number_format($invoice->amount, 2) }} {{$invoice->client->currency->symbol}}</td>
             </tr>
             <tr>
-                <th>IVA (21%):</th>
-                <td>{{ $invoice->tax }} {{$invoice->client->currency->symbol}}</td>
+                @if ($invoice->data['include_tax'] ?? true)
+                    <th>IVA (21%):</th>
+                    <td>{{ number_format($invoice->tax, 2) }} {{$invoice->client->currency->symbol}}</td>
+                @else
+                    <th>IVA (0%):</th>
+                    <td>{{number_format('0', 2)}} {{$invoice->client->currency->symbol}}</td>
+                @endif
             </tr>
             <tr>
                 <th>Total:</th>
-                <td class="total">{{ $invoice->total }} {{$invoice->client->currency->symbol}}</td>
+                @if ($invoice->data['include_tax'] ?? true)
+                    <td class="total">{{ number_format($invoice->total, 2) }} {{$invoice->client->currency->symbol}}</td>
+                @else
+                    <td class="total">{{ number_format($invoice->amount, 2) }} {{$invoice->client->currency->symbol}}</td>
+                @endif
             </tr>
         </table>
+
+        <div class="p-4">
+            <p>Firma:</p>
+            <p>{{ $billingClient->name }}</p>
+        </div>
     </div>
 </body>
 </html>

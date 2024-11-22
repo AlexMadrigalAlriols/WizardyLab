@@ -23,12 +23,22 @@ class InvoicesDataTable extends DataTable
             $viewGate = false;
             $editGate = false;
             $deleteGate = 'invoice_delete';
-            $links = [
-                [
-                    'href' => route('dashboard.invoices.download', $row->id),
-                    'icon' => 'bx bx-download',
-                    'text' => 'Download'
-                ]
+            $links = [];
+
+            if($row->status_id !== 11) {
+                $links = [
+                    [
+                        'href' => route('dashboard.invoices.paid', $row->id),
+                        'icon' => 'bx bx-check',
+                        'text' => 'Paid'
+                    ]
+                ];
+            }
+
+            $links[] = [
+                'href' => route('dashboard.invoices.download', $row->id),
+                'icon' => 'bx bx-download',
+                'text' => 'Download'
             ];
 
             return view('partials.datatables.actions', compact(
@@ -61,10 +71,14 @@ class InvoicesDataTable extends DataTable
         });
 
         $table->editColumn('total', function($row) {
-            return $row->total ? $row->total . ' ' . $row->client?->currency?->symbol : '';
+            if($row->data['include_tax'] ?? true) {
+                return $row->total ? $row->total . ' ' . $row->client?->currency?->symbol : '';
+            }
+
+            return $row->amount . ' ' . $row->client?->currency?->symbol;
         });
 
-        $table->rawColumns(['placeholder', 'actions']);
+        $table->rawColumns(['placeholder', 'actions', 'issue_date']);
 
         return $table;
     }

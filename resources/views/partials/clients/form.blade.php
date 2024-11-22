@@ -87,6 +87,14 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-floating mt-3">
+            <div class="form-floating mt-3">
+                <input type="text" class="form-control @if($errors->has('account_number')) is-invalid @endif" id="account_number" name="account_number" placeholder="Account Number" value="{{ old('account_number') ?? $client->account_number }}">
+                <label for="account_number">{{__('crud.clients.fields.account_number')}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-floating mt-3">
             <select class="form-select" id="active" name="active" aria-label="Active">
                 <option value="0" {{$client->active == 0 || old('active') == 0 ? 'selected' : ''}}>{{__('global.no')}}</option>
                 <option value="1" {{$client->active == 1 || old('active') == 1 ? 'selected' : ''}}>{{__('global.yes')}}</option>

@@ -163,7 +163,7 @@
                 ],
                 orderCellsTop: true,
                 order: [
-                    [1, "desc"]
+                    [3, "desc"]
                 ],
                 pageLength: 10,
                 filterAjax: '{{ route('dashboard.searchListOptions.index') }}',

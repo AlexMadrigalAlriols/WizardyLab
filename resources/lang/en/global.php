@@ -110,5 +110,6 @@ return [
     'attendance' => 'Attendance',
     'attendancetemplates' => 'Attendance Templates',
     'routes' => 'Routes',
+    'add' => 'Add'
 ];
 

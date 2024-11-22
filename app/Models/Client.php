@@ -49,6 +49,7 @@ class Client extends Model
         'country_id',
         'currency_id',
         'language_id',
+        'account_number',
         'company_id',
         'portal_id'
     ];

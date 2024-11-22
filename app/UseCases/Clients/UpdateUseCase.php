@@ -31,6 +31,7 @@ class UpdateUseCase extends UseCase
         protected ?string $zip_code = null,
         protected ?Country $country = null,
         protected ?string $state = null,
+        protected ?string $account_number = null
     ) {
     }
 
@@ -50,6 +51,7 @@ class UpdateUseCase extends UseCase
             'zip' => $this->zip_code,
             'country_id' => $this->country?->id,
             'state' => $this->state,
+            'account_number' => $this->account_number
         ]);
 
         return $this->client;

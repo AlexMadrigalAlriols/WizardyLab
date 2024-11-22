@@ -121,6 +121,11 @@ class InvoiceController extends Controller
             return back();
         }
 
+        $data = array_merge($data, [
+            'show_logo' => $request->input('show_logo'),
+            'include_tax' => $request->input('include_tax')
+        ]);
+
         $invoice = (new StoreUseCase(
             $project,
             Carbon::parse($request->input('issue_date')),
@@ -206,6 +211,8 @@ class InvoiceController extends Controller
             $dompdf->loadHtml($html);
             $dompdf->render();
 
+            dd();
+
             Storage::disk('public')->put($path, $dompdf->output());
         }
 
@@ -232,6 +239,16 @@ class InvoiceController extends Controller
 
         toast('Invoices deleted', 'success');
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function invoicePaid(Request $request, Invoice $invoice)
+    {
+        $invoice->update([
+            'status_id' => 11
+        ]);
+
+        toast('Invoice get paid!', 'success');
+        return back();
     }
 
     private function getData()

@@ -146,6 +146,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['c
     Route::resource('invoices', InvoiceController::class);
     Route::get('/projects/{project}/generate-invoice', [InvoiceController::class, 'generateProjectInvoice'])->name('projects.generate-invoice');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'downloadInvoice'])->name('invoices.download');
+    Route::get('invoices/{invoice}/paid', [InvoiceController::class, 'invoicePaid'])->name('invoices.paid');
     Route::delete('massDestroy/invoices', [InvoiceController::class, 'massDestroy'])->name('invoices.massDestroy');
 
     // Delivery notes

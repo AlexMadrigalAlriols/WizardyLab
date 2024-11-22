@@ -81,7 +81,8 @@ class ClientController extends Controller
             $request->input('city'),
             $request->input('zip'),
             Country::find($request->input('country_id')),
-            $request->input('state')
+            $request->input('state'),
+            $request->input('account_number')
         ))->action();
 
         toast('Client created', 'success');
@@ -117,7 +118,8 @@ class ClientController extends Controller
             $request->input('city'),
             $request->input('zip'),
             Country::find($request->input('country_id')),
-            $request->input('state')
+            $request->input('state'),
+            $request->input('account_number')
         ))->action();
 
         toast('Client updated', 'success');

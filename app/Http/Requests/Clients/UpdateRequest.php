@@ -35,7 +35,8 @@ class UpdateRequest extends FormRequest
             'city' => 'nullable|string|max:50',
             'zip' => 'nullable|string|max:10',
             'country_id' => 'nullable|exists:countries,id',
-            'state' => 'nullable|string|max:50'
+            'state' => 'nullable|string|max:50',
+            'account_number' => 'nullable|string'
         ];
     }
 }

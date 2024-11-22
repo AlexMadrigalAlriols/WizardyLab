@@ -106,7 +106,37 @@
     </div>
 </div>
 
-<div class="row d-none" id="manualValues">
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-floating mt-3">
+            <select class="form-select @if($errors->has('include_tax')) is-invalid @endif" id="include_tax" name="include_tax" aria-label="Status">
+                <option value="0" {{old('include_tax') === 0 ? 'selected' : ''}}>{{__('global.no')}}</option>
+                <option value="1" {{old('include_tax') === 1 ? 'selected' : ''}}>{{__('global.yes')}}</option>
+            </select>
+            <label for="floatingSelect">{{__('crud.invoices.fields.include_tax')}} <span class="text-danger">*</span></label>
+        </div>
+
+        @if ($errors->has('include_tax'))
+            <span class="text-danger">{{ $errors->first('include_tax') }}</span>
+        @endif
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-floating mt-3">
+            <select class="form-select @if($errors->has('show_logo')) is-invalid @endif" id="show_logo" name="show_logo" aria-label="Status">
+                <option value="1" {{old('show_logo') === 1 ? 'selected' : ''}}>{{__('global.yes')}}</option>
+                <option value="0" {{old('show_logo') === 0 ? 'selected' : ''}}>{{__('global.no')}}</option>
+            </select>
+            <label for="floatingSelect">{{__('crud.invoices.fields.show_logo')}} <span class="text-danger">*</span></label>
+        </div>
+
+        @if ($errors->has('show_logo'))
+            <span class="text-danger">{{ $errors->first('show_logo') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="row d-none mt-4" id="manualValues">
     <div class="col-md-12">
         <expenses-form :inventory-items="{{json_encode($inventoryArray)}}" :assignments="{{json_encode([])}}"></expenses-form>
 
